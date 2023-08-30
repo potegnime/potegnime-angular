@@ -1,0 +1,17 @@
+<h1>Prijava</h1>
+<form>  
+  <div>
+    <label for="username">Uporabniško ime</label>
+    <input [(ngModel)]="user.username" type="username" id="username" name="username" placeholder="Vnesi username" required> 
+  </div>
+
+  <div>
+    <label for="password">Geslo</label>
+    <input [(ngModel)]="user.username" type="password" id="password" name="password" placeholder="Vnesi password" required> 
+  </div>
+
+  
+
+</form>
+
+<p>Še nimaš računa? <a routerLink="/registracija">Registriraj se!</a></p>

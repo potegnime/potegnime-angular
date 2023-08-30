@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+/* Global styles */
+:root {
+    /**/
+    /* Basic colors */
+    --dark-purple: #590E87;
+    --light-purple: #9E00FF;
+    --white: #ffffff;
+    --lightgrey: #b3b3b3
+    --darkgrey: #5d5d5d;
+
+    /* Components */
+    --page-background: #121212;
+    --page-component: #1e1e1e;
+    --button-background: #5d5d5d;
+    
+
+}
+body {
+    color: var(--white);
+    font-family: 'Open Sans', sans-serif;
+    max-width: 1200px !important;
+    background-color: var(--page-background);
+}
+.page-component {
+    background-color: var(--page-component);
+    color: red;
+    
+}

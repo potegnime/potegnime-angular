@@ -1,0 +1,13 @@
+<div *ngIf="isLoggedIn && !error">
+  <app-header></app-header>
+  <router-outlet></router-outlet>
+  <app-footer></app-footer>
+</div>
+
+<div *ngIf="!isLoggedIn && !error">
+  <router-outlet></router-outlet>
+</div>
+
+<div *ngIf="error">
+  <app-not-found></app-not-found>
+</div>
