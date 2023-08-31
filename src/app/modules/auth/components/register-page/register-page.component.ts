@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserRegisterDto } from '../../models/user/user-register-dto.model';
 
 @Component({
   selector: 'app-register-page',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./register-page.component.scss']
 })
 export class RegisterPageComponent {
+  
+  userRegisterDto: UserRegisterDto = new UserRegisterDto();
 
 }

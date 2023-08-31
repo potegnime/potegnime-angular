@@ -48,6 +48,7 @@ import { TermsPageComponent } from '../auth/components/terms-page/terms-page.com
     TorrentComponent,
     LoginPageComponent,
     RegisterPageComponent,
-    TermsPageComponent]
+    TermsPageComponent
+  ]
 })
 export class SharedModule { }

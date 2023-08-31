@@ -2,19 +2,40 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserModel as User } from '../../models/user/user.model';
+import { urlConst } from 'src/app/modules/shared/enums/url.enum';
+import { UserRegisterDto } from '../../models/user/user-register-dto.model';
+import { UserLoginDto } from '../../models/user/user-login-dto.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+  ) { }
 
-  public register(user: User): Observable<string> {
-    return this.http.post<any>('http://localhost:3000/api/register', user);
-  }
+  public register(user: UserRegisterDto): Observable<string> {
+    const httpOptions = {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    };
 
-  public login(user: User): Observable<string> {
-    return this.http.post<any>('http://localhost:3000/api/register', user, {responseType: 'json'});
-  }
+    return this.http.post<string>(`${urlConst.apiBase}/auth/register`, user, httpOptions);
+  };
+
+  public login(user: UserLoginDto): Observable<string> {
+    const httpOptions = {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    };
+
+    return this.http.post<string>(`${urlConst.apiBase}/auth/login`, user, httpOptions);
+  };
+
+  public isAuthenticated(): boolean {
+    return localStorage.getItem('token') !== null;
+  };
 }

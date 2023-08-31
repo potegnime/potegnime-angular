@@ -11,11 +11,10 @@ import { UserModel as User } from './modules/auth/models/user/user.model';
 })
 export class AppComponent {
   title = '114.si';
-  user: User = new User();
   routes!: Route[];
   currentPath!: string;
 
-  public isLoggedIn: boolean = true;
+  public isLoggedIn: boolean = false;
   public error: boolean = false;
 
   constructor(private router: Router, private authService: AuthService) { }
@@ -28,20 +27,22 @@ export class AppComponent {
       this.checkCurrentUrlInRoutes()
     });
   }
+
   checkCurrentUrlInRoutes() {
+    // Check for 404 error
     if (this.routes.some(route => route.path === this.currentPath)) this.error = false;
     else this.error = true;
   }
 
-  register(user: User) {
-    this.authService.register(user).subscribe();
-  }
+  // register(user: User) {
+  //   this.authService.register(user).subscribe();
+  // }
 
-  login(user: User) {
-    this.authService.register(user).subscribe(
-      (token: string) => {
-        localStorage.setItem('token', token);
-      }
-    );
-  }
+  // login(user: User) {
+  //   this.authService.register(user).subscribe(
+  //     (token: string) => {
+  //       localStorage.setItem('token', token);
+  //     }
+  //   );
+  // }
 }

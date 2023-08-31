@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from './modules/shared/guards/auth.guard';
+import { AuthGuard } from './modules/auth/guards/auth.guard';
 import { NotFoundComponent } from './modules/shared/components/not-found/not-found.component';
 import { HomePageComponent } from './modules/home/components/home-page/home-page.component';
 import { LoginPageComponent } from './modules/auth/components/login-page/login-page.component';
@@ -30,11 +30,11 @@ const routes: Routes = [
 
   { path: 'profil/moj-profil', component: MyProfilePageComponent, canActivate: [AuthGuard] },
   { path: 'profil', redirectTo: 'profil/moj-profil', pathMatch: 'full' },
-  { path: 'profil/nastavitve', component: SettingsPageComponent },
-  { path: 'profil/ustvari', component: UploadTorrentPageComponent },
+  { path: 'profil/nastavitve', component: SettingsPageComponent, canActivate: [AuthGuard] },
+  { path: 'profil/ustvari', component: UploadTorrentPageComponent, canActivate: [AuthGuard] },
 
-  { path: 'o-nas', component: AboutPageComponent },
-  { path: 'donacije', component: DonatePageComponent },
+  { path: 'o-nas', component: AboutPageComponent, canActivate: [AuthGuard] },
+  { path: 'donacije', component: DonatePageComponent, canActivate: [AuthGuard] },
 
 
   // 404 error page
@@ -44,6 +44,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: []
+  providers: [AuthGuard]
 })
 export class AppRoutingModule { }
