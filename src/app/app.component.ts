@@ -3,6 +3,7 @@ import { Router, Route, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthService } from './modules/auth/services/auth/auth.service';
 import { UserModel as User } from './modules/auth/models/user/user.model';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -17,9 +18,20 @@ export class AppComponent {
   public isLoggedIn: boolean = false;
   public error: boolean = false;
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private httpClient: HttpClient, private router: Router, private authService: AuthService) { }
+
+  // Handle JWT header
+  ping() {
+    this.httpClient.get("http://example.com/api/things").subscribe(
+      (data) => console.log(data),
+      (err) => console.log(err)
+    );
+  }
 
   ngOnInit() {
+    // Check if user is logged in
+
+    // Check for error routes
     this.routes = this.router.config;
     this.currentPath = new URL(window.location.href).pathname.slice(1);
     this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => {

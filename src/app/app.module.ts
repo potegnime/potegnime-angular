@@ -14,6 +14,13 @@ import { SearchModule } from './modules/search/search.module';
 import { DetailsModule } from './modules/details/details.module';
 import { SharedModule } from './modules/shared/shared.module';
 import { AboutModule } from './modules/about/about.module';
+import { JwtModule } from '@auth0/angular-jwt';
+
+import { urlConst } from './modules/shared/enums/url.enum';
+
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 @NgModule({
   declarations: [
@@ -23,13 +30,20 @@ import { AboutModule } from './modules/about/about.module';
     BrowserModule,
     AppRoutingModule,
     RouterModule,
-    FormsModule,
     HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: [`${urlConst.appBase}`],
+        disallowedRoutes: ["http://example.com/examplebadroute/"],
+      },
+    }),
     AuthModule,
     ProfileModule,
     DetailsModule,
     SharedModule,
-    AboutModule
+    AboutModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

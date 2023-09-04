@@ -15,6 +15,7 @@ import { LikedTorrentComponent } from './components/liked-torrent/liked-torrent.
 import { LoginPageComponent } from '../auth/components/login-page/login-page.component';
 import { RegisterPageComponent } from '../auth/components/register-page/register-page.component';
 import { TermsPageComponent } from '../auth/components/terms-page/terms-page.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { TermsPageComponent } from '../auth/components/terms-page/terms-page.com
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    FormsModule
   ],
   exports: [
     RouterModule,

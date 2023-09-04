@@ -1,4 +1,4 @@
 export const urlConst = {
-  apiBase: 'http://localhost:4200/api',
-  appBase: 'http://localhost:4200/'
+  appBase: 'http://localhost:4200/',
+  apiBase: 'https://localhost:7079/api'
 };

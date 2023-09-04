@@ -1,17 +1,20 @@
 <h1>Prijava</h1>
-<form>  
+<form (ngSubmit)="onSubmit()" >  
   <div>
     <label for="username">Uporabniško ime</label>
-    <input type="username" id="username" name="username" placeholder="Vnesi username" required> 
+    <input type="text" id="username" name="username" [(ngModel)]="userLoginDto.username" placeholder="Vnesi uporabniško ime" required>
   </div>
 
   <div>
     <label for="password">Geslo</label>
-    <input type="password" id="password" name="password" placeholder="Vnesi password" required> 
+    <input type="password" id="password" name="password" [(ngModel)]="userLoginDto.password" placeholder="Vnesi geslo" required> 
   </div>
 
+  <button type="submit" class="btn btn-primary">Prijava</button>
   
 
 </form>
 
 <p>Še nimaš računa? <a routerLink="/registracija">Registriraj se!</a></p>
+
+<!-- make login form -->

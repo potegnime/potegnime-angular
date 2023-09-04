@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from './modules/auth/guards/auth.guard';
+import { AuthGuard } from './modules/auth/guards/auth/auth.guard';
 import { NotFoundComponent } from './modules/shared/components/not-found/not-found.component';
 import { HomePageComponent } from './modules/home/components/home-page/home-page.component';
 import { LoginPageComponent } from './modules/auth/components/login-page/login-page.component';
@@ -13,13 +13,14 @@ import { UploadTorrentPageComponent } from './modules/profile/components/upload-
 import { SettingsPageComponent } from './modules/profile/components/settings-page/settings-page.component';
 import { AboutPageComponent } from './modules/about/components/about-page/about-page.component';
 import { DonatePageComponent } from './modules/about/components/donate-page/donate-page.component';
+import { LoggedInAuthGuard } from './modules/auth/guards/logged-in/logged-in-guard.guard';
 
 
 const routes: Routes = [
   // public routes
-  { path: 'prijava', component: LoginPageComponent },
+  { path: 'prijava', component: LoginPageComponent, canActivate: [LoggedInAuthGuard]},
   { path: 'login', redirectTo: 'prijava', pathMatch: 'full' },
-  { path: 'registracija', component: RegisterPageComponent },
+  { path: 'registracija', component: RegisterPageComponent, canActivate: [LoggedInAuthGuard] },
   { path: 'register', redirectTo: 'registracija', pathMatch: 'full' },
   { path: 'pogoji', component: TermsPageComponent },
   { path: 'terms', redirectTo: 'pogoji' },
@@ -44,6 +45,9 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: [AuthGuard]
+  providers: [
+    AuthGuard, 
+    LoggedInAuthGuard
+  ]
 })
 export class AppRoutingModule { }
