@@ -55,7 +55,6 @@ export class AppComponent {
   checkCurrentUrlInRoutes() {
     // Check for 404 error
     this.currentPath = new URL(window.location.href).pathname.slice(1);
-    console.log(this.currentPath)
     if (DefinedRoutes.includes(this.currentPath)) {
       this.error = false;
     } else {

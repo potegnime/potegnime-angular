@@ -1,12 +1,29 @@
 <h1>Registracija</h1>
-<form>
-  register form fields TODO
+<form (ngSubmit)="onSubmit()">
+
+  <div>
+    <label for="username">Email</label>
+    <input type="text" id="username" name="username" [(ngModel)]="userRegisterDto.email" placeholder="Vnesi mail" required>
+  </div>
+
+  <div>
+    <label for="username">Uporabniško ime</label>
+    <input type="text" id="username" name="username" [(ngModel)]="userRegisterDto.username" placeholder="Vnesi uporabniško ime" required>
+  </div>
+
+  <div>
+    <label for="password">Geslo</label>
+    <input type="password" id="password" name="password" [(ngModel)]="userRegisterDto.password" placeholder="Vnesi geslo" required> 
+  </div>
+
   <input type="checkbox" id="terms-agreement" name="terms-agreement" unchecked>
   <div>
     <label for="terms-agreement">
       Strinjam se s <a routerLink="/pogoji">Pravili in splošnimi pogoji uporabe</a>
     </label>
   </div>
+
+  <button type="submit" class="btn btn-primary">Prijava</button>
 
 </form>
 

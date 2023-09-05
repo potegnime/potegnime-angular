@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { UserLoginDto } from '../../models/user/user-login-dto.model';
 import { AuthService } from '../../services/auth/auth.service';
 import { catchError, map, of } from 'rxjs';
@@ -23,31 +23,19 @@ export class LoginPageComponent {
   
   onSubmit() {
     this.authService.login(this.userLoginDto).subscribe(
-      (tokenResp) => {
+      (resp) => {
+        console.log('Login successful');
         // Login successful
-        localStorage.setItem('token', tokenResp);
+        localStorage.setItem('token', resp);
         this.router.navigate(['/']);
       },
       (error) => {
+        console.log('Login failed');
+
+        const el = document.getElementById('login-error');
         // Handle the failed login response here.
       }
     );
+    
   }
-  
-  
-  // onSubmit() {
-  //   try {
-  //     this.authService.login(this.userLoginDto).subscribe(
-  //       (tokenResp) => {
-  //         console.log('Login successful:', tokenResp);
-  //         // Handle the successful login response here, e.g., store the token.
-  //       }
-  //     );
-  //   } catch (error) {
-  //     console.log('Login failed:', error);
-  //     // Handle the failed login response here.
-  //   }
-
-  // }
-
 }
