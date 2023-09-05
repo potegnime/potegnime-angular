@@ -9,7 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AuthModule } from './modules/auth/auth.module';
 import { HomeModule } from './modules/home/home.module';
-import { ProfileModule } from './modules/profile/profile.module';
+import { SudoModule } from './modules/sudo/sudo.module';
 import { SearchModule } from './modules/search/search.module';
 import { DetailsModule } from './modules/details/details.module';
 import { SharedModule } from './modules/shared/shared.module';
@@ -39,7 +39,7 @@ export function tokenGetter() {
       },
     }),
     AuthModule,
-    ProfileModule,
+    SudoModule,
     DetailsModule,
     SharedModule,
     AboutModule,
