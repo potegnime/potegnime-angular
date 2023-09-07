@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth/auth.service';
 import { catchError, map, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login-page',
@@ -11,44 +12,54 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./login-page.component.scss']
 })
 export class LoginPageComponent {
+
+  loginForm!: FormGroup;
+  protected showLoginError: boolean = false;
+  protected loginErrorMessage: string = '';
+
   constructor(
-    private authService: AuthService,
-    private router: Router,
-    private toastr: ToastrService
-  ) { }
-
-  userLoginDto: UserLoginDto = {
-    username: '',
-    password: '',
-  };
-
-  protected showLoginError = false;
-
-  onSubmit() {
-    this.authService.login(this.userLoginDto).subscribe({
-      next: (resp) => {
-        // Login successful
-        if (resp.token) {
-          // Toast login successful
-          this.toastr.success('Prijava uspešna!');
-          
-          // Save token and redirect
-          localStorage.setItem('token', resp.token);
-          this.router.navigate(['/']);
-        } else {
-          this.toastr.error('Naša ekipa napako že odpravlja!', 'Napaka na strežniku');
-        }
-      },
-      error: (err) => {
-        // Login failed
-        if (err.status === 401) {
-          // Expected login failure, show login error message
-          this.showLoginError = true;
-        } else {
-          // Unexpected error, show toast
-          this.toastr.error('Naša ekipa napako že odpravlja!', 'Napaka na strežniku');
-        }
-      },
+    private formBuilder: FormBuilder,
+    private readonly authService: AuthService,
+    private readonly router: Router,
+    private readonly toastr: ToastrService
+  ) {
+    this.loginForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
+
+  onSubmit() {
+    if (this.loginForm?.valid) {
+      const userLoginDto: UserLoginDto = this.loginForm?.value;
+
+      this.authService.login(userLoginDto).subscribe({
+        next: (resp) => {
+          // Login successful
+          if (resp.token) {
+            // Toast login successful
+            this.toastr.success('Prijava uspešna!');
+            
+            // Save token and redirect
+            localStorage.setItem('token', resp.token);
+            this.router.navigate(['/']);
+          } else {
+            this.toastr.error('Naša ekipa napako že odpravlja!', 'Napaka na strežniku', {timeOut: 5000});
+          }
+        },
+        error: (err) => {
+          // Login failed
+          if (err.status === 401) {
+            // Expected login failure, show login error message
+            this.showLoginError = true;
+            this.loginErrorMessage = err.error.message;
+          } else {
+            // Unexpected error, show toast
+            this.toastr.error('Naša ekipa napako že odpravlja!', 'Napaka na strežniku', {timeOut: 5000});
+          }
+        },
+      });
+    }
+    }
+
 }

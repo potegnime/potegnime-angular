@@ -31,8 +31,6 @@ import { FormsModule } from '@angular/forms';
     TorrentComponent,
     UploadedTorrentComponent,
     LikedTorrentComponent,
-    LoginPageComponent,
-    RegisterPageComponent,
     TermsPageComponent
   ],
   imports: [
@@ -48,8 +46,6 @@ import { FormsModule } from '@angular/forms';
     FooterComponent,
     NotFoundComponent,
     TorrentComponent,
-    LoginPageComponent,
-    RegisterPageComponent,
     TermsPageComponent
   ]
 })

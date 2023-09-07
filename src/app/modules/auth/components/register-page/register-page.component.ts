@@ -11,15 +11,14 @@ import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './register-page.component.html',
   styleUrls: ['./register-page.component.scss']
 })
-export class RegisterPageComponent implements OnInit {
+export class RegisterPageComponent {
 
-  registerForm?: FormGroup;
+  registerForm!: FormGroup;
+  protected showRegisterError: boolean = false;
+  protected registerErrorMessage: string = '';
 
-  userRegisterDto: UserRegisterDto = {
-    email: '',
-    username: '',
-    password: '',
-  };
+  protected showPassword: boolean = false;
+  protected showPasswordConfirm: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -27,68 +26,104 @@ export class RegisterPageComponent implements OnInit {
     private readonly router: Router,
     private readonly toastr: ToastrService
   ) {
-
-  }
-
-  ngOnInit(): void {
-      this.registerForm = this.formBuilder.group({
-      email: ['', Validators.required, Validators.email],
-      username: ['', Validators.required],
-      password: ['', Validators.required, Validators.minLength(8)],
+    this.registerForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required]],
+      password: ['', Validators.required],
+      passwordConfirm: ['', Validators.required],
+      agreeToTerms: [false, Validators.required]
     });
   }
 
-  // Backend error messages
-  protected backendError: boolean= false;
-  protected backendErrorMessage: string = '';
+  // password visibility
+  togglePasswordVisibility(fieldNumber: number) {
+    if (fieldNumber === 1) {
+      this.showPassword = !this.showPassword;
+    } else if (fieldNumber === 2) {
+      this.showPasswordConfirm = !this.showPasswordConfirm;
+    }
+  }
 
-  // Frontend validation error
-  protected frontendError: boolean = false;
-  protected frontendErrorMessage: string = '';
 
   onSubmit() {
-    // Basic validation before sending request
-    // Check if all fields are filled
-    console.log(this.userRegisterDto);
-    if (!this.userRegisterDto.email || !this.userRegisterDto.username || !this.userRegisterDto.password) {
-      this.frontendError = true;
-      this.frontendErrorMessage = 'Izpolnite vsa polja!';
+    // Username validation
+    if (this.registerForm?.value.username.length < 4) {
+      this.showRegisterError = true;
+      this.registerErrorMessage = 'Uporabniško ime mora vsebovati vsaj 4 znake!';
       return;
     }
-    // Check if email is valid
 
+    // Password strength validation
+    // Length
+    if (this.registerForm?.value.password.length < 8) {
+      this.showRegisterError = true;
+      this.registerErrorMessage = 'Geslo mora vsebovati vsaj 8 znakov!';
+      return;
+    }
+    // Numbers
+    const numbers = /[0-9]/;
+    if (!numbers.test(this.registerForm?.value.password)) {
+      this.showRegisterError = true;
+      this.registerErrorMessage = 'Geslo mora vsebovati vsaj 1 številko!';
+      return;
+    }
+    // Special characters
+    const specialCharacters = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+    if (!specialCharacters.test(this.registerForm?.value.password)) {
+      this.showRegisterError = true;
+      this.registerErrorMessage = 'Geslo mora vsebovati vsaj 1 posebni znak! (!, $, #, ...)';
+      return;
+    }
 
-    // Send request
-    this.authService.register(this.userRegisterDto).subscribe({
-      next: (resp) => {
-        // Register successful
-        if (resp.token) {
-          // Toast register successful
-          this.toastr.success('Registracija uspešna!');
-          
-          // Save token and redirect
-          localStorage.setItem('token', resp.token);
-          this.router.navigate(['/']);
-        } else {
-          this.toastr.error('Naša ekipa napako že odpravlja!', 'Napaka na strežniku');
-        }
-      },
-      error: (err) => {
-        // Login failed
-        if (err.status === 409) {
-          // User with this email or username already exists
-          this.backendError = true;
-          this.backendErrorMessage = err.error.message;
-        } else if (err.status === 400) {
-          // Fields missing errror
-          this.backendError = true;
-          this.backendErrorMessage = err.error.message;
-        } else {
-          // Unexpected error, show toast
-          this.toastr.error('Naša ekipa napako že odpravlja!', 'Napaka na strežniku');
-        }
-      },
-    });
+    // Passwords match validation
+    if (this.registerForm?.value.password !== this.registerForm?.value.passwordConfirm) {
+      this.showRegisterError = true;
+      this.registerErrorMessage = 'Gesli se ne ujemata!';
+      return;
+    }
+
+    // Terms validation
+    if (!this.registerForm?.value.agreeToTerms) {
+      this.showRegisterError = true;
+      this.registerErrorMessage = 'Za nadaljevanje je potrebno strinjanje s spošnimi pogoji uporabe';
+      return;
+    }
+
+    if (this.registerForm?.valid) {
+      const userRegisterDto: UserRegisterDto = this.registerForm?.value;
+
+      this.authService.register(userRegisterDto).subscribe({
+        next: (resp) => {
+          // Register successful
+          if (resp.token) {
+            // Toast register successful
+            this.toastr.success('Registracija uspešna!');
+            
+            // Save token and redirect
+            localStorage.setItem('token', resp.token);
+            this.router.navigate(['/']);
+          } else {
+            this.toastr.error('Naša ekipa napako že odpravlja!', 'Napaka na strežniku'), {timeOut: 5000};
+          }
+        },
+        error: (err) => {
+          // Login failed
+          if (err.status === 409) {
+            // User with this email or username already exists
+            this.showRegisterError = true;
+            this.registerErrorMessage = err.error.message;
+
+          } else if (err.status === 400) {
+            // Fields missing errror
+            this.showRegisterError = true;
+            this.registerErrorMessage = err.error.message;
+          } else {
+            // Unexpected error, show toast
+            this.toastr.error('Naša ekipa napako že odpravlja!', 'Napaka na strežniku', {timeOut: 5000});
+          }
+        },
+      });
+    }
   }
 
 }

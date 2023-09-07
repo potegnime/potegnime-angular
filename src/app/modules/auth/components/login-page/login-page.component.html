@@ -5,18 +5,30 @@
   </div>
   <div class="col-6 text-center">
     <h1>Prijava</h1>
-    <form (ngSubmit)="onSubmit()" >  
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" >  
       <div>
-        <label for="username">Uporabniško ime</label>
-        <input type="text" id="username" name="username" [(ngModel)]="userLoginDto.username" placeholder="Vnesi uporabniško ime" required>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Uporabniško ime"
+          required
+          formControlName="username"
+        >
       </div>
     
       <div>
-        <label for="password">Geslo</label>
-        <input type="password" id="password" name="password" [(ngModel)]="userLoginDto.password" placeholder="Vnesi geslo" required> 
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Geslo"
+          required
+          formControlName="password"
+        > 
       </div>
     
-      <button type="submit" class="btn btn-primary">Prijava</button>
+      <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary">Prijava</button>
       
     
     </form>
@@ -24,7 +36,7 @@
     <p>Še nimaš računa? <a routerLink="/registracija">Registriraj se!</a></p>
 
     <div *ngIf="showLoginError">
-      Napačno uporabniško ime ali geslo!
+      {{ loginErrorMessage }}
     </div>
         
   </div>
