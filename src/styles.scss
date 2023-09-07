@@ -9,23 +9,27 @@
     --dark-purple: #590E87;
     --light-purple: #9E00FF;
     --white: #ffffff;
-    --lightgrey: #b3b3b3
-    --darkgrey: #5d5d5d;
+    --lightgray: #b3b3b3
+    --darkgray: #5d5d5d;
     --red-primary: #ff0000;
     --red-secondary: #ff6c6c;
     --green-primary: #00ff00;
     --green-secondary: #e5f8f0;
 
-    /* Components */
+    // Components
     --page-background: #121212;
     --page-component: #1e1e1e;
     --button-background: #5d5d5d;
+    --button-background-hover: #4d4d4d;
 
-    /* Toast */
+    // Toast
     --toast-error-primary: #ff8a84;
     --toast-error-secondary: #fd6666;
     --toast-success-primary: #e5f8f0;
     --toast-success-secondary: #32b088;
+
+    // Border radius
+    --border-radius: 5px;
 }
 body {
     color: var(--white);
@@ -35,6 +39,42 @@ body {
 .page-component {
     background-color: var(--page-component);
     color: red;
+}
+
+// Buttons
+.button {
+  color: var(--white);
+  text-decoration: none;
+  padding: 10px 20px;
+  background-color: var(--button-background);
+  border-radius: var(--border-radius);
+}
+.button:hover {
+  background-color: var(--button-background-hover);
+  cursor: pointer;
+}
+
+
+// Lists
+ul.list {
+  list-style-type: none;
+  padding: 0;
+}
+ul.list li {
+  margin: 5px 10px;
+  display: inline-block;
+}
+ul.list li a.button {
+  text-decoration: none;
+  color: var(--white);
+  display: block;
+  padding: 5px 10px;
+  background-color: var(--button-background);
+  border-radius: var(--border-radius);
+  transition: background-color 0.1s;
+}
+ul.list li a.button:hover {
+  background-color: var(--button-background-hover);
 }
 
 // override ngx-toastr styles

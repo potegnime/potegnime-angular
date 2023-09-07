@@ -1,0 +1,22 @@
+footer {
+  background-color: var(--page-component);
+  border-radius: var(--border-radius);
+  padding: 10px;
+}
+h3 {
+  color: var(--white)
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+ul li {
+  margin: 5px 10px;
+  padding: 0 20px;
+}
+ul li a {
+  text-decoration: none;
+  color: #acacac;
+  display: inline-block;
+  padding: 5px 10px;
+}
