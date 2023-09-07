@@ -1,30 +1,224 @@
-<h1>Registracija</h1>
-<form (ngSubmit)="onSubmit()">
-
-  <div>
-    <label for="username">Email</label>
-    <input type="text" id="username" name="username" [(ngModel)]="userRegisterDto.email" placeholder="Vnesi mail" required>
+<!-- <div class="container row">
+  <div class="col-4 text-cetner">
+    <h1>114.si</h1>
+    <p>Modern slovenski torrent sledilnik</p>
   </div>
 
-  <div>
-    <label for="username">Uporabniško ime</label>
-    <input type="text" id="username" name="username" [(ngModel)]="userRegisterDto.username" placeholder="Vnesi uporabniško ime" required>
+  <div class="col-6 text-center">
+    <h1>Registracija</h1>
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" >  
+      <div>
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email"
+          placeholder="Vnesi email" 
+          [(ngModel)]="userRegisterDto.email" 
+          required
+          #email="ngModel"
+          email="true"
+        >
+      </div>
+    
+      <div>
+        <label for="username">Uporabniško ime</label>
+        <input 
+          type="text" 
+          id="username" 
+          name="username" 
+          [(ngModel)]="userRegisterDto.username" 
+          placeholder="Vnesi uporabniško ime" 
+          required
+          minlength="4"
+          #username="ngModel"
+          >
+      </div>
+    
+      <div>
+        <label for="password">Geslo</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          [(ngModel)]="userRegisterDto.password"
+          placeholder="Vnesi geslo"
+          required
+          minlength="8"
+          #password="ngModel"
+          > 
+      </div>
+      
+      <div>
+        <input type="checkbox" id="terms-agreement" name="terms-agreement" unchecked>
+        <label for="terms-agreement">
+          Strinjam se s <a routerLink="/pogoji">Pravili in splošnimi pogoji uporabe</a>
+        </label>
+      </div>
+    
+      <button type="submit">Registracija</button>
+      
+    </form>
+    
+    <p>Že imaš račun? <a routerLink="/prijava">Prijavi se!</a></p>
+
+
+    <div>
+
+      <div *ngIf="email.invalid && (email.dirty || email.touched)">
+        <div *ngIf="email.errors?.['required']">
+          Email je obvezen.
+        </div>
+        <div *ngIf="email.errors?.['email']">
+          Email mora biti veljaven.
+        </div>
+      </div>
+
+
+      <div *ngIf="username.invalid && (username.dirty || username.touched)">
+        <div *ngIf="username.errors?.['required']">
+          Uporabniško ime je obvezno.
+        </div>
+        <div *ngIf="username.errors?.['minlength']">
+          Uporabniško ime mora vsebovati vsaj 4 znake.
+        </div>
+      </div>
+
+
+      <div *ngIf="password.invalid && (password.dirty || password.touched)">
+        <div *ngIf="password.errors?.['required']">
+          Geslo je obvezno.
+        </div>
+        <div *ngIf="password.errors?.['minlength']">
+          Geslo mora vsebovati vsaj 8 znakov.
+        </div>
+      </div>
+    </div>
+
+
+    <hr>
+    frontendError: {{ frontendError }}
+    backendError: {{ backendError }}
+    <div *ngIf="backendError">
+      {{ backendErrorMessage }}
+    </div>
+
+    <div *ngIf="frontendError">
+      {{ frontendErrorMessage }}
+    </div>
+
+  </div>
+</div> -->
+
+
+<div class="container row">
+  <div class="col-4 text-cetner">
+    <h1>114.si</h1>
+    <p>Modern slovenski torrent sledilnik</p>
   </div>
 
-  <div>
-    <label for="password">Geslo</label>
-    <input type="password" id="password" name="password" [(ngModel)]="userRegisterDto.password" placeholder="Vnesi geslo" required> 
+  <div class="col-6 text-center">
+    <h1>Registracija</h1>
+    <form (ngSubmit)="onSubmit()" >  
+      <div>
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email"
+          placeholder="Vnesi email" 
+          [(ngModel)]="userRegisterDto.email" 
+          required
+          #email="ngModel"
+          email="true"
+        >
+      </div>
+    
+      <div>
+        <label for="username">Uporabniško ime</label>
+        <input 
+          type="text" 
+          id="username" 
+          name="username" 
+          [(ngModel)]="userRegisterDto.username" 
+          placeholder="Vnesi uporabniško ime" 
+          required
+          minlength="4"
+          #username="ngModel"
+          >
+      </div>
+    
+      <div>
+        <label for="password">Geslo</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          [(ngModel)]="userRegisterDto.password"
+          placeholder="Vnesi geslo"
+          required
+          minlength="8"
+          #password="ngModel"
+          > 
+      </div>
+      
+      <div>
+        <input type="checkbox" id="terms-agreement" name="terms-agreement" unchecked>
+        <label for="terms-agreement">
+          Strinjam se s <a routerLink="/pogoji">Pravili in splošnimi pogoji uporabe</a>
+        </label>
+      </div>
+    
+      <button type="submit">Registracija</button>
+      
+    </form>
+    
+    <p>Že imaš račun? <a routerLink="/prijava">Prijavi se!</a></p>
+
+
+    <div>
+
+      <div *ngIf="email.invalid && (email.dirty || email.touched)">
+        <div *ngIf="email.errors?.['required']">
+          Email je obvezen.
+        </div>
+        <div *ngIf="email.errors?.['email']">
+          Email mora biti veljaven.
+        </div>
+      </div>
+
+
+      <div *ngIf="username.invalid && (username.dirty || username.touched)">
+        <div *ngIf="username.errors?.['required']">
+          Uporabniško ime je obvezno.
+        </div>
+        <div *ngIf="username.errors?.['minlength']">
+          Uporabniško ime mora vsebovati vsaj 4 znake.
+        </div>
+      </div>
+
+
+      <div *ngIf="password.invalid && (password.dirty || password.touched)">
+        <div *ngIf="password.errors?.['required']">
+          Geslo je obvezno.
+        </div>
+        <div *ngIf="password.errors?.['minlength']">
+          Geslo mora vsebovati vsaj 8 znakov.
+        </div>
+      </div>
+    </div>
+
+
+    <hr>
+    frontendError: {{ frontendError }}
+    backendError: {{ backendError }}
+    <div *ngIf="backendError">
+      {{ backendErrorMessage }}
+    </div>
+
+    <div *ngIf="frontendError">
+      {{ frontendErrorMessage }}
+    </div>
+
   </div>
-
-  <input type="checkbox" id="terms-agreement" name="terms-agreement" unchecked>
-  <div>
-    <label for="terms-agreement">
-      Strinjam se s <a routerLink="/pogoji">Pravili in splošnimi pogoji uporabe</a>
-    </label>
-  </div>
-
-  <button type="submit" class="btn btn-primary">Prijava</button>
-
-</form>
-
-<p>Že imaš račun? <a routerLink="/prijava">Prijavi se!</a></p>
+</div>

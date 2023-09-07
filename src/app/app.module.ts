@@ -4,7 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { AuthModule } from './modules/auth/auth.module';
@@ -17,6 +18,7 @@ import { AboutModule } from './modules/about/about.module';
 import { JwtModule } from '@auth0/angular-jwt';
 
 import { urlConst } from './modules/shared/enums/url.enum';
+import { ToastrModule } from 'ngx-toastr';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -43,7 +45,10 @@ export function tokenGetter() {
     DetailsModule,
     SharedModule,
     AboutModule,
-    FormsModule
+    FormsModule,
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

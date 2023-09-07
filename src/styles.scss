@@ -1,21 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+@import 'ngx-toastr/toastr';
 
-/* Global styles */
+/* 
+  Global styles 
+*/
 :root {
-    /**/
-    /* Basic colors */
+    // Basic colors
     --dark-purple: #590E87;
     --light-purple: #9E00FF;
     --white: #ffffff;
     --lightgrey: #b3b3b3
     --darkgrey: #5d5d5d;
+    --red-primary: #ff0000;
+    --red-secondary: #ff6c6c;
+    --green-primary: #00ff00;
+    --green-secondary: #e5f8f0;
 
     /* Components */
     --page-background: #121212;
     --page-component: #1e1e1e;
     --button-background: #5d5d5d;
-    
 
+    /* Toast */
+    --toast-error-primary: #ff8a84;
+    --toast-error-secondary: #fd6666;
+    --toast-success-primary: #e5f8f0;
+    --toast-success-secondary: #32b088;
 }
 body {
     color: var(--white);
@@ -26,3 +36,17 @@ body {
     background-color: var(--page-component);
     color: red;
 }
+
+// override ngx-toastr styles
+// .toast-success {
+//   background-color: var(--toast-success-secondary);
+//   border-left: solid 5px var(--toast-success-primary);
+// }
+// .toast-error {
+//   color: var(--toast-error-secondary);
+//   background-color: var(--toast-error-primary);
+//   border-left: solid 5px var(--toast-error-secondary);
+// }
+// .toast-warning {
+//   background-color: #F89406;
+// }

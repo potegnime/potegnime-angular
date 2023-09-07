@@ -3,6 +3,7 @@ import { UserLoginDto } from '../../models/user/user-login-dto.model';
 import { AuthService } from '../../services/auth/auth.service';
 import { catchError, map, of } from 'rxjs';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login-page',
@@ -12,7 +13,8 @@ import { Router } from '@angular/router';
 export class LoginPageComponent {
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) { }
 
   userLoginDto: UserLoginDto = {
@@ -20,22 +22,33 @@ export class LoginPageComponent {
     password: '',
   };
 
-  
-  onSubmit() {
-    this.authService.login(this.userLoginDto).subscribe(
-      (resp) => {
-        console.log('Login successful');
-        // Login successful
-        localStorage.setItem('token', resp);
-        this.router.navigate(['/']);
-      },
-      (error) => {
-        console.log('Login failed');
+  protected showLoginError = false;
 
-        const el = document.getElementById('login-error');
-        // Handle the failed login response here.
-      }
-    );
-    
+  onSubmit() {
+    this.authService.login(this.userLoginDto).subscribe({
+      next: (resp) => {
+        // Login successful
+        if (resp.token) {
+          // Toast login successful
+          this.toastr.success('Prijava uspešna!');
+          
+          // Save token and redirect
+          localStorage.setItem('token', resp.token);
+          this.router.navigate(['/']);
+        } else {
+          this.toastr.error('Naša ekipa napako že odpravlja!', 'Napaka na strežniku');
+        }
+      },
+      error: (err) => {
+        // Login failed
+        if (err.status === 401) {
+          // Expected login failure, show login error message
+          this.showLoginError = true;
+        } else {
+          // Unexpected error, show toast
+          this.toastr.error('Naša ekipa napako že odpravlja!', 'Napaka na strežniku');
+        }
+      },
+    });
   }
 }

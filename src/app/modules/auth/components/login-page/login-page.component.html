@@ -23,10 +23,9 @@
     
     <p>Še nimaš računa? <a routerLink="/registracija">Registriraj se!</a></p>
 
-    <div id="login-error">
+    <div *ngIf="showLoginError">
       Napačno uporabniško ime ali geslo!
     </div>
-    
-    
+        
   </div>
 </div>

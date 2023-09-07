@@ -7,7 +7,7 @@ import { UserRegisterDto } from '../../models/user/user-register-dto.model';
 import { UserLoginDto } from '../../models/user/user-login-dto.model';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
-import { CommonService } from 'src/app/modules/shared/services/common.service';
+import { CommonService } from 'src/app/modules/shared/services/common-service/common.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,39 +21,30 @@ export class AuthService {
     private readonly jwtHelper: JwtHelperService
   ) { }
 
-  public register(userRegisterDto: UserRegisterDto): Observable<string> {
+  public register(userRegisterDto: UserRegisterDto): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
 
-    return this.http.post<string>(`${urlConst.apiBase}/auth/register`, userRegisterDto, { headers: headers })
+    return this.http.post<any>(`${urlConst.apiBase}/auth/register`, userRegisterDto, { headers: headers })
     .pipe(
       map((response: any) => {
-        return response.token;
-      }),
-      catchError(this.commonService.handleError))
-    ;
+        return response;
+      })    
+    );
   };
 
-  public login(userLoginDto: UserLoginDto): Observable<string> {
+  public login(userLoginDto: UserLoginDto): Observable<any> {
     // Set headers
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
 
-    return this.http.post<string>(`${urlConst.apiBase}/auth/login`, userLoginDto, { headers: headers })
+    return this.http.post<any>(`${urlConst.apiBase}/auth/login`, userLoginDto, { headers: headers })
       .pipe(
         map((response: any) => {
-          console.log("adefrsg");
-          return response.token;
-        }),
-        catchError((error: HttpErrorResponse) => {
-          console.log("3r4");
-          if (error.status === 409) {
-            return throwError(() => new Error('Login failed: Conflict'));
-          }
-          return throwError(() => new Error(error.message));
-        }) 
+          return response;
+        })
       );
   };
 
