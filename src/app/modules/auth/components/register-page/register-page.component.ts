@@ -52,6 +52,12 @@ export class RegisterPageComponent {
       this.registerErrorMessage = 'Uporabniško ime mora vsebovati vsaj 4 znake!';
       return;
     }
+    // Username cannot end with a trailing space
+    if (this.registerForm?.value.username.endsWith(' ')) {
+      this.showRegisterError = true;
+      this.registerErrorMessage = 'Uporabniško ime ne sme končati s presledkom!';
+      return;
+    }
 
     // Password strength validation
     // Length
