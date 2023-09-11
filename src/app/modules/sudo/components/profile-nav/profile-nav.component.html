@@ -1,18 +1,16 @@
-<div>
-    <div>
-        <div>
-            <a routerLink="/profil/moj-profil">Moj profil</a>
-        </div>
-        <div>
-            <a routerLink="/profil/nastavitve">Nastavitve</a>
-        </div>
-        <div>
-            <a routerLink="/profil/ustvari">Ustvari torrent</a>
-        </div>
-    </div>
-    <div>
-        <div>
-          <button (click)="logout()">Logout</button>
-        </div>
-    </div>
+<div class="row">
+  <ul class="list">
+    <li>
+      <a routerLink="/profil/moj-profil">Moj profil</a>
+    </li>
+    <li>
+      <a routerLink="/profil/nastavitve">Nastavitve</a>
+    </li>
+    <li>
+      <a routerLink="/profil/ustvari">Ustvari torrent</a>
+    </li>
+    <li>
+      <a (click)="logout()">Odjava</a>
+    </li>
+  </ul>
 </div>

@@ -1,5 +1,5 @@
 <nav class="row">
-  <div class="col-6">
+  <div class="col-6 text-start">
     <ul class="list">
       <li>
         <a class="button" routerLink="/iskanje">Top tedna</a>
@@ -13,14 +13,31 @@
     </ul>
 
   </div>
-  <div class="col-6">
-    <app-ratio></app-ratio>
-    <div>
-      notfication icon
-    </div>
-    <div>
-      <a routerLink="/profil/moj-profil">Moj profil</a>
-      <img src="assets/images/no-pfp.png" alt="Moj profil">
-    </div>
+  <div class="col-6 text-end">
+    <ul class="list">
+      <li>
+        <app-ratio></app-ratio>
+      </li>
+      <li>
+        <button class="button">
+          <img src="assets/images/notification.png" alt="Notification icon" width="20">
+        </button>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-center" routerLink="/profil/moj-profil" id="o-nas-dropdown-link" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Moj profil
+        </a>
+        <div class="dropdown-menu text-center" aria-labelledby="o-nas-dropdown-link">
+            <a class="dropdown-item" routerLink="/profil/moj-profil">Moj profil</a>
+            <a class="dropdown-item" routerLink="/profil/nastavitve">Nastavitve</a>
+            <a class="dropdown-item" routerLink="/profil/ustvari">Ustvari torrent</a>
+            <a class="dropdown-item" (click)="logout()">Odjava</a>
+        </div>
+      </li>
+    </ul>
+
+
+
+
   </div>
 </nav>

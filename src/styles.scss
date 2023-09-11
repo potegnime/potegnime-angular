@@ -43,11 +43,14 @@ body {
 
 // Buttons
 .button {
-  color: var(--white);
   text-decoration: none;
-  padding: 10px 20px;
+  color: var(--white);
+  display: block;
+  padding: 5px 10px;
   background-color: var(--button-background);
   border-radius: var(--border-radius);
+  transition: background-color 0.1s;
+  border: none;
 }
 .button:hover {
   background-color: var(--button-background-hover);
@@ -59,23 +62,13 @@ body {
 ul.list {
   list-style-type: none;
   padding: 0;
+  margin-bottom: 0;
 }
 ul.list li {
   margin: 5px 10px;
   display: inline-block;
 }
-ul.list li a.button {
-  text-decoration: none;
-  color: var(--white);
-  display: block;
-  padding: 5px 10px;
-  background-color: var(--button-background);
-  border-radius: var(--border-radius);
-  transition: background-color 0.1s;
-}
-ul.list li a.button:hover {
-  background-color: var(--button-background-hover);
-}
+
 
 // override ngx-toastr styles
 // .toast-success {
