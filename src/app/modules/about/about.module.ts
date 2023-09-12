@@ -7,7 +7,7 @@ import { DonatePageComponent } from './components/donate-page/donate-page.compon
 
 @NgModule({
   declarations: [
-    AboutPageComponent,
+    AboutPageCmponent,
     DonatePageComponent
   ],
   imports: [
