@@ -16,6 +16,7 @@ import { LoginPageComponent } from '../auth/components/login-page/login-page.com
 import { RegisterPageComponent } from '../auth/components/register-page/register-page.component';
 import { TermsPageComponent } from '../auth/components/terms-page/terms-page.component';
 import { FormsModule } from '@angular/forms';
+import { CommonService } from './services/common-service/common.service';
 
 
 @NgModule({

@@ -5,6 +5,7 @@ import { MyProfilePageComponent } from './components/my-profile-page/my-profile-
 import { SettingsPageComponent } from './components/settings-page/settings-page.component';
 import { UploadTorrentPageComponent } from './components/upload-torrent-page/upload-torrent-page.component';
 import { ProfileNavComponent } from './components/profile-nav/profile-nav.component';
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 
 
 
@@ -17,7 +18,9 @@ import { ProfileNavComponent } from './components/profile-nav/profile-nav.compon
   ],
   imports: [
     SudoRoutingModule,
-    CommonModule
+    CommonModule,
+    FroalaEditorModule.forRoot(),
+    FroalaViewModule.forRoot()
   ]
 })
 export class SudoModule { }

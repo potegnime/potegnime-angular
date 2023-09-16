@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TorrentService } from 'src/app/modules/shared/services/torrent-service/torrent-service.service';
 
 @Component({
   selector: 'app-home-header',
@@ -6,5 +7,20 @@ import { Component } from '@angular/core';
   styleUrls: ['./home-header.component.scss']
 })
 export class HomeHeaderComponent {
+  /**
+   *
+   */
+  constructor(private torrentService: TorrentService) {
+    
+  }
 
+  async searchTorrents(query: string, category: string, limit: number) {
+    try {
+      const torrents = await this.torrentService.searchTorrents(query, category, limit);
+      // Do something with torrents (e.g., display them in your component)
+      console.log(torrents);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
