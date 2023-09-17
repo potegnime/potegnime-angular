@@ -1,43 +1,46 @@
-<div class="container row">
-  <div class="col-4 text-center">
-    <h1>140.si</h1>
-    <p>Modern slovenski torrent sledilnik</p>
-  </div>
-  <div class="col-6 text-center">
-    <h1>Prijava</h1>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" >  
-      <div>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          placeholder="Uporabniško ime"
-          required
-          formControlName="username"
-        >
-      </div>
-    
-      <div>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          placeholder="Geslo"
-          required
-          formControlName="password"
-        > 
-      </div>
-    
-      <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary">Prijava</button>
-      
-    
-    </form>
-    
-    <p>Še nimaš računa? <a routerLink="/registracija">Registriraj se!</a></p>
-
-    <div *ngIf="showLoginError">
-      {{ loginErrorMessage }}
+<div class="login-page">
+  <div class="login-container row d-flex align-center justify-content-center justify-content-start">
+    <div class="col-4 text-center login-left">
+      <h1>140.si</h1>
+      <p>Modern slovenski torrent sledilnik</p>
     </div>
+    <div class="col-6 text-center login-right">
+      <h1>Prijava</h1>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" >  
+        <div>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Uporabniško ime"
+            required
+            formControlName="username"
+          >
+        </div>
+      
+        <div>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Geslo"
+            required
+            formControlName="password"
+          > 
+        </div>
+      
+        <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary">Prijava</button>
         
+      
+      </form>
+      
+      <p>Še nimaš računa? <a routerLink="/registracija">Registriraj se!</a></p>
+  
+      <div *ngIf="showLoginError">
+        {{ loginErrorMessage }}
+      </div>
+          
+    </div>
   </div>
+
 </div>
