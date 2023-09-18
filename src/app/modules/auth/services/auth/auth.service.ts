@@ -7,7 +7,6 @@ import { UserRegisterDto } from '../../models/user/user-register-dto.model';
 import { UserLoginDto } from '../../models/user/user-login-dto.model';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
-import { CommonService } from 'src/app/modules/shared/services/common-service/common.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +14,6 @@ import { CommonService } from 'src/app/modules/shared/services/common-service/co
 export class AuthService {
 
   constructor(
-    private readonly commonService: CommonService,
     private readonly http: HttpClient,
     private readonly router: Router,
     private readonly jwtHelper: JwtHelperService

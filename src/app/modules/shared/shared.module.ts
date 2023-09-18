@@ -15,9 +15,7 @@ import { LikedTorrentComponent } from './components/liked-torrent/liked-torrent.
 import { LoginPageComponent } from '../auth/components/login-page/login-page.component';
 import { RegisterPageComponent } from '../auth/components/register-page/register-page.component';
 import { TermsPageComponent } from '../auth/components/terms-page/terms-page.component';
-import { FormsModule } from '@angular/forms';
-import { CommonService } from './services/common-service/common.service';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -35,11 +33,15 @@ import { CommonService } from './services/common-service/common.service';
     TermsPageComponent
   ],
   imports: [
+    FormsModule,
+    ReactiveFormsModule,
     CommonModule,
     RouterModule,
     FormsModule
   ],
   exports: [
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule,
     HeaderComponent,
     SearchBarComponent,
@@ -47,7 +49,7 @@ import { CommonService } from './services/common-service/common.service';
     FooterComponent,
     NotFoundComponent,
     TorrentComponent,
-    TermsPageComponent
+    TermsPageComponent,
   ]
 })
 export class SharedModule { }

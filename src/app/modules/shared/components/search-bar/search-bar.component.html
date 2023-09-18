@@ -1,4 +1,13 @@
-<form>
-    <input type="text" placeholder="Iskanje...">
-    <span>Search button</span>
+<form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+    <input 
+      type="text" 
+      formControlName="query"
+      placeholder="Iskanje..."
+    >
+    <button
+      type="submit"
+      class="btn btn-primary"
+    >
+      Iskanje
+    </button>
 </form>

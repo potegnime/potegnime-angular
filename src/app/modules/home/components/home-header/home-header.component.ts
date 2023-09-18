@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TorrentService } from 'src/app/modules/shared/services/torrent-service/torrent-service.service';
+import { TorrentService } from 'src/app/modules/shared/services/torrent-service/torrent.service';
 
 @Component({
   selector: 'app-home-header',

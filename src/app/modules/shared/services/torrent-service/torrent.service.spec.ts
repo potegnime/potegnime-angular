@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TorrentService } from './torrent-service.service';
+import { TorrentService } from './torrent.service';
 
 describe('TorrentServiceService', () => {
   let service: TorrentService;

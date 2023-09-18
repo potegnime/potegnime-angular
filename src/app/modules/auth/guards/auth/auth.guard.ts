@@ -11,19 +11,16 @@ export class AuthGuard {
     // return true if logged in with the correct JWT
     return this.authService.verifyToken().pipe(
       map(isValid => {
-        if (isValid) {
-          console.log('AuthGuard return true');
+        if (isValid) {;
           // User is logged in
           return true;
         } else {
-          console.log('AuthGuard return false');
           // User not logged in, redirect to login page
           this.router.navigate(['/prijava']);
           return false;
         }
       }),
       catchError(() => {
-        console.log('AuthGuard catchError return false');
         // User not logged in, redirect to login page
         this.router.navigate(['/prijava']);
         return of(false); // Handle errors by allowing access to the /login route.

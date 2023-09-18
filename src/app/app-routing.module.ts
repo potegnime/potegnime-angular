@@ -6,7 +6,7 @@ import { NotFoundComponent } from './modules/shared/components/not-found/not-fou
 import { HomePageComponent } from './modules/home/components/home-page/home-page.component';
 import { LoginPageComponent } from './modules/auth/components/login-page/login-page.component';
 import { RegisterPageComponent } from './modules/auth/components/register-page/register-page.component';
-import { SearchPageComponent } from './modules/search/components/search-page/search-page.component';
+import { SearchResultsComponent } from './modules/search/components/search-results/search-results.component';
 import { TermsPageComponent } from './modules/auth/components/terms-page/terms-page.component';
 import { AboutPageComponent } from './modules/about/components/about-page/about-page.component';
 import { DonatePageComponent } from './modules/about/components/donate-page/donate-page.component';
@@ -24,7 +24,7 @@ const routes: Routes = [
 
   // private routes, auth needed
   { path: '', component: HomePageComponent, canActivate: [AuthGuard] },
-  { path: 'iskanje', component: SearchPageComponent, canActivate: [AuthGuard] },
+  { path: 'iskanje', component: SearchResultsComponent, canActivate: [AuthGuard] },
 
   { path: 'o-nas', component: AboutPageComponent, canActivate: [AuthGuard] },
   { path: 'donacije', component: DonatePageComponent, canActivate: [AuthGuard] },
