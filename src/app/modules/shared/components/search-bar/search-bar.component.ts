@@ -18,7 +18,7 @@ export class SearchBarComponent {
     private readonly toastr: ToastrService
   ) {
     this.searchForm = this.formBuilder.group({
-      query: ['']
+      query : ['', Validators.required]
     });
   }
 

@@ -44,7 +44,7 @@ export class LoginPageComponent {
             localStorage.setItem('token', resp.token);
             this.router.navigate(['/']);
           } else {
-            this.toastr.error('Naša ekipa napako že odpravlja!', 'Napaka na strežniku', {timeOut: 5000});
+            this.toastr.error('', 'Napaka na strežniku', {timeOut: 5000});
           }
         },
         error: (err) => {
@@ -55,7 +55,7 @@ export class LoginPageComponent {
             this.loginErrorMessage = err.error.message;
           } else {
             // Unexpected error, show toast
-            this.toastr.error('Naša ekipa napako že odpravlja!', 'Napaka na strežniku', {timeOut: 5000});
+            this.toastr.error('', 'Napaka na strežniku', {timeOut: 5000});
           }
         },
       });

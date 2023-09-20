@@ -15,12 +15,15 @@ export class SearchService {
   search(query: string): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
-      'accept': '*/*'
+      'accept': '*/*',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
     });
 
-    return this.http.get<any>(`${urlConst.apiBase}/search?q=${query}`, {headers : headers}).pipe(
+    return this.http.get(`${urlConst.apiBase}/search?q=${query}`, {headers: headers}).pipe(
       map((response: any) => {
-        console.log(response);
+        console.log("Search service responseeeeeeeeeee")
+        console.table(response);
         return response;
       })   
     );

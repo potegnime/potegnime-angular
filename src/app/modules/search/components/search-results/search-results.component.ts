@@ -28,16 +28,25 @@ export class SearchResultsComponent implements OnInit {
   }
 
   fetchSearchResults(query: string): void {
-    this.searchService.search(query).subscribe({
-      next: (results) => {
+    // this.searchService.search(query).subscribe({
+    //   next: (results) => {
+    //     console.log("Serach results next");
+    //     this.searchResults = results;
+    //   },
+    //   error: (err) => {
+    //     console.log("Serach results error");
+    //     console.log(err);
+    //   }
+      
+    // });
+    this.searchService.search(query).subscribe(
+      (results) => {
         console.log("Serach results next");
         this.searchResults = results;
       },
-      error: (err) => {
+      (err) => {
         console.log("Serach results error");
         console.log(err);
-      }
-      
-    });
+      });
   }
 }
