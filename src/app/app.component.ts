@@ -12,7 +12,7 @@ import { DefinedRoutes } from './modules/shared/enums/routes.enum';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = '140.si';
+  title = 'potegni.ga';
   routes: Route[];
   currentPath: string = new URL(window.location.href).pathname;
 

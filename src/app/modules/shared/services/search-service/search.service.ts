@@ -20,9 +20,8 @@ export class SearchService {
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.get(`${urlConst.apiBase}/search?q=${query}`, {headers: headers}).pipe(
+    return this.http.get(`${urlConst.apiBase}/search?Query=${query}`, {headers: headers}).pipe(
       map((response: any) => {
-        console.log("Search service responseeeeeeeeeee")
         console.table(response);
         return response;
       })   

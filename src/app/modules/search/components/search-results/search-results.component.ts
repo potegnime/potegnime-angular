@@ -41,7 +41,6 @@ export class SearchResultsComponent implements OnInit {
     // });
     this.searchService.search(query).subscribe(
       (results) => {
-        console.log("Serach results next");
         this.searchResults = results;
       },
       (err) => {

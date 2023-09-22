@@ -16,6 +16,7 @@ import { LoginPageComponent } from '../auth/components/login-page/login-page.com
 import { RegisterPageComponent } from '../auth/components/register-page/register-page.component';
 import { TermsPageComponent } from '../auth/components/terms-page/terms-page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     TorrentComponent,
     UploadedTorrentComponent,
     LikedTorrentComponent,
-    TermsPageComponent
+    TermsPageComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     FormsModule,
@@ -50,6 +52,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NotFoundComponent,
     TorrentComponent,
     TermsPageComponent,
+    LoadingSpinnerComponent
   ]
 })
 export class SharedModule { }
