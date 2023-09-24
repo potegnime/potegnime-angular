@@ -1,0 +1,21 @@
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(180deg, var(--page-background) 40%, var(--dark-purple) 100%);
+}
+.login-container {
+  padding: 100px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+.login-left {
+  height:max-content;
+  background: linear-gradient(var(--dark-purple), #9E00FF 100%);
+
+  background-color: var(--page-component);
+}
+.login-right {
+  background-color: var(--page-component);
+}

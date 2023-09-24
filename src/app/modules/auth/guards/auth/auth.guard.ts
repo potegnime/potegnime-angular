@@ -8,6 +8,10 @@ export class AuthGuard {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate() {
+    // Check if token exists
+    const token = localStorage.getItem('token');
+    if (!token) return false;
+    
     // return true if logged in with the correct JWT
     return this.authService.verifyToken().pipe(
       map(isValid => {

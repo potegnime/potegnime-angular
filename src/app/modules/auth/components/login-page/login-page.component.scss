@@ -1,20 +1,129 @@
 .login-page {
+  background: linear-gradient(to bottom right, var(--page-background) 50%, var(--dark-purple) 100%);
+  margin: 0;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(180deg, var(--page-background) 40%, var(--dark-purple) 100%);
 }
 .login-container {
-  padding: 100px;
   border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 60%; /* Adjust the width as needed */
+  height: 60%;
+}
+.login-mobile-top {
+  display: none;
+}
+.login-logo {
+  width: 230px;
+  max-width: 230px;
 }
 .login-left {
-  background: linear-gradient(var(--dark-purple), #9E00FF 100%);
-
-  background-color: var(--page-component);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 40%;
+  text-align: center;
+  border-radius: 10px 0 0 10px;
+  background: linear-gradient(var(--dark-purple) 40%, #9E00FF 100%);
+  color: white;
+  padding: 10px;
 }
 .login-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 60%;
+  border-radius: 0 10px 10px 0;
+  text-align: center;
   background-color: var(--page-component);
+  color: white;
+  padding: 10px;
+}
+.login-right h1 {
+  font-size: 40px;
+}
+form {
+  margin: 30px 0;
+}
+input[type="text"],
+input[type="password"] {
+  color: white;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: transparent;
+  border: 2px solid var(--button-background);
+}
+button.login-button {
+  width: 150px;
+  padding: 10px 20px;
+  background: linear-gradient(var(--dark-purple), #9E00FF 100%);
+  border-radius: 20px;
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+button.login-button:disabled {
+  background: linear-gradient(#3d1655, #5b1089 100%);
+  opacity: 0,5;
+  color: gray;
+  cursor: not-allowed;
+}
+
+p.register-link {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+p.register-link a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+div.error-message {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #f00;
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column; 
+    width: 90%;
+    height: auto;
+  }
+  .login-left {
+    display: none;
+  }
+  .login-right {
+    flex: 100%; /* Make login-left and login-right full width on small screens */
+    border-radius: 10px; /* Maintain border radius */
+  }
+
+  .login-logo {
+    width: 50%; /* Adjust the logo width for smaller screens */
+  }
+
+  .login-left,
+  .login-right {
+    padding: 20px; /* Increase padding for better spacing on small screens */
+  }
+
+  button.login-button {
+    width: 100%; /* Make the login button full width on small screens */
+  }
 }

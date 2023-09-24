@@ -1,13 +1,10 @@
 <div class="login-page">
-  <div class="login-container">
-    <div class="login-mobile-top">
-      <img src="assets/images/logo-white-background.png" alt="potegni.ga" class="login-mobile-logo">
-    </div>
-    <div class="login-left">
-      <img src="assets/images/logo-white-background.png" alt="potegni.ga" class="login-logo">
+  <div class="login-container row d-flex align-center justify-content-center justify-content-start">
+    <div class="col-4 text-center login-left">
+      <h1>potegni.ga</h1>
       <p>Modern slovenski torrent sledilnik</p>
     </div>
-    <div class="login-right">
+    <div class="col-6 text-center login-right">
       <h1>Prijava</h1>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" >  
         <div>
@@ -20,6 +17,7 @@
             formControlName="username"
           >
         </div>
+      
         <div>
           <input
             type="password"
@@ -31,7 +29,9 @@
           > 
         </div>
       
-        <button type="submit" [disabled]="loginForm.invalid" class="login-button">Prijava</button>
+        <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary">Prijava</button>
+        
+      
       </form>
       
       <p>Še nimaš računa? <a routerLink="/registracija">Registriraj se!</a></p>
