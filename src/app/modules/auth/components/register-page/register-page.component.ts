@@ -19,6 +19,7 @@ export class RegisterPageComponent {
 
   protected showPassword: boolean = false;
   protected showPasswordConfirm: boolean = false;
+  protected agreeToTermsBool: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,7 +44,6 @@ export class RegisterPageComponent {
       this.showPasswordConfirm = !this.showPasswordConfirm;
     }
   }
-
 
   onSubmit() {
     // Username validation
@@ -109,7 +109,7 @@ export class RegisterPageComponent {
             localStorage.setItem('token', resp.token);
             this.router.navigate(['/']);
           } else {
-            this.toastr.error('Naša ekipa napako že odpravlja!', 'Napaka na strežniku'), {timeOut: 5000};
+            this.toastr.error('', 'Napaka na strežniku', {timeOut: 5000});
           }
         },
         error: (err) => {
@@ -125,7 +125,7 @@ export class RegisterPageComponent {
             this.registerErrorMessage = err.error.message;
           } else {
             // Unexpected error, show toast
-            this.toastr.error('Naša ekipa napako že odpravlja!', 'Napaka na strežniku', {timeOut: 5000});
+            this.toastr.error('', 'Napaka na strežniku', {timeOut: 5000});
           }
         },
       });

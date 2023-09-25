@@ -16,6 +16,7 @@ export class LoginPageComponent {
   loginForm!: FormGroup;
   protected showLoginError: boolean = false;
   protected loginErrorMessage: string = '';
+  protected showPassword: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -60,6 +61,10 @@ export class LoginPageComponent {
         },
       });
     }
-    }
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
 
 }

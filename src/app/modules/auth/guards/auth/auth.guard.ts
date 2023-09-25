@@ -10,7 +10,10 @@ export class AuthGuard {
   canActivate() {
     // Check if token exists
     const token = localStorage.getItem('token');
-    if (!token) return false;
+    if (!token) {
+      this.router.navigate(['/prijava']);
+      return false
+    };
     
     // return true if logged in with the correct JWT
     return this.authService.verifyToken().pipe(

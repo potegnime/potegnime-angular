@@ -6,6 +6,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+  word-wrap:break-word;
 }
 .login-container {
   border-radius: 10px;
@@ -14,7 +15,8 @@
   flex-direction: row;
   justify-content: space-between;
   width: 60%; /* Adjust the width as needed */
-  height: 60%;
+  height: 80%;
+  word-wrap:break-word;
 }
 .login-mobile-top {
   display: none;
@@ -40,6 +42,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-overflow: ellipsis;
   flex: 60%;
   border-radius: 0 10px 10px 0;
   text-align: center;
@@ -48,13 +51,17 @@
   padding: 10px;
 }
 .login-right h1 {
-  font-size: 40px;
+  font-size: 35px;
+  margin-bottom: 0;
 }
 form {
   margin: 30px 0;
 }
+// Input fields
 input[type="text"],
 input[type="password"] {
+  box-sizing: border-box;
+  width: 100%;
   color: white;
   width: 100%;
   padding: 10px;
@@ -63,6 +70,35 @@ input[type="password"] {
   border-radius: 5px;
   background-color: transparent;
   border: 2px solid var(--button-background);
+}
+.password-container input[type="text"],
+.password-container input[type="password"] {
+  width: 100%;
+}
+// Toggle password visibility
+.password-container {
+  position: relative;
+}
+.password-container input {
+  width: 200px;
+}
+.password-container i {
+  display: inline;
+  position: absolute;
+  top: 100%;
+  margin-left: -50px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.toggle-password {
+  position: absolute;
+  top: 42%;
+  right: -15px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.eye-icon {
+  color: var(--button-background);
 }
 button.login-button {
   width: 150px;
@@ -75,55 +111,59 @@ button.login-button {
   padding: 10px 20px;
   cursor: pointer;
 }
-
 button.login-button:disabled {
   background: linear-gradient(#3d1655, #5b1089 100%);
   opacity: 0,5;
   color: gray;
   cursor: not-allowed;
 }
-
-p.register-link {
-  margin-top: 10px;
-  font-size: 16px;
-  color: #333;
+.register-url a {
+  color: var(--blue);
 }
-
-p.register-link a {
+.register-url a:hover {
+  color: var(--dark-blue);
+}
+.login-error {
+  margin-top: 10px;
+  color: var(--red-primary);
+}
+a {
   text-decoration: none;
-  color: #007bff;
-}
-
-div.error-message {
-  margin-top: 10px;
-  font-size: 16px;
-  color: #f00;
 }
 
 @media (max-width: 768px) {
+  .login-page {
+    background: var(--page-background);
+  }
   .login-container {
     flex-direction: column; 
-    width: 90%;
+    width: 80%;
     height: auto;
+  }
+  .login-mobile-top {
+    display: block; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  .login-mobile-top img {
+    width: 200px;
   }
   .login-left {
     display: none;
   }
   .login-right {
-    flex: 100%; /* Make login-left and login-right full width on small screens */
-    border-radius: 10px; /* Maintain border radius */
+    flex: 100%; 
+    border-radius: 10px;
   }
-
   .login-logo {
-    width: 50%; /* Adjust the logo width for smaller screens */
+    width: 50%; 
   }
-
-  .login-left,
-  .login-right {
-    padding: 20px; /* Increase padding for better spacing on small screens */
+  .login-left, .login-right {
+    padding: 20px;
   }
-
   button.login-button {
-    width: 100%; /* Make the login button full width on small screens */
+    width: 100%;
   }
 }

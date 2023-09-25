@@ -1,0 +1,205 @@
+.register-page {
+  background: linear-gradient(to bottom right, var(--page-background) 50%, var(--dark-purple) 100%);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.register-container {
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 60%; /* Adjust the width as needed */
+  height: 80%;
+}
+.register-mobile-top {
+  display: none;
+}
+.register-logo {
+  width: 230px;
+  max-width: 230px;
+}
+.register-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 40%;
+  text-align: center;
+  border-radius: 10px 0 0 10px;
+  background: linear-gradient(var(--dark-purple) 40%, #9E00FF 100%);
+  color: white;
+  padding: 10px;
+}
+.register-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 60%;
+  border-radius: 0 10px 10px 0;
+  text-align: center;
+  background-color: var(--page-component);
+  color: white;
+  padding: 10px;
+}
+.register-right h1 {
+  font-size: 35px;
+  margin-bottom: 0;
+}
+.top-row, .bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.top-row input, .bottom-row input {
+  width: 48%;
+  display: flex;
+}
+
+form {
+  margin: 30px 0;
+}
+// Input fields
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  color: white;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: transparent;
+  border: 2px solid var(--button-background);
+}
+.password-container input[type="password"] {
+  width: 100%;
+}
+// .password-container input {
+//   min-width: 200px !important;
+// }
+// Toggle password visibility
+.password-container {
+  position: relative;
+  width: 48%;
+}
+.password-container i {
+  display: inline;
+  position: absolute;
+  top: 100%;
+  margin-left: -50px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.toggle-password {
+  position: absolute;
+  top: 42%;
+  right: -15px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.eye-icon {
+  color: var(--button-background);
+}
+.terms-container {
+  margin: 10px 0;
+}
+button.register-button {
+  width: 150px;
+  padding: 10px 20px;
+  background: linear-gradient(var(--dark-purple), #9E00FF 100%);
+  border-radius: 20px;
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+button.register-button:disabled {
+  background: linear-gradient(#3d1655, #5b1089 100%);
+  opacity: 0,5;
+  color: gray;
+  cursor: not-allowed;
+}
+.login-url a {
+  color: var(--blue);
+}
+.login-url a:hover {
+  color: var(--dark-blue);
+}
+.register-error {
+  margin-top: 10px;
+  color: var(--red-primary);
+}
+a {
+  text-decoration: none;
+}
+.hidden-checkbox {
+  display: none;
+}
+.terms-checkbox {
+  display: inline-block;
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.checkmark {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 25px;
+  width: 25px;
+  border-radius: 4px;
+  text-align: center;
+  line-height: 25px;
+  font-size: 20px;
+  color: var(--button-background);
+}
+.w-100 {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .register-container {
+    flex-direction: column; 
+    width: 80%;
+    height: auto;
+  }
+  .register-mobile-top {
+    display: block; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  .register-mobile-top img {
+    width: 200px;
+  }
+  .register-left {
+    display: none;
+  }
+  .register-right {
+    flex: 100%; /* Make register-left and register-right full width on small screens */
+    border-radius: 10px; /* Maintain border radius */
+  }
+
+  .register-logo {
+    width: 50%; /* Adjust the logo width for smaller screens */
+  }
+
+  .register-left,
+  .register-right {
+    padding: 20px; /* Increase padding for better spacing on small screens */
+  }
+
+  button.register-button {
+    width: 100%; /* Make the register button full width on small screens */
+  }
+}
