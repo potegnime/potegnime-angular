@@ -51,33 +51,18 @@ export class AuthService {
     this.router.navigate(['/prijava']);
   }
 
-  public verifyToken(): Observable<boolean> {
+  public verifyToken(): boolean {
     // Check if token exists
     const token = localStorage.getItem('token');
     if (!token) {
-      return of(false);
+      return false;
     }
 
-    // Set headers
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-
     // Check token expiration
-    try {
-      if (this.jwtHelper.isTokenExpired(token)) {
-        return of(false);
-      }  
-    } catch (err) {}
- 
-    // Send request to check if token is valid
-    return this.http.get<any>(`${urlConst.apiBase}/auth/verify`, { headers: headers } )
-      .pipe(
-        map(() => true),
-        catchError(() => {
-          return of(false);
-        })
-      );
-  };
+    if (this.jwtHelper.isTokenExpired(token)) {
+      return false;
+    }
 
+    return true;
+  }
 }

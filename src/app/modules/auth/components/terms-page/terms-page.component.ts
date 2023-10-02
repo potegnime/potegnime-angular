@@ -20,11 +20,7 @@ export class TermsPageComponent {
     // Route handling for auth
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.authService.verifyToken().subscribe(
-          (isLoggedIn: boolean) => {
-            this.isLoggedIn = isLoggedIn;
-          }
-        );
+        this.isLoggedIn = this.authService.verifyToken();
       }
     });
 }

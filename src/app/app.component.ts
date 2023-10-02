@@ -27,11 +27,7 @@ export class AppComponent {
     // Route handling for auth
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.authService.verifyToken().subscribe(
-          (isLoggedIn: boolean) => {
-            this.isLoggedIn = isLoggedIn;
-          }
-        );
+        this.isLoggedIn = this.authService.verifyToken();
       }
     });
     
@@ -44,12 +40,6 @@ export class AppComponent {
       .subscribe(() => {
         this.checkCurrentUrlInRoutes();
       });
-  }
-
-  // Handle JWT header
-  ping() {
-    this.httpClient.get("http://example.com/api/things").subscribe(
-    );
   }
 
   checkCurrentUrlInRoutes() {

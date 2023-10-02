@@ -1,4 +1,61 @@
-<div>
-    <app-profile-nav></app-profile-nav>
-    my profile page
+<app-sudo-nav></app-sudo-nav>
+<div class="container-profile">
+  <div class="profile-info">
+    <div class="col-8">
+      <div class="user-data" >
+        <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" class="profile-pic">
+        <div class="name-container">
+          <p class="user-name">Lan Lebar</p>
+          <img src="assets/images/red-ratio.png" alt="">              
+        </div>
+        <p class="user-role">Uploader</p>
+      </div>
+
+      <div class="user-stats">
+        <ul class="list">
+          <li>
+            <div class="title">Delilno razmerje</div>
+            <div class="value">15,1</div>
+          </li>
+          <li>
+            <div class="title">Upload</div>
+            <div class="value">15,1</div>
+          </li>
+          <li>
+            <div class="title">Download</div>
+            <div class="value">15,1</div>
+          </li>
+          <li>
+            <div class="title">Naloženih</div>
+            <div class="value">15</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-4 joined-data">
+      <span>Pridružil dne</span>
+      <p>15.6.2023</p>
+    </div>
+  </div>
+
+  <div class="uploaded-container">
+    uploaded torrents
+  </div>
+
+  <div class="liked-container">
+    liked torrents
+      <div class="container-fluid">
+        <div class="d-flex">
+          <button class="sudo-button" type="button" routerLink="/profil/moj-profil" routerLinkActive="active-link">Moj profil</button>
+          <button class="sudo-button" type="button" routerLink="/profil/nastavitve" routerLinkActive="active-link">Nastavitve</button>
+          <button class="sudo-button" type="button" routerLink="/profil/ustvari" routerLinkActive="active-link">Ustvari torrent</button>
+        </div>
+      
+        <div class="d-flex">
+          <button class="sudo-button sudo-logout" type="button">Odjava</button>
+        </div>
+      </div>
+    
+  </div>
 </div>
