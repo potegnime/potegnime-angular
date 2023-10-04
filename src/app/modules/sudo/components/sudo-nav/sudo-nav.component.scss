@@ -3,9 +3,15 @@
   color: #ccc;
   border: none;
 }
+.sudo-button:hover {
+  color: var(--white);
+}
 .sudo-logout {
   color: var(--red-primary);
 }
+.sudo-logout:hover {
+  color: var(--red-primary);
+}
 .active-link {
-color: var(--white);
+  color: var(--white);
 }

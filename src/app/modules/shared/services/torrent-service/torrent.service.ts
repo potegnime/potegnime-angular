@@ -4,11 +4,6 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class TorrentService {
-
-  constructor() {
-  }
-
-  public async searchTorrents(query: string, category: string, limit: number) { 
-
-  }
+  constructor(
+  ) {}
 }

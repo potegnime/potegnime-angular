@@ -3,7 +3,7 @@
   <div class="profile-info">
     <div class="col-8">
       <div class="user-data" >
-        <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" class="profile-pic">
+        <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" class="profile-pic" width="200">
         <div class="name-container">
           <p class="user-name">Lan Lebar</p>
           <img src="assets/images/red-ratio.png" alt="">              
@@ -39,23 +39,6 @@
     </div>
   </div>
 
-  <div class="uploaded-container">
-    uploaded torrents
-  </div>
+  <app-profile-torrents torrentType="liked"></app-profile-torrents>
 
-  <div class="liked-container">
-    liked torrents
-      <div class="container-fluid">
-        <div class="d-flex">
-          <button class="sudo-button" type="button" routerLink="/profil/moj-profil" routerLinkActive="active-link">Moj profil</button>
-          <button class="sudo-button" type="button" routerLink="/profil/nastavitve" routerLinkActive="active-link">Nastavitve</button>
-          <button class="sudo-button" type="button" routerLink="/profil/ustvari" routerLinkActive="active-link">Ustvari torrent</button>
-        </div>
-      
-        <div class="d-flex">
-          <button class="sudo-button sudo-logout" type="button">Odjava</button>
-        </div>
-      </div>
-    
-  </div>
 </div>

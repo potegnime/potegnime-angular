@@ -6,6 +6,7 @@ import { SettingsPageComponent } from './components/settings-page/settings-page.
 import { UploadTorrentPageComponent } from './components/upload-torrent-page/upload-torrent-page.component';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { SudoNavComponent } from './components/sudo-nav/sudo-nav.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -19,6 +20,7 @@ import { SudoNavComponent } from './components/sudo-nav/sudo-nav.component';
   imports: [
     SudoRoutingModule,
     CommonModule,
+    SharedModule,
     FroalaEditorModule.forRoot(),
     FroalaViewModule.forRoot()
   ]

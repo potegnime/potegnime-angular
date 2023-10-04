@@ -1,12 +1,13 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, of, map, throwError  } from 'rxjs';
-import { UserModel as User } from '../../models/user/user.model';
+import { Observable, map  } from 'rxjs';
 import { urlConst } from 'src/app/modules/shared/enums/url.enum';
 import { UserRegisterDto } from '../../models/user/user-register-dto.model';
 import { UserLoginDto } from '../../models/user/user-login-dto.model';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { TokenService } from 'src/app/modules/shared/services/token-service/token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,9 @@ export class AuthService {
   constructor(
     private readonly http: HttpClient,
     private readonly router: Router,
-    private readonly jwtHelper: JwtHelperService
+    private readonly jwtHelper: JwtHelperService,
+    private readonly toastr: ToastrService,
+    private readonly tokenService: TokenService
   ) { }
 
   public register(userRegisterDto: UserRegisterDto): Observable<any> {
@@ -47,13 +50,13 @@ export class AuthService {
   };
 
   public logout(): void {
-    localStorage.removeItem('token');
+    this.tokenService.deleteToken();
     this.router.navigate(['/prijava']);
   }
 
   public verifyToken(): boolean {
     // Check if token exists
-    const token = localStorage.getItem('token');
+    const token = this.tokenService.getToken();
     if (!token) {
       return false;
     }
@@ -64,5 +67,10 @@ export class AuthService {
     }
 
     return true;
+  }
+
+  public unauthorizedHandler(): void {
+    this.logout();
+    this.toastr.error('Vaša seja je potekla', 'Ponovno se prijavite', {timeOut: 5000});
   }
 }

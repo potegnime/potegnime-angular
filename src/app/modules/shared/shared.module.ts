@@ -12,11 +12,10 @@ import { TinyTorrentComponent } from './components/tiny-torrent/tiny-torrent.com
 import { TorrentComponent } from './components/torrent/torrent.component';
 import { UploadedTorrentComponent } from './components/uploaded-torrent/uploaded-torrent.component';
 import { LikedTorrentComponent } from './components/liked-torrent/liked-torrent.component';
-import { LoginPageComponent } from '../auth/components/login-page/login-page.component';
-import { RegisterPageComponent } from '../auth/components/register-page/register-page.component';
 import { TermsPageComponent } from '../auth/components/terms-page/terms-page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { ProfileTorrentsComponent } from './components/profile-torrents/profile-torrents.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +31,8 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
     UploadedTorrentComponent,
     LikedTorrentComponent,
     TermsPageComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    ProfileTorrentsComponent
   ],
   imports: [
     FormsModule,
@@ -52,7 +52,8 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
     NotFoundComponent,
     TorrentComponent,
     TermsPageComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    ProfileTorrentsComponent
   ]
 })
 export class SharedModule { }

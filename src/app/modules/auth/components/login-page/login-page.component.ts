@@ -5,6 +5,7 @@ import { catchError, map, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TokenService } from 'src/app/modules/shared/services/token-service/token.service';
 
 @Component({
   selector: 'app-login-page',
@@ -21,6 +22,7 @@ export class LoginPageComponent {
   constructor(
     private formBuilder: FormBuilder,
     private readonly authService: AuthService,
+    private readonly tokenService: TokenService,
     private readonly router: Router,
     private readonly toastr: ToastrService
   ) {
@@ -42,7 +44,7 @@ export class LoginPageComponent {
             this.toastr.success('Prijava uspešna!');
             
             // Save token and redirect
-            localStorage.setItem('token', resp.token);
+            this.tokenService.setToken(resp.token);
             this.router.navigate(['/']);
           } else {
             this.toastr.error('', 'Napaka na strežniku', {timeOut: 5000});

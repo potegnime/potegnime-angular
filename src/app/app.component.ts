@@ -20,7 +20,6 @@ export class AppComponent {
   public error: boolean = false;
 
   constructor(
-    private httpClient: HttpClient, 
     private router: Router, 
     private authService: AuthService) 
   {

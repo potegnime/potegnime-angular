@@ -1,0 +1,32 @@
+<table class="table dark-table">
+  <thead>
+    <tr>
+      <th scope="col">Datoteka</th>
+      <th scope="col">Uploader</th>
+      <th scope="col">Velikost</th>
+      <th scope="col">SE</th>
+      <th scope="col">LE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let torrent of torrentsArray">
+      <td>
+        <div class="d-flex align-items-center">
+          <img *ngIf="torrent.source === 'Native'" src="assets/images/TODO.png" alt="{{ torrent.title }} Image" width="50" class="mr-2">
+          <img *ngIf="torrent.source === 'None'" src="assets/images/no-image.png" alt="{{ torrent.title }} Image" width="50" class="mr-2 p-2">
+          <img *ngIf="torrent.source === 'ThePirateBay'" src="assets/images/tpb.png" alt="{{ torrent.title }} Image" width="50" class="mr-2">
+          <img *ngIf="torrent.source === '_1337x'" src="assets/images/1337x.png" alt="{{ torrent.title }} Image" width="50" class="mr-2">
+          <img *ngIf="torrent.source === 'YTS'" src="assets/images/yts.png" alt="{{ torrent.title }} Image" width="50" class="mr-2">
+          <div>
+            <h4>{{ torrent.title }}</h4>
+            <p>{{ torrent.category }} | {{ torrent.format }} | {{ torrent.year }}</p>
+          </div>
+        </div>
+      </td>
+      <td>{{ torrent.uploaderUsername }}</td>
+      <td>{{ torrent.size }}</td>
+      <td>{{ torrent.seeders }}</td>
+      <td>{{ torrent.leechers }}</td>
+    </tr>
+  </tbody>
+</table>
