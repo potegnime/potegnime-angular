@@ -1,0 +1,125 @@
+// Container
+.search-results {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Loading spinner
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+// No results
+.no-results {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+// Table
+.dark-table {
+  color: white;
+}
+
+// Table head
+.dark-table thead th  {
+  background-color: #121212;
+  color: var(--white);
+  border: none;
+  padding: 10px;
+}
+.dark-table thead th:hover {
+  color: lightgrey;
+  cursor: pointer;
+}
+
+
+// Table body
+.dark-table tbody td, 
+.dark-table tbody tr {
+  background-color: #5d5d5d;
+  color: white;
+}
+// Round corners of first and last row
+.dark-table tbody tr:first-child td:first-child {
+  border-top-left-radius: var(--border-radius);
+}
+.dark-table tbody tr:first-child td:last-child {
+  border-top-right-radius: var(--border-radius);
+}
+.dark-table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: var(--border-radius);
+}
+.dark-table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: var(--border-radius);
+}
+.dark-table tbody td {
+  padding: 10px;
+}
+.dark-table tbody tr:not(.expanded):hover td {
+  cursor: pointer;
+  background-color: #515151;
+}
+
+// Expanded details
+.expanded-info {
+  width: 100%;
+  background-color: #515151;
+  padding: 1rem;
+}
+.expanded-details-container {
+  margin: 10px 0;
+}
+.expanded-details {
+  margin: 0 10px;
+  text-align: center;
+  p:first-child {
+    font-size: small;
+  }
+  p:last-child {
+    font-size: large;
+    margin: 0;
+  }
+}
+
+// Buttons
+.buttons-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+.action-button {
+  transition: background-color 0.2s ease-in-out;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 150px;
+  margin: 5px;
+  padding: 7px;
+  background-color: #515151;
+  border: none;
+  box-shadow: (0px 4px 4px rgba(0, 0, 0, 0.25));
+  border-radius: var(--border-radius);
+  color: var(--white);
+  font-weight: bold;
+  p {
+    flex-basis: 70%;
+    margin: 0;
+    padding: 0;
+    transition: color 0.2s ease-in-out;
+    text-align: center;
+  }
+  img {
+    flex-basis: 30%;
+    padding: 3px;
+    width: 40px;
+  }
+}
+.action-button:hover {
+  background-color: #333;
+}

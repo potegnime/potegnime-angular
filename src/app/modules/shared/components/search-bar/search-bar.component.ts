@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 
@@ -8,16 +8,19 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.scss']
 })
-export class SearchBarComponent {
+export class SearchBarComponent implements OnInit {
   searchForm!: FormGroup;
 
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly router: Router,
-    private readonly toastr: ToastrService
-  ) {
+    private readonly toastr: ToastrService,
+    private readonly route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
     this.searchForm = this.formBuilder.group({
-      query : ['', Validators.required]
+      query: [this.route.snapshot.queryParamMap.get('q') || '', Validators.required]
     });
   }
 

@@ -38,7 +38,8 @@
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
               "node_modules/froala-editor/js/froala_editor.pkgd.min.js"
-            ]
+            ],
+            "allowedCommonJsDependencies": ["froala-editor"]
           },
           "configurations": {
             "production": {

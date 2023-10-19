@@ -9,7 +9,6 @@ import { NotificationsComponent } from './components/notifications/notifications
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { TinyTorrentComponent } from './components/tiny-torrent/tiny-torrent.component';
-import { TorrentComponent } from './components/torrent/torrent.component';
 import { UploadedTorrentComponent } from './components/uploaded-torrent/uploaded-torrent.component';
 import { LikedTorrentComponent } from './components/liked-torrent/liked-torrent.component';
 import { TermsPageComponent } from '../auth/components/terms-page/terms-page.component';
@@ -27,7 +26,6 @@ import { ProfileTorrentsComponent } from './components/profile-torrents/profile-
     SearchBarComponent,
     NotFoundComponent,
     TinyTorrentComponent,
-    TorrentComponent,
     UploadedTorrentComponent,
     LikedTorrentComponent,
     TermsPageComponent,
@@ -50,7 +48,6 @@ import { ProfileTorrentsComponent } from './components/profile-torrents/profile-
     NavComponent,
     FooterComponent,
     NotFoundComponent,
-    TorrentComponent,
     TermsPageComponent,
     LoadingSpinnerComponent,
     ProfileTorrentsComponent
