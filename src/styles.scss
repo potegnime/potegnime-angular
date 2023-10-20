@@ -9,7 +9,7 @@
     --dark-purple: #590E87;
     --light-purple: #9E00FF;
     --white: #ffffff;
-    --lightgray: #b3b3b3
+    --lightgray: #b3b3b3;
     --darkgray: #5d5d5d;
     --red-primary: #ff0000;
     --red-secondary: #ff6c6c;
@@ -32,6 +32,9 @@
 
     // Border radius
     --border-radius: 5px;
+}
+* {
+  font-weight: 600;
 }
 body {
     color: var(--white);

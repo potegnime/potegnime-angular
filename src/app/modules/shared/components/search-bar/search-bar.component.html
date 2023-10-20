@@ -1,36 +1,8 @@
 <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
-  <label for="search-input" class="sr-only">Iskanje</label>
-  <div class="input-group input-group-sm">
-    <input 
-      type="text" 
-      id="search-input"
-      formControlName="query"
-      placeholder="Iskanje..."
-      aria-label="Iskanje"
-      aria-describedby="search-button"
-    >
-    <button
-      type="submit"
-      class="search-button"
-      id="search-button"
-    >
-      <span class="visually-hidden">Iskanje</span>
-      <img src="assets/images/search-icon.png" alt="Search">
+  <div class="search-bar-container">
+    <input type="text" id="search-input" formControlName="query" placeholder="Iskanje..." autocomplete="off" spellcheck="false" autocorrect="off" aria-label="Iskanje" aria-describedby="search-button">
+    <button type="submit" class="search-button" id="search-button">
+      <img src="assets/images/search-icon.png" class="search-img" alt="Iskanje" width="20px" height="20px">
     </button>
   </div>
 </form>
-
-
-<!-- <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
-    <input 
-      type="text" 
-      formControlName="query"
-      placeholder="Iskanje..."
-    >
-    <button
-      type="submit"
-      class="btn btn-primary"
-    >
-      Iskanje
-    </button>
-</form> -->

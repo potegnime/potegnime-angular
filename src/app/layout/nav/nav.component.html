@@ -1,6 +1,6 @@
 <nav class="row">
   <div class="col-6 text-start">
-    <ul class="list">
+    <ul class="list left-list">
       <li>
         <a class="button" routerLink="/iskanje">Top tedna</a>
       </li>
@@ -14,7 +14,7 @@
 
   </div>
   <div class="col-6 text-end">
-    <ul class="list">
+    <ul class="list right-list">
       <li>
         <app-ratio></app-ratio>
       </li>
@@ -24,14 +24,17 @@
         </button>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle text-center" id="o-nas-dropdown-link" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link text-center" id="o-nas-dropdown-link" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <div class="my-profile-container button">
             Moj profil
+            <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Profilna slika" class="profile-pic" width="20">  
+          </div>
         </a>
         <div class="dropdown-menu text-center" aria-labelledby="o-nas-dropdown-link">
             <a class="dropdown-item" routerLink="/profil/moj-profil">Moj profil</a>
             <a class="dropdown-item" routerLink="/profil/nastavitve">Nastavitve</a>
             <a class="dropdown-item" routerLink="/profil/ustvari">Ustvari torrent</a>
-            <a class="dropdown-item" (click)="logout()">Odjava</a>
+            <a class="dropdown-item" id="logout-dropdown" (click)="logout()">Odjava</a>
         </div>
       </li>
     </ul>

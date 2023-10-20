@@ -24,6 +24,26 @@
 // Table
 .dark-table {
   color: white;
+  width: 100%;
+  margin: auto;
+  border-collapse: collapse;
+}
+// Widths of columns
+table.dark-table td:first-child {
+  width: 60%;
+  max-width: 600px;
+  word-break: break-word;
+}
+
+table.dark-table td:nth-child(2),
+table.dark-table td:nth-child(3) {
+  width: 13%;
+}
+table.dark-table td:nth-child(2),
+table.dark-table td:nth-child(3),
+table.dark-table td:nth-child(4),
+table.dark-table td:nth-child(5) {
+  width: 7%;
 }
 
 // Table head

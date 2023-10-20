@@ -12,7 +12,7 @@ export class NavComponent {
     private readonly authService: AuthService
   ) { }
 
-  public logout() {
+  protected logout() {
     this.authService.logout();
   }
 }
