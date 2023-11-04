@@ -27,6 +27,9 @@ export class AppComponent {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.isLoggedIn = this.authService.verifyToken();
+        if (!this.isLoggedIn) {
+          this.authService.logout();
+        }
       }
     });
     

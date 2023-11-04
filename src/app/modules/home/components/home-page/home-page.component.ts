@@ -7,10 +7,7 @@ import { AuthService } from 'src/app/modules/auth/services/auth/auth.service';
   styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent {
-  constructor(private authService: AuthService) { }
-    
-  
-  public logout() {
-    this.authService.logout();
-  }
+  constructor(
+    private authService: AuthService
+  ) { }
 }

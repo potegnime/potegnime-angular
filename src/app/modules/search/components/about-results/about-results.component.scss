@@ -1,0 +1,57 @@
+.center-cont {
+  padding: 15px;
+}
+.trigger-cont:hover {
+  background-color: var(--page-component);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}
+.img-cont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#question-icon {
+  width: 60%;
+  aspect-ratio: 1/1;
+}
+.center-cont {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 0;
+  margin-left: 0;
+}
+.center-cont p {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+// Help links
+a {
+    text-decoration: underline;
+}
+.tpb a {
+    color: var(--tpb-color);
+    text-decoration-color: var(--tpb-color);
+}
+.tpb a:hover {
+    color: var(--tpb-color-hover);
+    text-decoration-color: var(--tpb-color-hover);
+}
+._1337x a {
+    color: var(--_1337x-color);
+    text-decoration-color: var(--_1337x-color);
+}
+._1337x a:hover {
+    color: var(--_1337x-color-hover);
+    text-decoration-color: var(--_1337x-color-hover);
+}
+.yts a {
+    color: var(--yts-color);
+    text-decoration-color: var(--yts-color);
+}
+.yts a:hover {
+    color: var(--yts-color-hover);
+    text-decoration-color: var(--yts-color-hover);
+}

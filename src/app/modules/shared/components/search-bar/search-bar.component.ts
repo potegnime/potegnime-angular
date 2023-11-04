@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-search-bar',
@@ -10,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class SearchBarComponent implements OnInit {
   searchForm!: FormGroup;
+  private routeSubscription!: Subscription;
 
   constructor(
     private readonly formBuilder: FormBuilder,
@@ -20,8 +22,17 @@ export class SearchBarComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchForm = this.formBuilder.group({
-      query: [this.route.snapshot.queryParamMap.get('q') || '', Validators.required]
+      query: ['', Validators.required]
     });
+
+    this.routeSubscription = this.route.queryParamMap.subscribe(params => {
+      const query = params.get('q') || '';
+      this.searchForm.patchValue({ query });
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.routeSubscription.unsubscribe();
   }
 
   onSearch(): void {

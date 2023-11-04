@@ -54,6 +54,10 @@ export class AuthService {
     this.router.navigate(['/prijava']);
   }
 
+  public unauthorizedHandler(): void {
+    this.logout();
+  }
+
   public verifyToken(): boolean {
     // Check if token exists
     const token = this.tokenService.getToken();
@@ -67,10 +71,5 @@ export class AuthService {
     }
 
     return true;
-  }
-
-  public unauthorizedHandler(): void {
-    this.logout();
-    this.toastr.error('Vaša seja je potekla', 'Ponovno se prijavite', {timeOut: 5000});
   }
 }

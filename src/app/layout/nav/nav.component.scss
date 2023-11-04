@@ -5,12 +5,12 @@ nav {
 .left-list {
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
 }
 .right-list {
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
 }
 // Profile button
 .my-profile-container {

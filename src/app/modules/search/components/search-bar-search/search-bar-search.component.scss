@@ -20,9 +20,6 @@
   padding: 0 10px;
   height: 45px;
 }
-#search-input:focus {
-  outline: none;
-}
 .search-button {
   border: none;
   background: linear-gradient(var(--dark-purple), var(--light-purple));
@@ -43,6 +40,7 @@
 // Buttons
 .options-button {
   background-color: var(--button-background);
+  align-self: last baseline;
   color: white;
   padding: 6px 10px;
   border: none;
@@ -60,10 +58,6 @@
 #predlagaj-button:hover {
   background: linear-gradient(#460370, var(--light-purple));
 }
-#predlagaj-button:focus {
-  outline: none;
-  background: linear-gradient(#460370, var(--light-purple));
-}
 // Dropdown
 .dropdown-container {
   display: flex;
@@ -76,10 +70,6 @@
 }
 .dropdown-container select {
   width: 200px;
-}
-.dropdown-container select:focus {
-  outline: none;
-  background-color: var(--button-background-hover);
 }
 .dropdown {
   background-color: var(--button-background);

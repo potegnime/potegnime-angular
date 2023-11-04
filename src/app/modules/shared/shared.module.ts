@@ -15,6 +15,8 @@ import { TermsPageComponent } from '../auth/components/terms-page/terms-page.com
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { ProfileTorrentsComponent } from './components/profile-torrents/profile-torrents.component';
+import { Date1337xPipe } from './pipes/date-1337.pipe';
+import { TorrentSourcePipe } from './pipes/torrent-source.pipe';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { ProfileTorrentsComponent } from './components/profile-torrents/profile-
     LikedTorrentComponent,
     TermsPageComponent,
     LoadingSpinnerComponent,
-    ProfileTorrentsComponent
+    ProfileTorrentsComponent,
+    Date1337xPipe,
+    TorrentSourcePipe
   ],
   imports: [
     FormsModule,
@@ -50,7 +54,9 @@ import { ProfileTorrentsComponent } from './components/profile-torrents/profile-
     NotFoundComponent,
     TermsPageComponent,
     LoadingSpinnerComponent,
-    ProfileTorrentsComponent
+    ProfileTorrentsComponent,
+    Date1337xPipe,
+    TorrentSourcePipe
   ]
 })
 export class SharedModule { }

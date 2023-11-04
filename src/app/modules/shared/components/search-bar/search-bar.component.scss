@@ -1,7 +1,7 @@
 .search-bar-container {
   display: flex;
-  align-items: end;
-  justify-content: end;
+  align-items: flex-end;
+  justify-content: flex-end;
   flex-direction: row;
 }
 
@@ -12,9 +12,6 @@
   border-radius: 4px 0 0 4px;
   padding: 0 10px;
   height: 35px;
-}
-#search-input:focus {
-  outline: none;
 }
 #search-input::placeholder {
   color: var(--lightgray);

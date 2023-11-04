@@ -1,0 +1,41 @@
+<div class="mb-2">
+    <div class="row trigger-cont" (click)="toggleExpanded()">
+        <div class="col-1 img-cont">
+          <img id="question-icon" src="assets/images/question-icon.png" alt="O rezultatih">
+        </div>
+        <div class="col-11 center-cont">
+          <p>O rezultatih</p>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-12 mt-2" *ngIf="expanded">
+          <p>
+            Rezultati prihajajo iz treh različnih virov: 
+                <span class="tpb">
+                    <a href="https://thepiratebay.org/" target="_blank">ThePirateBay</a>
+                </span>,
+                <span class="_1337x">
+                    <a href="https://www.13377x.tw/" target="_blank">1337x</a>
+                </span> in
+                <span class="yts">
+                    <a href="https://yts.mx/" target="_blank">YTS</a>
+                </span>
+          </p>
+          <p>
+            Ker so rezultati iz angleških strani, je priporočljivo, da v iskalno polje vpišete angleški naslov želenega torrenta
+          </p>
+          <p>Uporabne povezave:</p>
+          <ul>
+            <li>
+                <span>
+                    <a href="https://www.titlovi.com/" target="_blank">Titlovi.com</a> - prenos podnapisev
+                </span>
+                <span>
+                    
+                </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+</div>

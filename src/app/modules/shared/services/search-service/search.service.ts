@@ -64,7 +64,6 @@ export class SearchService {
           return;
         }
         if (error.status === 404) {
-          console.log('search.service.ts: 404 error')
           return of([]);
         }
         return error;

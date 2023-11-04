@@ -17,10 +17,6 @@ export class TokenService {
     localStorage.removeItem('token');
   }
 
-  public hasToken(): boolean {
-    return !!this.getToken();
-  }
-
   public decodeToken(): any {
     try {
       const token = this.getToken();
