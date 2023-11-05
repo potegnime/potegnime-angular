@@ -41,7 +41,7 @@ export class LoginPageComponent {
           // Login successful
           if (resp.token) {
             // Toast login successful
-            this.toastr.success('Prijava uspešna!');
+            this.toastr.success('', 'Prijava uspešna!', {timeOut: 2000});
             
             // Save token and redirect
             this.tokenService.setToken(resp.token);

@@ -2,8 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, Route, NavigationEnd, RouteConfigLoadEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthService } from './modules/auth/services/auth/auth.service';
-import { UserModel as User } from './modules/auth/models/user/user.model';
-import { HttpClient } from '@angular/common/http';
 import { DefinedRoutes } from './modules/shared/enums/routes.enum';
 
 @Component({

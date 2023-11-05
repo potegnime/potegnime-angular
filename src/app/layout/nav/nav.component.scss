@@ -46,3 +46,7 @@ nav {
 #logout-dropdown:hover {
   color: var(--red-secondary);
 }
+.button:hover {
+  background-color: var(--button-background-hover);
+  cursor: pointer;
+}

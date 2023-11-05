@@ -2,53 +2,43 @@
 <div class="row container-profile">
   <div class="row profile-info">
 
-    <div class="col-10">
+
       <div class="row user-data">
 
-        <div class="col-4 img-cont">
+        <div class="col-3 img-cont">
           <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" class="profile-pic" width="200">
         </div>
 
-        <div class="col-8 name-cont">
-          <div class="name-container">
-            <div class="username-cont">
-              <h3 class="username">string</h3>
-              <img src="assets/images/red-ratio.png" alt="Delilno razmerje">  
-            </div>
+        <div class="col-9 name-cont">
+          <div class="username-cont">
+            <h3 class=" m-0 p-0 username">{{ username }}</h3>
+            <p class="role mt-1">{{ role }}</p>
+            <!-- <img src="assets/images/red-ratio.png" alt="Delilno razmerje">   -->
           </div>
-          <p class="user-role">Uploader</p>
         </div>
-
       </div>
 
-      <div class="user-stats">
-        <ul class="list">
+      <div class="row user-stats">
+        <ul class="col-7 list">
           <li>
-            <div class="title">Delilno razmerje</div>
-            <div class="value">15,1</div>
+            <div class="title">Pridružil dne</div>
+            <div class="value">{{ joined | date:'d.M.y' }}</div>
           </li>
           <li>
-            <div class="title">Upload</div>
+            <div class="title">Všečlanih torrentov</div>
             <div class="value">15,1</div>
           </li>
+          <!-- TODO -->
           <li>
-            <div class="title">Download</div>
-            <div class="value">15,1</div>
-          </li>
-          <li>
-            <div class="title">Naloženih</div>
-            <div class="value">15</div>
+            <div class="title">Naloženih torrentov</div>
+            <div class="value">Ø</div>
           </li>
         </ul>
       </div>
-    </div>
-
-    <div class="col-2 joined-data">
-      <span>Pridružil dne</span>
-      <p>15.6.2023</p>
-    </div>
   </div>
 
-  <app-profile-torrents torrentType="liked"></app-profile-torrents>
+  <hr class="my-2">
 
+  <app-profile-torrents torrentType="liked"></app-profile-torrents>
+  <app-profile-torrents torrentType="uploaded"></app-profile-torrents>
 </div>

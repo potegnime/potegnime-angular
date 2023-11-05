@@ -4,5 +4,49 @@
   margin-top: 5px;
   margin-bottom: 10px;
   border-radius: var(--border-radius);
-
+}
+// Profile picture - left
+.img-cont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+.profile-pic {
+  border-radius: 100%;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  object-position: center;
+  aspect-ratio: 1/1;
+  max-width: 150px;
+  max-height: 150px;
+}
+// Profile info - right
+.name-cont {
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+.name-cont .username {
+  font-size: 1.8rem;
+}
+.name-cont .role {
+  color: var(--darkgray);
+  font-size: 0.9rem;
+}
+// User stats
+.user-stats ul {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+}
+.user-stats ul li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.user-stats .title {
+  color: var(--darkgray);
+  font-size: small;
 }

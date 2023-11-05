@@ -28,6 +28,10 @@
   text-align: left;
 }
 // Help links
+.warning {
+  color: var(--red-primary);
+  font-size: 1.2rem;
+}
 a {
     text-decoration: underline;
 }

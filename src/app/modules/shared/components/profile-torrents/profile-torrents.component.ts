@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UserService } from '../../services/user-service/user.service';
 import { TokenService } from '../../services/token-service/token.service';
+import { AuthService } from 'src/app/modules/auth/services/auth/auth.service';
+import { DecodedTokenModel } from '../../models/decoded-token.interface';
 
 @Component({
   selector: 'app-profile-torrents',
@@ -8,37 +10,51 @@ import { TokenService } from '../../services/token-service/token.service';
   styleUrls: ['./profile-torrents.component.scss']
 })
 export class ProfileTorrentsComponent implements OnInit {
-  constructor(
-    private readonly userService: UserService,
-    private readonly tokenService: TokenService
-  ) {}
-
+  protected canGetTorrents: boolean = true;
+  protected canGetLikedTorrents: boolean = true;
+  protected canGetUploadedTorrents: boolean = true;
   protected torrentsArray: any[] = [];
 
   @Input({ required: true })
   torrentType: 'uploaded' | 'liked' | undefined;
 
+  constructor(
+    private readonly userService: UserService,
+    private readonly tokenService: TokenService,
+    private readonly authService: AuthService
+  ) {}
+
   ngOnInit(): void {
-    const userId = this.tokenService.decodeToken().uid;
+    const decodedToken: DecodedTokenModel | null = this.tokenService.decodeToken();
+    if (!decodedToken) {
+      this.authService.logout();
+    }
+    const userId: number = this.tokenService.decodeToken()?.uid || 0;
+    if (userId === 0 || !userId) {
+      this.authService.logout();
+    }
     if (this.torrentType === 'uploaded') {
       this.userService.getUploadedTorrents(userId).subscribe({
         next: (data) => {
           this.torrentsArray = data;
+          this.canGetUploadedTorrents = true;
+          this.canGetTorrents = true;
         },
-        error: (error) => {
-          // TODO
-          console.log(error);
+        error: () => {
+          this.canGetUploadedTorrents = false;
+          this.canGetTorrents = false;
         }
       });
     } else if (this.torrentType === 'liked') {
       this.userService.getLikedTorrents(userId).subscribe({
         next: (data) => {
           this.torrentsArray = data;
-          console.log(this.torrentsArray);
+          this.canGetLikedTorrents = true;
+          this.canGetTorrents = true;
         },
-        error: (error) => {
-          // TODO
-          console.log(error);
+        error: () => {
+          this.canGetLikedTorrents = false;
+          this.canGetTorrents = false;
         }
       });
     }

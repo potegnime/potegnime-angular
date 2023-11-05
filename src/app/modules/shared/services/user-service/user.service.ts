@@ -9,13 +9,17 @@ import { urlConst } from '../../enums/url.enum';
   providedIn: 'root'
 })
 export class UserService {
+  private readonly token: string | undefined | null;
   constructor(
     private readonly http: HttpClient,
     private readonly authService: AuthService,
     private readonly tokenService: TokenService
-  ) {}
-
-  private readonly token = this.tokenService.getToken();
+  ) {
+    this.token = this.tokenService.getToken();
+    if (!this.token) {
+      this.authService.logout();
+    }
+  }
 
   public getUploadedTorrents(userId: number): Observable<any> {
     const headers = new HttpHeaders({

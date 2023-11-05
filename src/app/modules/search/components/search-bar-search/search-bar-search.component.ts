@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './search-bar-search.component.html',
   styleUrls: ['./search-bar-search.component.scss']
 })
-export class SearchBarSearchComponent {
+export class SearchBarSearchComponent implements OnInit {
   searchForm!: FormGroup;
 
   constructor(
@@ -16,13 +16,20 @@ export class SearchBarSearchComponent {
     private readonly router: Router,
     private readonly toastr: ToastrService,
     private readonly route: ActivatedRoute,
-  ) {
+  ) { }
+
+  ngOnInit(): void {
     // Default values for search form
     this.searchForm = this.formBuilder.group({
       query: [this.route.snapshot.queryParamMap.get('q') || '', Validators.required],
       category: ['all'],
       source: ['all'],
       sort: ['default']
+    });
+
+    this.route.queryParamMap.subscribe(params => {
+      const query = params.get('q') || '';
+      this.searchForm.patchValue({ query });
     });
   }
 
