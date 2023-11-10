@@ -1,22 +1,25 @@
 export const DefinedRoutes =  [
   // auth
-  '/prijava',
+  'prijava',
   'login',
   'registracija',
   'register',
-  'logout',
-  'pogoji',
-  'terms',
 
-  // public
+
   '',
   'iskanje',
+  'search',
+  'uporabnik',
+  'user',
+
+  // About
   'o-nas',
   'donacije',
   'donate',
   'doniraj',
+  'pogoji',
+  'terms',
 
-   //lazy loaded
   'profil',
   'profil/moj-profil',
   'profil/nastavitve',
