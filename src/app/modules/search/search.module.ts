@@ -4,7 +4,7 @@ import { SharedModule } from '../shared/shared.module';
 import { SearchResultsComponent } from './components/search-results/search-results.component';
 import { SearchBarSearchComponent } from './components/search-bar-search/search-bar-search.component';
 import { AboutResultsComponent } from './components/about-results/about-results.component';
-
+import { SearchRoutingModule } from './search-routing.module';
 
 @NgModule({
     declarations: [
@@ -14,7 +14,8 @@ import { AboutResultsComponent } from './components/about-results/about-results.
     ],
     imports: [
         CommonModule,
-        SharedModule
+        SharedModule,
+        SearchRoutingModule
     ]
 })
 export class SearchModule { }

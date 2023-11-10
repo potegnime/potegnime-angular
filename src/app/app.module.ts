@@ -13,7 +13,6 @@ import { AuthModule } from './modules/auth/auth.module';
 import { HomeModule } from './modules/home/home.module';
 import { SudoModule } from './modules/sudo/sudo.module';
 import { SearchModule } from './modules/search/search.module';
-import { DetailsModule } from './modules/details/details.module';
 import { SharedModule } from './modules/shared/shared.module';
 import { AboutModule } from './modules/about/about.module';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -43,7 +42,6 @@ export function tokenGetter() {
     }),
     AuthModule,
     SudoModule,
-    DetailsModule,
     SharedModule,
     AboutModule,
     FormsModule,
