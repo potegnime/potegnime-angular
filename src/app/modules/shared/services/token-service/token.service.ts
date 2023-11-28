@@ -27,17 +27,22 @@ export class TokenService {
     if (!token) {
       return null;
     }
-    // return jwt_decode(token);
-    return {
-      uid: 1,
-      username: 'test',
-      email: 'test@example.com',
-      role: 'user',
-      joined: '',
-      iss: 'issuer',
-      aud: 'audience',
-      iat: 1234567890,
-      exp: 1234567890
-    };
+    const decodedToken = jwt_decode(token) as DecodedTokenModel;
+    try {
+      return {
+        uid: decodedToken.uid,
+        username: decodedToken.username,
+        email: decodedToken.email,
+        role: decodedToken.role,
+        joined: decodedToken.joined,
+        iss: decodedToken.iss,
+        aud: decodedToken.aud,
+        iat: decodedToken.iat,
+        exp: decodedToken.exp
+      };
+    } catch (error) {
+      return null;
+    }
   }
+
 }

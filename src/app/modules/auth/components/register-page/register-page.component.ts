@@ -34,6 +34,12 @@ export class RegisterPageComponent {
       passwordConfirm: ['', Validators.required],
       agreeToTerms: [false, Validators.required]
     });
+
+    this.registerForm.valueChanges.subscribe(() => {
+      if (this.agreeToTermsBool !== this.registerForm.value.agreeToTerms) {
+        this.agreeToTermsBool = this.registerForm.value.agreeToTerms;
+      }
+    });
   }
 
   // password visibility

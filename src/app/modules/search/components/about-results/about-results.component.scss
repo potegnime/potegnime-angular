@@ -36,26 +36,18 @@ a {
     text-decoration: underline;
 }
 .tpb a {
-    color: var(--tpb-color);
-    text-decoration-color: var(--tpb-color);
-}
-.tpb a:hover {
-    color: var(--tpb-color-hover);
-    text-decoration-color: var(--tpb-color-hover);
+    color: var(--white);
+    text-decoration-color: var(--white);
 }
 ._1337x a {
-    color: var(--_1337x-color);
-    text-decoration-color: var(--_1337x-color);
-}
-._1337x a:hover {
-    color: var(--_1337x-color-hover);
-    text-decoration-color: var(--_1337x-color-hover);
+    color: var(--white);
+    text-decoration-color: var(--white);
 }
 .yts a {
-    color: var(--yts-color);
-    text-decoration-color: var(--yts-color);
+    color: var(--white);
+    text-decoration-color: var(--white);
 }
-.yts a:hover {
-    color: var(--yts-color-hover);
-    text-decoration-color: var(--yts-color-hover);
+.yts a:hover, ._1337x a:hover, .tpb a:hover {
+    color: var(--blue);
+    text-decoration-color: var(--blue);
 }

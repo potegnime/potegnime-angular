@@ -5,6 +5,8 @@ import { ErrorComponent } from './modules/shared/components/error/error.componen
 import { LoggedInAuthGuard } from './modules/auth/guards/logged-in/logged-in-guard.guard';
 import { LoginPageComponent } from './modules/auth/components/login-page/login-page.component';
 import { RegisterPageComponent } from './modules/auth/components/register-page/register-page.component';
+import { SettingsPageComponent } from './modules/sudo/components/settings-page/settings-page.component';
+import { UploadTorrentPageComponent } from './modules/sudo/components/upload-torrent-page/upload-torrent-page.component';
 
 const routes: Routes = [
 
@@ -15,19 +17,24 @@ const routes: Routes = [
   { path: 'register', redirectTo: 'registracija', pathMatch: 'full' },
 
   // Home module
-  { path: '', loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule) },
-
-  // User module
-  { path: 'uporabnik', loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule), canActivate: [AuthGuard] },
+  { path: '', loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule), canActivate: [AuthGuard] },
 
   // Search module
   { path: 'iskanje', loadChildren: () => import('./modules/search/search.module').then(m => m.SearchModule), canActivate: [AuthGuard] },
-  
-  // Sudo module
-  { path: 'profil', loadChildren: () => import('./modules/sudo/sudo.module').then(m => m.SudoModule), canActivate: [AuthGuard] },
+
+  // User module
+  { path: 'u', loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule), canActivate: [AuthGuard] },
 
   // About module
   { path: '', loadChildren: () => import('./modules/about/about.module').then(m => m.AboutModule), canActivate: [AuthGuard] },
+
+  // Sudo module components  
+  // Settings page - not lazy loaded
+  { path: 'nastavitve',component: SettingsPageComponent, canActivate: [AuthGuard] },
+
+  // Upload torrent page - not lazy loaded
+  { path: 'ustvari', component: UploadTorrentPageComponent, canActivate: [AuthGuard] },
+
   
   // 404 error page
   { path: '**', component: ErrorComponent }
