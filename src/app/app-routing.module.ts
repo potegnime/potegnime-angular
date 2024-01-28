@@ -10,42 +10,42 @@ import { UploadTorrentPageComponent } from './modules/sudo/components/upload-tor
 
 const routes: Routes = [
 
-  // Auth module - not lazy loaded
-  { path: 'prijava', component: LoginPageComponent, canActivate: [LoggedInAuthGuard]},
-  { path: 'login', redirectTo: 'prijava', pathMatch: 'full' },
-  { path: 'registracija', component: RegisterPageComponent, canActivate: [LoggedInAuthGuard] },
-  { path: 'register', redirectTo: 'registracija', pathMatch: 'full' },
+    // Auth module - not lazy loaded
+    { path: 'prijava', component: LoginPageComponent, canActivate: [LoggedInAuthGuard] },
+    { path: 'login', redirectTo: 'prijava', pathMatch: 'full' },
+    { path: 'registracija', component: RegisterPageComponent, canActivate: [LoggedInAuthGuard] },
+    { path: 'register', redirectTo: 'registracija', pathMatch: 'full' },
 
-  // Home module
-  { path: '', loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule), canActivate: [AuthGuard] },
+    // Home module
+    { path: '', loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule), canActivate: [AuthGuard] },
 
-  // Search module
-  { path: 'iskanje', loadChildren: () => import('./modules/search/search.module').then(m => m.SearchModule), canActivate: [AuthGuard] },
+    // Search module
+    { path: 'iskanje', loadChildren: () => import('./modules/search/search.module').then(m => m.SearchModule), canActivate: [AuthGuard] },
 
-  // User module
-  { path: 'u', loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule), canActivate: [AuthGuard] },
+    // User module
+    { path: 'u', loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule), canActivate: [AuthGuard] },
 
-  // About module
-  { path: '', loadChildren: () => import('./modules/about/about.module').then(m => m.AboutModule), canActivate: [AuthGuard] },
+    // About module
+    { path: '', loadChildren: () => import('./modules/about/about.module').then(m => m.AboutModule) },
 
-  // Sudo module components  
-  // Settings page - not lazy loaded
-  { path: 'nastavitve',component: SettingsPageComponent, canActivate: [AuthGuard] },
+    // Sudo module components  
+    // Settings page - not lazy loaded
+    { path: 'nastavitve', component: SettingsPageComponent, canActivate: [AuthGuard] },
 
-  // Upload torrent page - not lazy loaded
-  { path: 'ustvari', component: UploadTorrentPageComponent, canActivate: [AuthGuard] },
+    // Upload torrent page - not lazy loaded
+    { path: 'ustvari', component: UploadTorrentPageComponent, canActivate: [AuthGuard] },
 
-  
-  // 404 error page
-  { path: '**', component: ErrorComponent }
+
+    // 404 error page
+    { path: '**', component: ErrorComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-  providers: [
-    AuthGuard,
-    LoggedInAuthGuard
-  ]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule],
+    providers: [
+        AuthGuard,
+        LoggedInAuthGuard
+    ]
 })
 export class AppRoutingModule { }

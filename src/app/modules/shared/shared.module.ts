@@ -8,9 +8,6 @@ import { RatioComponent } from './components/ratio/ratio.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { ErrorComponent } from './components/error/error.component';
-import { TinyTorrentComponent } from './components/tiny-torrent/tiny-torrent.component';
-import { UploadedTorrentComponent } from './components/uploaded-torrent/uploaded-torrent.component';
-import { LikedTorrentComponent } from './components/liked-torrent/liked-torrent.component';
 import { TermsPageComponent } from '../about/components/terms-page/terms-page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
@@ -27,9 +24,6 @@ import { TorrentSourcePipe } from './pipes/torrent-source.pipe';
     NotificationsComponent,
     SearchBarComponent,
     ErrorComponent,
-    TinyTorrentComponent,
-    UploadedTorrentComponent,
-    LikedTorrentComponent,
     TermsPageComponent,
     LoadingSpinnerComponent,
     ProfileTorrentsComponent,

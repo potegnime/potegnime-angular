@@ -1,17 +1,71 @@
 <app-sudo-nav></app-sudo-nav>
 <div class="row container-settings">
-  <div class="col-3">
-    <nav>
-      <ul class="flex-column">
-        <li><a routerLink="users">Users</a></li>
-        <li><a routerLink="torrents">Torrents</a></li>
-        <li><a routerLink="categories">Categories</a></li>
-        <li><a routerLink="roles">Roles</a></li>
-      </ul>
-    </nav>
-  </div>
-  <div class="col-9">
-    settings content
-    <router-outlet></router-outlet>
-  </div>
+    <div class="col-3">
+        <nav>
+            <ul class="flex-column">
+                <li><a class="side-link" (click)="scrollToSection('uredi')">Uredi profil</a></li>
+                <li><a class="side-link" (click)="scrollToSection('zasebnost')">Zasebnost</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-9">
+        <div class="settings-section" id="users">
+            <h3 id="uredi">Uredi profil</h3>
+            <hr>
+            <form [formGroup]="changeUserDataForm" (ngSubmit)="onChnangeUserDataSubmit()">
+                <div class="change-container">
+                    <label for="change-user-username">Uporabniško ime:</label>
+                    <input type="text" name="change-user-username" id="change-user-username" formControlName="username">
+                </div>
+                <div class="change-container">
+                    <label for="change-user-email">E-pošta:</label>
+                    <input type="text" name="change-user-email" id="change-user-email" formControlName="email">
+                </div>
+                <div class="change-container">
+                    <label for="change-user-pfp">Profilna slika:</label>
+                    <input type="file" name="change-user-pfp" id="change-user-pfp" formControlName="profilePicture">
+                </div>
+                <button type="submit" [disabled]="changeUserDataForm.invalid" class="submit-button">
+                    Shrani spremembe
+                </button>
+            </form>
+        </div>
+
+        <div class="settings-section" id="zasebnost">
+            <h3>Zasebnost</h3>
+            <hr>
+            <h4 class="section-title">Sprememba gesla</h4>
+            <form [formGroup]="changePasswordForm" (ngSubmit)="onChangePasswordSubmit()">
+                <div class="change-container">
+                    <label for="change-password-old">Staro geslo:</label>
+                    <input type="text" name="change-password-old" id="change-password-old" formControlName="oldPassword">
+                </div>
+                <div class="change-container">
+                    <label for="change-password-new">Novo geslo:</label>
+                    <input type="text" name="change-password-new" id="change-password-new" formControlName="newPassword">
+                </div>
+                <div class="change-container">
+                    <label for="change-password-repeat">Potrditev novega gesla:</label>
+                    <input type="text" name="change-password-repeat" id="change-password-repeat" formControlName="newPasswordRepeat">
+                </div>
+    
+                <button type="submit" [disabled]="changePasswordForm.invalid" class="submit-button">
+                    Shrani spremembe
+                </button>
+            </form>
+
+            <h4>Izbris profila</h4>
+            <form [formGroup]="deleteProfileForm" (ngSubmit)="onDeleteProfileSubmit()">
+                <div class="change-container">
+                    <label for="delete-profile-password">Geslo:</label>
+                    <input type="text" name="delete-profile-password" id="delete-profile-password" formControlName="password">
+                </div>
+                <button type="submit" [disabled]="deleteProfileForm.invalid" class="submit-button" id="delete-profile-button">
+                    Izbriši profil
+                </button>
+            </form>
+        </div>
+
+
+    </div>
 </div>
