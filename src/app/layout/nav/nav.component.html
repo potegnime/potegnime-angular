@@ -27,7 +27,10 @@
         <a class="nav-link text-center" id="o-nas-dropdown-link" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <div class="my-profile-container button">
             Moj profil
-            <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Profilna slika" class="profile-pic" width="20">  
+            <img 
+                [src]="profilePictureUrl"
+                alt="Profilna slika" class="profile-pic" width="20" height="20"
+            > 
           </div>
         </a>
         <div class="dropdown-menu text-center" aria-labelledby="o-nas-dropdown-link">

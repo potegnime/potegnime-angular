@@ -5,8 +5,11 @@
         <div class="row user-data mb-3">
 
             <div class="col-3 img-cont">
-                <img *ngIf="base64ProfilePicture && profilePictureMimeType" src="data:image/{{ profilePictureMimeType }};base64,{{ base64ProfilePicture }}" title="{{username}}" alt="{{ username }}" class="profile-pic" width="200" height="200">
-                <img *ngIf="!base64ProfilePicture && !profilePictureMimeType" src="assets/images/no-pfp.png" title="{{username}}" alt="{{username}}" class="profile-pic" width="200" height="200">
+                <img 
+                    [src]="profilePictureUrl"
+                    [alt]="username" [title]="username" class="profile-pic" 
+                    width="200" height="200"
+                >
             </div>
 
             <div class="col-9 name-cont">

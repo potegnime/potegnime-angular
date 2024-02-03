@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, Route, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { AuthService } from './modules/auth/services/auth/auth.service';
+import { AuthService } from './modules/auth/services/auth.service';
 import { DefinedRoutes } from './modules/shared/enums/routes.enum';
 
 @Component({

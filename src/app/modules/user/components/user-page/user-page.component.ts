@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/modules/auth/services/auth/auth.service';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { TokenService } from 'src/app/modules/shared/services/token-service/token.service';
 import { UserService } from 'src/app/modules/shared/services/user-service/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { CacheService } from 'src/app/modules/shared/services/cache-service/cache.service';
 
 @Component({
     selector: 'app-user-page',
@@ -16,8 +17,7 @@ export class UserPageComponent implements OnInit {
     protected token: string | null = null;
     protected uid: number | null = null;
     protected username: string | null = null;
-    protected base64ProfilePicture: string | null = null;
-    protected profilePictureMimeType: string | null = null;
+    protected profilePictureUrl: string = 'assets/images/no-pfp.png';
     protected role: string | null = null;
     protected joined: string | null = null;
 
@@ -27,86 +27,118 @@ export class UserPageComponent implements OnInit {
         private readonly tokenService: TokenService,
         private readonly authService: AuthService,
         private readonly route: ActivatedRoute,
-        private readonly toastr: ToastrService
+        private readonly toastr: ToastrService,
+        private readonly cacheService: CacheService
     ) { }
 
     ngOnInit(): void {
         this.route.params.subscribe(params => {
-            // perform checks on any route change
+            // Perform checks on any route change
 
-            // check if token exists
+            // Check if token exists
             this.token = this.tokenService.getToken();
             if (!this.token) {
-                // user not logged in - session expired - redirect to login page
+                // User not logged in - session expired - redirect to login page
                 this.authService.unauthorizedHandler();
             }
 
-            // check if user id exists in url
+            // Check if user id exists in url
             const urlUid: number | null = parseInt(this.router.url.split('/')[2]);
             if (!urlUid) {
-                // no user id in url - redirect to my page
+                // No user id in url - redirect to my page
                 const decodedToken = this.tokenService.decodeToken();
                 if (decodedToken) {
                     this.router.navigate(['u', decodedToken.uid]);
                 } else {
-                    // user not logged in - session expired - redirect to login page
+                    // User not logged in - session expired - redirect to login page
                     this.authService.unauthorizedHandler();
                 }
             }
 
-            // check if user page is my user page
+            // Check if user page is my user page
             const decodedToken = this.tokenService.decodeToken();
             if (decodedToken) {
                 this.isMyPage = decodedToken.uid === urlUid;
                 if (this.isMyPage) {
-                    // get user data by id and set my page
-                    this.userService.getUserById(decodedToken.uid).subscribe({
-                        next: (user) => {
-                            this.setMyPage(user.uid, user.username, user.profilePictureBase64, user.profilePictureMimeType, user.role, user.joined);
-                        },
-                        error: () => {
-                            this.toastr.error('Napaka pri pridobivanju podatkov o uporabniku');
-                            // redirect to 404 page
-                            this.router.navigate(['404']);
-                        }
-                    });
+                    this.getCompleteUserData(decodedToken.uid);                                  
                 } else {
-                    // get user data by id and set user page
-                    this.userService.getUserById(urlUid).subscribe({
-                        next: (user) => {
-                            this.setUserPage(user.uid, user.username, user.profilePictureBase64, user.profilePictureMimeType, user.role, user.joined);
-                        },
-                        error: () => {
-                            this.toastr.error('Napaka pri pridobivanju podatkov o uporabniku');
-                            // redirect to 404 page
-                            this.router.navigate(['404']);
-                        }
-                    });
+                    this.getCompleteUserData(urlUid);
                 }
             } else {
-                // error decoding token - redirect to login page - log out user
+                // Error decoding token - redirect to login page - log out user
                 this.authService.unauthorizedHandler();
             }
         });
     }
 
-    protected setMyPage(uid: number, username: string, base64Image: string, mimeType: string | null, role: string, joined: string): void {
+    protected createImageFromBlob(image: Blob) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            this.profilePictureUrl = reader.result as string;
+        }
+        reader.readAsDataURL(image);
+    }
+
+    protected getCompleteUserData(id: number): void {
+        // Get user data and set user page
+        this.userService.getUserById(id).subscribe({
+            next: (user) => {
+                this.setUserPage(user.uid, user.username, user.joined, user.role);
+            },
+            error: () => {
+                this.toastr.error('Napaka pri pridobivanju podatkov o uporabniku');
+                // Redirect to 404 page
+                this.router.navigate(['404']);
+            }
+        });
+
+        // Get profile picture
+        // Wait 0.5 second to avoid unnecessary double api calls for profile picture - other component already has it cached
+        setTimeout(() => {
+            const cachedProfilePicture = this.cacheService.get(id.toString());
+            if (cachedProfilePicture) {
+                this.createImageFromBlob(cachedProfilePicture);
+                return;
+            } else {
+                this.userService.getUserPfp(id).subscribe({
+                    next: (response) => {
+                        this.cacheService.put(id.toString(), response);
+                        this.createImageFromBlob(response);
+                    },
+                    error: (error) => {
+                        switch (error.status) {
+                            case 401:
+                                this.authService.unauthorizedHandler();
+                                break;
+                            case 404:
+                                // No profile picture
+                                this.profilePictureUrl = 'assets/images/no-pfp.png';
+                                break;
+                            default:
+                                // this.toastr.error('Napaka pri pridobivanju profilne slike');
+                                break;
+                        }
+                    }
+                });
+            }
+        }, 500);
+    }
+
+    protected setMyPage(uid: number, username: string, joined: string, role: string): void {
         this.uid = uid;
         this.username = username;
-        this.base64ProfilePicture = base64Image;
-        this.profilePictureMimeType = mimeType;
         this.role = role;
         this.joined = joined;
         this.isMyPage = true;
     }
 
-    protected setUserPage(uid: number, username: string, base64Image: string, mimeType: string | null, role: string, joined: string): void {
+    protected setUserPage(uid: number, username: string, joined: string, role: string): void {
         this.uid = uid;
         this.username = username;
-        this.base64ProfilePicture = base64Image;
-        this.profilePictureMimeType = mimeType;
         this.role = role;
         this.joined = joined;
         this.isMyPage = false;
     }
+
+
 }

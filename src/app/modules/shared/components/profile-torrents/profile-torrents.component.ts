@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UserService } from '../../services/user-service/user.service';
 import { TokenService } from '../../services/token-service/token.service';
-import { AuthService } from 'src/app/modules/auth/services/auth/auth.service';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { DecodedTokenModel } from '../../models/decoded-token.interface';
 
 @Component({

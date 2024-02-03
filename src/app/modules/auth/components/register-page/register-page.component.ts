@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserRegisterDto } from '../../models/user/user-register-dto.model';
-import { AuthService } from '../../services/auth/auth.service';
+import { UserRegisterDto } from '../../models/user-register.interface';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';

@@ -25,12 +25,13 @@
     --_1337x-color-hover: #b92e08;
     --yts-color: #6AC045;
     --yts-color-hover: #4E8A2E;
-  
+
     // Components
     --page-background: #121212;
     --page-component: #1e1e1e;
     --button-background: #5d5d5d;
     --button-background-hover: #4d4d4d;
+    --button-background-disabled: #303030;
 
     // Toast
     --toast-error-primary: #ff8a84;
@@ -41,43 +42,62 @@
     // Border radius
     --border-radius: 5px;
 }
+
 * {
-  font-weight: 600;
+    font-weight: 600;
 }
+
 body {
     color: var(--white);
     font-family: 'Open Sans', sans-serif;
     background-color: var(--page-background);
 }
+
 .page-component {
     background-color: var(--page-component);
-    color: red;
 }
 
 // Buttons
 .button {
-  text-decoration: none;
-  color: var(--white);
-  display: block;
-  padding: 5px 10px;
-  background-color: var(--button-background);
-  border-radius: var(--border-radius);
-  transition: background-color 0.1s;
-  border: none;
+    text-decoration: none;
+    color: var(--white);
+    display: block;
+    padding: 5px 10px;
+    background-color: var(--button-background);
+    border-radius: var(--border-radius);
+    transition: background-color 0.1s;
+    border: none;
 }
+
 .button:hover {
-  background-color: var(--button-background-hover);
-  cursor: pointer;
+    background-color: var(--button-background-hover);
+    cursor: pointer;
+}
+
+.button:disabled {
+    background-color: var(--button-background-disabled);
+    cursor: not-allowed;
+}
+
+// Inputs
+.input {
+    background-color: var(--darkgray);
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 5px 10px;
+    transition: background-color 0.1s;
 }
 
 
 // Lists
 ul.list {
-  list-style-type: none;
-  padding: 0;
-  margin-bottom: 0;
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 0;
 }
+
 ul.list li {
-  margin: 5px 10px;
-  display: inline-block;
+    margin: 5px 10px;
+    display: inline-block;
 }

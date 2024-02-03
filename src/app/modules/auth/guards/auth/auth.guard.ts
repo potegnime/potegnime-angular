@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
@@ -11,7 +11,6 @@ export class AuthGuard {
     ) { }
 
     canActivate() {
-        console.log(`AuthGuard ${this.authService.verifyToken()}`);
         if (this.authService.verifyToken()) {
             return true;
         } else {

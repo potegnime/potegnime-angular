@@ -45,4 +45,8 @@ export class TokenService {
         }
     }
 
+    public updateToken(newToken: string): void {
+        this.deleteToken();
+        this.setToken(newToken);
+    }
 }

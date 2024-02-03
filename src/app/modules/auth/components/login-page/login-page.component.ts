@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { UserLoginDto } from '../../models/user/user-login-dto.model';
-import { AuthService } from '../../services/auth/auth.service';
+import { UserLoginDto } from '../../models/user-login.interface';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
