@@ -5,7 +5,7 @@ import { of, map, Observable } from 'rxjs';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { CacheService } from 'src/app/modules/shared/services/cache-service/cache.service';
 import { TokenService } from 'src/app/modules/shared/services/token-service/token.service';
-import { UserService } from 'src/app/modules/shared/services/user-service/user.service';
+import { UserService } from 'src/app/modules/user/services/user.service';
 import { UpdateUsernameDto } from 'src/app/modules/user/models/update-username.interface';
 import { UpdateEmailDto } from 'src/app/modules/user/models/update-email.interface';
 import { UpdatePfpDto } from 'src/app/modules/user/models/update-pfp.interface';
@@ -209,11 +209,8 @@ export class SettingsPageComponent {
             }
 
             if (profilePicture !== this.pristineProfilePicture) {
-                const pfpUpdate: File | null =
-                    profilePicture == 'assets/images/no-pfp.png' 
-                    ? this.selectedProfilePicture as File : null;
                 const updatePfpDto: UpdatePfpDto = {
-                    profilePicFile: pfpUpdate as File
+                    profilePicFile: this.selectedProfilePicture as File
                 };
                 this.userService.updatePfp(updatePfpDto).subscribe({
                     next: () => {

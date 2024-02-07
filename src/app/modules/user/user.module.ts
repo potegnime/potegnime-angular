@@ -7,14 +7,14 @@ import { SharedModule } from '../shared/shared.module';
 import { SudoModule } from '../sudo/sudo.module';
 
 @NgModule({
-  declarations: [
-    UserPageComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    SudoModule,
-    UserRoutingModule
-  ]
+    declarations: [
+        UserPageComponent
+    ],
+    imports: [
+        CommonModule,
+        SharedModule,
+        SudoModule,
+        UserRoutingModule
+    ]
 })
 export class UserModule { }

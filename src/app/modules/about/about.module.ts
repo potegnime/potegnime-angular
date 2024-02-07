@@ -6,16 +6,16 @@ import { AuthGuard } from '../auth/guards/auth/auth.guard';
 import { AboutRoutingModule } from './about-routing.module';
 
 @NgModule({
-  declarations: [
-    AboutPageComponent,
-    DonatePageComponent
-  ],
-  imports: [
-    CommonModule,
-    AboutRoutingModule
-  ],
-  providers: [
-    AuthGuard
-  ]
+    declarations: [
+        AboutPageComponent,
+        DonatePageComponent
+    ],
+    imports: [
+        CommonModule,
+        AboutRoutingModule
+    ],
+    providers: [
+        AuthGuard
+    ]
 })
 export class AboutModule { }

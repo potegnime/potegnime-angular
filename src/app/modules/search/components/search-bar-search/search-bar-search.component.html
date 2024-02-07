@@ -1,52 +1,52 @@
 <div class="search-bar">
-  <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
-    <div class="input-top-row">
-      <input type="text" id="search-input" formControlName="query" placeholder="Iskanje...">
-      <button type="submit" class="search-button" id="search-button">
-        <img src="assets/images/search-icon.png" class="search-img" alt="Iskanje" width="20px" height="20px">
-      </button>
-    </div>
+    <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+        <div class="input-top-row">
+            <input type="text" id="search-input" formControlName="query" placeholder="Iskanje...">
+            <button type="submit" class="search-button" id="search-button">
+                <img src="assets/images/search-icon.png" class="search-img" alt="Iskanje" width="20px" height="20px">
+            </button>
+        </div>
 
-    <div class="options-search">
-      <input type="button" class="options-button" name="predlagaj" id="predlagaj-button" value="Predlagaj">
-      
-      <div class="dropdown-container">
-        <label for="category">Kategorija</label>
-        <select class="dropdown" formControlName="category" id="category" name="category">
-          <option value="all" selected>Vse kategorije</option>
-          <option value="movies">Filmi</option>
-          <option value="series">Serije</option>
-          <option value="programs">Programi</option>
-        </select>
-      </div>
+        <div class="options-search">
+            <input type="button" class="options-button" name="predlagaj" id="predlagaj-button" value="Predlagaj">
 
-      <div class="dropdown-container">
-        <label for="source">Vir</label>
-        <select class="dropdown" formControlName="source" id="source" name="source">
-          <option value="all">Vsi viri</option>
-          <option value="tpb">ThePirateBay</option>
-          <option value="1337x">1337x</option>
-          <option value="yts">YTS</option>
-        </select>
-      </div>
+            <div class="dropdown-container">
+                <label for="source">Vir</label>
+                <select 
+                    [(ngModel)]="selectedProvider" (change)="onProviderChange(selectedProvider)"
+                    class="dropdown" formControlName="source" id="source" name="source"
+                >
+                    <option *ngFor="let provider of providers" [value]="provider">{{translate(provider)}}</option>
+                </select>
+            </div>
 
-      <div class="dropdown-container">
-        <label for="sort">Sort</label>
-        <select class="dropdown" formControlName="sort" id="sort" name="sort">
-          <option value="default">Privzeto soritranje</option>
-          <option value="name-asc">Imenu naraščajoče</option>
-          <option value="name-desc">Imenu padajoče</option>
-          <option value="date-asc">Datumu naraščajoče</option>
-          <option value="date-desc">Datumu padajoče</option>
-          <option value="uploader-asc">Nalagalcih naraščajoče</option>
-          <option value="uploader-desc">Nalagalcih padajoče</option>
-          <option value="seed-asc">Sejalcih naraščajoče</option>
-          <option value="seed-desc">Sejalcih padajoče</option>
-          <option value="size-asc">Velikosti naraščajoče</option>
-          <option value="size-desc">Velikosti padajoče</option>
-        </select>
-      </div>
-    </div>
+            <div class="dropdown-container">
+                <label for="category">Kategorija</label>
+                <select 
+                    *ngIf="categories && categories.length > 0" (change)="onCategoryChange()"
+                    class="dropdown" formControlName="category" id="category" name="category"
+                >
+                    <option *ngFor="let category of categories" [value]="category">{{translate(category)}}</option>
+                </select>
+            </div>
 
-  </form>
+            <div class="dropdown-container">
+                <label for="sort">Sort</label>
+                <select class="dropdown" formControlName="sort" id="sort" name="sort">
+                    <option value="default">Privzeto soritranje</option>
+                    <option value="name-asc">Imenu naraščajoče</option>
+                    <option value="name-desc">Imenu padajoče</option>
+                    <option value="date-asc">Datumu naraščajoče</option>
+                    <option value="date-desc">Datumu padajoče</option>
+                    <option value="uploader-asc">Nalagalcih naraščajoče</option>
+                    <option value="uploader-desc">Nalagalcih padajoče</option>
+                    <option value="seed-asc">Sejalcih naraščajoče</option>
+                    <option value="seed-desc">Sejalcih padajoče</option>
+                    <option value="size-asc">Velikosti naraščajoče</option>
+                    <option value="size-desc">Velikosti padajoče</option>
+                </select>
+            </div>
+        </div>
+
+    </form>
 </div>

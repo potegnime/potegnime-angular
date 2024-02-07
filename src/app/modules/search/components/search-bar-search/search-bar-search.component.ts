@@ -1,44 +1,130 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { SearchService } from '../../services/search.service';
+import { TorrentProviderCategories } from '../../models/torrent-provider-categories.interface';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
 
 @Component({
-  selector: 'app-search-bar-search',
-  templateUrl: './search-bar-search.component.html',
-  styleUrls: ['./search-bar-search.component.scss']
+    selector: 'app-search-bar-search',
+    templateUrl: './search-bar-search.component.html',
+    styleUrls: ['./search-bar-search.component.scss']
 })
 export class SearchBarSearchComponent implements OnInit {
-  searchForm!: FormGroup;
+    searchForm!: FormGroup;
 
-  constructor(
-    private readonly formBuilder: FormBuilder,
-    private readonly router: Router,
-    private readonly toastr: ToastrService,
-    private readonly route: ActivatedRoute,
-  ) { }
+    torrentProviderCategories: TorrentProviderCategories = {} as TorrentProviderCategories;
+    categories: string[] = [];
+    providers: string[] = [];
+    selectedProvider: string = 'All';
+    selectedCategory: string = 'All';
 
-  ngOnInit(): void {
-    // Default values for search form
-    this.searchForm = this.formBuilder.group({
-      query: [this.route.snapshot.queryParamMap.get('q') || '', Validators.required],
-      category: ['all'],
-      source: ['all'],
-      sort: ['default']
-    });
+    constructor(
+        private readonly formBuilder: FormBuilder,
+        private readonly toastr: ToastrService,
+        private readonly route: ActivatedRoute,
+        private readonly searchService: SearchService,
+        private readonly authService: AuthService
+    ) { }
 
-    this.route.queryParamMap.subscribe(params => {
-      const query = params.get('q') || '';
-      this.searchForm.patchValue({ query });
-    });
-  }
+    ngOnInit(): void {
+        // Get torrent provider categories
+        this.searchService.getTorrentProviderCategories().subscribe({
+            next: (data: TorrentProviderCategories) => {
+                this.torrentProviderCategories = data;
+                this.providers = Object.keys(data);
+                this.onProviderChange(this.selectedProvider);
+            },
+            error: () => {
+                this.authService.logout();
+                this.toastr.error('', 'Napaka na strežniku', { timeOut: 5000 });
+            }
+        });
 
-  onSearch(): void {
-    if (!this.searchForm.valid) {
-      this.toastr.warning('', 'Vnesite izraz za iskanje', {timeOut: 2000});
-      return;
+        // Default values for search form
+        this.searchForm = this.formBuilder.group({
+            query: [this.route.snapshot.queryParamMap.get('q') || '', Validators.required],
+            category: ['All'],
+            source: ['All'],
+            sort: ['default']
+        });
+
+        this.route.queryParamMap.subscribe(params => {
+            const query = params.get('q') || '';
+            this.searchForm.patchValue({ query });
+        });
     }
-    const query = this.searchForm.value.query;
-    this.router.navigate(['/iskanje'], { queryParams: { q: query } });
-  }
+
+    protected onSearch(): void {
+        console.log(`SELECTED CATEGORY: ${this.selectedCategory}`);
+        if (!this.searchForm.valid) {
+            this.toastr.warning('', 'Vnesite izraz za iskanje', { timeOut: 2000 });
+            return;
+        }
+
+        // Use search service onSearch method
+        this.searchService.onSearchComponent(
+            this.searchForm.value.query,
+            this.selectedCategory === 'All' ? null : this.selectedCategory,
+            this.selectedProvider === 'All' ? null : this.selectedProvider,
+            null,
+            this.searchForm.value.sort == 'default' ? null : this.searchForm.value.sort
+        );
+    }
+
+    protected onProviderChange(selectedProvider: string): void {
+        console.log('onProviderChange')
+        this.selectedProvider = selectedProvider;
+        
+        this.categories = this.torrentProviderCategories[selectedProvider];
+        this.selectedCategory = 'All';
+
+        this.searchForm.patchValue({
+            source: this.selectedProvider,
+            category: this.selectedCategory
+        });
+
+        // Search
+        this.onSearch();
+    }
+
+    protected onCategoryChange(): void {
+        console.log('onCategoryChange')
+        this.selectedCategory = this.searchForm.value.category;
+        this.onSearch();
+    }
+
+    protected translate(string: string): string {
+        switch (string) {
+            case 'All':
+                return 'Vsi';
+            case 'Movies':
+                return 'Filmi';
+            case 'Audio':
+                return 'Avdio';
+            case 'Video':
+                return 'Video';
+            case 'Apps':
+            case 'App':
+            case 'Applications':
+                return 'Aplikacije';
+            case 'Games':
+                return 'Igre';
+            case 'Music':
+                return 'Glasba';
+            case 'Books':
+                return 'Knjige';
+            case 'Documentaries':
+                return 'Dokumentarci';
+            case 'XXX':
+            case 'Adult':
+            case 'Porn':
+                return 'XXX';
+            case 'Other':
+                return 'Ostalo';
+            default:
+                return string;
+        }
+    }
 }

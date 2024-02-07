@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { CacheService } from 'src/app/modules/shared/services/cache-service/cache.service';
-import { UserService } from 'src/app/modules/shared/services/user-service/user.service';
+import { UserService } from 'src/app/modules/user/services/user.service';
 
 @Component({
     selector: 'app-nav',
@@ -47,7 +47,7 @@ export class NavComponent {
                                 break;
                         }
                     }
-                }); 
+                });
             }
         } else {
             this.authService.unauthorizedHandler();

@@ -21,35 +21,35 @@ import { urlConst } from './modules/shared/enums/url.enum';
 import { ToastrModule } from 'ngx-toastr';
 
 export function tokenGetter() {
-  return localStorage.getItem('token');
+    return localStorage.getItem('token');
 }
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    RouterModule,
-    HttpClientModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: tokenGetter,
-        allowedDomains: [`${urlConst.appBase}`],
-        disallowedRoutes: ["http://example.com/examplebadroute/"],
-      },
-    }),
-    AuthModule,
-    SudoModule,
-    SharedModule,
-    AboutModule,
-    FormsModule,
-    ToastrModule.forRoot(),
-    BrowserAnimationsModule,
-    ReactiveFormsModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        RouterModule,
+        HttpClientModule,
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: tokenGetter,
+                allowedDomains: [`${urlConst.appBase}`],
+                disallowedRoutes: ["http://example.com/examplebadroute/"],
+            },
+        }),
+        AuthModule,
+        SudoModule,
+        SharedModule,
+        AboutModule,
+        FormsModule,
+        ToastrModule.forRoot(),
+        BrowserAnimationsModule,
+        ReactiveFormsModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,127 +1,135 @@
 <app-search-bar-search class="row"></app-search-bar-search>
 <app-about-results *ngIf="searchResults.length > 0" class="row"></app-about-results>
 <div class="row search-results mb-4" *ngIf="searchResults.length > 0">
-  <table class="dark-table">
-    <thead>
-      <tr>
-        <th scope="col">Datoteka</th>
-        <th scope="col">Uploader</th>
-        <th scope="col">Velikost</th>
-        <th scope="col">SE</th>
-        <th scope="col">LE</th>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngFor="let torrent of searchResults">
-        <tr 
-          (click)="toggleRow(torrent)" 
-          *ngIf="!torrent.expanded" 
-          title="{{torrent.title}}"
-        >
-          <td>
-            <div class="d-flex align-items-center">
-              <div>
-                <img *ngIf="torrent.source === 'Native'" src="assets/images/TODO.png" alt="{{ torrent.title }} Image" width="50">
-                <img *ngIf="torrent.source === 'None'" src="assets/images/no-image.png" alt="{{ torrent.title }} Image" width="50" class="mr-2 p-2">
-                <img *ngIf="torrent.source === 'thePirateBay'" src="assets/images/tpb.png" alt="{{ torrent.title }} Image" width="50">
-                <img *ngIf="torrent.source === '_1337x'" src="assets/images/1337x.png" alt="{{ torrent.title }} Image" width="50">
-                <img *ngIf="torrent.source === 'yts'" src="assets/images/yts.png" alt="{{ torrent.title }} Image" width="50">
-              </div>
-              <div>
-                <h4>{{ torrent.title }}</h4>
-                <p *ngIf="torrent.source === 'Native'">
-                  {{ torrent.category }} | {{ torrent.format }} | {{ torrent.year }}
-                </p>
-              </div>
-            </div>
-          </td>
-          <td [ngClass]="{
+    <table class="dark-table">
+        <thead>
+            <tr>
+                <th scope="col">Datoteka</th>
+                <th scope="col">Uploader</th>
+                <th scope="col">Velikost</th>
+                <th scope="col">SE</th>
+                <th scope="col">LE</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let torrent of searchResults">
+                <tr (click)="toggleRow(torrent)" *ngIf="!torrent.expanded" title="{{torrent.title}}">
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <img *ngIf="torrent.source === 'Native'" src="assets/images/TODO.png"
+                                    alt="{{ torrent.title }} Image" width="50">
+                                <img *ngIf="torrent.source === 'None'" src="assets/images/no-image.png"
+                                    alt="{{ torrent.title }} Image" width="50" class="mr-2 p-2">
+                                <img *ngIf="torrent.source === 'thePirateBay'" src="assets/images/tpb.png"
+                                    alt="{{ torrent.title }} Image" width="50">
+                                <img *ngIf="torrent.source === '_1337x'" src="assets/images/1337x.png"
+                                    alt="{{ torrent.title }} Image" width="50">
+                                <img *ngIf="torrent.source === 'yts'" src="assets/images/yts.png"
+                                    alt="{{ torrent.title }} Image" width="50">
+                            </div>
+                            <div>
+                                <h4>{{ torrent.title }}</h4>
+                                <p *ngIf="torrent.source === 'Native'">
+                                    {{ torrent.category }} | {{ torrent.format }} | {{ torrent.year }}
+                                </p>
+                            </div>
+                        </div>
+                    </td>
+                    <td [ngClass]="{
             'native': torrent.source === 'Native',
             'tpb': torrent.source === 'thePirateBay', 
             '_1337x': torrent.source === '_1337x',
             'yts': torrent.source === 'yts'}
           ">
-            <a href="{{getUploaderUrl(torrent)}}" target="_blank">
-              {{ torrent.source | torrentSource }}
-            </a>
-          </td>
-          <td>{{ torrent.size }}</td>
-          <td>{{ torrent.seeds || '/' }}</td>
-          <td>{{ torrent.leechers || '/' }}</td>
-        </tr>
-  
-        <tr
-          (click)="toggleRow(torrent)" 
-          *ngIf="torrent.expanded" 
-          title="{{torrent.title}}"
-        >
-          <td class="m-0 p-0" colspan="5">
-            <div class="expanded-info">
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center w-100">
-                  <img *ngIf="torrent.source === 'Native'" src="assets/images/TODO.png" alt="{{ torrent.title }} Image" width="100" class="mr-3">
-                  <img *ngIf="torrent.source === 'None'" src="assets/images/no-image.png" alt="{{ torrent.title }} Image" width="100" class="mr-3 p-2">
-                  <img *ngIf="torrent.source === 'thePirateBay'" src="assets/images/tpb.png" alt="{{ torrent.title }} Image" width="100" class="mr-3">
-                  <img *ngIf="torrent.source === '_1337x'" src="assets/images/1337x.png" alt="{{ torrent.title }} Image" width="100" class="mr-3">
-                  <img *ngIf="torrent.source === 'yts'" src="assets/images/yts.png" alt="{{ torrent.title }} Image" width="100" class="mr-3">
-                  <div class="w-100">
-                    <h4>{{ torrent.title }}</h4>
-                    <div class="d-flex justify-content-between align-items-center">
-                      <div class="expanded-details-container d-flex justify-content-between align-items-center">
-                        <div class="expanded-details">
-                          <p>Velikost</p>
-                          <p>{{ torrent.size }}</p>
+                        <a href="{{getUploaderUrl(torrent)}}" target="_blank">
+                            {{ torrent.source | torrentSource }}
+                        </a>
+                    </td>
+                    <td>{{ torrent.size }}</td>
+                    <td>{{ torrent.seeds || '/' }}</td>
+                    <td>{{ torrent.leechers || '/' }}</td>
+                </tr>
+
+                <tr (click)="toggleRow(torrent)" *ngIf="torrent.expanded" title="{{torrent.title}}">
+                    <td class="m-0 p-0" colspan="5">
+                        <div class="expanded-info">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center w-100">
+                                    <img *ngIf="torrent.source === 'Native'" src="assets/images/TODO.png"
+                                        alt="{{ torrent.title }} Image" width="100" class="mr-3">
+                                    <img *ngIf="torrent.source === 'None'" src="assets/images/no-image.png"
+                                        alt="{{ torrent.title }} Image" width="100" class="mr-3 p-2">
+                                    <img *ngIf="torrent.source === 'thePirateBay'" src="assets/images/tpb.png"
+                                        alt="{{ torrent.title }} Image" width="100" class="mr-3">
+                                    <img *ngIf="torrent.source === '_1337x'" src="assets/images/1337x.png"
+                                        alt="{{ torrent.title }} Image" width="100" class="mr-3">
+                                    <img *ngIf="torrent.source === 'yts'" src="assets/images/yts.png"
+                                        alt="{{ torrent.title }} Image" width="100" class="mr-3">
+                                    <div class="w-100">
+                                        <h4>{{ torrent.title }}</h4>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div
+                                                class="expanded-details-container d-flex justify-content-between align-items-center">
+                                                <div class="expanded-details">
+                                                    <p>Velikost</p>
+                                                    <p>{{ torrent.size }}</p>
+                                                </div>
+                                                <div class="expanded-details">
+                                                    <p>Seeders</p>
+                                                    <p>{{ torrent.seeds }}</p>
+                                                </div>
+                                                <div class="expanded-details">
+                                                    <p>Leechers</p>
+                                                    <p>{{ torrent.leechers || '/' }}</p>
+                                                </div>
+                                                <div class="expanded-details">
+                                                    <p>Naloženo</p>
+                                                    <p *ngIf="torrent.source !== '_1337x'">{{ torrent.time |
+                                                        date:'d.M.y' }}</p>
+                                                    <p *ngIf="torrent.source === '_1337x'">{{ torrent.time| date1337x }}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="buttons-container">
+                                                <button #copyButton class="action-button copy-button"
+                                                    title="Kopiraj magnet link"
+                                                    (click)="copy($event, copyButton, torrent.url)">
+                                                    <img src="assets/images/copy.png" alt="Kopiraj magnet link">
+                                                    <p>{{ copyText }}</p>
+                                                </button>
+                                                <button #downloadButton class="action-button download-button"
+                                                    title="Potegni ga!" (click)="download($event, torrent.url)">
+                                                    <img src="assets/images/download-green.png" alt="Potegni ga!">
+                                                    <p>{{ downloadText }}</p>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="expanded-details">
-                          <p>Seeders</p>
-                          <p>{{ torrent.seeds }}</p>
-                        </div>
-                        <div class="expanded-details">
-                          <p>Leechers</p>
-                          <p>{{ torrent.leechers || '/' }}</p>
-                        </div>
-                        <div class="expanded-details">
-                          <p>Naloženo</p>
-                          <p *ngIf="torrent.source !== '_1337x'">{{ torrent.time | date:'d.M.y' }}</p>
-                          <p *ngIf="torrent.source === '_1337x'">{{ torrent.time| date1337x }}</p>
-                        </div>
-                      </div>
-  
-                      <div class="buttons-container">
-                        <button #copyButton class="action-button copy-button" title="Kopiraj magnet link" (click)="copy($event, copyButton, torrent.url)">
-                          <img src="assets/images/copy.png" alt="Kopiraj magnet link">
-                          <p>{{ copyText }}</p>
-                        </button>
-                        <button #downloadButton class="action-button download-button" title="Potegni ga!" (click)="download($event, torrent.url)">
-                          <img src="assets/images/download-green.png" alt="Potegni ga!" >
-                          <p>{{ downloadText }}</p>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </td>
-        </tr>
-      </ng-container>
-    </tbody>
-  </table>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
 </div>
 
 
 <div class="loading-spinner mb-4" *ngIf="displayLoadingSpinner">
-  <app-loading-spinner></app-loading-spinner>
+    <app-loading-spinner></app-loading-spinner>
 </div>
 
 <div class="no-results mb-4" *ngIf="noResults">
-  <h3>
-    Ni rezultatov :(
-  </h3>
+    <h3>
+        Ni rezultatov :(
+    </h3>
 </div>
 
 <div class="no-results mb-4" *ngIf="missingQuery">
-  <h3>
-    Vnesite izraz za iskanje
-  </h3>
+    <h3>
+        Vnesite izraz za iskanje
+    </h3>
 </div>

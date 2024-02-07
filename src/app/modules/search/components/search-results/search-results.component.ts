@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { SearchService } from 'src/app/modules/shared/services/search-service/search.service';
+import { SearchService } from 'src/app/modules/search/services/search.service';
 import { urlConst } from 'src/app/modules/shared/enums/url.enum';
+import { SearchRequestDto } from '../../models/search-request.interface';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { Torrent } from 'src/app/modules/torrent/models/torrent.interface';
 
 @Component({
     selector: 'app-search-results',
@@ -10,7 +13,12 @@ import { urlConst } from 'src/app/modules/shared/enums/url.enum';
     styleUrls: ['./search-results.component.scss']
 })
 export class SearchResultsComponent implements OnInit {
-    searchQuery = '';
+    // Params gathered from URL
+    private searchQuery: string = '';
+    private category: string | null = null;
+    private source: string | null = null;
+    private sort: string = 'default';
+
     searchResults: any[] = [];
     displayLoadingSpinner: boolean = true;
     noResults: boolean = false;
@@ -23,18 +31,35 @@ export class SearchResultsComponent implements OnInit {
     constructor(
         private readonly route: ActivatedRoute,
         private readonly searchService: SearchService,
-        private readonly toastr: ToastrService
+        private readonly toastr: ToastrService,
+        private readonly authService: AuthService
     ) { }
 
     ngOnInit(): void {
+        // onInit, get search query from URL and fetch search results
         this.noResults = false;
         this.route.queryParams.subscribe((params) => {
+            // Set params from URL - only q, category and source are used
+            // Limit is set to null - backend handles this
+            // Sorting is done on frontend
             this.searchQuery = params['q'];
+            this.category = params['category'];
+            this.source = params['source'];
+
             if (this.searchQuery) {
                 // Empty search results on new search
                 this.searchResults = [];
                 this.missingQuery = false;
-                this.fetchSearchResults(this.searchQuery);
+
+                // Build search request DTO and fetch search results
+                const searchRequestDto: SearchRequestDto = {
+                    query: this.searchQuery,
+                    category: this.category || null,
+                    source: this.source || null,
+                    limit: null
+                };
+                console.log(`searchResults - ogOnInit: Search request DTO: ${JSON.stringify(searchRequestDto)}`);
+                this.fetchSearchResults(searchRequestDto);
             } else {
                 this.missingQuery = true;
                 this.displayLoadingSpinner = false;
@@ -43,26 +68,58 @@ export class SearchResultsComponent implements OnInit {
         });
     }
 
-    protected fetchSearchResults(query: string): void {
+    private fetchSearchResults(searchRequestDto: SearchRequestDto): void {
         this.displayLoadingSpinner = true;
         this.noResults = false;
-        this.searchService.searchTorrents(query).subscribe({
+        this.searchService.searchTorrents(searchRequestDto).subscribe({
             next: (results) => {
-                if (results.length === 0) {
-                    // 404
-                    this.displayLoadingSpinner = false;
-                    this.noResults = true;
-                    this.searchResults = [];
-                } else {
-                    this.displayLoadingSpinner = false;
-                    this.noResults = false;
-                    this.searchResults = results;
+                // Convert response from JSON to array of objects
+                let torrents: Torrent[] = [];
+                for (const provider in results) {
+                    if (results.hasOwnProperty(provider)) {
+                        const providerTorrents = results[provider];
+                        for (const torrent of providerTorrents) {
+                            torrents.push({
+                                source: provider,
+                                title: torrent.title,
+                                time: torrent.time,
+                                size: torrent.size,
+                                url: torrent.url,
+                                seeds: torrent.seeds,
+                                peers: torrent.peers,
+                                imdb: torrent.imdb
+                            });
+                        }
+                    }
                 }
 
+                // console.log(`Search results: ${JSON.stringify(torrents)}`);
+                this.displayLoadingSpinner = false;
+                this.noResults = false;
+                this.searchResults = torrents;
             },
-            error: (err) => {
-                console.log(err);
-                this.toastr.error('Napaka pri iskanju torrentov', '', { timeOut: 5000 });
+            error: (error) => {
+                switch (error.status) {
+                    case 400:
+                        // Check if message is present and can be displayed
+                        if (error.error.message && error.error.errorCode == 1) {
+                            this.toastr.error(`Napaka pri iskanju torrentov: ${error.error.message}`, '', { timeOut: 5000 });
+                            break;
+                        } else {
+                            this.toastr.error('Napaka pri iskanju torrentov', '', { timeOut: 5000 });
+                            break;
+                        }
+                    case 401:
+                        this.authService.unauthorizedHandler();
+                        break;
+                    case 404:
+                        // No results
+                        this.handle404();
+                        break;
+                    default:
+                        this.toastr.error('Napaka pri iskanju torrentov', '', { timeOut: 5000 });
+                        break;
+                }
                 this.displayLoadingSpinner = false;
                 this.noResults = true;
             }
@@ -71,6 +128,12 @@ export class SearchResultsComponent implements OnInit {
 
     protected toggleRow(torrent: any) {
         torrent.expanded = !torrent.expanded;
+    }
+
+    protected handle404() {
+        this.displayLoadingSpinner = false;
+        this.noResults = true;
+        this.searchResults = [];
     }
 
     protected getUploaderUrl(torrent: any): string {

@@ -9,18 +9,18 @@ import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
-  declarations: [
-    SettingsPageComponent,
-    UploadTorrentPageComponent,
-    SudoNavComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    FroalaEditorModule.forRoot(),
-    FroalaViewModule.forRoot()
-  ], exports: [
-    SudoNavComponent
-  ]
+    declarations: [
+        SettingsPageComponent,
+        UploadTorrentPageComponent,
+        SudoNavComponent
+    ],
+    imports: [
+        CommonModule,
+        SharedModule,
+        FroalaEditorModule.forRoot(),
+        FroalaViewModule.forRoot()
+    ], exports: [
+        SudoNavComponent
+    ]
 })
 export class SudoModule { }

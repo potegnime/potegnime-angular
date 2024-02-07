@@ -1,52 +1,62 @@
 nav {
-  background-color: var(--page-component);
-  border-radius: var(--border-radius);
+    background-color: var(--page-component);
+    border-radius: var(--border-radius);
 }
+
 .left-list {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 }
+
 .right-list {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
+
 // Profile button
 .my-profile-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: var(--button-background);
-  border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--button-background);
+    border-radius: var(--border-radius);
 }
+
 .profile-pic {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  margin-left: 10px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin-left: 10px;
 }
+
 // Dropdown items
 .dropdown-menu {
-  background-color: #333;
+    background-color: #333;
 }
+
 .dropdown-item {
-  font-weight: 600;
-  background-color: #333;
-  color: #a9a9a9;
-  transition: background-color 0.2s ease-in-out;
+    font-weight: 600;
+    background-color: #333;
+    color: #a9a9a9;
+    transition: background-color 0.2s ease-in-out;
 }
+
 .dropdown-item:hover {
-  cursor: pointer;
-  color: var(--white);
+    cursor: pointer;
+    color: var(--white);
 }
+
 #logout-dropdown {
-  color: var(--red-primary);
+    color: var(--red-primary);
 }
+
 #logout-dropdown:hover {
-  color: var(--red-secondary);
+    color: var(--red-secondary);
 }
+
 .button:hover {
-  background-color: var(--button-background-hover);
-  cursor: pointer;
+    background-color: var(--button-background-hover);
+    cursor: pointer;
 }

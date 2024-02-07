@@ -1,4 +1,4 @@
-export interface SearchRequest {
+export interface SearchRequestDto {
     query: string;
     category: string | null;
     source: string | null;

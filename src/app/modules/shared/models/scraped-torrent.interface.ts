@@ -1,5 +1,5 @@
 export class ScrapedTorrents {
-  title?: string;
-  size?: string;
+    title?: string;
+    size?: string;
 
 }

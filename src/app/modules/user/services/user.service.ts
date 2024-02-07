@@ -2,8 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DebugElement, Injectable } from '@angular/core';
 import { Observable, catchError, map, of, tap } from 'rxjs';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
-import { TokenService } from '../token-service/token.service';
-import { urlConst } from '../../enums/url.enum';
+import { TokenService } from '../../shared/services/token-service/token.service';
+import { urlConst } from '../../shared/enums/url.enum';
 import { UpdateUsernameDto } from 'src/app/modules/user/models/update-username.interface';
 import { UpdateEmailDto } from 'src/app/modules/user/models/update-email.interface';
 import { UpdatePfpDto } from 'src/app/modules/user/models/update-pfp.interface';
@@ -18,7 +18,7 @@ export class UserService {
         private readonly http: HttpClient,
         private readonly authService: AuthService,
         private readonly tokenService: TokenService
-    ) {}
+    ) { }
 
     public getUserById(userId: number | string): Observable<any> {
         const headers = new HttpHeaders({
@@ -77,7 +77,7 @@ export class UserService {
         });
 
         const formData = new FormData();
-        if (updatePfpDto.profilePicFile){
+        if (updatePfpDto.profilePicFile) {
             formData.append("ProfilePicFile", updatePfpDto.profilePicFile);
         }
 

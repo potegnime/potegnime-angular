@@ -16,41 +16,41 @@ import { Date1337xPipe } from './pipes/date-1337.pipe';
 import { TorrentSourcePipe } from './pipes/torrent-source.pipe';
 
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    NavComponent,
-    FooterComponent,
-    RatioComponent,
-    NotificationsComponent,
-    SearchBarComponent,
-    ErrorComponent,
-    TermsPageComponent,
-    LoadingSpinnerComponent,
-    ProfileTorrentsComponent,
-    Date1337xPipe,
-    TorrentSourcePipe
-  ],
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    RouterModule,
-    FormsModule
-  ],
-  exports: [
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule,
-    HeaderComponent,
-    SearchBarComponent,
-    NavComponent,
-    FooterComponent,
-    ErrorComponent,
-    TermsPageComponent,
-    LoadingSpinnerComponent,
-    ProfileTorrentsComponent,
-    Date1337xPipe,
-    TorrentSourcePipe
-  ]
+    declarations: [
+        HeaderComponent,
+        NavComponent,
+        FooterComponent,
+        RatioComponent,
+        NotificationsComponent,
+        SearchBarComponent,
+        ErrorComponent,
+        TermsPageComponent,
+        LoadingSpinnerComponent,
+        ProfileTorrentsComponent,
+        Date1337xPipe,
+        TorrentSourcePipe
+    ],
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        CommonModule,
+        RouterModule,
+        FormsModule
+    ],
+    exports: [
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule,
+        HeaderComponent,
+        SearchBarComponent,
+        NavComponent,
+        FooterComponent,
+        ErrorComponent,
+        TermsPageComponent,
+        LoadingSpinnerComponent,
+        ProfileTorrentsComponent,
+        Date1337xPipe,
+        TorrentSourcePipe
+    ]
 })
 export class SharedModule { }

@@ -1,28 +1,28 @@
-export const DefinedRoutes =  [
-  // auth
-  'prijava',
-  'login',
-  'registracija',
-  'register',
+export const DefinedRoutes = [
+    // auth
+    'prijava',
+    'login',
+    'registracija',
+    'register',
 
 
-  '',
-  'iskanje',
-  'search',
-  'uporabnik',
-  'user',
+    '',
+    'iskanje',
+    'search',
+    'uporabnik',
+    'user',
 
-  // About
-  'o-nas',
-  'donacije',
-  'donate',
-  'doniraj',
-  'pogoji',
-  'terms',
+    // About
+    'o-nas',
+    'donacije',
+    'donate',
+    'doniraj',
+    'pogoji',
+    'terms',
 
-  'profil',
-  'profil/moj-profil',
-  'profil/nastavitve',
-  'profil/ustvari'
+    'profil',
+    'profil/moj-profil',
+    'profil/nastavitve',
+    'profil/ustvari'
 
 ];

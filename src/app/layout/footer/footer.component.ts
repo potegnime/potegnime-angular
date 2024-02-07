@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
-import { UserService } from 'src/app/modules/shared/services/user-service/user.service';
+import { UserService } from 'src/app/modules/user/services/user.service';
 
 @Component({
     selector: 'app-footer',
@@ -8,14 +8,14 @@ import { UserService } from 'src/app/modules/shared/services/user-service/user.s
     styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent {
-  protected uid: number | null;
-  constructor(
-    private readonly authService: AuthService,
-    private readonly userService: UserService
-  ) {
-    this.uid = userService.getLoggedUserId();
-    if (!this.uid) {
-      this.authService.logout();
+    protected uid: number | null;
+    constructor(
+        private readonly authService: AuthService,
+        private readonly userService: UserService
+    ) {
+        this.uid = userService.getLoggedUserId();
+        if (!this.uid) {
+            this.authService.logout();
+        }
     }
-  }
 }
