@@ -43,7 +43,7 @@ export class NavComponent {
                                 this.profilePictureUrl = 'assets/images/no-pfp.png';
                                 break;
                             default:
-                                this.toastr.error('Napaka pri pridobivanju profilne slike');
+                                // this.toastr.error('Napaka pri pridobivanju profilne slike');
                                 break;
                         }
                     }

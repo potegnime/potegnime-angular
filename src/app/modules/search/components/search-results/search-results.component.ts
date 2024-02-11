@@ -58,7 +58,6 @@ export class SearchResultsComponent implements OnInit {
                     source: this.source || null,
                     limit: null
                 };
-                console.log(`searchResults - ogOnInit: Search request DTO: ${JSON.stringify(searchRequestDto)}`);
                 this.fetchSearchResults(searchRequestDto);
             } else {
                 this.missingQuery = true;

@@ -4,7 +4,7 @@ export interface Torrent {
     time: string;
     size: string;
     url: string;
-    seeds: number;
-    peers: number;
+    seeds: string;
+    peers: string;
     imdb: string;
 }
