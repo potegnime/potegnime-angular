@@ -1,0 +1,87 @@
+.home-header {
+    background-color: var(--page-component);
+    border-radius: var(--border-radius);
+    padding: 10px;
+    margin-top: 15px;
+}
+
+img {
+    max-width: 80%;
+    width: 80%;
+    color: linear-gradient(var(--dark-purple), var(--light-purple));
+}
+.bellow-logo {
+    color: white;
+}
+
+.btn-cnt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 100%;
+    margin: auto;
+}
+
+.button {
+    position: relative;
+    display: inline-block;
+    background: none; 
+    z-index: 1;
+    
+}
+
+.button::before, .button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: var(--border-radius);
+}
+
+.button::before {
+    background: linear-gradient(var(--dark-purple), var(--light-purple));
+    opacity: 1;
+}
+
+.button::after {
+    background: linear-gradient(var(--light-purple), var(--dark-purple));
+    opacity: 0;
+}
+
+
+.button:hover::before {
+    opacity: 0;
+}
+
+.button:hover::after {
+    opacity: 1;
+}
+
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin: 5px 10px;
+    padding: 0 20px;
+    width: 90%;
+}
+
+ul li a {
+    color: white;
+    display: inline-block;
+    padding: 5px 10px;
+    text-decoration: none;
+}
+
+ul li a:hover {
+    color: var(--white);
+}
+

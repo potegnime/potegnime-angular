@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { DebugElement, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable, catchError, map, of, tap } from 'rxjs';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { TokenService } from '../../shared/services/token-service/token.service';
