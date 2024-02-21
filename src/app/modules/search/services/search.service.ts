@@ -57,14 +57,7 @@ export class SearchService {
         source: string | null,
         limit: string | null,
         sort: string | null
-    ): void {
-        // console.log("searchService - OnSearchComponent:")
-        // console.log(`query: ${query}, typeof: ${typeof query}`);
-        // console.log(`category: ${category}, typeof: ${typeof category}`);
-        // console.log(`source: ${source}, typeof: ${typeof source}`);
-        // console.log(`limit: ${limit}, typeof: ${typeof limit}`);
-        // console.log(`sort: ${sort}, typeof: ${typeof sort}`);
-        
+    ): void {        
         // Build query params
         let queryParams = {};
         if (query) {
@@ -83,8 +76,6 @@ export class SearchService {
             queryParams = { ...queryParams, sort: sort };
         }
 
-        // console.log(`queryParams: ${JSON.stringify(queryParams)}`);
-        
         this.router.navigate(['/iskanje'], { queryParams: queryParams });
     }
 }

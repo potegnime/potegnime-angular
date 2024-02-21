@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { SearchService } from '../../services/search.service';
 import { TorrentProviderCategories } from '../../models/torrent-provider-categories.interface';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { RecommendService } from 'src/app/modules/shared/services/recommend-service/recommend.service';
 
 @Component({
     selector: 'app-search-bar-search',
@@ -12,20 +13,22 @@ import { AuthService } from 'src/app/modules/auth/services/auth.service';
     styleUrls: ['./search-bar-search.component.scss']
 })
 export class SearchBarSearchComponent implements OnInit {
-    searchForm!: FormGroup;
+    protected searchForm!: FormGroup;
 
-    torrentProviderCategories: TorrentProviderCategories = {} as TorrentProviderCategories;
-    categories: string[] = [];
-    providers: string[] = [];
-    selectedProvider: string = 'All';
-    selectedCategory: string = 'All';
+    protected torrentProviderCategories: TorrentProviderCategories = {} as TorrentProviderCategories;
+    protected categories: string[] = [];
+    protected providers: string[] = [];
+    protected selectedProvider: string = 'All';
+    protected selectedCategory: string = 'All';
+    protected sort: string = 'default';
 
     constructor(
         private readonly formBuilder: FormBuilder,
         private readonly toastr: ToastrService,
         private readonly route: ActivatedRoute,
         private readonly searchService: SearchService,
-        private readonly authService: AuthService
+        private readonly authService: AuthService,
+        private readonly recommendService: RecommendService
     ) { }
 
     ngOnInit(): void {
@@ -44,7 +47,7 @@ export class SearchBarSearchComponent implements OnInit {
 
         // Default values for search form
         this.searchForm = this.formBuilder.group({
-            query: [this.route.snapshot.queryParamMap.get('q') || '', Validators.required],
+            query: [this.route.snapshot.queryParamMap.get('q') || '', [Validators.required, this.notOnlyWhitespaceValidator]],
             category: ['All'],
             source: ['All'],
             sort: ['default']
@@ -56,8 +59,13 @@ export class SearchBarSearchComponent implements OnInit {
         });
     }
 
+    private notOnlyWhitespaceValidator(control: FormControl) {
+        const isWhitespace = (control.value || '').trim().length === 0;
+        const isValid = !isWhitespace;
+        return isValid ? null : { 'whitespace': true };
+    }
+
     protected onSearch(): void {
-        console.log(`SELECTED CATEGORY: ${this.selectedCategory}`);
         if (!this.searchForm.valid) {
             this.toastr.warning('', 'Vnesite izraz za iskanje', { timeOut: 2000 });
             return;
@@ -73,8 +81,28 @@ export class SearchBarSearchComponent implements OnInit {
         );
     }
 
+    protected searchRandomTitle(): void {
+        this.recommendService.getRandomRecommendation().subscribe({
+            next: (response) => {
+                this.searchForm.patchValue({
+                    query: response.name
+                });
+                this.onSearch();
+            },
+            error: (error) => {
+                switch (error.status) {
+                    case 401:
+                        this.authService.unauthorizedHandler();
+                        break;
+                    default:
+                        this.toastr.error('', 'Napaka pri pridobivanju priporočila', { timeOut: 5000 })    
+                    break;
+                }
+            }
+        })
+    }
+
     protected onProviderChange(selectedProvider: string): void {
-        console.log('onProviderChange')
         this.selectedProvider = selectedProvider;
         
         this.categories = this.torrentProviderCategories[selectedProvider];
@@ -90,8 +118,12 @@ export class SearchBarSearchComponent implements OnInit {
     }
 
     protected onCategoryChange(): void {
-        console.log('onCategoryChange')
         this.selectedCategory = this.searchForm.value.category;
+        this.onSearch();
+    }
+
+    protected onSortChange(sort: any): void {
+        this.sort = sort;
         this.onSearch();
     }
 

@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './modules/auth/guards/auth/auth.guard';
-import { ErrorComponent } from './modules/shared/components/error/error.component';
 import { LoggedInAuthGuard } from './modules/auth/guards/logged-in/logged-in-guard.guard';
+import { AdminGuard } from './modules/sudo/guards/admin.guard';
+import { ErrorComponent } from './modules/shared/components/error/error.component';
 import { LoginPageComponent } from './modules/auth/components/login-page/login-page.component';
 import { RegisterPageComponent } from './modules/auth/components/register-page/register-page.component';
 import { SettingsPageComponent } from './modules/sudo/components/settings-page/settings-page.component';
-import { UploadTorrentPageComponent } from './modules/sudo/components/upload-torrent-page/upload-torrent-page.component';
+import { AdministrationPageComponent } from './modules/sudo/components/administration-page/administration-page.component';
 
 const routes: Routes = [
 
@@ -25,16 +26,16 @@ const routes: Routes = [
     // User module
     { path: 'u', loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule), canActivate: [AuthGuard] },
 
+    // Recommned module
+    { path: 'razisci', loadChildren: () => import('./modules/recommend/recommend.module').then(m => m.RecommendModule), canActivate: [AuthGuard] },
+
     // About module
     { path: '', loadChildren: () => import('./modules/about/about.module').then(m => m.AboutModule) },
 
     // Sudo module components  
     // Settings page - not lazy loaded
     { path: 'nastavitve', component: SettingsPageComponent, canActivate: [AuthGuard] },
-
-    // Upload torrent page - not lazy loaded
-    { path: 'ustvari', component: UploadTorrentPageComponent, canActivate: [AuthGuard] },
-
+    { path: 'admin', component: AdministrationPageComponent, canActivate: [AdminGuard] },
 
     // 404 error page
     { path: '**', component: ErrorComponent }
@@ -45,7 +46,8 @@ const routes: Routes = [
     exports: [RouterModule],
     providers: [
         AuthGuard,
-        LoggedInAuthGuard
+        LoggedInAuthGuard,
+        AdminGuard
     ]
 })
 export class AppRoutingModule { }

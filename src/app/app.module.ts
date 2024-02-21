@@ -6,13 +6,9 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
-
 import { AppComponent } from './app.component';
 import { AuthModule } from './modules/auth/auth.module';
-import { HomeModule } from './modules/home/home.module';
 import { SudoModule } from './modules/sudo/sudo.module';
-import { SearchModule } from './modules/search/search.module';
 import { SharedModule } from './modules/shared/shared.module';
 import { AboutModule } from './modules/about/about.module';
 import { JwtModule } from '@auth0/angular-jwt';

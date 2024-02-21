@@ -39,7 +39,7 @@ img {
     right: 0;
     bottom: 0;
     z-index: -1;
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.2s ease-in-out;
     border-radius: var(--border-radius);
 }
 
@@ -61,7 +61,10 @@ img {
 .button:hover::after {
     opacity: 1;
 }
-
+p {
+    margin: 0;
+    padding: 0;
+}
 
 ul {
     list-style-type: none;
@@ -74,14 +77,14 @@ ul li {
     width: 90%;
 }
 
-ul li a {
+ul li p {
     color: white;
     display: inline-block;
     padding: 5px 10px;
     text-decoration: none;
 }
 
-ul li a:hover {
+ul li p:hover {
     color: var(--white);
 }
 

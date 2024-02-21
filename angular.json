@@ -31,17 +31,12 @@
                         ],
                         "styles": [
                             "node_modules/bootstrap/dist/css/bootstrap.min.css",
-                            "src/styles.scss",
-                            "node_modules/froala-editor/css/froala_editor.pkgd.min.css",
-                            "./node_modules/froala-editor/css/froala_style.min.css"
+                            "src/styles.scss"
                         ],
                         "scripts": [
-                            "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-                            "node_modules/froala-editor/js/froala_editor.pkgd.min.js"
+                            "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
                         ],
-                        "allowedCommonJsDependencies": [
-                            "froala-editor"
-                        ]
+                        "allowedCommonJsDependencies": []
                     },
                     "configurations": {
                         "production": {

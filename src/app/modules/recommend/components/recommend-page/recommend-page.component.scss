@@ -1,0 +1,86 @@
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin: 50px 0;
+}
+
+h2 {
+    margin-top: 1em;
+    text-align: center;
+}
+
+.sectionTitle {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 2em;
+}
+
+.card {
+    background-color: var(--darkgray);
+    color: white !important;
+    padding: 6px;
+}
+
+.card:hover {
+    cursor: pointer;
+    background-color: #8a8a8a;
+}
+
+label {
+    display: block;
+    text-align: center;
+    margin-bottom: 3px;
+}
+
+.sel-cont {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    flex-direction: column;
+
+}
+
+select {
+    margin: auto;
+    width: 200px;
+    background-color: var(--button-background);
+    color: white;
+    text-align: center;
+    padding: 6px 10px;
+    border: none;
+    border-radius: var(--border-radius);
+}
+
+select:hover {
+    background-color: var(--button-background-hover);
+    cursor: pointer;
+}
+
+// About
+.center-cont {
+    padding: 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.center-cont p {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+.img-cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#question-icon {
+    width: 60%;
+    aspect-ratio: 1/1;
+}

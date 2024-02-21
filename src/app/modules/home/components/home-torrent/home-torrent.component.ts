@@ -1,4 +1,10 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { forkJoin } from 'rxjs';
+import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { TmdbMovieResponse } from 'src/app/modules/shared/models/tmdb-movie-response.interface';
+import { TmdbTrendingResponse } from 'src/app/modules/shared/models/tmdb-trending-response.interface';
 import { RecommendService } from 'src/app/modules/shared/services/recommend-service/recommend.service';
 
 @Component({
@@ -7,12 +13,67 @@ import { RecommendService } from 'src/app/modules/shared/services/recommend-serv
     styleUrls: ['./home-torrent.component.scss']
 })
 export class HomeTorrentComponent {
+    protected language: 'sl-SI' | 'en-US' = 'sl-SI'
+    protected region: 'SI' | 'US' = 'US';
+    protected timeWindow: 'day' | 'week' = 'day';
+
+    protected readonly posterUrl = 'https://image.tmdb.org/t/p/original';
     
+    protected nowPlayingMovies: TmdbMovieResponse[] = [];
+    protected popularMovies: TmdbMovieResponse[] = [];
+    protected topRatedMovies: TmdbMovieResponse[] = [];
+
+    private errorToastShown: boolean = false;
+
     constructor(
-        private readonly recommendService: RecommendService
+        private readonly recommendService: RecommendService,
+        private readonly authService: AuthService,
+        private readonly toastr: ToastrService,
+        private readonly router: Router
     ) {
-        this.recommendService.trendingMovie('day', 'en-US').subscribe((response: any) => {
-            console.log(response);
+        // Load recommendations
+        const requests = [
+            this.recommendService.nowPlaying(this.language, 1, this.region),
+            this.recommendService.popular(this.language, 1, this.region),
+            this.recommendService.topRated(this.language, 1, this.region),
+        ];
+
+        forkJoin(requests).subscribe({
+            next: (responses: any) => {
+                this.nowPlayingMovies = responses[0];
+                this.popularMovies = responses[1];
+                this.topRatedMovies = responses[2];
+            },
+            error: (error: any) => {
+                switch (error.status) {
+                    case 401:
+                        this.authService.unauthorizedHandler();
+                        break;
+                    default:
+                        this.errorGettingRecommendations();
+                        break;
+                }
+            }
         });
+    }
+
+    // Error getting recommendations
+    private errorGettingRecommendations(): void {
+        if (!this.errorToastShown) {
+            this.toastr.error('Napaka pri pridobivanju torrentov. Prosimo, poskusite znova kasneje');
+            this.errorToastShown = true;
+        }
+    }
+
+    protected searchTitle(text: string): void {
+        this.toastr.info('Za boljše rezultate, poskusite iskati v angleščini', 'Iskanje v slovenščini', { timeOut: 5000})
+        this.router.navigate(['/iskanje'], { queryParams: { q: text } });
+    }
+
+    protected seeMore(section: string) {
+        let queryParams = {
+            s: section
+        }
+        this.router.navigate(['/razisci'], { queryParams: queryParams });
     }
 }

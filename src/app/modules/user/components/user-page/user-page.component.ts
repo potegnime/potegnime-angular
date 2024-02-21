@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, untracked } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { TokenService } from 'src/app/modules/shared/services/token-service/token.service';
@@ -58,7 +58,7 @@ export class UserPageComponent implements OnInit {
             // Check if user page is my user page
             const decodedToken = this.tokenService.decodeToken();
             if (decodedToken) {
-                this.isMyPage = decodedToken.uid === urlUid;
+                this.isMyPage = decodedToken.uid == urlUid;
                 if (this.isMyPage) {
                     this.getCompleteUserData(decodedToken.uid);                                  
                 } else {
@@ -83,12 +83,27 @@ export class UserPageComponent implements OnInit {
         // Get user data and set user page
         this.userService.getUserById(id).subscribe({
             next: (user) => {
-                this.setUserPage(user.uid, user.username, user.joined, user.role);
+                if (this.isMyPage) {
+                    this.setMyPage(user.uid, user.username, user.joined, user.role);
+                }
+                else {
+                    this.setUserPage(user.uid, user.username, user.joined, user.role);
+                }
+                
             },
-            error: () => {
-                this.toastr.error('Napaka pri pridobivanju podatkov o uporabniku');
-                // Redirect to 404 page
-                this.router.navigate(['404']);
+            error: (error) => {
+                switch (error.status) {
+                    case 401:
+                        this.authService.unauthorizedHandler();
+                        break;
+                    case 404:
+                        // Redirect to 404 page
+                        this.router.navigate(['404']);
+                        break;
+                    default:
+                        this.toastr.error('Napaka pri pridobivanju podatkov o uporabniku');
+                        break;
+                }
             }
         });
 
@@ -139,6 +154,4 @@ export class UserPageComponent implements OnInit {
         this.joined = joined;
         this.isMyPage = false;
     }
-
-
 }

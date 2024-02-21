@@ -4,11 +4,12 @@
     <table class="dark-table">
         <thead>
             <tr>
-                <th scope="col">Datoteka</th>
-                <th scope="col">Uploader</th>
-                <th scope="col">Velikost</th>
-                <th scope="col">SE</th>
-                <th scope="col">LE</th>
+                <th scope="col" class="no-select" (click)="sortRowColumnClick('name')">Datoteka</th>
+                <th scope="col" class="text-center no-select" (click)="sortRowColumnClick('uploader')">Uploader</th>
+                <th scope="col" class="text-center no-select" (click)="sortRowColumnClick('size')">Velikost</th>
+                <th scope="col" class="text-center no-select" title="Seeds" (click)="sortRowColumnClick('se')">SE</th>
+                <th scope="col" class="text-center no-select" title="Peers" (click)="sortRowColumnClick('pe')">PE</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -19,47 +20,39 @@
                             <div>
                                 <img *ngIf="torrent.source.toLowerCase() === 'native'" src="assets/images/logo.png"
                                     alt="{{ torrent.title }} Image" width="50">
-                                
+
                                 <img *ngIf="torrent.source.toLowerCase() === 'none'" src="assets/images/no-image.png"
-                                alt="{{ torrent.title }} Image" width="50" class="mr-2 p-2">
-                            
+                                    alt="{{ torrent.title }} Image" width="50" class="mr-2 p-2">
+
                                 <img *ngIf="torrent.source.toLowerCase() === 'thepiratebay'" src="assets/images/tpb.png"
-                                alt="{{ torrent.title }} Image" width="50">
+                                    alt="{{ torrent.title }} Image" width="50">
 
                                 <img *ngIf="torrent.source.toLowerCase() === 'yts'" src="assets/images/yts.png"
-                                alt="{{ torrent.title }} Image" width="50">
-                            
-                                <img *ngIf="torrent.source.toLowerCase() === 'torrent9'" src="assets/images/torrent9.png"
-                                alt="{{ torrent.title }} Image" width="50">
+                                    alt="{{ torrent.title }} Image" width="50">
 
-                                <img *ngIf="torrent.source.toLowerCase() === 'torrentproject'" src="assets/images/torrentproject.png"
-                                alt="{{ torrent.title }} Image" width="50">
-
-                                <img *ngIf="torrent.source.toLowerCase() === 'eztv'" src="assets/images/eztv.png"
-                                alt="{{ torrent.title }} Image" width="50">
-                            
+                                <img *ngIf="torrent.source.toLowerCase() === 'torrentproject'"
+                                    src="assets/images/torrentproject.png" alt="{{ torrent.title }} Image" width="50">
 
                             </div>
-                            <div>
+                            <div class="title-container">
                                 <h4>{{ torrent.title }}</h4>
-                                <p *ngIf="torrent.source.toLowerCase()=== 'native'">
-                                    {{ torrent.category }} | {{ torrent.format }} | {{ torrent.year }}
-                                </p>
                             </div>
                         </div>
                     </td>
                     <td [ngClass]="{
                         'native': torrent.source.toLowerCase() === 'native',
                         'tpb': torrent.source.toLowerCase() === 'thepiratebay', 
-                        'yts': torrent.source.toLowerCase() === 'yts'}
+                        'yts': torrent.source.toLowerCase() === 'yts', 
+                        'torrentproject': torrent.source.toLowerCase() === 'torrentproject'
+                    }
                     ">
                         <a href="{{getUploaderUrl(torrent)}}" target="_blank">
                             {{ torrent.source | torrentSource }}
                         </a>
                     </td>
                     <td>{{ torrent.size }}</td>
-                    <td>{{ torrent.seeds || '/' }}</td>
-                    <td>{{ torrent.leechers || '/' }}</td>
+                    <td>{{ displaySePe(torrent.seeds) }}</td>
+                    <td>{{ displaySePe(torrent.peers) }}</td>
                 </tr>
 
                 <tr (click)="toggleRow(torrent)" *ngIf="torrent.expanded" title="{{torrent.title}}">
@@ -67,30 +60,19 @@
                         <div class="expanded-info">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex align-items-center w-100">
-                                    <img *ngIf="torrent.source.toLowerCase() === 'native'" src="assets/images/TODO.png"
-                                        alt="{{ torrent.title }} Image" width="100" class="mr-3">
-                                    
-                                    <img *ngIf="torrent.source.toLowerCase() === 'None'" src="assets/images/no-image.png"
-                                    alt="{{ torrent.title }} Image" width="100" class="mr-3 p-2">
-                                
-                                    <img *ngIf="torrent.source.toLowerCase() === 'thepiratebay'" src="assets/images/tpb.png"
-                                    alt="{{ torrent.title }} Image" width="100" class="mr-3">
+                                    <img *ngIf="torrent.source.toLowerCase() === 'thepiratebay'"
+                                        src="assets/images/tpb.png" alt="{{ torrent.title }} Image" width="100"
+                                        class="mr-3">
 
                                     <img *ngIf="torrent.source.toLowerCase() === 'yts'" src="assets/images/yts.png"
-                                    alt="{{ torrent.title }} Image" width="100" class="mr-3">
-                                
-                                    <img *ngIf="torrent.source.toLowerCase() === 'torrent9'" src="assets/images/torrent9.png"
-                                    alt="{{ torrent.title }} Image" width="100" class="mr-3">
+                                        alt="{{ torrent.title }} Image" width="100" class="mr-3">
 
-                                    <img *ngIf="torrent.source.toLowerCase() === 'torrentproject'" src="assets/images/torrentproject.png"
-                                    alt="{{ torrent.title }} Image" width="100" class="mr-3">
+                                    <img *ngIf="torrent.source.toLowerCase() === 'torrentproject'"
+                                        src="assets/images/torrentproject.png" alt="{{ torrent.title }} Image"
+                                        width="100" class="mr-3">
 
-                                    <img *ngIf="torrent.source.toLowerCase() === 'eztv'" src="assets/images/eztv.png"
-                                    alt="{{ torrent.title }} Image" width="100" class="mr-3">
-                                
-
-                                    <div class="w-100">
-                                        <h4>{{ torrent.title }}</h4>
+                                    <div class="w-100 title-container">
+                                        <h4 >{{ torrent.title }}</h4>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div
                                                 class="expanded-details-container d-flex justify-content-between align-items-center">
@@ -99,16 +81,16 @@
                                                     <p>{{ torrent.size }}</p>
                                                 </div>
                                                 <div class="expanded-details">
-                                                    <p>Seeders</p>
-                                                    <p>{{ torrent.seeds }}</p>
+                                                    <p>Seeds</p>
+                                                    <p>{{ displaySePe(torrent.seeds) }}</p>
                                                 </div>
                                                 <div class="expanded-details">
-                                                    <p>Leechers</p>
-                                                    <p>{{ torrent.leechers || '/' }}</p>
+                                                    <p>Peers</p>
+                                                    <p>{{ displaySePe(torrent.peers) }}</p>
                                                 </div>
                                                 <div class="expanded-details">
                                                     <p>Naloženo</p>
-                                                    <p>{{ torrent.time | date:'d.M.y' }}</p>
+                                                    <p>{{ displayTime(torrent.time) }}</p>
                                                 </div>
                                             </div>
 

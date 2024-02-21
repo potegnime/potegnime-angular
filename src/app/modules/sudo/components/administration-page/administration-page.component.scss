@@ -23,7 +23,7 @@ nav ul {
     }
 }
 
-.settings-section {
+.admin-section {
     margin-bottom: 60px;
 }
 
@@ -44,59 +44,46 @@ h4 {
     margin-bottom: 5px;
 }
 
-// File upload
-input[type="file"] {
-    display: none;
+.user-display-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.user-display-container h5 {
+    margin-bottom: 16px;
+}
+.user-display-container p {
+    padding: 0;
+    margin: 10px 0;
 }
 
-.profile-pic-container {
-    // width is same as image width
-    width: 300px;
-    height: 300px;
-    margin: auto;
-    position: relative;
+
+#save-recommendation-button, #delete-recommendation-button {
+    width: auto;
+}
+.left-button-container {
+    display: flex;
+    justify-content: flex-start;
+}
+.right-button-container {
+    display: flex;
+    justify-content: flex-end;
 }
 
-.profile-pic {
-    aspect-ratio: 1/1;
+.error-text {
+    color: var(--red-primary);
+    text-align: center;
+}
+
+#profile-pic {
+    width: 250px;
+    height: 250px;
     border-radius: var(--border-radius);
     object-fit: cover;
-    object-position: center;
-}
-
-.profile-pic:hover {
-    opacity: 0.6;
-    cursor: pointer;
-}
-
-.overlay-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 90%;
-    text-align: center;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-weight: bold;
-    opacity: 0;
-    font-size: 18px;
-}
-
-.profile-pic-container:hover .overlay-text {
-    opacity: 1;
-    cursor: pointer;
-}
-
-.profile-pic-container:hover .profile-pic {
-    opacity: 0.3;
-    cursor: pointer;
-}
-
-#remove-profile-picture-button {
     margin: auto;
 }
 
-// Buttons
 .danger-button {
     background-color: var(--red-primary);
 }
@@ -104,5 +91,11 @@ input[type="file"] {
     background-color: var(--red-secondary);
 }
 #remove-profile-picture-button {
+    margin-top: 20px;
+}
+#changeUserRole {
+    margin-top: 5px;
+}
+#delete-profile-button {
     margin-top: 20px;
 }

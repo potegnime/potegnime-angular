@@ -1,24 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SettingsPageComponent } from './components/settings-page/settings-page.component';
-import { UploadTorrentPageComponent } from './components/upload-torrent-page/upload-torrent-page.component';
-import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { SudoNavComponent } from './components/sudo-nav/sudo-nav.component';
 import { SharedModule } from '../shared/shared.module';
-
-
+import { AdministrationPageComponent } from './components/administration-page/administration-page.component';
 
 @NgModule({
     declarations: [
         SettingsPageComponent,
-        UploadTorrentPageComponent,
-        SudoNavComponent
+        SudoNavComponent,
+        AdministrationPageComponent
     ],
     imports: [
         CommonModule,
-        SharedModule,
-        FroalaEditorModule.forRoot(),
-        FroalaViewModule.forRoot()
+        SharedModule
     ], exports: [
         SudoNavComponent
     ]

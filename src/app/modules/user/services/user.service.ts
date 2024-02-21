@@ -9,6 +9,7 @@ import { UpdateEmailDto } from 'src/app/modules/user/models/update-email.interfa
 import { UpdatePfpDto } from 'src/app/modules/user/models/update-pfp.interface';
 import { UpdatePasswordDto } from 'src/app/modules/user/models/update-password.interface';
 import { DeleteProfileDto } from 'src/app/modules/user/models/delete-profile.interface';
+import { UpdateRoleDto } from '../models/update-role.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -27,18 +28,17 @@ export class UserService {
             'Authorization': `Bearer ${this.tokenService.getToken()}`
         });
 
-        return this.http.get(`${urlConst.apiBase}/user/${userId}`, { headers: headers }).pipe(
-            map((response: any) => {
-                return response;
-            }),
-            catchError((error: any) => {
-                if (error.status === 401) {
-                    this.authService.unauthorizedHandler();
-                    return error;
-                }
-                return error;
-            })
-        );
+        return this.http.get(`${urlConst.apiBase}/user/userId?userId=${userId}`, { headers: headers });
+    }
+
+    public getUserByUsername(username: string): Observable<any> {
+        const headers = new HttpHeaders({
+            'accept': '*/*',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.tokenService.getToken()}`
+        });
+
+        return this.http.get(`${urlConst.apiBase}/user/username?username=${username}`, { headers: headers });
     }
 
     public getUserPfp(userId: number | string): Observable<Blob> {
@@ -57,7 +57,7 @@ export class UserService {
         const formData = new FormData();
         formData.append("Username", UpdateUsernameDto.username);
 
-        return this.http.post<any>(`${urlConst.apiBase}/user/updateUsername`, formData, { headers })
+        return this.http.post<any>(`${urlConst.apiBase}/user/updateUsername`, formData, { headers });
     }
 
     public updateEmail(updateEmailDto: UpdateEmailDto): Observable<any> {
@@ -68,7 +68,7 @@ export class UserService {
         const formData = new FormData();
         formData.append("Email", updateEmailDto.email);
 
-        return this.http.post<any>(`${urlConst.apiBase}/user/updateEmail`, formData, { headers })
+        return this.http.post<any>(`${urlConst.apiBase}/user/updateEmail`, formData, { headers });
     }
 
     public updatePfp(updatePfpDto: UpdatePfpDto): Observable<any> {
@@ -80,8 +80,8 @@ export class UserService {
         if (updatePfpDto.profilePicFile) {
             formData.append("ProfilePicFile", updatePfpDto.profilePicFile);
         }
-
-        return this.http.post<any>(`${urlConst.apiBase}/user/updatePfp`, formData, { headers })
+        
+        return this.http.post<any>(`${urlConst.apiBase}/user/updatePfp`, formData, { headers });
     }
 
     public updatePassword(updatePasswordDto: UpdatePasswordDto): Observable<any> {
@@ -93,7 +93,7 @@ export class UserService {
         formData.append("OldPassword", updatePasswordDto.oldPassword);
         formData.append("NewPassword", updatePasswordDto.newPassword);
 
-        return this.http.post<any>(`${urlConst.apiBase}/user/updatePassword`, formData, { headers })
+        return this.http.post<any>(`${urlConst.apiBase}/user/updatePassword`, formData, { headers });
     }
 
     public deleteProfile(deleteProfileDto: DeleteProfileDto): Observable<any> {
@@ -104,49 +104,28 @@ export class UserService {
         const formData: FormData = new FormData();
         formData.append('Password', deleteProfileDto.password);
 
-        return this.http.delete<any>(`${urlConst.apiBase}/user/deleteUser`, { headers: headers, body: formData })
+        return this.http.delete<any>(`${urlConst.apiBase}/user/deleteUser`, { headers: headers, body: formData });
     }
 
-    public getUploadedTorrents(userId: number): Observable<any> {
+    public deleteProfileAdmin(username: string): Observable<any> {
         const headers = new HttpHeaders({
-            'accept': '*/*',
-            'Content-Type': 'application/json',
             'Authorization': `Bearer ${this.tokenService.getToken()}`
         });
 
-        return this.http.get(`${urlConst.apiBase}/user/uploadedTorrents?userId=${userId}`, { headers: headers }).pipe(
-            map((response: any) => {
-                return response;
-            }),
-            catchError((error: any) => {
-                if (error.status === 401) {
-                    this.authService.unauthorizedHandler();
-                    return;
-                }
-                return error;
-            })
-        );
-    }
+        return this.http.delete<any>(`${urlConst.apiBase}/user/adminDelete?username=${username}`, { headers: headers });
 
-    public getLikedTorrents(userId: number): Observable<any> {
+    } 
+
+    public updateRole(updateRoleDto: UpdateRoleDto): Observable<any> {
         const headers = new HttpHeaders({
-            'accept': '*/*',
-            'Content-Type': 'application/json',
             'Authorization': `Bearer ${this.tokenService.getToken()}`
         });
 
-        return this.http.get(`${urlConst.apiBase}/user/likedTorrents?userId=${userId}`, { headers: headers }).pipe(
-            map((response: any) => {
-                return response;
-            }),
-            catchError((error: any) => {
-                if (error.status === 401) {
-                    this.authService.unauthorizedHandler();
-                    return;
-                }
-                return error;
-            })
-        );
+        const formData: FormData = new FormData();
+        formData.append('UserId', updateRoleDto.userId.toString());
+        formData.append('RoleName', updateRoleDto.roleName);
+
+        return this.http.post<any>(`${urlConst.apiBase}/user/updateRole`, formData, { headers })
     }
 
     public getLoggedUserId(): number | null {
@@ -158,5 +137,9 @@ export class UserService {
         }
     }
 
-
+    public isAdminLogged(): boolean {
+        const decodedToken = this.tokenService.decodeToken();
+        if (decodedToken?.role == '1') return true;
+        return false;
+    }
 }

@@ -16,32 +16,10 @@
                 <div class="username-cont">
                     <h3 class=" m-0 p-0 username">{{ username }}</h3>
                     <p class="role mt-1">{{ role }}</p>
-                    <!-- <img src="assets/images/red-ratio.png" alt="Delilno razmerje">   -->
+                    <div class="title">Pridružil dne</div>
+                    <div class="value">{{ joined }}</div>
                 </div>
             </div>
         </div>
-
-        <div class="row user-stats">
-            <ul class="col-7 list">
-                <li>
-                    <div class="title">Pridružil dne</div>
-                    <div class="value">{{ joined }}</div>
-                </li>
-                <li>
-                    <div class="title">Všečlanih torrentov</div>
-                    <div class="value">15,1</div>
-                </li>
-                <!-- TODO -->
-                <li>
-                    <div class="title">Naloženih torrentov</div>
-                    <div class="value">Ø</div>
-                </li>
-            </ul>
-        </div>
     </div>
-
-    <hr class="my-2">
-
-    <app-profile-torrents torrentType="liked"></app-profile-torrents>
-    <app-profile-torrents torrentType="uploaded"></app-profile-torrents>
 </div>

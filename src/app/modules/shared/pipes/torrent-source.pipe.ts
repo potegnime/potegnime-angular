@@ -7,12 +7,12 @@ export class TorrentSourcePipe implements PipeTransform {
 
     transform(value: string): string {
         switch (value) {
-            case '_1337x':
-                return '1337x';
             case 'thePirateBay':
                 return 'ThePirateBay';
             case 'yts':
                 return 'YTS';
+            case 'torrentProject':
+                return 'TorrentProject';
         }
         return value;
     }

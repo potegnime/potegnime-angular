@@ -8,42 +8,40 @@
         </div>
 
         <div class="options-search">
-            <input type="button" class="options-button" name="predlagaj" id="predlagaj-button" value="Predlagaj">
+            <input type="button" class="options-button" name="predlagaj" id="predlagaj-button" value="Preseneti me" (click)="searchRandomTitle()">
 
             <div class="dropdown-container">
                 <label for="source">Vir</label>
-                <select 
-                    [(ngModel)]="selectedProvider" (change)="onProviderChange(selectedProvider)"
-                    class="dropdown" formControlName="source" id="source" name="source"
-                >
+                <select [(ngModel)]="selectedProvider" (change)="onProviderChange(selectedProvider)" class="dropdown"
+                    formControlName="source" id="source" name="source">
                     <option *ngFor="let provider of providers" [value]="provider">{{translate(provider)}}</option>
                 </select>
             </div>
 
             <div class="dropdown-container">
                 <label for="category">Kategorija</label>
-                <select 
-                    *ngIf="categories && categories.length > 0" (change)="onCategoryChange()"
-                    class="dropdown" formControlName="category" id="category" name="category"
-                >
+                <select *ngIf="categories && categories.length > 0" (change)="onCategoryChange()" class="dropdown"
+                    formControlName="category" id="category" name="category">
                     <option *ngFor="let category of categories" [value]="category">{{translate(category)}}</option>
                 </select>
             </div>
 
             <div class="dropdown-container">
-                <label for="sort">Sort</label>
-                <select class="dropdown" formControlName="sort" id="sort" name="sort">
-                    <option value="default">Privzeto soritranje</option>
-                    <option value="name-asc">Imenu naraščajoče</option>
-                    <option value="name-desc">Imenu padajoče</option>
-                    <option value="date-asc">Datumu naraščajoče</option>
-                    <option value="date-desc">Datumu padajoče</option>
-                    <option value="uploader-asc">Nalagalcih naraščajoče</option>
-                    <option value="uploader-desc">Nalagalcih padajoče</option>
-                    <option value="seed-asc">Sejalcih naraščajoče</option>
-                    <option value="seed-desc">Sejalcih padajoče</option>
-                    <option value="size-asc">Velikosti naraščajoče</option>
-                    <option value="size-desc">Velikosti padajoče</option>
+                <label for="sort">Sortiranje</label>
+                <select class="dropdown" formControlName="sort" id="sort" name="sort" [(ngModel)]="sort" (change)="onSortChange(sort)">
+                    <option value="default">Privzeto</option>
+                    <option value="name-asc">Imenu ↑</option>
+                    <option value="name-desc">Imenu ↓</option>
+                    <option value="uploader-asc">Uploader ↑</option>
+                    <option value="uploader-desc">Uploader ↓</option>
+                    <option value="date-asc">Datumu ↑</option>
+                    <option value="date-desc">Datumu ↓</option>
+                    <option value="seed-asc">Seed ↑</option>
+                    <option value="seed-desc">Seed ↓</option>
+                    <option value="peer-asc">Peers ↑</option>
+                    <option value="peer-desc">Peers ↓</option>
+                    <option value="size-asc">Velikosti ↑</option>
+                    <option value="size-desc">Velikosti ↓</option>
                 </select>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/modules/auth/services/auth.service';
 import { CacheService } from 'src/app/modules/shared/services/cache-service/cache.service';
 import { UserService } from 'src/app/modules/user/services/user.service';
@@ -13,14 +13,16 @@ export class NavComponent {
     protected uid: number | null;
     protected username: string | null = null;
     protected profilePictureUrl: string | null = null;
+    protected isAdmin: boolean = false;
 
     constructor(
         private readonly authService: AuthService,
         private readonly userService: UserService,
-        private readonly toastr: ToastrService,
+        private readonly router: Router,
         private readonly cacheService: CacheService
     ) {
         this.uid = userService.getLoggedUserId();
+        this.isAdmin = userService.isAdminLogged();
         if (this.uid) {
             // Get profile picture
             // Try to get from cache first
@@ -43,7 +45,6 @@ export class NavComponent {
                                 this.profilePictureUrl = 'assets/images/no-pfp.png';
                                 break;
                             default:
-                                // this.toastr.error('Napaka pri pridobivanju profilne slike');
                                 break;
                         }
                     }
@@ -52,6 +53,16 @@ export class NavComponent {
         } else {
             this.authService.unauthorizedHandler();
         }
+    }
+
+    protected exploreClick(section: string | null) {
+        if (!section) {
+            this.router.navigate(['/razisci']);
+        }
+        let queryParams = {
+            s: section
+        }
+        this.router.navigate(['/razisci'], { queryParams: queryParams });
     }
 
     protected createImageFromBlob(image: Blob) {

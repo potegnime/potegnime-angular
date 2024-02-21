@@ -279,8 +279,6 @@ export class SettingsPageComponent {
                             this.authService.unauthorizedHandler();
                             break;
                         case 403:
-                            console.log('40333333333333');
-                            console.log(error);
                             this.toastr.error(error.error.message);
                             break;
                         default:
@@ -301,7 +299,7 @@ export class SettingsPageComponent {
 
     onDeleteProfileSubmit() {
         if (this.deleteProfileForm.valid) {
-            if (!confirm('Ali ste prepričani, da želite izbrisati profil? Ta operacija je nepovratna!')) {
+            if (!confirm('Ali ste prepričani, da želite izbrisati profil?')) {
                 return;
             }
             const password = this.deleteProfileForm.get('password')?.value;
@@ -320,10 +318,10 @@ export class SettingsPageComponent {
                             this.authService.unauthorizedHandler();
                             break;
                         case 403:
-                            this.toastr.error(error.error.message);
+                            this.toastr.error('', error.error.message, { timeOut: 5000 });
                             break;
                         default:
-                            this.toastr.error('Napaka pri brisanju profila!');
+                            this.toastr.error('', 'Napaka pri brisanju profila!', { timeOut: 5000 });
                             break;
                     }
                 }
@@ -349,7 +347,6 @@ export class SettingsPageComponent {
         }
     }
 
-    // UI methods
     protected scrollToSection(sectionId: string): void {
         const element = document.getElementById(sectionId);
         if (element) {
@@ -441,7 +438,7 @@ export class SettingsPageComponent {
             case 'password':
                 return 'Geslo';
             default:
-                return '';
+                return controlName;
         }
     }
 }
