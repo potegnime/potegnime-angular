@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthService } from '../../services/auth-service/auth.service';
 
 @Injectable()
 export class AuthGuard {

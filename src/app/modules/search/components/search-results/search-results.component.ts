@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { SearchService } from 'src/app/modules/search/services/search.service';
+import { SearchService } from 'src/app/modules/search/services/search-service/search.service';
 import { urlConst } from 'src/app/modules/shared/enums/url.enum';
 import { SearchRequestDto } from '../../models/search-request.interface';
-import { AuthService } from 'src/app/modules/auth/services/auth.service';
-import { Torrent } from 'src/app/modules/torrent/models/torrent.interface';
+import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
+import { Torrent } from 'src/app/modules/search/models/torrent.interface';
 import { DatePipe } from '@angular/common';
+import { SortService } from '../../services/sort-service/sort.service';
 
 @Component({
     selector: 'app-search-results',
@@ -14,7 +15,6 @@ import { DatePipe } from '@angular/common';
     styleUrls: ['./search-results.component.scss']
 })
 export class SearchResultsComponent implements OnInit {
-    // Params gathered from URL
     private searchQuery: string = '';
     private category: string | null = null;
     private source: string | null = null;
@@ -34,27 +34,22 @@ export class SearchResultsComponent implements OnInit {
         private readonly searchService: SearchService,
         private readonly toastr: ToastrService,
         private readonly authService: AuthService,
+        private readonly sortService: SortService,
         private readonly datePipe: DatePipe
     ) { }
 
     ngOnInit(): void {
-        // onInit, get search query from URL and fetch search results
         this.noResults = false;
         this.route.queryParams.subscribe((params) => {
-            // Set params from URL - only q, category and source are used
-            // Limit is set to null - backend handles this
-            // Sorting is done on frontend
             this.searchQuery = params['q'];
             this.category = params['category'];
             this.source = params['source'];
             this.sort = params['sort'] ?? 'default';
 
             if (this.searchQuery) {
-                // Empty search results on new search
                 this.searchResults = [];
                 this.missingQuery = false;
 
-                // Build search request DTO and fetch search results
                 const searchRequestDto: SearchRequestDto = {
                     query: this.searchQuery,
                     category: this.category || null,
@@ -236,6 +231,7 @@ export class SearchResultsComponent implements OnInit {
     }
 
     protected sortRowColumnClick(columnName: 'name' | 'uploader' | 'size' | 'se' | 'pe') {
+        this.sortService.changeSort(this.sort);
         switch (columnName) {
             case 'name':
                 if (this.sort == 'name-asc') this.sort = 'name-desc';
@@ -243,10 +239,10 @@ export class SearchResultsComponent implements OnInit {
                 this.sortResults(this.sort);
                 break;
             case 'uploader':
-                    if (this.sort == 'uploader-asc') this.sort = 'uploader-desc';
-                    else this.sort = 'uploader-asc';
-                    this.sortResults(this.sort);
-                    break;
+                if (this.sort == 'uploader-asc') this.sort = 'uploader-desc';
+                else this.sort = 'uploader-asc';
+                this.sortResults(this.sort);
+                break;
             case 'size':
                 if (this.sort == 'size-asc') this.sort = 'size-desc';
                 else this.sort = 'size-asc';
@@ -283,9 +279,9 @@ export class SearchResultsComponent implements OnInit {
     }
 
     protected displaySePe(value: any): string {
-        if (!value || 
-            value == '-' || 
-            value == '/' || 
+        if (!value ||
+            value == '-' ||
+            value == '/' ||
             isNaN(parseInt(value))
         ) {
             return '?';
@@ -349,7 +345,7 @@ export class SearchResultsComponent implements OnInit {
                 multiplier = 1024 * 1024 * 1024 * 1024 * 1024;
                 break;
         }
-    
+
         return value * multiplier;
     }
 }

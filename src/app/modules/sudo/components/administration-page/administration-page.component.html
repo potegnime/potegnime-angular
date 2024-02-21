@@ -16,18 +16,21 @@
             <form [formGroup]="setRecommendationForm" (ngSubmit)="onSetRecommendationFormSubmit()">
                 <div class="change-container">
                     <label for="set-recommendation-date">Datum:</label>
-                    <input type="date" name="set-recommendation-date" id="set-recommendation-date" formControlName="date" class="input" (change)="onRecommendationDateChanged()">
+                    <input type="date" name="set-recommendation-date" id="set-recommendation-date"
+                        formControlName="date" class="input" (change)="onRecommendationDateChanged()">
                 </div>
                 <div class="change-container">
                     <label for="set-recommendation-type">Tip:</label>
-                    <select name="set-recommendation-type" id="set-recommendation-type" formControlName="type" class="input" (change)="onRecommendationTypeChange($event.target)">
+                    <select name="set-recommendation-type" id="set-recommendation-type" formControlName="type"
+                        class="input" (change)="onRecommendationTypeChange($event.target)">
                         <option value="movie">Film</option>
                         <option value="series">Serija</option>
                     </select>
                 </div>
                 <div class="change-container">
                     <label for="set-recommendation-name">Naslov:</label>
-                    <input type="text" name="set-recommendation-name" id="set-recommendation-name" formControlName="name" class="input">
+                    <input type="text" name="set-recommendation-name" id="set-recommendation-name"
+                        formControlName="name" class="input">
                 </div>
 
                 <div class="row">
@@ -37,7 +40,8 @@
                         </button>
                     </div>
                     <div class="col-6 right-button-container">
-                        <button type="button" class="button danger-button button col-6" id="delete-recommendation-button" (click)="onDeleteTodaysRecommendation()">
+                        <button type="button" class="button danger-button button col-6"
+                            id="delete-recommendation-button" (click)="onDeleteTodaysRecommendation()">
                             Izbriši izbran torrent
                         </button>
                     </div>
@@ -51,7 +55,8 @@
             <form [formGroup]="userControlForm" (ngSubmit)="onUserControlFormSubmit()">
                 <div class="change-container">
                     <label for="user-control-username">Uporabniško ime:</label>
-                    <input type="text" name="user-control-username" id="user-control-username" formControlName="username" class="input">
+                    <input type="text" name="user-control-username" id="user-control-username"
+                        formControlName="username" class="input">
                 </div>
                 <button type="submit" class="button">
                     Išči
@@ -68,20 +73,22 @@
                     </div>
                 </div>
                 <div class="col-4" *ngIf="userFound === true">
-                    <form [formGroup]="userRoleChangeForm" >
+                    <form [formGroup]="userRoleChangeForm">
                         <label for="changeUserRole">Spremeni role</label>
-                        <select name="changeUserRole" id="changeUserRole" class="input" formControlName="role" (change)="onUserRoleChangeForm()">
+                        <select name="changeUserRole" id="changeUserRole" class="input" formControlName="role"
+                            (change)="onUserRoleChangeForm()">
                             <option value="admin">Admin</option>
                             <option value="uporabnik">Uporabnik</option>
                         </select>
                     </form>
-                    <button class="button" class="danger-button button" id="delete-profile-button" (click)="onDeleteUser()">
+                    <button class="button" class="danger-button button" id="delete-profile-button"
+                        (click)="onDeleteUser()">
                         Izbriši uporabnika
                     </button>
                 </div>
             </div>
 
-            
+
         </div>
     </div>
 </div>

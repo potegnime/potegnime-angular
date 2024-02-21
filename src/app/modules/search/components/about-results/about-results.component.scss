@@ -43,15 +43,16 @@ a {
     text-decoration: underline;
 }
 
-.tpb a, .yts a, .torrentProject a {
+.tpb a,
+.yts a,
+.torrentProject a {
     color: var(--white);
     text-decoration-color: var(--white);
 }
 
 .tpb a:hover,
 .yts a:hover,
-.torrentProject a:hover
- {
+.torrentProject a:hover {
     color: var(--blue);
     text-decoration-color: var(--blue);
 }

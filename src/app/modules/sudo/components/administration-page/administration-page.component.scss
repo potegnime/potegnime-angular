@@ -50,22 +50,27 @@ h4 {
     align-items: center;
     justify-content: center;
 }
+
 .user-display-container h5 {
     margin-bottom: 16px;
 }
+
 .user-display-container p {
     padding: 0;
     margin: 10px 0;
 }
 
 
-#save-recommendation-button, #delete-recommendation-button {
+#save-recommendation-button,
+#delete-recommendation-button {
     width: auto;
 }
+
 .left-button-container {
     display: flex;
     justify-content: flex-start;
 }
+
 .right-button-container {
     display: flex;
     justify-content: flex-end;
@@ -87,15 +92,20 @@ h4 {
 .danger-button {
     background-color: var(--red-primary);
 }
-.danger-button:disabled, .danger-button:hover {
+
+.danger-button:disabled,
+.danger-button:hover {
     background-color: var(--red-secondary);
 }
+
 #remove-profile-picture-button {
     margin-top: 20px;
 }
+
 #changeUserRole {
     margin-top: 5px;
 }
+
 #delete-profile-button {
     margin-top: 20px;
 }

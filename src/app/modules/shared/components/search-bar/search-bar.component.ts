@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { SearchService } from 'src/app/modules/search/services/search.service';
+import { SearchService } from 'src/app/modules/search/services/search-service/search.service';
 
 @Component({
     selector: 'app-search-bar',

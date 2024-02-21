@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { UserLoginDto } from '../../models/user-login.interface';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../services/auth-service/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -13,7 +13,7 @@ import { TokenService } from 'src/app/modules/shared/services/token-service/toke
 })
 export class LoginPageComponent {
 
-    loginForm: FormGroup;
+    protected loginForm: FormGroup;
     protected showLoginError: boolean = false;
     protected loginErrorMessage: string = '';
     protected showPassword: boolean = false;
@@ -37,12 +37,9 @@ export class LoginPageComponent {
 
             this.authService.login(userLoginDto).subscribe({
                 next: (resp) => {
-                    // Login successful
                     if (resp.token) {
-                        // Toast login successful
                         this.toastr.success('', 'Prijava uspešna!', { timeOut: 2000 });
 
-                        // Save token and redirect
                         this.tokenService.setToken(resp.token);
                         this.router.navigate(['/']);
                     } else {
@@ -50,13 +47,10 @@ export class LoginPageComponent {
                     }
                 },
                 error: (err) => {
-                    // Login failed
                     if (err.status === 401) {
-                        // Expected login failure, show login error message
                         this.showLoginError = true;
                         this.loginErrorMessage = err.error.message;
                     } else {
-                        // Unexpected error, show toast
                         this.toastr.error('', 'Napaka na strežniku', { timeOut: 5000 });
                     }
                 },

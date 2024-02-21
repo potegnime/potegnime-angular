@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
-import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
 import { TmdbMovieResponse } from 'src/app/modules/shared/models/tmdb-movie-response.interface';
-import { TmdbTrendingResponse } from 'src/app/modules/shared/models/tmdb-trending-response.interface';
 import { RecommendService } from 'src/app/modules/shared/services/recommend-service/recommend.service';
 
 @Component({

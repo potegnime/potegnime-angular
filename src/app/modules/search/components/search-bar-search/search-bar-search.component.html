@@ -8,7 +8,8 @@
         </div>
 
         <div class="options-search">
-            <input type="button" class="options-button" name="predlagaj" id="predlagaj-button" value="Preseneti me" (click)="searchRandomTitle()">
+            <input type="button" class="options-button" name="predlagaj" id="predlagaj-button" value="Preseneti me"
+                (click)="searchRandomTitle()">
 
             <div class="dropdown-container">
                 <label for="source">Vir</label>
@@ -28,7 +29,8 @@
 
             <div class="dropdown-container">
                 <label for="sort">Sortiranje</label>
-                <select class="dropdown" formControlName="sort" id="sort" name="sort" [(ngModel)]="sort" (change)="onSortChange(sort)">
+                <select class="dropdown" formControlName="sort" id="sort" name="sort" [(ngModel)]="sort"
+                    (change)="onSortChange(sort)">
                     <option value="default">Privzeto</option>
                     <option value="name-asc">Imenu ↑</option>
                     <option value="name-desc">Imenu ↓</option>

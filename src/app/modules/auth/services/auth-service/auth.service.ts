@@ -2,8 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map, of, catchError } from 'rxjs';
 import { urlConst } from 'src/app/modules/shared/enums/url.enum';
-import { UserRegisterDto } from '../models/user-register.interface';
-import { UserLoginDto } from '../models/user-login.interface';
+import { UserRegisterDto } from '../../models/user-register.interface';
+import { UserLoginDto } from '../../models/user-login.interface';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -17,7 +17,8 @@ export class AuthService {
         private readonly http: HttpClient,
         private readonly router: Router,
         private readonly jwtHelper: JwtHelperService,
-        private readonly tokenService: TokenService
+        private readonly tokenService: TokenService,
+        private readonly toastr: ToastrService
     ) { }
 
     public register(userRegisterDto: UserRegisterDto): Observable<any> {
@@ -25,12 +26,7 @@ export class AuthService {
             'Content-Type': 'application/json'
         });
 
-        return this.http.post<any>(`${urlConst.apiBase}/auth/register`, userRegisterDto, { headers: headers })
-            .pipe(
-                map((response: any) => {
-                    return response;
-                })
-            );
+        return this.http.post<any>(`${urlConst.apiBase}/auth/register`, userRegisterDto, { headers: headers });
     };
 
     public login(userLoginDto: UserLoginDto): Observable<any> {
@@ -39,17 +35,13 @@ export class AuthService {
             'Content-Type': 'application/json'
         });
 
-        return this.http.post<any>(`${urlConst.apiBase}/auth/login`, userLoginDto, { headers: headers })
-            .pipe(
-                map((response: any) => {
-                    return response;
-                })
-            );
+        return this.http.post<any>(`${urlConst.apiBase}/auth/login`, userLoginDto, { headers: headers });
     };
 
     public logout(): void {
         this.tokenService.deleteToken();
         this.router.navigate(['/prijava']);
+        this.toastr.success('', 'Odjava uspešna', { timeOut: 5000 })
     }
 
     public unauthorizedHandler(): void {
@@ -57,13 +49,10 @@ export class AuthService {
     }
 
     public verifyToken(): boolean {
-        // Check if token exists
         const token = this.tokenService.getToken();
         if (!token) {
             return false;
         }
-
-        // Check token expiration
         if (this.jwtHelper.isTokenExpired(token)) {
             return false;
         }

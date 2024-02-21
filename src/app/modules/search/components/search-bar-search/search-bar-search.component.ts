@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { SearchService } from '../../services/search.service';
+import { SearchService } from '../../services/search-service/search.service';
 import { TorrentProviderCategories } from '../../models/torrent-provider-categories.interface';
-import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
 import { RecommendService } from 'src/app/modules/shared/services/recommend-service/recommend.service';
+import { SortService } from '../../services/sort-service/sort.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-search-bar-search',
     templateUrl: './search-bar-search.component.html',
     styleUrls: ['./search-bar-search.component.scss']
 })
-export class SearchBarSearchComponent implements OnInit {
+export class SearchBarSearchComponent implements OnInit, OnDestroy {
     protected searchForm!: FormGroup;
 
     protected torrentProviderCategories: TorrentProviderCategories = {} as TorrentProviderCategories;
@@ -22,14 +24,21 @@ export class SearchBarSearchComponent implements OnInit {
     protected selectedCategory: string = 'All';
     protected sort: string = 'default';
 
+    private sortSubscription: Subscription;
+
     constructor(
         private readonly formBuilder: FormBuilder,
         private readonly toastr: ToastrService,
         private readonly route: ActivatedRoute,
         private readonly searchService: SearchService,
         private readonly authService: AuthService,
-        private readonly recommendService: RecommendService
-    ) { }
+        private readonly recommendService: RecommendService,
+        private readonly sortService: SortService
+    ) {
+        this.sortSubscription = this.sortService.currentSort.subscribe(sort => {
+            this.sort = sort;
+        })
+    }
 
     ngOnInit(): void {
         // Get torrent provider categories
@@ -57,6 +66,10 @@ export class SearchBarSearchComponent implements OnInit {
             const query = params.get('q') || '';
             this.searchForm.patchValue({ query });
         });
+    }
+
+    ngOnDestroy(): void {
+        this.sortSubscription.unsubscribe();
     }
 
     private notOnlyWhitespaceValidator(control: FormControl) {

@@ -2,7 +2,7 @@ import { Component, NgZone, AfterViewChecked } from '@angular/core';
 import { RecommendService } from '../../../shared/services/recommend-service/recommend.service';
 import { TmdbMovieResponse } from '../../../shared/models/tmdb-movie-response.interface';
 import { TmdbTrendingResponse } from '../../../shared/models/tmdb-trending-response.interface';
-import { AuthService } from '../../../auth/services/auth.service';
+import { AuthService } from '../../../auth/services/auth-service/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
@@ -139,7 +139,7 @@ export class RecommendPageComponent implements AfterViewChecked {
 
     protected searchTitle(text: string): void {
         if (this.language == 'sl-SI') {
-            this.toastr.info('Za boljše rezultate, poskusite iskati v angleščini', 'Iskanje v slovenščini', { timeOut: 5000})
+            this.toastr.info('Za boljše rezultate, poskusite iskati v angleščini', 'Iskanje v slovenščini', { timeOut: 5000 })
         }
         this.router.navigate(['/iskanje'], { queryParams: { q: text } });
     }

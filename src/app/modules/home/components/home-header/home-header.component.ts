@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
 import { AdminRecommendation } from 'src/app/modules/shared/models/admin-recommendation.interface';
 import { RecommendService } from 'src/app/modules/shared/services/recommend-service/recommend.service';
 @Component({

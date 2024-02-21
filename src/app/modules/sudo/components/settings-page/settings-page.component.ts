@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { of, map, Observable } from 'rxjs';
-import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
 import { CacheService } from 'src/app/modules/shared/services/cache-service/cache.service';
 import { TokenService } from 'src/app/modules/shared/services/token-service/token.service';
-import { UserService } from 'src/app/modules/user/services/user.service';
+import { UserService } from 'src/app/modules/user/services/user-service/user.service';
 import { UpdateUsernameDto } from 'src/app/modules/user/models/update-username.interface';
 import { UpdateEmailDto } from 'src/app/modules/user/models/update-email.interface';
 import { UpdatePfpDto } from 'src/app/modules/user/models/update-pfp.interface';
@@ -22,7 +21,7 @@ export class SettingsPageComponent {
     protected uid: number | null = null;
     protected username: string | null = null;
     protected email: string | null = null;
-    protected pristineProfilePicture: string | Blob= 'assets/images/no-pfp.png';
+    protected pristineProfilePicture: string | Blob = 'assets/images/no-pfp.png';
     protected hasProfilePicture: boolean = false;
     protected selectedProfilePicture: File | null = null;
     protected profilePictureUrl: string = 'assets/images/no-pfp.png';

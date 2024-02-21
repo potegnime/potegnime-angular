@@ -26,8 +26,8 @@ export class TokenService {
         const token = this.getToken();
         if (!token) {
             return null;
-        }                                                                                                     
-        const decodedToken = jwtDecode(token) as DecodedTokenModel;                                                                                                                                                                   
+        }
+        const decodedToken = jwtDecode(token) as DecodedTokenModel;
         try {
             return {
                 uid: Number(decodedToken.uid),

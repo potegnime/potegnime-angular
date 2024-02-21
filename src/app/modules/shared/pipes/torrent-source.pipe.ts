@@ -16,5 +16,4 @@ export class TorrentSourcePipe implements PipeTransform {
         }
         return value;
     }
-
 }

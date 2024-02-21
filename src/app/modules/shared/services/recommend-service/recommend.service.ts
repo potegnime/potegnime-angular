@@ -65,7 +65,7 @@ export class RecommendService {
 
         return this.http.get<TmdbTrendingResponse>(`${urlConst.apiBase}/recommend/trendingTv?language=${language}&timeWindow=${timeWindow}`, { headers });
     }
-    
+
     public setAdminRecommendation(recommendationDto: RecommendationDto): Observable<AdminRecommendation> {
         const headers: HttpHeaders = new HttpHeaders({
             'Authorization': `Bearer ${this.tokenService.getToken()}`

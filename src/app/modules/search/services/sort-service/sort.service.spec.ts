@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TokenService } from './token.service';
+import { SortService } from './sort.service';
 
-describe('TokenService', () => {
-    let service: TokenService;
+describe('SortService', () => {
+    let service: SortService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({});
-        service = TestBed.inject(TokenService);
+        service = TestBed.inject(SortService);
     });
 
     it('should be created', () => {

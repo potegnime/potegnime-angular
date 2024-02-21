@@ -100,9 +100,12 @@ input[type="file"] {
 .danger-button {
     background-color: var(--red-primary);
 }
-.danger-button:disabled, .danger-button:hover {
+
+.danger-button:disabled,
+.danger-button:hover {
     background-color: var(--red-secondary);
 }
+
 #remove-profile-picture-button {
     margin-top: 20px;
 }

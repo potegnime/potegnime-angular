@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router, Route, NavigationEnd } from '@angular/router';
+import { Component } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { AuthService } from './modules/auth/services/auth.service';
+import { AuthService } from './modules/auth/services/auth-service/auth.service';
 import { DefinedRoutes } from './modules/shared/enums/routes.enum';
 
 @Component({
@@ -10,7 +10,7 @@ import { DefinedRoutes } from './modules/shared/enums/routes.enum';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    title = 'potegni.ga';
+    title = 'nalozi.si';
     currentPath: string = new URL(window.location.href).pathname;
 
     public isLoggedIn: boolean = false;
@@ -22,16 +22,12 @@ export class AppComponent {
         this.router.events
             .pipe(filter(event => event instanceof NavigationEnd))
             .subscribe(() => {
-                // auth
                 this.isLoggedIn = this.authService.verifyToken();
-
-                // 404
                 this.checkCurrentUrlInRoutes();
             })
     }
 
     private checkCurrentUrlInRoutes() {
-        // Check for 404 error
         this.currentPath = new URL(window.location.href).pathname.slice(1);
         if (DefinedRoutes.includes(this.currentPath)) {
             this.error = false;

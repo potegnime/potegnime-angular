@@ -1,49 +1,37 @@
 <div class="login-page">
-  <div class="login-container">
-    <div class="login-mobile-top">
-      <img src="assets/images/logo.png" alt="nalozi.si" class="login-mobile-logo">
-    </div>
-    <div class="login-left">
-      <img src="assets/images/logo-white-background.png" alt="nalozi.si" class="login-logo">
-      <p>Moderni slovenski torrent iskalnik</p>
-    </div>
-    <div class="login-right">
-      <h1>Prijava</h1>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" >  
-        <div>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            placeholder="Uporabniško ime"
-            required
-            formControlName="username"
-          >
+    <div class="login-container">
+        <div class="login-mobile-top">
+            <img src="assets/images/logo.png" alt="nalozi.si" class="login-mobile-logo">
         </div>
-        <div class="password-container">
-          <input
-          type="{{ showPassword ? 'text' : 'password' }}"
-            id="password"
-            name="password"
-            placeholder="Geslo"
-            required
-            formControlName="password"
-          >
-          <span class="toggle-password" (click)="togglePasswordVisibility()">
-            <i class="eye-icon fa-solid" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
-          </span>
+        <div class="login-left">
+            <img src="assets/images/logo-white-background.png" alt="nalozi.si" class="login-logo">
+            <p>Moderni slovenski torrent iskalnik</p>
         </div>
-      
-        <button type="submit" [disabled]="loginForm.invalid" class="login-button">Prijava</button>
-      </form>
-      
-      <p class="register-url">Še nimaš računa? <a routerLink="/registracija">Registriraj se!</a></p>
-  
-      <div class="login-error" *ngIf="showLoginError">
-        {{ loginErrorMessage }}
-      </div>
-          
+        <div class="login-right">
+            <h1>Prijava</h1>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div>
+                    <input type="text" id="username" name="username" placeholder="Uporabniško ime" required
+                        formControlName="username">
+                </div>
+                <div class="password-container">
+                    <input type="{{ showPassword ? 'text' : 'password' }}" id="password" name="password"
+                        placeholder="Geslo" required formControlName="password">
+                    <span class="toggle-password" (click)="togglePasswordVisibility()">
+                        <i class="eye-icon fa-solid" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
+                    </span>
+                </div>
+
+                <button type="submit" [disabled]="loginForm.invalid" class="login-button">Prijava</button>
+            </form>
+
+            <p class="register-url">Še nimaš računa? <a routerLink="/registracija">Registriraj se!</a></p>
+
+            <div class="login-error" *ngIf="showLoginError">
+                {{ loginErrorMessage }}
+            </div>
+
+        </div>
     </div>
-  </div>
 
 </div>

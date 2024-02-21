@@ -1,11 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, of } from 'rxjs';
-import { AuthService } from 'src/app/modules/auth/services/auth.service';
-import { urlConst } from '../../shared/enums/url.enum';
-import { TokenService } from '../../shared/services/token-service/token.service';
-import { SearchRequestDto } from '../models/search-request.interface';
-import { TorrentProviderCategories } from '../models/torrent-provider-categories.interface';
+import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
+import { urlConst } from '../../../shared/enums/url.enum';
+import { TokenService } from '../../../shared/services/token-service/token.service';
+import { SearchRequestDto } from '../../models/search-request.interface';
+import { TorrentProviderCategories } from '../../models/torrent-provider-categories.interface';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -51,13 +51,13 @@ export class SearchService {
         return this.http.get<any>(`${urlConst.apiBase}/search/allProviderCategories`, { headers: headers });
     }
 
-    public onSearchComponent (
-        query: string, 
+    public onSearchComponent(
+        query: string,
         category: string | null,
         source: string | null,
         limit: string | null,
         sort: string | null
-    ): void {        
+    ): void {
         // Build query params
         let queryParams = {};
         if (query) {

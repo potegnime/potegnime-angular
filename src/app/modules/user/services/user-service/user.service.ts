@@ -1,15 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, of, tap } from 'rxjs';
-import { AuthService } from 'src/app/modules/auth/services/auth.service';
-import { TokenService } from '../../shared/services/token-service/token.service';
-import { urlConst } from '../../shared/enums/url.enum';
+import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
+import { TokenService } from '../../../shared/services/token-service/token.service';
+import { urlConst } from '../../../shared/enums/url.enum';
 import { UpdateUsernameDto } from 'src/app/modules/user/models/update-username.interface';
 import { UpdateEmailDto } from 'src/app/modules/user/models/update-email.interface';
 import { UpdatePfpDto } from 'src/app/modules/user/models/update-pfp.interface';
 import { UpdatePasswordDto } from 'src/app/modules/user/models/update-password.interface';
 import { DeleteProfileDto } from 'src/app/modules/user/models/delete-profile.interface';
-import { UpdateRoleDto } from '../models/update-role.interface';
+import { UpdateRoleDto } from '../../models/update-role.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -17,7 +17,6 @@ import { UpdateRoleDto } from '../models/update-role.interface';
 export class UserService {
     constructor(
         private readonly http: HttpClient,
-        private readonly authService: AuthService,
         private readonly tokenService: TokenService
     ) { }
 

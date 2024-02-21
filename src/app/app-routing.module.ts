@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './modules/auth/guards/auth/auth.guard';
 import { LoggedInAuthGuard } from './modules/auth/guards/logged-in/logged-in-guard.guard';
-import { AdminGuard } from './modules/sudo/guards/admin.guard';
+import { AdminGuard } from './modules/sudo/guards/admin-guard/admin.guard';
 import { ErrorComponent } from './modules/shared/components/error/error.component';
 import { LoginPageComponent } from './modules/auth/components/login-page/login-page.component';
 import { RegisterPageComponent } from './modules/auth/components/register-page/register-page.component';

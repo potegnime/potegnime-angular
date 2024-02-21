@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { urlConst } from '../../enums/url.enum';
-import { Route } from '@angular/router';
 
 @Component({
     selector: 'app-error',

@@ -1,26 +1,22 @@
 <footer class="row">
 
     <div class="col-4 text-center">
-        <a routerLink="/iskanje">
-            <h3>Torrenti</h3>
-        </a>
+        <h3>Torrenti</h3>
         <ul>
             <li>
-                <a routerLink="/iskanje">Filmi</a>
+                <a routerLink="" (click)="exploreClick('popular')">Popularno</a>
             </li>
             <li>
-                <a routerLink="/iskanje">Risanke</a>
+                <a routerLink="" (click)="exploreClick('trendingMovie')">Trending</a>
             </li>
             <li>
-                <a routerLink="/iskanje">Programi</a>
+                <a routerLink="" (click)="exploreClick('upcoming')">Kmalu v kinu</a>
             </li>
         </ul>
     </div>
 
     <div class="col-4 text-center">
-        <a routerLink="/u">
-            <h3>Profil</h3>
-        </a>
+        <h3>Profil</h3>
         <ul>
             <li>
                 <a [routerLink]="['/u', this.uid]">Moj profil</a>
@@ -28,16 +24,17 @@
             <li>
                 <a routerLink="/nastavitve">Nastavitve</a>
             </li>
-            <li>
-                <a routerLink="/ustvari">Ustvari torrent</a>
+            <li *ngIf="isAdmin">
+                <a  routerLink="/admin">Administracija</a>
+            </li>
+            <li *ngIf="!isAdmin">
+                <a routerLink="" (click)="logout()">Odjava</a>
             </li>
         </ul>
     </div>
 
     <div class="col-4 text-center">
-        <a routerLink="/o-nas">
-            <h3>nalozi.si</h3>
-        </a>
+        <h3>nalozi.si</h3>
         <ul>
             <li>
                 <a routerLink="/o-nas">O nas</a>

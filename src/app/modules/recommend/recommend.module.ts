@@ -4,8 +4,6 @@ import { RecommendPageComponent } from './components/recommend-page/recommend-pa
 import { RecommendRoutingModule } from './recommend-routing.module';
 import { SharedModule } from '../shared/shared.module';
 
-
-
 @NgModule({
   declarations: [
     RecommendPageComponent

@@ -6,29 +6,37 @@
     margin-top: 15px;
     margin-bottom: 15px;
 }
+
 .top-rec-table {
     width: 100%;
     table-layout: fixed;
 }
-.top-rec-table th, .top-rec-table td {
+
+.top-rec-table th,
+.top-rec-table td {
     width: 33.33%;
 }
+
 .img-fluid {
     max-width: 100%;
     height: auto;
 }
+
 thead tr th {
     padding: 12px;
     font-size: 1.2em;
 }
+
 h2 {
     margin-top: 1em;
     text-align: center;
 }
+
 h2 a {
     text-decoration: none;
     color: var(--white);
 }
+
 ul {
     margin-bottom: 5px;
 }
@@ -38,16 +46,19 @@ ul {
     border-radius: var(--border-radius);
     transition: all 0.3s;
 }
+
 .li-movie:hover {
     background-color: var(--darkgray);
     cursor: pointer;
 }
+
 .li-movie img {
     border-radius: var(--border-radius);
     margin-right: 5px;
     height: auto;
     width: 75px;
 }
+
 .li-movie div {
     display: flex;
     flex-direction: column;
@@ -55,10 +66,12 @@ ul {
     align-items: center;
     // margin: auto;
 }
+
 .li-movie h5 {
     text-align: center;
     font-weight: bold;
 }
+
 .li-movie .genres {
     text-align: center;
     font-weight: normal;
@@ -73,14 +86,17 @@ ul {
     border-radius: var(--border-radius);
     transition: all 0.3s;
 }
+
 .li-more p {
     padding: 5px;
     margin: auto;
 }
+
 .li-more p a {
     text-decoration: none;
     color: var(--white);
 }
+
 .li-more:hover {
     background-color: var(--darkgray);
     cursor: pointer;

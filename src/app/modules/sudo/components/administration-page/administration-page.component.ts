@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
 import { AdminRecommendation } from 'src/app/modules/shared/models/admin-recommendation.interface';
 import { RecommendationDto } from 'src/app/modules/shared/models/recommendation-dto.interface';
 import { RecommendService } from 'src/app/modules/shared/services/recommend-service/recommend.service';
 import { UpdateRoleDto } from 'src/app/modules/user/models/update-role.interface';
-import { UserService } from 'src/app/modules/user/services/user.service';
+import { UserService } from 'src/app/modules/user/services/user-service/user.service';
 
 @Component({
-  selector: 'app-administration-page',
-  templateUrl: './administration-page.component.html',
-  styleUrls: ['./administration-page.component.scss']
+    selector: 'app-administration-page',
+    templateUrl: './administration-page.component.html',
+    styleUrls: ['./administration-page.component.scss']
 })
 export class AdministrationPageComponent {
     protected userFound: boolean | null = null;
@@ -43,7 +43,7 @@ export class AdministrationPageComponent {
                 this.setRecommendationForm.patchValue({
                     name: response.name
                 });
-            }, 
+            },
             error: (error) => {
                 switch (error.status) {
                     case 401:
@@ -63,7 +63,7 @@ export class AdministrationPageComponent {
                             type: ['movie', Validators.required],
                             name: ['', Validators.required]
                         });
-                    break;
+                        break;
                 }
             }
         });
@@ -96,7 +96,7 @@ export class AdministrationPageComponent {
                     type: response.type,
                     name: response.name
                 });
-            }, 
+            },
             error: (error) => {
                 switch (error.status) {
                     case 401:
@@ -116,7 +116,7 @@ export class AdministrationPageComponent {
                             type: ['movie', Validators.required],
                             name: ['', Validators.required]
                         });
-                    break;
+                        break;
                 }
             }
         });
@@ -172,7 +172,7 @@ export class AdministrationPageComponent {
                     this.toastr.success('', 'Izbrani film dnvea uspešno izbrisan!', { timeOut: 5000 });
                 } else if (type == 'series') {
                     this.toastr.success('', 'Izbrana serija dnvea uspešno izbrisana!', { timeOut: 5000 });
-                }                
+                }
                 this.setRecommendationForm.patchValue({
                     name: ''
                 });
@@ -257,14 +257,14 @@ export class AdministrationPageComponent {
                 userId: this.userUserId,
                 roleName: role
             };
-    
+
             this.userService.updateRole(updateRoleDto).subscribe({
                 next: () => {
                     this.toastr.success('', `Role za uporabnika ${this.userUsername} uspešno nastavljen na ${this.getUiAppropriateControlName(role)}`, { timeOut: 5000 });
                     this.onUserControlFormSubmit();
                 },
                 error: (error) => {
-                    switch(error.status) {
+                    switch (error.status) {
                         case 401:
                             this.authService.unauthorizedHandler();
                             break;

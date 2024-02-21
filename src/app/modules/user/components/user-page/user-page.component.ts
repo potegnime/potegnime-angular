@@ -1,8 +1,8 @@
-import { Component, OnInit, untracked } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/modules/auth/services/auth.service';
+import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
 import { TokenService } from 'src/app/modules/shared/services/token-service/token.service';
-import { UserService } from 'src/app/modules/user/services/user.service';
+import { UserService } from 'src/app/modules/user/services/user-service/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CacheService } from 'src/app/modules/shared/services/cache-service/cache.service';
@@ -33,29 +33,21 @@ export class UserPageComponent implements OnInit {
 
     ngOnInit(): void {
         this.route.params.subscribe(params => {
-            // Perform checks on any route change
-
-            // Check if token exists
             this.token = this.tokenService.getToken();
             if (!this.token) {
-                // User not logged in - session expired - redirect to login page
                 this.authService.unauthorizedHandler();
             }
 
-            // Check if user id exists in url
             const urlUid: number | null = parseInt(this.router.url.split('/')[2]);
             if (!urlUid) {
-                // No user id in url - redirect to my page
                 const decodedToken = this.tokenService.decodeToken();
                 if (decodedToken) {
                     this.router.navigate(['u', decodedToken.uid]);
                 } else {
-                    // User not logged in - session expired - redirect to login page
                     this.authService.unauthorizedHandler();
                 }
             }
 
-            // Check if user page is my user page
             const decodedToken = this.tokenService.decodeToken();
             if (decodedToken) {
                 this.isMyPage = decodedToken.uid == urlUid;
@@ -65,7 +57,6 @@ export class UserPageComponent implements OnInit {
                     this.getCompleteUserData(urlUid);
                 }
             } else {
-                // Error decoding token - redirect to login page - log out user
                 this.authService.unauthorizedHandler();
             }
         });
@@ -80,7 +71,6 @@ export class UserPageComponent implements OnInit {
     }
 
     protected getCompleteUserData(id: number): void {
-        // Get user data and set user page
         this.userService.getUserById(id).subscribe({
             next: (user) => {
                 if (this.isMyPage) {
