@@ -61,3 +61,9 @@ nav {
     background-color: var(--button-background-hover);
     cursor: pointer;
 }
+
+@media (max-width: 768px) {
+    .left-list, .right-list {
+        justify-content: center;
+    }
+}

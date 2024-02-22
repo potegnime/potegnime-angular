@@ -3,11 +3,15 @@ footer {
     border-radius: var(--border-radius);
     padding: 10px;
     margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 h3 {
     color: var(--white);
     font-weight: 600;
+    text-align: center;
 }
 
 a {
@@ -17,6 +21,7 @@ a {
 ul {
     list-style-type: none;
     padding: 0;
+    text-align: center;
 }
 
 ul li {

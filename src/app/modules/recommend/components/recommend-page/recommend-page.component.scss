@@ -21,12 +21,25 @@ h2 {
     background-color: var(--darkgray);
     color: white !important;
     padding: 6px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: 0.3s;
 }
 
 .card:hover {
     cursor: pointer;
     background-color: #8a8a8a;
+    background-color: #8a8a8a;
+    transform: scale(1.05);
 }
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 
 label {
     display: block;
@@ -39,7 +52,6 @@ label {
     justify-content: center;
     align-self: center;
     flex-direction: column;
-
 }
 
 select {
@@ -58,7 +70,6 @@ select:hover {
     cursor: pointer;
 }
 
-// About
 .center-cont {
     padding: 15px;
     display: flex;
@@ -83,4 +94,32 @@ select:hover {
 #question-icon {
     width: 60%;
     aspect-ratio: 1/1;
+}
+
+.no-results {
+    font-size: 1.5em;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col-md-4 {
+    display: flex;
+    flex: 1 0 33%;
+    padding: 15px;
+}
+
+.card-img-top {
+    width: 100%;
+    height: auto;
+}
+
+.card-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
 }

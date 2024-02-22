@@ -5,7 +5,7 @@
             <img id="question-icon" src="assets/images/question-icon.png" alt="O rezultatih">
         </div>
         <div class="col-11 center-cont">
-            <p>Vir podatkov: <a href="https://www.themoviedb.org/">TMDB</a></p>
+            <p>Vir podatkov: <a href="https://www.themoviedb.org/" target="_blank">TMDB</a></p>
         </div>
     </div>
 </div>
@@ -44,9 +44,9 @@
 
 <div class="container mt-4">
     <h3 class="sectionTitle" id="popular">Popularno</h3>
-    <div class="row mb-5 grid">
-        <div *ngFor="let movie of popularMovies" class="col-md-4 mb-4 grid-item" (click)="searchTitle(movie.title)">
-            <div class="card">
+    <div class="row mb-5" *ngIf="popularMovies" >
+        <div *ngFor="let movie of popularMovies" class="col-md-4 mb-4" (click)="searchTitle(movie.title)">
+            <div class="card" title="{{ movie.description }}">
                 <img [src]="posterUrl + movie.imageUrl" class="card-img-top" [alt]="movie.title">
                 <div class="card-body">
                     <h5 class="card-title">{{movie.title}}</h5>
@@ -56,15 +56,17 @@
                 </div>
             </div>
         </div>
+        
     </div>
+    <p *ngIf="popularMovies.length === 0" class="text-center no-results">Ni rezultatov :(</p>
 </div>
 
 
 <div class="container mt-4">
     <h3 class="sectionTitle" id="nowPlaying">Zdaj v kinu</h3>
-    <div class="row mb-5">
-        <div *ngFor="let movie of nowPlayingMovies" class="col-md-4 mb-4 grid-item" (click)="searchTitle(movie.title)">
-            <div class="card">
+    <div class="row mb-5" *ngIf="nowPlayingMovies">
+        <div *ngFor="let movie of nowPlayingMovies" class="col-md-4 mb-4" (click)="searchTitle(movie.title)">
+            <div class="card" title="{{ movie.description }}">
                 <img [src]="posterUrl + movie.imageUrl" class="card-img-top" [alt]="movie.title">
                 <div class="card-body">
                     <h5 class="card-title">{{movie.title}}</h5>
@@ -75,14 +77,15 @@
             </div>
         </div>
     </div>
+    <p *ngIf="nowPlayingMovies.length === 0" class="text-center no-results">Ni rezultatov :(</p>
 </div>
 
 
 <div class="container mt-4">
     <h3 class="sectionTitle" id="topRated">Najbolj ocenjeno</h3>
-    <div class="row mb-5">
-        <div *ngFor="let movie of topRatedMovies" class="col-md-4 mb-4 grid-item" (click)="searchTitle(movie.title)">
-            <div class="card">
+    <div class="row mb-5" *ngIf="topRatedMovies">
+        <div *ngFor="let movie of topRatedMovies" class="col-md-4 mb-4" (click)="searchTitle(movie.title)">
+            <div class="card" title="{{ movie.description }}">
                 <img [src]="posterUrl + movie.imageUrl" class="card-img-top" [alt]="movie.title">
                 <div class="card-body">
                     <h5 class="card-title">{{movie.title}}</h5>
@@ -93,13 +96,14 @@
             </div>
         </div>
     </div>
+    <p *ngIf="topRatedMovies.length === 0" class="text-center no-results">Ni rezultatov :(</p>
 </div>
 
 <div class="container mt-4">
     <h3 class="sectionTitle" id="upcoming">Kmalu v kinu</h3>
-    <div class="row mb-5">
-        <div *ngFor="let movie of upcomingMovies" class="col-md-4 mb-4 grid-item" (click)="searchTitle(movie.title)">
-            <div class="card">
+    <div class="row mb-5" *ngIf="upcomingMovies">
+        <div *ngFor="let movie of upcomingMovies" class="col-md-4 mb-4" (click)="searchTitle(movie.title)">
+            <div class="card" title="{{ movie.description }}">
                 <img [src]="posterUrl + movie.imageUrl" class="card-img-top" [alt]="movie.title">
                 <div class="card-body">
                     <h5 class="card-title">{{movie.title}}</h5>
@@ -110,13 +114,14 @@
             </div>
         </div>
     </div>
+    <p *ngIf="upcomingMovies.length === 0" class="text-center no-results">Ni rezultatov :(</p>
 </div>
 
 <div class="container mt-4">
     <h3 class="sectionTitle" id="trendingMovie">Trending filmi</h3>
-    <div class="row mb-5">
-        <div *ngFor="let movie of trendingMovies" class="col-md-4 mb-4 grid-item" (click)="searchTitle(movie.title)">
-            <div class="card">
+    <div class="row mb-5" *ngIf="trendingMovies">
+        <div *ngFor="let movie of trendingMovies" class="col-md-4 mb-4" (click)="searchTitle(movie.title)">
+            <div class="card" title="{{ movie.description }}">
                 <img [src]="posterUrl + movie.imageUrl" class="card-img-top" [alt]="movie.title">
                 <div class="card-body">
                     <h5 class="card-title">{{movie.title}}</h5>
@@ -126,13 +131,14 @@
             </div>
         </div>
     </div>
+    <p *ngIf="trendingMovies.length === 0" class="text-center no-results">Ni rezultatov :(</p>
 </div>
 
 <div class="container mt-4">
     <h3 class="sectionTitle" id="trendingTv">Trending TV</h3>
-    <div class="row mb-5">
-        <div *ngFor="let movie of trendingTvShows" class="col-md-4 mb-4 grid-item" (click)="searchTitle(movie.title)">
-            <div class="card">
+    <div class="row mb-5" *ngIf="trendingTvShows">
+        <div *ngFor="let movie of trendingTvShows" class="col-md-4 mb-4" (click)="searchTitle(movie.title)">
+            <div class="card" title="{{ movie.description }}">
                 <img [src]="posterUrl + movie.imageUrl" class="card-img-top" [alt]="movie.title">
                 <div class="card-body">
                     <h5 class="card-title">{{movie.title}}</h5>
@@ -142,4 +148,5 @@
             </div>
         </div>
     </div>
+    <p *ngIf="trendingTvShows.length === 0" class="text-center no-results">Ni rezultatov :(</p>
 </div>

@@ -1,5 +1,87 @@
-<div *ngIf="!isLoggedIn">
-  <a routerLink="/">nalozi.si</a>
-</div>
+<div class="container text-center">
+    <div *ngIf="!isLoggedIn" class="back-link-cont m-2">
+        <a routerLink="/registracija">
+            <img src="assets/images/logo.png" alt="nalozi.si" width="150">
+        </a>
+    </div>
+    <h2 class="text-center mt-4 mb-4">Pravila in splošni pogoji uporabe</h2>
+    <p>
+        Pred uporabo iskalnika nalozi.si, prosimo, pozorno preberite spodnja pravila in pogoje uporabe. Z uporabo
+        aplikacije se strinjate, da vas zavezujejo ti pogoji.
+    </p>
 
-<h1>Pravila in splošni pogoji uporabe</h1>
+    <h4>Vsebina nalozi.si spletne aplikacije</h4>
+    <p>
+        nalozi.si je zgolj torrent iskalnik, ki črpa podatke iz drugih torrent sledilnikov (<a href="https://thepiratebay.org/" target="_blank" class="hidden-link">The Pirate Bay</a>, <a href="https://yts.mx/" target="_blank" class="hidden-link">YTS</a> in <a href="https://torrentproject.cc/" target="_blank" class="hidden-link">TorrentProject</a>), 
+        zato nalozi.si nima vpliva na vsebino datotek in drugih vsebin, katere je moč pridobiti preko spletne aplikacije.
+        Posledično nalozi.si ne prevzema nobene odgovornosti za resničnost, pravilnost in zakonitost vsebin, ki jih preko aplikacije lahko pridobijo uporabniki.
+    </p>
+
+    <h4>Registracija uporabnikov</h4>
+    <p>
+        Uporabnikom se je pred uporabo spletne aplikacije nalozi.si potrebno registrirati. Uporabnik mora ob registraciji upoštevati, da bodo vpisani podatki popolni in resnični.
+        Izdajanje za tretjo osebo ali uporaba začasnih "temp" e-naslovov je prepovedana.
+        Vsak uporabnik ima lahko na spletni aplikaciji svojo profilno sliko, katera pa ne sme vsebovati moralno spornih vsebin, ki bi lahko na kakšen koli način oškodovale druge uporabnike ali tretje osebe.
+    </p>
+
+    <h4>Dovoljena uporaba</h4>
+    <p>
+        nalozi.si je dovoljeno uporabljati zgolj za osebno, nekomercialno uporabo, razen če ni s temi pogoji uporabe ali s posebnim dogovorom drugače določeno. 
+        Prepovedano je kakršno koli kopiranje vsebine spletne aplikacije nalozi.si, zlasti posameznih datotek, njihovo spreminjanje ter vključevanje v drugo spletno stran, izdelek ali storitev.
+        Prepovedano je "meta" iskanje po spletni aplikaciji nalozi.si. Prepovedana je uporaba avtomatskih poizvedb ali drugih robotov, ki avtomatsko pridobivajo podatke iz spletne aplikacije nalozi.si 
+    </p>
+    <p>
+        Uporabnikom je izrecno prepovedana uporaba storitve z namenom propagiranja katere koli vsebine in/ali dejavnosti, širjenja neveljavnih podatkov o  drugih uporabnikih ali tretjih osebah, 
+        žaljenja drugih uporabnikov ali tretjih oseb in  širjenje kakršnih koli moralno spornih vsebin, ki bi na kakršen koli način lahko oškovale druge uporabnike ali tretje osebe.
+    </p>
+    <p>
+        nalozi.si si pridržuje pravico da ob mnenju, da vsebina uporabniškega profila ni primerna ali ne ustreza pogojem uporabe, krši oz. bi lahko predstavljal kršitev veljavne zakonodaje
+        izbriše posameznega uporabnika in mu onemogoči uporabo spletne aplikacije nalozi.si, brez kakšnega koli predhodnega opozorila ali potrebe po navedbi razloga za izbris.
+    </p>
+
+    <h4>Varstvo podatkov</h4>
+    <p>
+        Uporabnik storitve dovoljuje, da nalozi.si zbira in obdeluje podatke, ki so za ta namen potrebni in sicer:
+        podatki o uporabniku, kot jih je le ta vnesel v spletno aplikacijo nalozi.si,
+        podatki o shranjenih datotekah in drugih vsebinah,
+        podatki o IP naslovu uporabnika,
+        podatki o času uporabe spletne aplikacije nalozi.si.
+    </p>
+    <p>
+        nalozi.si se zavezuje, da zgoraj navedenih podatkov o uporabniku ne bo posredoval tretjim osebam z izjemo
+        povezanim osebam,
+        ki ponudniku zagotavljajo določene podporne storitve, potrebne za delovanje storitve ter v primeru suma kršitve
+        teh pogojev uporabe tudi ostalim osebam (zlasti državnim organom),
+        katerih sodelovanje je potrebno pri pregonu kršitelja.
+        Uporabnik izrecno dovoljuje ponudniku, da mu periodično, brezplačno z namenom direktnega marketinga pošilja
+        sporočila o njegovih lastnih storitvah in izdelkih in storitvah in izdelkih povezanih oseb v smislu ZGD-1.
+        Uporabnik ima pravico do vpogleda, prepisa, kopiranja, dopolnitve, popravka, blokiranja in izbrisa osebnih
+        podatkov, ki se nanj nanašajo.
+    </p>
+
+    <h4>Omejitev odgovornosti</h4>
+    <p>
+        nalozi.si si prizadeva, da bo celotna vsebina spletne aplikacije kvalitetna, estetska, zakonita in ažurna. 
+        Kljub temu, je storitev na voljo takšna kot je, brez kakršnega koli jamstva za delovanje.
+        Iskalnik črpa podatke iz drugih torrent sledilnikov (<a href="https://thepiratebay.org/" target="_blank" class="hidden-link">The Pirate Bay</a>, <a href="https://yts.mx/" target="_blank" class="hidden-link">YTS</a> in <a href="https://torrentproject.cc/" target="_blank" class="hidden-link">TorrentProject</a>), 
+        zato nalozi.si ne prevzema nobene odgovornosti za vsebino, dostopnost in delovanje spletne aplikacije nalozi.si, zlasti ne odgovarja za resničnost, pravilnost in zakonitost vsebin, ki jih je moč dobiti preko aplikacije.
+        nalozi.si prav tako ne prevzema odgovornosti za kakršno koli morebitno škodo, ki bi nastala uporabniku preko uporabe ali nezmožnosti uporabe spletne aplikacije nalozi.si.
+        nalozi.si ne prevzema nobene odgovornosti za morebitno izgubo vsebin ali kakršnih koli drugih podatkov, ki so del nalozi.si spletne aplikacije.  
+        nalozi.si si pridržuje pravico, da kadar koli, iz katerega koli razloga in za kakršno koli obdobje, brez predhodnega obvestila, prekine zagotavljanje spletnega aplikacije nalozi.si, če meni, da je to potrebno.
+        Omejitev odgovornosti v teh pravilih uporabe velja pod pogojem, da je v skladu z veljavno zakonodajo. V primeru neskladnosti velja takšna omejitev odgovornosti, v kakršnem obsegu je dovoljena z veljavno zakonodajo.
+    </p>
+
+    <h4>Licenca</h4>
+    <p>
+        nalozi.si je odprtokodna programska pod odprtokodno <a routerLink="/licenca" class="hidden-link">MIT licenco</a>. 
+    </p>
+
+    <h4>Sprememba pravil in pogojev uporabe</h4>
+    <p>
+        nalozi.si si pridržuje pravico, da lahko kadar koli spremeni pravila in pogoje uporabe, če meni, da je to potrebno. 
+        Spremenjeni pogoji uporabe veljajo od objave na spletni strani in veljajo za posameznega uporabnika od sprejema novih pogojev.
+    </p>
+
+    <hr>
+    <p>nalozi.si, februar 2024</p>
+</div>

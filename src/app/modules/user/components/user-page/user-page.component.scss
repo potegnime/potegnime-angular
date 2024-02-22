@@ -9,3 +9,9 @@
     background-position: center;
     background-repeat: no-repeat;
 }
+@media (max-width: 992px) {
+    .name-cont {
+        margin: auto;
+        text-align: center;
+    }
+}

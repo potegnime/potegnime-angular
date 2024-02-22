@@ -10,6 +10,7 @@ import { UpdateEmailDto } from 'src/app/modules/user/models/update-email.interfa
 import { UpdatePfpDto } from 'src/app/modules/user/models/update-pfp.interface';
 import { UpdatePasswordDto } from 'src/app/modules/user/models/update-password.interface';
 import { DeleteProfileDto } from 'src/app/modules/user/models/delete-profile.interface';
+import { timeout } from 'rxjs';
 
 @Component({
     selector: 'app-settings-page',
@@ -308,8 +309,8 @@ export class SettingsPageComponent {
 
             this.userService.deleteProfile(deleteProfileDto).subscribe({
                 next: () => {
-                    this.toastr.success('Profil uspešno izbrisan!');
-                    this.authService.logout();
+                    this.toastr.success('', 'Profil uspešno izbrisan!', { timeOut: 5000 });
+                    this.authService.unauthorizedHandler();
                 },
                 error: (error) => {
                     switch (error.status) {

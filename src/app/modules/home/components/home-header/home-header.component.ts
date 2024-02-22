@@ -43,7 +43,7 @@ export class HomeHeaderComponent {
                         break;
                     case 404:
                         if (type == 'movie') this.toastr.info('', 'Film dneva še ni bil nastavljen', { timeOut: 5000 });
-                        else this.toastr.info('', 'Serija dneva še ni bil nastavljena', { timeOut: 5000 });
+                        else this.toastr.info('', 'Serija dneva še ni bila nastavljena', { timeOut: 5000 });
                         break;
                     default:
                         if (type == 'movie') this.toastr.error('', 'Napaka pri pridobivanju filma dneva', { timeOut: 5000 });

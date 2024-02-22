@@ -1,17 +1,4 @@
 export const DefinedRoutes = [
-    // auth
-    'prijava',
-    'login',
-    'registracija',
-    'register',
-
-
-    '',
-    'iskanje',
-    'search',
-    'uporabnik',
-    'user',
-
     // About
     'o-nas',
     'donacije',
@@ -20,9 +7,30 @@ export const DefinedRoutes = [
     'pogoji',
     'terms',
 
-    'profil',
-    'profil/moj-profil',
-    'profil/nastavitve',
-    'profil/ustvari'
+    // Auth
+    'prijava',
+    'login',
+    'registracija',
+    'register',
 
+    // Home
+    '',
+
+    // Search
+    'iskanje',
+    'search',
+
+    // User
+    'u',
+    ':id',
+
+    // Recommend
+    'razisci',
+
+    // Sudo
+    'nastavitve',
+    'admin',
+
+    // 404
+    '**'
 ];

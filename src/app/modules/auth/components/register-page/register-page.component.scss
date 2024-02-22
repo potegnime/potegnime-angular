@@ -189,12 +189,39 @@ a {
     width: 100%;
 }
 
+@media (max-width: 1024px) {
+
+    .register-left,
+    .register-right {
+        flex: unset;
+        width: 100%;
+        border-radius: 10px;
+    }
+
+    .top-row,
+    .bottom-row {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .password-container,
+    .top-row input {
+        width: 100%;
+    }
+}
+
 @media (max-width: 768px) {
+    .register-page {
+        background: var(--page-background);
+    }
+
     .register-container {
         flex-direction: column;
         width: 80%;
         height: auto;
     }
+
+
 
     .register-mobile-top {
         display: block;
