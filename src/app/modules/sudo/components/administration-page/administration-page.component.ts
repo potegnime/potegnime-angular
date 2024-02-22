@@ -212,15 +212,10 @@ export class AdministrationPageComponent {
                             this.createImageFromBlob(response2);
                         },
                         error: (error2) => {
+                            this.userPfpUrl = 'assets/images/no-pfp.png';
                             switch (error2.status) {
                                 case 401:
                                     this.authService.unauthorizedHandler();
-                                    break;
-                                case 404:
-                                    // No profile picture
-                                    this.userPfpUrl = 'assets/images/no-pfp.png';
-                                    break;
-                                default:
                                     break;
                             }
                         }

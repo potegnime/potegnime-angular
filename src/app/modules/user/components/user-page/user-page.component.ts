@@ -111,16 +111,10 @@ export class UserPageComponent implements OnInit {
                         this.createImageFromBlob(response);
                     },
                     error: (error) => {
+                        this.profilePictureUrl = 'assets/images/no-pfp.png';
                         switch (error.status) {
                             case 401:
                                 this.authService.unauthorizedHandler();
-                                break;
-                            case 404:
-                                // No profile picture
-                                this.profilePictureUrl = 'assets/images/no-pfp.png';
-                                break;
-                            default:
-                                // this.toastr.error('Napaka pri pridobivanju profilne slike');
                                 break;
                         }
                     }

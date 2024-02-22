@@ -93,19 +93,13 @@ export class SettingsPageComponent {
                             this.pristineProfilePicture = response;
                         },
                         error: (error) => {
+                            this.profilePictureUrl = 'assets/images/no-pfp.png';
+                            this.changeUserDataForm.patchValue({
+                                profilePicture: this.profilePictureUrl
+                            });
                             switch (error.status) {
                                 case 401:
                                     this.authService.unauthorizedHandler();
-                                    break;
-                                case 404:
-                                    // No profile picture
-                                    this.profilePictureUrl = 'assets/images/no-pfp.png';
-                                    this.changeUserDataForm.patchValue({
-                                        profilePicture: this.profilePictureUrl
-                                    });
-                                    break;
-                                default:
-                                    // this.toastr.error('Napaka pri pridobivanju profilne slike');
                                     break;
                             }
                         }

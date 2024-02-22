@@ -40,13 +40,8 @@ export class NavComponent {
                             case 401:
                                 this.authService.unauthorizedHandler();
                                 break;
-                            case 404:
-                                // No profile picture
-                                this.profilePictureUrl = 'assets/images/no-pfp.png';
-                                break;
-                            default:
-                                break;
                         }
+                        this.profilePictureUrl = 'assets/images/no-pfp.png';
                     }
                 });
             }
