@@ -10,7 +10,6 @@ import { UpdateEmailDto } from 'src/app/modules/user/models/update-email.interfa
 import { UpdatePfpDto } from 'src/app/modules/user/models/update-pfp.interface';
 import { UpdatePasswordDto } from 'src/app/modules/user/models/update-password.interface';
 import { DeleteProfileDto } from 'src/app/modules/user/models/delete-profile.interface';
-import { timeout } from 'rxjs';
 
 @Component({
     selector: 'app-settings-page',
@@ -26,6 +25,7 @@ export class SettingsPageComponent {
     protected hasProfilePicture: boolean = false;
     protected selectedProfilePicture: File | null = null;
     protected profilePictureUrl: string = 'assets/images/no-pfp.png';
+    protected pfpChanged: boolean = false;
 
     changeUserDataForm: FormGroup;
     changePasswordForm: FormGroup;
@@ -202,7 +202,7 @@ export class SettingsPageComponent {
                 });
             }
 
-            if (profilePicture !== this.pristineProfilePicture) {
+            if (profilePicture !== this.pristineProfilePicture && this.pfpChanged) {
                 const updatePfpDto: UpdatePfpDto = {
                     profilePicFile: this.selectedProfilePicture as File
                 };
@@ -349,6 +349,7 @@ export class SettingsPageComponent {
     }
 
     protected removeProfilePicture(): void {
+        this.pfpChanged = true;
         this.hasProfilePicture = false;
         this.selectedProfilePicture = null;
         this.profilePictureUrl = this.getProfilePictureUrl();
@@ -358,6 +359,7 @@ export class SettingsPageComponent {
     }
 
     protected onProfilePictureChange(event: any): void {
+        this.pfpChanged = true;
         if (event.target.files && event.target.files.length > 0) {
             this.hasProfilePicture = true;
             this.selectedProfilePicture = event.target.files[0];
