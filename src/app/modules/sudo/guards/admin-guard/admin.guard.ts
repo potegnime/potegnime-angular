@@ -7,8 +7,8 @@ import { ToastrService } from 'ngx-toastr';
 export class AdminGuard {
     constructor(
         private readonly userService: UserService,
-        private readonly router: Router,
-        private readonly toastr: ToastrService
+        private readonly toastr: ToastrService,
+        private readonly router: Router
     ) { }
 
     canActivate() {
@@ -16,6 +16,7 @@ export class AdminGuard {
             return true;
         } else {
             this.toastr.error('', 'Dostop ni dovoljen', { timeOut: 5000 });
+            this.router.navigate(['/']);
             return false;
         }
     }

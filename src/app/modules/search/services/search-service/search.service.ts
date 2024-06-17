@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
 import { urlConst } from '../../../shared/enums/url.enum';
 import { TokenService } from '../../../shared/services/token-service/token.service';
 import { SearchRequestDto } from '../../models/search-request.interface';
@@ -14,7 +13,6 @@ import { Router } from '@angular/router';
 export class SearchService {
     constructor(
         private readonly http: HttpClient,
-        private readonly authService: AuthService,
         private readonly tokenService: TokenService,
         private readonly router: Router,
     ) { }

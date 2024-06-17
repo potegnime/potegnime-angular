@@ -18,6 +18,11 @@ export class TokenService {
         localStorage.setItem('token', token);
     }
 
+    public updateToken(newToken: string): void {
+        this.deleteToken();
+        this.setToken(newToken);
+    }
+
     public deleteToken(): void {
         localStorage.removeItem('token');
     }
@@ -45,8 +50,4 @@ export class TokenService {
         }
     }
 
-    public updateToken(newToken: string): void {
-        this.deleteToken();
-        this.setToken(newToken);
-    }
 }

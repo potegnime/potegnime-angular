@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
 import { TokenService } from '../../../shared/services/token-service/token.service';
 import { urlConst } from '../../../shared/enums/url.enum';
 import { UpdateUsernameDto } from 'src/app/modules/user/models/update-username.interface';
@@ -112,7 +111,6 @@ export class UserService {
         });
 
         return this.http.delete<any>(`${urlConst.apiBase}/user/adminDelete?username=${username}`, { headers: headers });
-
     } 
 
     public updateRole(updateRoleDto: UpdateRoleDto): Observable<any> {
@@ -124,7 +122,7 @@ export class UserService {
         formData.append('UserId', updateRoleDto.userId.toString());
         formData.append('RoleName', updateRoleDto.roleName);
 
-        return this.http.post<any>(`${urlConst.apiBase}/user/updateRole`, formData, { headers })
+        return this.http.post<any>(`${urlConst.apiBase}/user/updateRole`, formData, { headers });
     }
 
     public getLoggedUserId(): number | null {

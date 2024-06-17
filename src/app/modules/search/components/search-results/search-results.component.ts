@@ -89,7 +89,6 @@ export class SearchResultsComponent implements OnInit {
                         }
                     }
                 }
-
                 this.displayLoadingSpinner = false;
                 this.noResults = false;
                 this.searchResults = torrents;
@@ -102,10 +101,7 @@ export class SearchResultsComponent implements OnInit {
                         if (error.error.message && error.error.errorCode == 1) {
                             this.toastr.error(`Napaka pri iskanju torrentov: ${error.error.message}`, '', { timeOut: 5000 });
                             break;
-                        } else {
-                            this.toastr.error('Napaka pri iskanju torrentov', '', { timeOut: 5000 });
-                            break;
-                        }
+                        } else {this.toastr.error('Napaka pri iskanju torrentov', '', { timeOut: 5000 }); break; }
                     case 401:
                         this.authService.unauthorizedHandler();
                         break;

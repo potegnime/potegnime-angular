@@ -30,7 +30,6 @@ export class AuthService {
     };
 
     public login(userLoginDto: UserLoginDto): Observable<any> {
-        // Set headers
         const headers = new HttpHeaders({
             'Content-Type': 'application/json'
         });
@@ -41,7 +40,7 @@ export class AuthService {
     public logout(): void {
         this.tokenService.deleteToken();
         this.router.navigate(['/prijava']);
-        this.toastr.success('', 'Odjava uspešna', { timeOut: 5000 })
+        this.toastr.success('', 'Odjava uspešna', { timeOut: 5000 });
     }
 
     public unauthorizedHandler(): void {
