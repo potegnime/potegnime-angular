@@ -32,6 +32,7 @@ Built with Angular framework using HTML, SCSS and TypeScript. Utilizing [Bootstr
 Project images:
 
 ![Login and sign up screen](images/login.png)
+![Home page](images/home.png)
 ![Search torrents](images/search.png)
 ![Profile page](images/profile.png)
 ![Edit profile page](images/edit.png)
