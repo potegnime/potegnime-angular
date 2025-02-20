@@ -10,7 +10,7 @@ import { DefinedRoutes } from './modules/shared/enums/routes.enum';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    title = 'nalozi.si';
+    title = 'potegni.me';
     currentPath: string = new URL(window.location.href).pathname;
 
     public isLoggedIn: boolean = false;

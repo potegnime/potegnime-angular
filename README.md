@@ -4,12 +4,12 @@
   <a href="https://github.com/othneildrew/Best-README-Template">
     <img src="images/logo.png" alt="Logo" height="80">
   </a>
-  <h3 align="center" style="margin-top:0;">nalozi.si Angular frontend</h3>
+  <h3 align="center" style="margin-top:0;">potegni.me Angular frontend</h3>
 </div>
 
 ## About The Project
 
-Backed: [nalozisi-api](https://github.com/lanlebar/nalozisi-api)
+Backed: [potegnime-api](https://github.com/lanlebar/potegnime-api)
 
 Torrent search platform build with Angular on the frontend and ASP.NET on the backend. PostgreSQL database.
 Features:
@@ -46,6 +46,6 @@ Distributed under the MIT License. See [`LICENSE.txt`](LICENSE.txt) for more inf
 
 Lan Lebar - [LinkedIn](https://www.linkedin.com/in/lan-lebar) - lanlebar6@gmail.com
 
-Project Link: [https://github.com/lanlebar/nalozisi-api](https://github.com/lanlebar/nalozisi-api)
+Project Link: [https://github.com/lanlebar/potegnime-api](https://github.com/lanlebar/potegnime-api)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

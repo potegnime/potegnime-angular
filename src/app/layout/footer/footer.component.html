@@ -25,7 +25,7 @@
                 <a routerLink="/nastavitve">Nastavitve</a>
             </li>
             <li *ngIf="isAdmin">
-                <a  routerLink="/admin">Administracija</a>
+                <a routerLink="/admin">Administracija</a>
             </li>
             <li *ngIf="!isAdmin">
                 <a routerLink="" (click)="logout()">Odjava</a>
@@ -34,7 +34,7 @@
     </div>
 
     <div class="col-4 text-center">
-        <h3>nalozi.si</h3>
+        <h3>potegni.me</h3>
         <ul>
             <li>
                 <a routerLink="/o-nas">O nas</a>
