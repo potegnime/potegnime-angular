@@ -23,9 +23,9 @@ Features:
     - I'm feeling lucky functionality
     - Movie/series of the day (set by admins then visible to other users)
 
-Project is not published.
+Project is not published. Formly known as nalozi.si.
 
-## Backend
+## Frontend
 
 Built with Angular framework using HTML, SCSS and TypeScript. Utilizing [Bootstrap](https://getbootstrap.com/). Designed in Figma.
 
