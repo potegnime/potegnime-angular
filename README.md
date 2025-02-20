@@ -9,7 +9,7 @@
 
 ## About The Project
 
-Backed: [potegnime-api](https://github.com/lanlebar/potegnime-api)
+Backed: [potegnime-api](https://github.com/lebaaar/potegnime-api)
 
 Torrent search platform build with Angular on the frontend and ASP.NET on the backend. PostgreSQL database.
 Features:
@@ -46,6 +46,6 @@ Distributed under the MIT License. See [`LICENSE.txt`](LICENSE.txt) for more inf
 
 Lan Lebar - [LinkedIn](https://www.linkedin.com/in/lan-lebar) - lanlebar6@gmail.com
 
-Project Link: [https://github.com/lanlebar/potegnime-api](https://github.com/lanlebar/potegnime-api)
+Project Link: [https://github.com/lebaaar/potegnime-angular](https://github.com/lebaaar/potegnime-angular)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
