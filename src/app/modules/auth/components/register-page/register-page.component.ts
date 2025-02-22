@@ -78,13 +78,15 @@ export class RegisterPageComponent {
             this.registerErrorMessage = 'Geslo mora vsebovati vsaj 1 številko!';
             return;
         }
-        // Special characters
+        // Special characters 
+        /*
         const specialCharacters = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
         if (!specialCharacters.test(this.registerForm?.value.password)) {
             this.showRegisterError = true;
             this.registerErrorMessage = 'Geslo mora vsebovati vsaj 1 posebni znak! (!, $, #, ...)';
             return;
         }
+        */
 
         // Passwords match validation
         if (this.registerForm?.value.password !== this.registerForm?.value.passwordConfirm) {
