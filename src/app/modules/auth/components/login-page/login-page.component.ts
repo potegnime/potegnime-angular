@@ -15,6 +15,7 @@ export class LoginPageComponent {
 
     protected loginForm: FormGroup;
     protected showLoginError: boolean = false;
+    protected triggerErrorAnimation: boolean = false;
     protected loginErrorMessage: string = '';
     protected showPassword: boolean = false;
 
@@ -50,6 +51,7 @@ export class LoginPageComponent {
                     if (err.status === 401) {
                         this.showLoginError = true;
                         this.loginErrorMessage = err.error.message;
+                        this.handleErrorAnimation();
                     } else {
                         this.toastr.error('', 'Napaka na strežniku', { timeOut: 5000 });
                     }
@@ -58,8 +60,14 @@ export class LoginPageComponent {
         }
     }
 
-    togglePasswordVisibility(): void {
+    protected togglePasswordVisibility(): void {
         this.showPassword = !this.showPassword;
     }
 
+    private handleErrorAnimation() {
+        this.triggerErrorAnimation = true;
+        setTimeout(() => {
+            this.triggerErrorAnimation = false;
+        }, 300);
+    }
 }

@@ -14,6 +14,7 @@ export class RegisterPageComponent {
 
     registerForm!: FormGroup;
     protected showRegisterError: boolean = false;
+    protected triggerErrorAnimation: boolean = false;
     protected registerErrorMessage: string = '';
 
     protected showPassword: boolean = false;
@@ -55,12 +56,14 @@ export class RegisterPageComponent {
         if (this.registerForm?.value.username.length < 4) {
             this.showRegisterError = true;
             this.registerErrorMessage = 'Uporabniško ime mora vsebovati vsaj 4 znake!';
+            this.handleErrorAnimation();
             return;
         }
         // Username cannot end with a trailing space
         if (this.registerForm?.value.username.endsWith(' ')) {
             this.showRegisterError = true;
             this.registerErrorMessage = 'Uporabniško ime ne sme končati s presledkom!';
+            this.handleErrorAnimation();
             return;
         }
 
@@ -69,6 +72,7 @@ export class RegisterPageComponent {
         if (this.registerForm?.value.password.length < 8) {
             this.showRegisterError = true;
             this.registerErrorMessage = 'Geslo mora vsebovati vsaj 8 znakov!';
+            this.handleErrorAnimation();
             return;
         }
         // Numbers
@@ -76,9 +80,10 @@ export class RegisterPageComponent {
         if (!numbers.test(this.registerForm?.value.password)) {
             this.showRegisterError = true;
             this.registerErrorMessage = 'Geslo mora vsebovati vsaj 1 številko!';
+            this.handleErrorAnimation();
             return;
         }
-        // Special characters 
+        // Special characters
         /*
         const specialCharacters = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
         if (!specialCharacters.test(this.registerForm?.value.password)) {
@@ -92,6 +97,7 @@ export class RegisterPageComponent {
         if (this.registerForm?.value.password !== this.registerForm?.value.passwordConfirm) {
             this.showRegisterError = true;
             this.registerErrorMessage = 'Gesli se ne ujemata!';
+            this.handleErrorAnimation();
             return;
         }
 
@@ -99,6 +105,7 @@ export class RegisterPageComponent {
         if (!this.registerForm?.value.agreeToTerms) {
             this.showRegisterError = true;
             this.registerErrorMessage = 'Za nadaljevanje je potrebno strinjanje s spošnimi pogoji uporabe';
+            this.handleErrorAnimation();
             return;
         }
 
@@ -125,11 +132,12 @@ export class RegisterPageComponent {
                         // User with this email or username already exists
                         this.showRegisterError = true;
                         this.registerErrorMessage = err.error.message;
-
+                        this.handleErrorAnimation();
                     } else if (err.status === 400) {
                         // Fields missing errror
                         this.showRegisterError = true;
                         this.registerErrorMessage = err.error.message;
+                        this.handleErrorAnimation();
                     } else {
                         // Unexpected error, show toast
                         this.toastr.error('', 'Napaka na strežniku', { timeOut: 5000 });
@@ -139,4 +147,10 @@ export class RegisterPageComponent {
         }
     }
 
+    private handleErrorAnimation() {
+        this.triggerErrorAnimation = true;
+        setTimeout(() => {
+            this.triggerErrorAnimation = false;
+        }, 300);
+    }
 }

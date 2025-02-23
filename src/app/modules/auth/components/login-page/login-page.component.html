@@ -28,7 +28,7 @@
 
             <p class="register-url">Še nimaš računa? <a routerLink="/registracija">Registriraj se!</a></p>
 
-            <div class="login-error" *ngIf="showLoginError">
+            <div class="login-error" [class.shake]="triggerErrorAnimation" *ngIf="showLoginError">
                 {{ loginErrorMessage }}
             </div>
 

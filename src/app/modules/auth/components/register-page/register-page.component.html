@@ -47,7 +47,7 @@
                 <button type="submit" [disabled]="registerForm.invalid" class="register-button">Registracija</button>
             </form>
             <p class="login-url">Že imaš račun? <a routerLink="/prijava">Prijavi se!</a></p>
-            <div class="register-error">
+            <div class="register-error" [class.shake]="triggerErrorAnimation">
                 <p *ngIf="showRegisterError">{{ registerErrorMessage }}</p>
             </div>
         </div>
