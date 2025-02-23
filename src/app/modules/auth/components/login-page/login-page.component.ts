@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TokenService } from 'src/app/modules/shared/services/token-service/token.service';
+import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 
 @Component({
     selector: 'app-login-page',
@@ -39,12 +40,12 @@ export class LoginPageComponent {
             this.authService.login(userLoginDto).subscribe({
                 next: (resp) => {
                     if (resp.token) {
-                        this.toastr.success('', 'Prijava uspešna!', { timeOut: 2000 });
+                        this.toastr.success('', 'Prijava uspešna!', { timeOut: timingConst.success });
 
                         this.tokenService.setToken(resp.token);
                         this.router.navigate(['/']);
                     } else {
-                        this.toastr.error('', 'Napaka na strežniku', { timeOut: 5000 });
+                        this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
                     }
                 },
                 error: (err) => {
@@ -53,7 +54,7 @@ export class LoginPageComponent {
                         this.loginErrorMessage = err.error.message;
                         this.handleErrorAnimation();
                     } else {
-                        this.toastr.error('', 'Napaka na strežniku', { timeOut: 5000 });
+                        this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
                     }
                 },
             });

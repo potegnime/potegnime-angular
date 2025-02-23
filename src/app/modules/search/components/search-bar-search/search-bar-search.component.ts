@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.ser
 import { RecommendService } from 'src/app/modules/shared/services/recommend-service/recommend.service';
 import { SortService } from '../../services/sort-service/sort.service';
 import { Subscription } from 'rxjs';
+import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 
 @Component({
     selector: 'app-search-bar-search',
@@ -50,7 +51,7 @@ export class SearchBarSearchComponent implements OnInit, OnDestroy {
             },
             error: () => {
                 this.authService.logout();
-                this.toastr.error('', 'Napaka na strežniku', { timeOut: 5000 });
+                this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
             }
         });
 
@@ -80,7 +81,7 @@ export class SearchBarSearchComponent implements OnInit, OnDestroy {
 
     protected onSearch(): void {
         if (!this.searchForm.valid) {
-            this.toastr.warning('', 'Vnesite izraz za iskanje', { timeOut: 2000 });
+            this.toastr.warning('', 'Vnesite izraz za iskanje', { timeOut: timingConst.warning });
             return;
         }
 
@@ -108,8 +109,8 @@ export class SearchBarSearchComponent implements OnInit, OnDestroy {
                         this.authService.unauthorizedHandler();
                         break;
                     default:
-                        this.toastr.error('', 'Napaka pri pridobivanju priporočila', { timeOut: 5000 })    
-                    break;
+                        this.toastr.error('', 'Napaka pri pridobivanju priporočila', { timeOut: timingConst.error });
+                        break;
                 }
             }
         })
@@ -117,7 +118,7 @@ export class SearchBarSearchComponent implements OnInit, OnDestroy {
 
     protected onProviderChange(selectedProvider: string): void {
         this.selectedProvider = selectedProvider;
-        
+
         this.categories = this.torrentProviderCategories[selectedProvider];
         this.selectedCategory = 'All';
 

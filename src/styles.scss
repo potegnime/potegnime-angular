@@ -23,7 +23,7 @@
     --tpb-color-hover: #8F5F3B;
     --yts-color: #6AC045;
     --yts-color-hover: #4E8A2E;
-    --torrent-project-color: #486aa4 ;
+    --torrent-project-color: #486aa4;
     --torrent-project-color-hover: #2e579e;
 
     // Components
@@ -46,7 +46,9 @@
 * {
     font-weight: 600;
 }
-h1, h2 {
+
+h1,
+h2 {
     font-weight: bold;
 }
 
@@ -103,4 +105,13 @@ ul.list {
 ul.list li {
     margin: 5px 10px;
     display: inline-block;
+}
+
+// ngx-toastr overrides
+.toast-error {
+    box-shadow: none !important;
+}
+
+.ngx-toastr {
+    box-shadow: none !important;
 }

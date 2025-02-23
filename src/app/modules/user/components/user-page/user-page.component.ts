@@ -6,6 +6,8 @@ import { UserService } from 'src/app/modules/user/services/user-service/user.ser
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CacheService } from 'src/app/modules/shared/services/cache-service/cache.service';
+import { timeInterval } from 'rxjs';
+import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 
 @Component({
     selector: 'app-user-page',
@@ -52,7 +54,7 @@ export class UserPageComponent implements OnInit {
             if (decodedToken) {
                 this.isMyPage = decodedToken.uid == urlUid;
                 if (this.isMyPage) {
-                    this.getCompleteUserData(decodedToken.uid);                                  
+                    this.getCompleteUserData(decodedToken.uid);
                 } else {
                     this.getCompleteUserData(urlUid);
                 }
@@ -79,7 +81,7 @@ export class UserPageComponent implements OnInit {
                 else {
                     this.setUserPage(user.uid, user.username, user.joined, user.role);
                 }
-                
+
             },
             error: (error) => {
                 switch (error.status) {
@@ -91,7 +93,7 @@ export class UserPageComponent implements OnInit {
                         this.router.navigate(['404']);
                         break;
                     default:
-                        this.toastr.error('Napaka pri pridobivanju podatkov o uporabniku');
+                        this.toastr.error('', 'Napaka pri pridobivanju podatkov o uporabniku', { timeOut: timingConst.error });
                         break;
                 }
             }

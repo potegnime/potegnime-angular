@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth-service/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 
 @Component({
     selector: 'app-register-page',
@@ -117,13 +118,13 @@ export class RegisterPageComponent {
                     // Register successful
                     if (resp.token) {
                         // Toast register successful
-                        this.toastr.success('Registracija uspešna!');
+                        this.toastr.success('', 'Registracija uspešna!', { timeOut: timingConst.success });
 
                         // Save token and redirect
                         localStorage.setItem('token', resp.token);
                         this.router.navigate(['/']);
                     } else {
-                        this.toastr.error('', 'Napaka na strežniku', { timeOut: 5000 });
+                        this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
                     }
                 },
                 error: (err) => {
@@ -140,7 +141,7 @@ export class RegisterPageComponent {
                         this.handleErrorAnimation();
                     } else {
                         // Unexpected error, show toast
-                        this.toastr.error('', 'Napaka na strežniku', { timeOut: 5000 });
+                        this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
                     }
                 },
             });

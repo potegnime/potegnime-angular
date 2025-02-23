@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
+import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 import { TmdbMovieResponse } from 'src/app/modules/shared/models/tmdb-movie-response.interface';
 import { RecommendService } from 'src/app/modules/shared/services/recommend-service/recommend.service';
 
@@ -17,7 +18,7 @@ export class HomeTorrentComponent {
     protected timeWindow: 'day' | 'week' = 'day';
 
     protected readonly posterUrl = 'https://image.tmdb.org/t/p/original';
-    
+
     protected nowPlayingMovies: TmdbMovieResponse[] = [];
     protected popularMovies: TmdbMovieResponse[] = [];
     protected topRatedMovies: TmdbMovieResponse[] = [];
@@ -59,13 +60,13 @@ export class HomeTorrentComponent {
     // Error getting recommendations
     private errorGettingRecommendations(): void {
         if (!this.errorToastShown) {
-            this.toastr.error('Napaka pri pridobivanju torrentov. Prosimo, poskusite znova kasneje');
+            this.toastr.error('', 'Napaka pri pridobivanju torrentov. Prosimo, poskusite znova kasneje', { timeOut: timingConst.error });
             this.errorToastShown = true;
         }
     }
 
     protected searchTitle(text: string): void {
-        this.toastr.info('Za boljše rezultate, poskusite iskati v angleščini', 'Iskanje v slovenščini', { timeOut: 5000})
+        this.toastr.info('Za boljše rezultate, poskusite iskati v angleščini', 'Iskanje v slovenščini', { timeOut: timingConst.info });
         this.router.navigate(['/iskanje'], { queryParams: { q: text } });
     }
 

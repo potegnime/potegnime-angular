@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
+import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 import { AdminRecommendation } from 'src/app/modules/shared/models/admin-recommendation.interface';
 import { RecommendService } from 'src/app/modules/shared/services/recommend-service/recommend.service';
 @Component({
@@ -42,12 +43,12 @@ export class HomeHeaderComponent {
                         this.authService.unauthorizedHandler();
                         break;
                     case 404:
-                        if (type == 'movie') this.toastr.info('', 'Film dneva še ni bil nastavljen', { timeOut: 5000 });
-                        else this.toastr.info('', 'Serija dneva še ni bila nastavljena', { timeOut: 5000 });
+                        if (type == 'movie') this.toastr.info('', 'Film dneva še ni bil nastavljen', { timeOut: timingConst.info });
+                        else this.toastr.info('', 'Serija dneva še ni bila nastavljena', { timeOut: timingConst.info });
                         break;
                     default:
-                        if (type == 'movie') this.toastr.error('', 'Napaka pri pridobivanju filma dneva', { timeOut: 5000 });
-                        else this.toastr.info('', 'Napaka pri pridobivanju serije dneva', { timeOut: 5000 });
+                        if (type == 'movie') this.toastr.error('', 'Napaka pri pridobivanju filma dneva', { timeOut: timingConst.error });
+                        else this.toastr.error('', 'Napaka pri pridobivanju serije dneva', { timeOut: timingConst.error });
                         break;
                 }
             }
@@ -65,7 +66,7 @@ export class HomeHeaderComponent {
                         this.authService.unauthorizedHandler();
                         break;
                     default:
-                        this.toastr.error('', 'Napaka pri pridobivanju priporočila', { timeOut: 5000 });
+                        this.toastr.error('', 'Napaka pri pridobivanju priporočila', { timeOut: timingConst.error });
                         break;
                 }
             }

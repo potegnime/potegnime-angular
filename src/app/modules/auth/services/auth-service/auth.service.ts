@@ -8,6 +8,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { TokenService } from 'src/app/modules/shared/services/token-service/token.service';
+import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 
 @Injectable({
     providedIn: 'root'
@@ -40,11 +41,12 @@ export class AuthService {
     public logout(): void {
         this.tokenService.deleteToken();
         this.router.navigate(['/prijava']);
-        this.toastr.success('', 'Odjava uspešna', { timeOut: 5000 });
+        this.toastr.success('', 'Odjava uspešna', { timeOut: timingConst.success });
     }
 
     public unauthorizedHandler(): void {
-        this.logout();
+        this.tokenService.deleteToken();
+        this.router.navigate(['/prijava']);
     }
 
     public verifyToken(): boolean {

@@ -6,6 +6,7 @@ import { AuthService } from '../../../auth/services/auth-service/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
+import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 
 @Component({
     selector: 'app-recommend-page',
@@ -139,14 +140,14 @@ export class RecommendPageComponent implements AfterViewChecked {
 
     protected searchTitle(text: string): void {
         if (this.language == 'sl-SI') {
-            this.toastr.info('Za boljše rezultate, poskusite iskati v angleščini', 'Iskanje v slovenščini', { timeOut: 5000 })
+            this.toastr.info('Za boljše rezultate, poskusite iskati v angleščini', 'Iskanje v slovenščini', { timeOut: timingConst.info });
         }
         this.router.navigate(['/iskanje'], { queryParams: { q: text } });
     }
 
     private errorGettingRecommendations(): void {
         if (!this.errorToastShown) {
-            this.toastr.error('Napaka pri pridobivanju torrentov. Prosimo, poskusite znova kasneje');
+            this.toastr.error('Prosimo, poskusite znova kasneje', 'Napaka pri pridobivanju torrentov', { timeOut: timingConst.error });
             this.errorToastShown = true;
         }
     }
