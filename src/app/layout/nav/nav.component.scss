@@ -1,7 +1,8 @@
+// TODO fix mobile responsiveness
+
 nav {
     background-color: var(--page-component);
     border-radius: var(--border-radius);
-    padding: 5px 0;
 }
 
 .left-list {
@@ -10,10 +11,79 @@ nav {
     justify-content: flex-start;
 }
 
+.left-list li,
+.right-list li {
+    margin: 10px 10px;
+}
+
+.left-list li:first-child {
+    margin-right: 0;
+}
+
+.left-list li:last-child,
+.right-list li:last-child {
+    margin-left: 0;
+}
+
 .right-list {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+}
+
+// Notification button
+.notification-button {
+    aspect-ratio: 1;
+    padding: 5px 7px;
+}
+
+.notification-icon {
+    aspect-ratio: 1;
+}
+
+.notification-counter {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    aspect-ratio: 1;
+    background-color: none;
+    padding: 5px 7px;
+    border: none;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 100%;
+}
+
+.notification-content {
+    word-wrap: break-word;
+    word-break: break-word;
+    max-width: 100%;
+}
+
+.notification-content {
+    font-size: 14px;
+    color: #666;
+    white-space: normal;
 }
 
 // Profile button
@@ -63,7 +133,9 @@ nav {
 }
 
 @media (max-width: 768px) {
-    .left-list, .right-list {
+
+    .left-list,
+    .right-list {
         justify-content: center;
     }
 }

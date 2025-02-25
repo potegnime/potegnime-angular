@@ -14,6 +14,7 @@ export class NavComponent {
     protected username: string | null = null;
     protected profilePictureUrl: string | null = null;
     protected isAdmin: boolean = false;
+    protected notificationCount: number = 10;
 
     constructor(
         private readonly authService: AuthService,
@@ -50,6 +51,10 @@ export class NavComponent {
         }
     }
 
+    protected get notificationCountUi(): string {
+        return this.notificationCount > 9 ? '9+' : this.notificationCount.toString();
+    }
+
     protected exploreClick(section: string | null) {
         if (!section) {
             this.router.navigate(['/razisci']);
@@ -66,6 +71,16 @@ export class NavComponent {
             this.profilePictureUrl = reader.result as string;
         }
         reader.readAsDataURL(image);
+    }
+
+    protected removeNotification(event: Event, notificationId: number) {
+        /**
+         * TODO
+         * Remove notification from database
+         * Handle notification count (better?)
+         */
+        event.stopPropagation();
+        this.notificationCount--;
     }
 
     protected logout() {
