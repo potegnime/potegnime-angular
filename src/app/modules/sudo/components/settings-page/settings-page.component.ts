@@ -11,6 +11,8 @@ import { UpdatePfpDto } from 'src/app/modules/user/models/update-pfp.interface';
 import { UpdatePasswordDto } from 'src/app/modules/user/models/update-password.interface';
 import { DeleteProfileDto } from 'src/app/modules/user/models/delete-profile.interface';
 import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
+import { UploaderRequestDto } from 'src/app/modules/user/models/uploader-request.interface';
+import { UploaderRequestStatus } from '../../enums/uploader-request-status.enum';
 
 @Component({
     selector: 'app-settings-page',
@@ -27,8 +29,17 @@ export class SettingsPageComponent {
     protected selectedProfilePicture: File | null = null;
     protected profilePictureUrl: string = 'assets/images/no-pfp.png';
     protected pfpChanged: boolean = false;
+    protected uploaderRequestStatus: UploaderRequestStatus | null = null;
+    protected uploaderRequestStatusEnum = UploaderRequestStatus;
+    protected uploaderRequestFormCharacterCount: any = {
+        experience: 0,
+        content: 0,
+        proof: 0,
+        otherTrackers: 0
+    };
 
     changeUserDataForm: FormGroup;
+    uploaderRequestDataForm: FormGroup;
     changePasswordForm: FormGroup;
     deleteProfileForm: FormGroup;
 
@@ -45,6 +56,14 @@ export class SettingsPageComponent {
             username: ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
             profilePicture: ['']
+        });
+
+        this.uploaderRequestDataForm = this.formBuilder.group({
+            experience: ['', Validators.required],
+            content: ['', Validators.required],
+            proof: [''], // not required
+            otherTrackers: [''], // not required
+            agreeToTerms: ['no']
         });
 
         this.changePasswordForm = this.formBuilder.group({
@@ -64,24 +83,14 @@ export class SettingsPageComponent {
         }
         const decodedToken = this.tokenService.decodeToken();
         if (decodedToken) {
-            // Get user data
-            this.userService.getUserById(decodedToken.uid).subscribe({
-                next: (user) => {
-                    this.setSettingsPage(
-                        user.username,
-                        user.email);
-                },
-                error: (error) => {
-                    switch (error.status) {
-                        case 401:
-                            this.authService.unauthorizedHandler();
-                            break;
-                        default:
-                            this.toastr.error('', 'Napaka pri pridobivanju podatkov o uporabniku', { timeOut: timingConst.error });
-                            break;
-                    }
-                }
-            });
+            if (decodedToken.uploaderRequestStatus) {
+                this.uploaderRequestStatus = decodedToken.uploaderRequestStatus;
+            }
+            // Get user data from JWT
+            this.setSettingsPage(
+                decodedToken.username,
+                decodedToken.email,
+            );
 
             // Get user pfp
             // Wait 0.5 second to avoid unnecessary double api calls for profile picture - other component already has it cached
@@ -119,7 +128,7 @@ export class SettingsPageComponent {
         }
     }
 
-    onChnangeUserDataSubmit() {
+    protected onChnangeUserDataSubmit() {
         if (this.changeUserDataForm.valid) {
             // Check which fields have changed
             const username = this.changeUserDataForm.get('username')?.value;
@@ -244,16 +253,80 @@ export class SettingsPageComponent {
                 });
             }
         } else {
-            Object.keys(this.changeUserDataForm.controls).forEach((controlName) => {
+            for (const controlName of Object.keys(this.changeUserDataForm.controls)) {
                 const control = this.changeUserDataForm.get(controlName);
                 if (control?.invalid) {
                     this.toastr.error('', `Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`, { timeOut: timingConst.error });
+                    break;
                 }
-            });
+            }
         }
     }
 
-    onChangePasswordSubmit() {
+    protected onUploaderRequestSubmit() {
+        if (this.uploaderRequestDataForm.valid) {
+            const experience = this.uploaderRequestDataForm.get('experience')?.value;
+            const content = this.uploaderRequestDataForm.get('content')?.value;
+            const proof = this.uploaderRequestDataForm.get('proof')?.value;
+            const otherTrackers = this.uploaderRequestDataForm.get('otherTrackers')?.value;
+            const agreeToTerms = this.uploaderRequestDataForm.get('agreeToTerms')?.value;
+
+            if (agreeToTerms !== 'yes') {
+                this.toastr.error('', 'Strinjanje s pogoji je obvezno!', { timeOut: timingConst.error });
+                return;
+            }
+
+            // Confirm submission
+            if (!confirm('Ali ste prepričani, da želite poslati vlogo za nalagalca?')) {
+                return;
+            }
+
+            const uploaderRequestDto: UploaderRequestDto = {
+                requestedRole: 'nalagalec',
+                experience: experience,
+                content: content ? content : null,
+                proof: proof ? proof : null,
+                otherTrackers: otherTrackers ? otherTrackers : null
+            };
+
+            this.userService.submitUploaderRequest(uploaderRequestDto).subscribe({
+                next: () => {
+                    this.toastr.success('', 'Vloga za nalagalca uspešno poslana!', { timeOut: timingConst.success });
+                    this.uploaderRequestStatus = UploaderRequestStatus.Review;
+                    // Update JWT
+                    this.authService.refreshToken().subscribe({
+                        next: (response) => {
+                            this.tokenService.updateToken(response.token);
+                        },
+                        error: () => {
+                            this.authService.unauthorizedHandler();
+                        }
+                    });
+                },
+                error: (error) => {
+                    switch (error.status) {
+                        case 401:
+                            this.authService.unauthorizedHandler();
+                            break;
+                        default:
+                            this.toastr.error('', 'Napaka pri pošiljanju vloge za nalagalca', { timeOut: timingConst.error });
+                            break;
+                    }
+                }
+            });
+
+        } else {
+            for (const controlName of Object.keys(this.uploaderRequestDataForm.controls)) {
+                const control = this.uploaderRequestDataForm.get(controlName);
+                if (control?.invalid) {
+                    this.toastr.error('', `Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`, { timeOut: timingConst.error });
+                    break;
+                }
+            }
+        }
+    }
+
+    protected onChangePasswordSubmit() {
         if (this.changePasswordForm.valid) {
             const oldPassword = this.changePasswordForm.get('oldPassword')?.value;
             const newPassword = this.changePasswordForm.get('newPassword')?.value;
@@ -289,16 +362,17 @@ export class SettingsPageComponent {
                 }
             });
         } else {
-            Object.keys(this.changePasswordForm.controls).forEach((controlName) => {
+            for (const controlName of Object.keys(this.changePasswordForm.controls)) {
                 const control = this.changePasswordForm.get(controlName);
                 if (control?.invalid) {
                     this.toastr.error('', `Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`, { timeOut: timingConst.error });
+                    break;
                 }
-            });
+            }
         }
     }
 
-    onDeleteProfileSubmit() {
+    protected onDeleteProfileSubmit() {
         if (this.deleteProfileForm.valid) {
             if (!confirm('Ali ste prepričani, da želite izbrisati profil?')) {
                 return;
@@ -328,23 +402,13 @@ export class SettingsPageComponent {
                 }
             });
         } else {
-            Object.keys(this.deleteProfileForm.controls).forEach((controlName) => {
+            for (const controlName of Object.keys(this.deleteProfileForm.controls)) {
                 const control = this.deleteProfileForm.get(controlName);
                 if (control?.invalid) {
                     this.toastr.error('', `Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`, { timeOut: timingConst.error });
+                    break;
                 }
-            });
-        }
-    }
-
-    passwordMatchValidator(control: AbstractControl) {
-        const newPassword = control.get('newPassword')?.value;
-        const newPasswordRepeat = control.get('newPasswordRepeat')?.value;
-
-        if (newPassword !== newPasswordRepeat) {
-            control.get('newPasswordRepeat')?.setErrors({ passwordMismatch: true });
-        } else {
-            control.get('newPasswordRepeat')?.setErrors(null);
+            }
         }
     }
 
@@ -399,19 +463,6 @@ export class SettingsPageComponent {
         }
     }
 
-    private setSettingsPage(username: string, email: string): void {
-        // Set input fields
-        this.username = username;
-        this.email = email;
-
-        this.changeUserDataForm.patchValue({
-            username: this.username,
-            email: this.email,
-            profilePicture: this.profilePictureUrl
-        });
-
-    }
-
     protected createImageFromBlob(image: Blob) {
         const reader = new FileReader();
         reader.onloadend = () => {
@@ -440,8 +491,45 @@ export class SettingsPageComponent {
                 return 'Ponovi novo geslo';
             case 'password':
                 return 'Geslo';
+            case 'experience':
+                return 'Izkušnje';
+            case 'content':
+                return 'Vsebina';
+            case 'proof':
+                return 'Dokaz';
+            case 'otherTrackers':
+                return 'Ostali sledilci';
+            case 'agreeToTerms':
+                return 'Strinjanje s pogoji';
             default:
                 return controlName;
+        }
+    }
+
+    protected updateCharacterCount(field: string) {
+        this.uploaderRequestFormCharacterCount[field] = this.uploaderRequestDataForm.get(field)?.value.length || 0;
+    }
+
+    private setSettingsPage(username: string, email: string): void {
+        // Set input fields
+        this.username = username;
+        this.email = email;
+
+        this.changeUserDataForm.patchValue({
+            username: this.username,
+            email: this.email,
+            profilePicture: this.profilePictureUrl
+        });
+    }
+
+    private passwordMatchValidator(control: AbstractControl) {
+        const newPassword = control.get('newPassword')?.value;
+        const newPasswordRepeat = control.get('newPasswordRepeat')?.value;
+
+        if (newPassword !== newPasswordRepeat) {
+            control.get('newPasswordRepeat')?.setErrors({ passwordMismatch: true });
+        } else {
+            control.get('newPasswordRepeat')?.setErrors(null);
         }
     }
 }

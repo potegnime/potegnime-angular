@@ -1,3 +1,5 @@
+import { UploaderRequestStatus } from "../../sudo/enums/uploader-request-status.enum";
+
 // decoded token model
 export interface DecodedTokenModel {
     uid: number;
@@ -5,6 +7,7 @@ export interface DecodedTokenModel {
     email: string;
     role: string;
     joined: string;
+    uploaderRequestStatus?: UploaderRequestStatus;
     iss: string;
     aud: string;
     iat: number;

@@ -155,12 +155,13 @@ export class AdministrationPageComponent {
                 }
             });
         } else {
-            Object.keys(this.setRecommendationForm.controls).forEach((controlName) => {
+            for (const controlName of Object.keys(this.setRecommendationForm.controls)) {
                 const control = this.setRecommendationForm.get(controlName);
                 if (control?.invalid) {
-                    this.toastr.error(`Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`);
+                    this.toastr.error('', `Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`, { timeOut: timingConst.error });
+                    break;
                 }
-            });
+            }
         }
     }
 
@@ -237,12 +238,13 @@ export class AdministrationPageComponent {
                 }
             });
         } else {
-            Object.keys(this.userControlForm.controls).forEach((controlName) => {
+            for (const controlName of Object.keys(this.userControlForm.controls)) {
                 const control = this.userControlForm.get(controlName);
                 if (control?.invalid) {
                     this.toastr.error('', `Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`, { timeOut: timingConst.error });
+                    break;
                 }
-            });
+            }
         }
     }
 

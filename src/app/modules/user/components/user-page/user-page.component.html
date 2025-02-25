@@ -1,5 +1,5 @@
 <app-sudo-nav *ngIf="isMyPage"></app-sudo-nav>
-<div class="row container-profile">
+<div class="row container-profile" [ngClass]="{'mt-2': !isMyPage}">
     <div class="row profile-info">
 
         <div class="row user-data mb-3">

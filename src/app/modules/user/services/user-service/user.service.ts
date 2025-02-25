@@ -9,6 +9,7 @@ import { UpdatePfpDto } from 'src/app/modules/user/models/update-pfp.interface';
 import { UpdatePasswordDto } from 'src/app/modules/user/models/update-password.interface';
 import { DeleteProfileDto } from 'src/app/modules/user/models/delete-profile.interface';
 import { UpdateRoleDto } from '../../models/update-role.interface';
+import { UploaderRequestDto } from '../../models/uploader-request.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -78,7 +79,7 @@ export class UserService {
         if (updatePfpDto.profilePicFile) {
             formData.append("ProfilePicFile", updatePfpDto.profilePicFile);
         }
-        
+
         return this.http.post<any>(`${urlConst.apiBase}/user/updatePfp`, formData, { headers });
     }
 
@@ -111,7 +112,7 @@ export class UserService {
         });
 
         return this.http.delete<any>(`${urlConst.apiBase}/user/adminDelete?username=${username}`, { headers: headers });
-    } 
+    }
 
     public updateRole(updateRoleDto: UpdateRoleDto): Observable<any> {
         const headers = new HttpHeaders({
@@ -123,6 +124,25 @@ export class UserService {
         formData.append('RoleName', updateRoleDto.roleName);
 
         return this.http.post<any>(`${urlConst.apiBase}/user/updateRole`, formData, { headers });
+    }
+
+    public submitUploaderRequest(uploaderRequestDto: UploaderRequestDto): Observable<any> {
+        const headers = new HttpHeaders({
+            'Authorization': `Bearer ${this.tokenService.getToken()}`
+        });
+
+        const formData: FormData = new FormData();
+        formData.append('RequestedRole', uploaderRequestDto.requestedRole);
+        formData.append('Experience', uploaderRequestDto.experience);
+        formData.append('Content', uploaderRequestDto.content);
+        if (uploaderRequestDto.proof) {
+            formData.append('Proof', uploaderRequestDto.proof);
+        }
+        if (uploaderRequestDto.otherTrackers) {
+            formData.append('OtherTrackers', uploaderRequestDto.otherTrackers);
+        }
+
+        return this.http.post<any>(`${urlConst.apiBase}/user/submitUploaderRequest`, formData, { headers });
     }
 
     public getLoggedUserId(): number | null {

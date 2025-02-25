@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import jwtDecode from "jwt-decode";
 import { DecodedTokenModel } from '../../models/decoded-token.interface';
+import { UploaderRequestStatus } from 'src/app/modules/sudo/enums/uploader-request-status.enum';
 
 @Injectable({
     providedIn: 'root'
@@ -34,7 +35,8 @@ export class TokenService {
         }
         const decodedToken = jwtDecode(token) as DecodedTokenModel;
         try {
-            return {
+
+            const formattedToken: DecodedTokenModel = {
                 uid: Number(decodedToken.uid),
                 username: decodedToken.username,
                 email: decodedToken.email,
@@ -45,6 +47,12 @@ export class TokenService {
                 iat: decodedToken.iat,
                 exp: Number(decodedToken.exp)
             };
+
+            if (decodedToken.uploaderRequestStatus) {
+                formattedToken.uploaderRequestStatus = decodedToken.uploaderRequestStatus as UploaderRequestStatus;
+            }
+
+            return formattedToken;
         } catch (error) {
             return null;
         }
