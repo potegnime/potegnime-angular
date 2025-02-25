@@ -71,10 +71,15 @@ export class SettingsPageComponent {
                         user.username,
                         user.email);
                 },
-                error: () => {
-                    this.toastr.error('', 'Napaka pri pridobivanju podatkov o uporabniku', { timeOut: timingConst.error });
-                    // Force logout
-                    this.authService.unauthorizedHandler();
+                error: (error) => {
+                    switch (error.status) {
+                        case 401:
+                            this.authService.unauthorizedHandler();
+                            break;
+                        default:
+                            this.toastr.error('', 'Napaka pri pridobivanju podatkov o uporabniku', { timeOut: timingConst.error });
+                            break;
+                    }
                 }
             });
 

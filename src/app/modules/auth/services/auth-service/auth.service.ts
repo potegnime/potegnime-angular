@@ -45,6 +45,7 @@ export class AuthService {
     }
 
     public unauthorizedHandler(): void {
+        // Called on 401, or when page cannot be displayed
         this.tokenService.deleteToken();
         this.router.navigate(['/prijava']);
     }
