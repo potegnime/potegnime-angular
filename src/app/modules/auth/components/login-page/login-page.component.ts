@@ -19,6 +19,7 @@ export class LoginPageComponent {
     protected triggerErrorAnimation: boolean = false;
     protected loginErrorMessage: string = '';
     protected showPassword: boolean = false;
+    protected isSubmitting: boolean = false;
 
     constructor(
         private readonly formBuilder: FormBuilder,
@@ -33,12 +34,14 @@ export class LoginPageComponent {
         });
     }
 
-    onSubmit(): void {
-        if (this.loginForm.valid) {
-            const userLoginDto: UserLoginDto = this.loginForm?.value;
+    protected onSubmit(): void {
+        if (this.loginForm.valid && !this.isSubmitting) {
+            this.isSubmitting = true; // prevent multiple requests
 
+            const userLoginDto: UserLoginDto = this.loginForm?.value;
             this.authService.login(userLoginDto).subscribe({
                 next: (resp) => {
+                    this.isSubmitting = false;
                     if (resp.token) {
                         this.toastr.success('', 'Prijava uspešna!', { timeOut: timingConst.success });
 
@@ -49,6 +52,7 @@ export class LoginPageComponent {
                     }
                 },
                 error: (err) => {
+                    this.isSubmitting = false;
                     if (err.status === 401) {
                         this.showLoginError = true;
                         this.loginErrorMessage = err.error.message;

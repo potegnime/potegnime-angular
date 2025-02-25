@@ -17,10 +17,10 @@ export class RegisterPageComponent {
     protected showRegisterError: boolean = false;
     protected triggerErrorAnimation: boolean = false;
     protected registerErrorMessage: string = '';
-
     protected showPassword: boolean = false;
     protected showPasswordConfirm: boolean = false;
     protected agreeToTermsBool: boolean = false;
+    protected isSubmitting: boolean = false;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -44,7 +44,7 @@ export class RegisterPageComponent {
     }
 
     // password visibility
-    togglePasswordVisibility(fieldNumber: number) {
+    protected togglePasswordVisibility(fieldNumber: number) {
         if (fieldNumber === 1) {
             this.showPassword = !this.showPassword;
         } else if (fieldNumber === 2) {
@@ -52,7 +52,7 @@ export class RegisterPageComponent {
         }
     }
 
-    onSubmit() {
+    protected onSubmit() {
         // Username validation
         if (this.registerForm?.value.username.length < 4) {
             this.showRegisterError = true;
@@ -110,14 +110,14 @@ export class RegisterPageComponent {
             return;
         }
 
-        if (this.registerForm?.valid) {
-            const userRegisterDto: UserRegisterDto = this.registerForm?.value;
+        if (this.registerForm.valid && !this.isSubmitting) {
+            this.isSubmitting = true;
 
+            const userRegisterDto: UserRegisterDto = this.registerForm?.value;
             this.authService.register(userRegisterDto).subscribe({
                 next: (resp) => {
-                    // Register successful
+                    this.isSubmitting = false;
                     if (resp.token) {
-                        // Toast register successful
                         this.toastr.success('', 'Registracija uspešna!', { timeOut: timingConst.success });
 
                         // Save token and redirect
@@ -128,7 +128,7 @@ export class RegisterPageComponent {
                     }
                 },
                 error: (err) => {
-                    // Login failed
+                    this.isSubmitting = false;
                     if (err.status === 409) {
                         // User with this email or username already exists
                         this.showRegisterError = true;
