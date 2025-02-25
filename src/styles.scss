@@ -94,6 +94,30 @@ body {
     transition: background-color 0.1s;
 }
 
+.text-area {
+    background-color: var(--darkgray);
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 5px 10px;
+    transition: background-color 0.1s;
+    width: 100%;
+}
+
+.select {
+    background-color: var(--button-background);
+    color: white;
+    text-align: center;
+    padding: 6px 10px;
+    border: none;
+    border-radius: var(--border-radius);
+}
+
+select:hover {
+    background-color: var(--button-background-hover);
+    cursor: pointer;
+}
+
 
 // Lists
 ul.list {

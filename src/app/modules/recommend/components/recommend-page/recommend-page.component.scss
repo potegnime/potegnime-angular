@@ -57,17 +57,6 @@ label {
 select {
     margin: auto;
     width: 200px;
-    background-color: var(--button-background);
-    color: white;
-    text-align: center;
-    padding: 6px 10px;
-    border: none;
-    border-radius: var(--border-radius);
-}
-
-select:hover {
-    background-color: var(--button-background-hover);
-    cursor: pointer;
 }
 
 .center-cont {
@@ -121,5 +110,6 @@ select:hover {
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 5;
+    line-clamp: 5;
     -webkit-box-orient: vertical;
 }
