@@ -11,15 +11,14 @@ export class TermsPageComponent {
   protected isLoggedIn: boolean = false;
 
   constructor(
-    private router: Router, 
-    private authService: AuthService) 
-  {
-    
+    private router: Router,
+    private authService: AuthService
+  ) {
     // Route handling for auth
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.isLoggedIn = this.authService.verifyToken();
       }
     });
-}
+  }
 }
