@@ -221,7 +221,7 @@ export class SettingsPageComponent {
                         // Refresh site to update profile picture across the site
                         setTimeout(() => {
                             window.location.reload();
-                        }, 3000);
+                        }, 1000);
                     },
                     error: (error) => {
                         switch (error.status) {

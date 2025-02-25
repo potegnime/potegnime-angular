@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
+import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 import { AdminRecommendation } from 'src/app/modules/shared/models/admin-recommendation.interface';
 import { RecommendationDto } from 'src/app/modules/shared/models/recommendation-dto.interface';
 import { RecommendService } from 'src/app/modules/shared/services/recommend-service/recommend.service';
@@ -57,7 +58,7 @@ export class AdministrationPageComponent {
                         });
                         break;
                     default:
-                        this.toastr.error('', 'Napaka pri pridobivanju priporočila dneva', { timeOut: 5000 });
+                        this.toastr.error('', 'Napaka pri pridobivanju priporočila dneva', { timeOut: timingConst.error });
                         this.setRecommendationForm = this.formBuilder.group({
                             date: [date, Validators.required],
                             type: ['movie', Validators.required],
@@ -110,7 +111,7 @@ export class AdministrationPageComponent {
                         });
                         break;
                     default:
-                        this.toastr.error('', 'Napaka pri pridobivanju priporočila dneva', { timeOut: 5000 });
+                        this.toastr.error('', 'Napaka pri pridobivanju priporočila dneva', { timeOut: timingConst.error });
                         this.setRecommendationForm = this.formBuilder.group({
                             date: [date, Validators.required],
                             type: ['movie', Validators.required],
@@ -137,9 +138,9 @@ export class AdministrationPageComponent {
             this.recommendService.setAdminRecommendation(recommendationDto).subscribe({
                 next: () => {
                     if (type == 'movie') {
-                        this.toastr.success('', 'Izbrani film dnvea uspešno nastavljen!', { timeOut: 5000 });
+                        this.toastr.success('', 'Izbrani film dnvea uspešno nastavljen!', { timeOut: timingConst.success });
                     } else if (type == 'series') {
-                        this.toastr.success('', 'Izbrana serija dnvea uspešno nastavljena!', { timeOut: 5000 });
+                        this.toastr.success('', 'Izbrana serija dnvea uspešno nastavljena!', { timeOut: timingConst.success });
                     }
                 },
                 error: (error) => {
@@ -148,7 +149,7 @@ export class AdministrationPageComponent {
                             this.authService.unauthorizedHandler();
                             break;
                         default:
-                            this.toastr.error('', 'Napaka na strežniku', { timeOut: 5000 });
+                            this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
                             break;
                     }
                 }
@@ -169,9 +170,9 @@ export class AdministrationPageComponent {
         this.recommendService.deleteAdminRecommendation(date, type).subscribe({
             next: () => {
                 if (type == 'movie') {
-                    this.toastr.success('', 'Izbrani film dnvea uspešno izbrisan!', { timeOut: 5000 });
+                    this.toastr.success('', 'Izbrani film dnvea uspešno izbrisan!', { timeOut: timingConst.success });
                 } else if (type == 'series') {
-                    this.toastr.success('', 'Izbrana serija dnvea uspešno izbrisana!', { timeOut: 5000 });
+                    this.toastr.success('', 'Izbrana serija dnvea uspešno izbrisana!', { timeOut: timingConst.success });
                 }
                 this.setRecommendationForm.patchValue({
                     name: ''
@@ -183,7 +184,7 @@ export class AdministrationPageComponent {
                         this.authService.unauthorizedHandler();
                         break;
                     default:
-                        this.toastr.error('', 'Napaka na strežniku', { timeOut: 5000 });
+                        this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
                         break;
                 }
             }
@@ -239,7 +240,7 @@ export class AdministrationPageComponent {
             Object.keys(this.userControlForm.controls).forEach((controlName) => {
                 const control = this.userControlForm.get(controlName);
                 if (control?.invalid) {
-                    this.toastr.error(`Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`);
+                    this.toastr.error('', `Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`, { timeOut: timingConst.error });
                 }
             });
         }
@@ -255,7 +256,7 @@ export class AdministrationPageComponent {
 
             this.userService.updateRole(updateRoleDto).subscribe({
                 next: () => {
-                    this.toastr.success('', `Role za uporabnika ${this.userUsername} uspešno nastavljen na ${this.getUiAppropriateControlName(role)}`, { timeOut: 5000 });
+                    this.toastr.success('', `Role za uporabnika ${this.userUsername} uspešno nastavljen na ${this.getUiAppropriateControlName(role)}`, { timeOut: timingConst.success });
                     this.onUserControlFormSubmit();
                 },
                 error: (error) => {
@@ -264,7 +265,7 @@ export class AdministrationPageComponent {
                             this.authService.unauthorizedHandler();
                             break;
                         default:
-                            this.toastr.error('', 'Napaka na strežniku', { timeOut: 5000 });
+                            this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
                             break;
                     }
                 }
@@ -280,7 +281,7 @@ export class AdministrationPageComponent {
         if (this.userUsername) {
             this.userService.deleteProfileAdmin(this.userUsername).subscribe({
                 next: () => {
-                    this.toastr.success('Profil uspešno izbrisan!');
+                    this.toastr.success('', 'Profil uspešno izbrisan!', { timeOut: timingConst.success });
                     this.userFound = null;
                     this.userUsername = null;
                     this.userRole = null;
@@ -292,10 +293,10 @@ export class AdministrationPageComponent {
                             this.authService.unauthorizedHandler();
                             break;
                         case 404:
-                            this.toastr.error('', 'Uporabnik ne obstaja', { timeOut: 5000 });
+                            this.toastr.error('', 'Uporabnik ne obstaja', { timeOut: timingConst.error });
                             break;
                         default:
-                            this.toastr.error('', 'Napaka pri brisanju profila!', { timeOut: 5000 });
+                            this.toastr.error('', 'Napaka pri brisanju profila!', { timeOut: timingConst.error });
                             break;
                     }
                 }

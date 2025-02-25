@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { SearchService } from 'src/app/modules/search/services/search-service/search.service';
+import { timingConst } from '../../enums/toastr-timing.enum';
 
 @Component({
     selector: 'app-search-bar',
@@ -35,7 +36,7 @@ export class SearchBarComponent implements OnInit {
     onSearch(): void {
         // Use search service onSearch method
         if (!this.searchForm.valid) {
-            this.toastr.warning('', 'Vnesite izraz za iskanje', { timeOut: 2000 });
+            this.toastr.warning('', 'Vnesite izraz za iskanje', { timeOut: timingConst.warning });
             return;
         }
 

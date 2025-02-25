@@ -60,7 +60,7 @@ export class HomeTorrentComponent {
     // Error getting recommendations
     private errorGettingRecommendations(): void {
         if (!this.errorToastShown) {
-            this.toastr.error('', 'Napaka pri pridobivanju torrentov. Prosimo, poskusite znova kasneje', { timeOut: timingConst.error });
+            this.toastr.error('', 'Napaka pri pridobivanju torrentov', { timeOut: timingConst.error });
             this.errorToastShown = true;
         }
     }
