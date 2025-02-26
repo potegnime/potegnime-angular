@@ -155,8 +155,35 @@ export class UserService {
     }
 
     public isAdminLogged(): boolean {
-        const decodedToken = this.tokenService.decodeToken();
-        if (decodedToken?.role == '1') return true;
+        const role = this.getUserRole();
+        if (role) {
+            return role === 'admin';
+        }
         return false;
+    }
+
+    public isUploaderLogged(): boolean {
+        const role = this.getUserRole();
+        if (role) {
+            return role === 'uploader';
+        }
+        return false;
+    }
+
+    public isUserLogged(): boolean {
+        const role = this.getUserRole();
+        if (role) {
+            return role === 'user';
+        }
+        return false;
+    }
+
+    private getUserRole(): string | null {
+        const decodedToken = this.tokenService.decodeToken();
+        if (decodedToken) {
+            return decodedToken.role.toLowerCase();
+        } else {
+            return null;
+        }
     }
 }

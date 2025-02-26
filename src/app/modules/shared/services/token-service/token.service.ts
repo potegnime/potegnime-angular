@@ -40,7 +40,7 @@ export class TokenService {
                 uid: Number(decodedToken.uid),
                 username: decodedToken.username,
                 email: decodedToken.email,
-                role: decodedToken.role,
+                role: decodedToken.role.toLowerCase(),
                 joined: decodedToken.joined,
                 iss: decodedToken.iss,
                 aud: decodedToken.aud,

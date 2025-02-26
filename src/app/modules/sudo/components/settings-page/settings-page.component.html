@@ -5,7 +5,7 @@
             <ul class="flex-column">
                 <li><a class="side-link" (click)="scrollToSection('uredi')">Uredi profil</a></li>
                 <li><a class="side-link" (click)="scrollToSection('zasebnost')">Zasebnost</a></li>
-                <li *ngIf="uploaderRequestStatus !== uploaderRequestStatusEnum.Approved"><a class="side-link"
+                <li *ngIf="uploaderRequestStatus !== uploaderRequestStatusEnum.Approved && isUser"><a class="side-link"
                         (click)="scrollToSection('request-uploader')">Postani nalagalec</a></li>
             </ul>
         </nav>
@@ -88,7 +88,7 @@
         </div>
 
         <div class="settings-section" id="request-uploader"
-            *ngIf="uploaderRequestStatus !== uploaderRequestStatusEnum.Approved">
+            *ngIf="uploaderRequestStatus !== uploaderRequestStatusEnum.Approved && isUser">
             <h3>Postani nalagalec</h3>
             <hr>
 

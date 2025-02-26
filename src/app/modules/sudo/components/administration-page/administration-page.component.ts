@@ -89,42 +89,8 @@ export class AdministrationPageComponent {
         this.updateRecommendationFields(date, type.value);
     }
 
-    private updateRecommendationFields(date: string, type: 'movie' | 'series') {
-        this.recommendService.getAdminRecommendation(date, type).subscribe({
-            next: (response: AdminRecommendation) => {
-                this.setRecommendationForm.patchValue({
-                    date: response.date,
-                    type: response.type,
-                    name: response.name
-                });
-            },
-            error: (error) => {
-                switch (error.status) {
-                    case 401:
-                        this.authService.unauthorizedHandler();
-                        break;
-                    case 404:
-                        this.setRecommendationForm = this.formBuilder.group({
-                            date: [date, Validators.required],
-                            type: [type, Validators.required],
-                            name: ['', Validators.required]
-                        });
-                        break;
-                    default:
-                        this.toastr.error('', 'Napaka pri pridobivanju priporočila dneva', { timeOut: timingConst.error });
-                        this.setRecommendationForm = this.formBuilder.group({
-                            date: [date, Validators.required],
-                            type: ['movie', Validators.required],
-                            name: ['', Validators.required]
-                        });
-                        break;
-                }
-            }
-        });
-    }
-
     // Form submit methods
-    onSetRecommendationFormSubmit() {
+    protected onSetRecommendationFormSubmit() {
         if (this.setRecommendationForm.valid) {
             const date = this.setRecommendationForm.get('date')?.value;
             const type = this.setRecommendationForm.get('type')?.value;
@@ -165,7 +131,7 @@ export class AdministrationPageComponent {
         }
     }
 
-    onDeleteTodaysRecommendation() {
+    protected onDeleteTodaysRecommendation() {
         const date = this.setRecommendationForm.get('date')?.value;
         const type = this.setRecommendationForm.get('type')?.value;
         this.recommendService.deleteAdminRecommendation(date, type).subscribe({
@@ -192,7 +158,7 @@ export class AdministrationPageComponent {
         })
     }
 
-    onUserControlFormSubmit() {
+    protected onUserControlFormSubmit() {
         if (this.userControlForm.valid) {
             // Search for user
             const username = this.userControlForm.get('username')?.value;
@@ -248,7 +214,7 @@ export class AdministrationPageComponent {
         }
     }
 
-    onUserRoleChangeForm() {
+    protected onUserRoleChangeForm() {
         const role = this.userRoleChangeForm.get('role')?.value;
         if (this.userUserId) {
             const updateRoleDto: UpdateRoleDto = {
@@ -275,7 +241,7 @@ export class AdministrationPageComponent {
         }
     }
 
-    onDeleteUser() {
+    protected onDeleteUser() {
         if (!confirm(`Ali ste prepričani, da želite izbrisati uporabnika ${this.userUsername}?`)) {
             return;
         }
@@ -344,5 +310,39 @@ export class AdministrationPageComponent {
         const month = String(dateObject.getMonth() + 1).padStart(2, '0');
         const year = dateObject.getFullYear();
         return `${year}-${month}-${day}`;
+    }
+
+    private updateRecommendationFields(date: string, type: 'movie' | 'series') {
+        this.recommendService.getAdminRecommendation(date, type).subscribe({
+            next: (response: AdminRecommendation) => {
+                this.setRecommendationForm.patchValue({
+                    date: response.date,
+                    type: response.type,
+                    name: response.name
+                });
+            },
+            error: (error) => {
+                switch (error.status) {
+                    case 401:
+                        this.authService.unauthorizedHandler();
+                        break;
+                    case 404:
+                        this.setRecommendationForm = this.formBuilder.group({
+                            date: [date, Validators.required],
+                            type: [type, Validators.required],
+                            name: ['', Validators.required]
+                        });
+                        break;
+                    default:
+                        this.toastr.error('', 'Napaka pri pridobivanju priporočila dneva', { timeOut: timingConst.error });
+                        this.setRecommendationForm = this.formBuilder.group({
+                            date: [date, Validators.required],
+                            type: ['movie', Validators.required],
+                            name: ['', Validators.required]
+                        });
+                        break;
+                }
+            }
+        });
     }
 }

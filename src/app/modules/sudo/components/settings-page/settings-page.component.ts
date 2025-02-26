@@ -29,6 +29,7 @@ export class SettingsPageComponent {
     protected selectedProfilePicture: File | null = null;
     protected profilePictureUrl: string = 'assets/images/no-pfp.png';
     protected pfpChanged: boolean = false;
+    protected isUser: boolean = false;
     protected uploaderRequestStatus: UploaderRequestStatus | null = null;
     protected uploaderRequestStatusEnum = UploaderRequestStatus;
     protected uploaderRequestFormCharacterCount: any = {
@@ -89,7 +90,7 @@ export class SettingsPageComponent {
             // Get user data from JWT
             this.setSettingsPage(
                 decodedToken.username,
-                decodedToken.email,
+                decodedToken.email
             );
 
             // Get user pfp
@@ -514,6 +515,7 @@ export class SettingsPageComponent {
         // Set input fields
         this.username = username;
         this.email = email;
+        this.isUser = this.userService.isUserLogged();
 
         this.changeUserDataForm.patchValue({
             username: this.username,
