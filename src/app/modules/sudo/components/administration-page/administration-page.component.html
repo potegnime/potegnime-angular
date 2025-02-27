@@ -78,8 +78,9 @@
                         <label for="changeUserRole">Spremeni role</label>
                         <select name="changeUserRole" id="changeUserRole" class="input" formControlName="role"
                             (change)="onUserRoleChangeForm()">
-                            <option value="admin">Admin</option>
                             <option value="user">Uporabnik</option>
+                            <option value="uploader">Nalagalec</option>
+                            <option value="admin">Admin</option>
                         </select>
                     </form>
                     <button class="button" class="danger-button button" id="delete-profile-button"
