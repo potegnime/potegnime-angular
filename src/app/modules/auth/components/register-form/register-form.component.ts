@@ -43,7 +43,6 @@ export class RegisterFormComponent {
     });
   }
 
-  // password visibility
   protected togglePasswordVisibility(fieldNumber: number) {
     if (fieldNumber === 1) {
       this.showPassword = !this.showPassword;

@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { TokenService } from 'src/app/modules/shared/services/token-service/token.service';
 import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
+import { ForgotPasswordDto } from '../../models/forgot-password.interface';
+import { ResetPasswordDto } from '../../models/reset-password.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -71,5 +73,21 @@ export class AuthService {
             })
         };
         return this.http.post<string>(`${urlConst.apiBase}/auth/refresh`, {}, httpOptions);
+    }
+
+    public forgotPassword(forgorPasswordDto: ForgotPasswordDto): Observable<any> {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json'
+        });
+
+        return this.http.post<any>(`${urlConst.apiBase}/auth/forgotPassword`, forgorPasswordDto, { headers: headers });
+    }
+
+    public resetPassword(resetPasswordDto: ResetPasswordDto): Observable<any> {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json'
+        });
+
+        return this.http.post<any>(`${urlConst.apiBase}/auth/resetPassword`, resetPasswordDto, { headers: headers });
     }
 }

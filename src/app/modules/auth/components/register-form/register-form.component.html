@@ -1,4 +1,4 @@
-<h1>Registracija</h1>
+<h2>Registracija</h2>
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <div class="top-row">
         <input type="text" id="username" name="username" placeholder="Uporabniško ime" required
@@ -28,13 +28,16 @@
             <span class="checkmark">
                 <i [ngClass]="agreeToTermsBool ? 'fa-solid fa-square-check' : 'fa-regular fa-square'"></i>
             </span>
-            Strinjam se s <a routerLink="/pogoji">pravili in splošnimi pogoji uporabe</a>
+            <span class="url">
+                Strinjam se s <a routerLink="/pogoji">pravili in splošnimi pogoji uporabe</a>
+            </span>
         </label>
     </div>
     <button type="submit" [disabled]="registerForm.invalid" class="register-button">Registracija</button>
 </form>
 
-<p class="url">Že imaš račun? <a routerLink="/prijava">Prijavi se!</a></p>
 <div class="register-error" [class.shake]="triggerErrorAnimation">
     <p *ngIf="showRegisterError">{{ registerErrorMessage }}</p>
 </div>
+
+<p class="url">Že imaš račun? <a routerLink="/prijava">Prijavi se!</a></p>

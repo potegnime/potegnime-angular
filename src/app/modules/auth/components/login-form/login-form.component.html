@@ -1,4 +1,4 @@
-<h1>Prijava</h1>
+<h2>Prijava</h2>
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div>
         <input type="text" id="username" name="username" placeholder="Uporabniško ime" required
@@ -15,9 +15,9 @@
     <button type="submit" [disabled]="loginForm.invalid" class="login-button">Prijava</button>
 </form>
 
-<p class="mb-1"><a routerLink="/pozabljeno-geslo">Pozabljeno geslo?</a></p>
-<p class="register-url">Še nimaš računa? <a routerLink="/registracija">Registriraj se!</a></p>
-
-<div class="login-error" [class.shake]="triggerErrorAnimation" *ngIf="showLoginError">
+<div class="login-error my-2" [class.shake]="triggerErrorAnimation" *ngIf="showLoginError">
     {{ loginErrorMessage }}
 </div>
+
+<p class="url mb-1"><a routerLink="/pozabljeno-geslo">Pozabljeno geslo?</a></p>
+<p class="url">Še nimaš računa? <a routerLink="/registracija">Registriraj se!</a></p>

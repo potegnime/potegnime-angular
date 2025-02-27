@@ -20,6 +20,8 @@ form {
 input[type="text"],
 input[type="email"],
 input[type="password"] {
+    box-sizing: border-box;
+    width: 100%;
     color: white;
     width: 100%;
     padding: 10px;
@@ -36,7 +38,6 @@ input[type="password"] {
     padding-right: 45px;
 }
 
-// Toggle password visibility
 .password-container {
     position: relative;
     width: 48%;
@@ -51,6 +52,7 @@ input[type="password"] {
     cursor: pointer;
 }
 
+// Toggle password visibility
 .toggle-password {
     position: absolute;
     top: 42%;
@@ -95,8 +97,7 @@ input[type="password"] {
 
 button.register-button {
     width: 150px;
-    padding: 10px 20px;
-    background: linear-gradient(var(--dark-purple), #9E00FF 100%);
+    background: linear-gradient(var(--dark-purple), var(--light-purple) 100%);
     border-radius: 20px;
     border: none;
     color: white;
@@ -106,9 +107,7 @@ button.register-button {
 }
 
 button.register-button:disabled {
-    background: linear-gradient(#3d1655, #5b1089 100%);
-    opacity: 0, 5;
-    color: gray;
+    opacity: 0.5;
     cursor: not-allowed;
 }
 
@@ -121,27 +120,7 @@ button.register-button:disabled {
     width: 100%;
 }
 
-// Links
-.url a {
-    color: var(--blue);
-}
-
-.url a:hover {
-    color: var(--dark-blue);
-}
-
-a {
-    text-decoration: none;
-}
-
 @media (max-width: 1024px) {
-
-    .register-left,
-    .register-right {
-        flex: unset;
-        width: 100%;
-        border-radius: 10px;
-    }
 
     .top-row,
     .bottom-row {

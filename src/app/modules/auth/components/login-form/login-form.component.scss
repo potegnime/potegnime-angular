@@ -59,7 +59,7 @@ input[type="password"] {
 button.login-button {
     width: 150px;
     padding: 10px 20px;
-    background: linear-gradient(var(--dark-purple), #9E00FF 100%);
+    background: linear-gradient(var(--dark-purple), var(--light-purple) 100%);
     border-radius: 20px;
     border: none;
     color: white;
@@ -69,9 +69,7 @@ button.login-button {
 }
 
 button.login-button:disabled {
-    background: linear-gradient(#3d1655, #5b1089 100%);
-    opacity: 0, 5;
-    color: gray;
+    opacity: 0.5;
     cursor: not-allowed;
 }
 
@@ -80,21 +78,7 @@ button.login-button:disabled {
     color: var(--red-primary);
 }
 
-// Links
-.url a {
-    color: var(--blue);
-}
-
-.url a:hover {
-    color: var(--dark-blue);
-}
-
-a {
-    text-decoration: none;
-}
-
 @media (max-width: 768px) {
-
     button.login-button {
         width: 100%;
     }

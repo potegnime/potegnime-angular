@@ -131,6 +131,25 @@ ul.list li {
     display: inline-block;
 }
 
+// Links
+.url a {
+    color: var(--blue);
+}
+
+.url-white a {
+    color: var(--white);
+}
+
+.url a:hover,
+.url-white a:hover {
+    color: var(--dark-blue);
+    text-decoration: underline;
+}
+
+a {
+    text-decoration: none;
+}
+
 // ngx-toastr overrides
 .toast-error {
     box-shadow: none !important;

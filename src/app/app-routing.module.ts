@@ -25,7 +25,7 @@ const routes: Routes = [
             { path: 'registracija', component: RegisterFormComponent, canActivate: [LoggedInAuthGuard] },
             { path: 'register', redirectTo: 'registracija', pathMatch: 'full' },
             { path: 'pozabljeno-geslo', component: ForgotPasswordFormComponent, canActivate: [LoggedInAuthGuard] },
-            { path: 'ponastavi-geslo/:token', component: ResetPasswordFormComponent, canActivate: [LoggedInAuthGuard] },
+            { path: 'ponastavi-geslo', component: ResetPasswordFormComponent, canActivate: [LoggedInAuthGuard] },
         ],
     },
 
