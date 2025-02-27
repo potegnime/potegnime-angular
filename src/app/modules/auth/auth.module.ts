@@ -2,13 +2,19 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module'
-import { LoginPageComponent } from './components/login-page/login-page.component';
-import { RegisterPageComponent } from './components/register-page/register-page.component';
+import { AuthPageComponent } from './components/auth-page/auth-page.component';
+import { LoginFormComponent } from './components/login-form/login-form.component';
+import { RegisterFormComponent } from './components/register-form/register-form.component';
+import { ForgotPasswordFormComponent } from './components/forgot-password-form/forgot-password-form.component';
+import { ResetPasswordFormComponent } from './components/reset-password-form/reset-password-form.component';
 
 @NgModule({
     declarations: [
-        LoginPageComponent,
-        RegisterPageComponent
+        AuthPageComponent,
+        LoginFormComponent,
+        RegisterFormComponent,
+        ForgotPasswordFormComponent,
+        ResetPasswordFormComponent
     ],
     imports: [
         CommonModule,

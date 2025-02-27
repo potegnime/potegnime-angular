@@ -1,0 +1,23 @@
+<h1>Prijava</h1>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div>
+        <input type="text" id="username" name="username" placeholder="Uporabniško ime" required
+            formControlName="username">
+    </div>
+    <div class="password-container">
+        <input type="{{ showPassword ? 'text' : 'password' }}" id="password" name="password" placeholder="Geslo"
+            required formControlName="password">
+        <span class="toggle-password" (click)="togglePasswordVisibility()">
+            <i class="eye-icon fa-solid" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
+        </span>
+    </div>
+
+    <button type="submit" [disabled]="loginForm.invalid" class="login-button">Prijava</button>
+</form>
+
+<p class="mb-1"><a routerLink="/pozabljeno-geslo">Pozabljeno geslo?</a></p>
+<p class="register-url">Še nimaš računa? <a routerLink="/registracija">Registriraj se!</a></p>
+
+<div class="login-error" [class.shake]="triggerErrorAnimation" *ngIf="showLoginError">
+    {{ loginErrorMessage }}
+</div>

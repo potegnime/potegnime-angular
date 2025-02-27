@@ -4,19 +4,30 @@ import { AuthGuard } from './modules/auth/guards/auth/auth.guard';
 import { LoggedInAuthGuard } from './modules/auth/guards/logged-in/logged-in-guard.guard';
 import { AdminGuard } from './modules/sudo/guards/admin-guard/admin.guard';
 import { ErrorComponent } from './modules/shared/components/error/error.component';
-import { LoginPageComponent } from './modules/auth/components/login-page/login-page.component';
-import { RegisterPageComponent } from './modules/auth/components/register-page/register-page.component';
+import { AuthPageComponent } from './modules/auth/components/auth-page/auth-page.component';
+import { LoginFormComponent } from './modules/auth/components/login-form/login-form.component';
+import { RegisterFormComponent } from './modules/auth/components/register-form/register-form.component';
+import { ForgotPasswordFormComponent } from './modules/auth/components/forgot-password-form/forgot-password-form.component';
+import { ResetPasswordFormComponent } from './modules/auth/components/reset-password-form/reset-password-form.component';
 
 const routes: Routes = [
-
-    // Auth module - not lazy loaded
-    { path: 'prijava', component: LoginPageComponent, canActivate: [LoggedInAuthGuard] },
-    { path: 'login', redirectTo: 'prijava', pathMatch: 'full' },
-    { path: 'registracija', component: RegisterPageComponent, canActivate: [LoggedInAuthGuard] },
-    { path: 'register', redirectTo: 'registracija', pathMatch: 'full' },
-
     // Home module
+    // Needs to be defined before Auth module
     { path: '', loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule), canActivate: [AuthGuard] },
+
+    // Auth module
+    {
+        path: '',
+        component: AuthPageComponent,
+        children: [
+            { path: 'prijava', component: LoginFormComponent, canActivate: [LoggedInAuthGuard] },
+            { path: 'login', redirectTo: 'prijava', pathMatch: 'full' },
+            { path: 'registracija', component: RegisterFormComponent, canActivate: [LoggedInAuthGuard] },
+            { path: 'register', redirectTo: 'registracija', pathMatch: 'full' },
+            { path: 'pozabljeno-geslo', component: ForgotPasswordFormComponent, canActivate: [LoggedInAuthGuard] },
+            { path: 'ponastavi-geslo/:token', component: ResetPasswordFormComponent, canActivate: [LoggedInAuthGuard] },
+        ],
+    },
 
     // Search module
     { path: 'iskanje', loadChildren: () => import('./modules/search/search.module').then(m => m.SearchModule), canActivate: [AuthGuard] },
@@ -34,7 +45,7 @@ const routes: Routes = [
     { path: '', loadChildren: () => import('./modules/about/about.module').then(m => m.AboutModule) },
 
     // 404 error page
-    { path: '**', component: ErrorComponent }
+    { path: '**', component: ErrorComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
