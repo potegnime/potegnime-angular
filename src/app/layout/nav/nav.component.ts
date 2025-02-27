@@ -14,6 +14,7 @@ export class NavComponent {
     protected username: string | null = null;
     protected profilePictureUrl: string | null = null;
     protected isAdmin: boolean = false;
+    protected isUploader: boolean = false;
     protected notificationCount: number = 10;
 
     constructor(
@@ -24,6 +25,7 @@ export class NavComponent {
     ) {
         this.uid = userService.getLoggedUserId();
         this.isAdmin = userService.isAdminLogged();
+        this.isUploader = userService.isUploaderLogged();
         if (this.uid) {
             // Get profile picture
             // Try to get from cache first

@@ -5,6 +5,8 @@
                 profil</button>
             <button class="sudo-button" type="button" routerLink="/nastavitve"
                 routerLinkActive="active-link">Nastavitve</button>
+            <button *ngIf="isAdmin || isUploader" class="sudo-button" type="button" routerLink="/ustvari"
+                routerLinkActive="active-link">Ustvari torrent</button>
             <button *ngIf="isAdmin" class="sudo-button" type="button" routerLink="/admin"
                 routerLinkActive="active-link">Administracija</button>
         </div>

@@ -30,6 +30,7 @@ export const DefinedRoutes = [
     // Sudo
     'nastavitve',
     'admin',
+    'ustvari',
 
     // 404
     '**'

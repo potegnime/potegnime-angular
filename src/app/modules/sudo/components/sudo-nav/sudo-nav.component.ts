@@ -10,6 +10,7 @@ import { UserService } from 'src/app/modules/user/services/user-service/user.ser
 export class SudoNavComponent {
     protected uid: number | null;
     protected isAdmin: boolean = false;
+    protected isUploader: boolean = false;
 
     constructor(
         private readonly authService: AuthService,
@@ -20,6 +21,7 @@ export class SudoNavComponent {
             this.authService.logout();
         }
         this.isAdmin = this.userService.isAdminLogged();
+        this.isUploader = this.userService.isUploaderLogged();
     }
 
     public logout() {

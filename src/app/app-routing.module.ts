@@ -6,8 +6,6 @@ import { AdminGuard } from './modules/sudo/guards/admin-guard/admin.guard';
 import { ErrorComponent } from './modules/shared/components/error/error.component';
 import { LoginPageComponent } from './modules/auth/components/login-page/login-page.component';
 import { RegisterPageComponent } from './modules/auth/components/register-page/register-page.component';
-import { SettingsPageComponent } from './modules/sudo/components/settings-page/settings-page.component';
-import { AdministrationPageComponent } from './modules/sudo/components/administration-page/administration-page.component';
 
 const routes: Routes = [
 
@@ -29,13 +27,11 @@ const routes: Routes = [
     // Recommned module
     { path: 'razisci', loadChildren: () => import('./modules/recommend/recommend.module').then(m => m.RecommendModule), canActivate: [AuthGuard] },
 
+    // Sudo module - guards defined in the module
+    { path: '', loadChildren: () => import('./modules/sudo/sudo.module').then(m => m.SudoModule) },
+
     // About module
     { path: '', loadChildren: () => import('./modules/about/about.module').then(m => m.AboutModule) },
-
-    // Sudo module components  
-    // Settings page - not lazy loaded
-    { path: 'nastavitve', component: SettingsPageComponent, canActivate: [AuthGuard] },
-    { path: 'admin', component: AdministrationPageComponent, canActivate: [AdminGuard] },
 
     // 404 error page
     { path: '**', component: ErrorComponent }
