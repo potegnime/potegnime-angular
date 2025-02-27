@@ -102,7 +102,10 @@ export class SearchResultsComponent implements OnInit {
                         if (error.error.message && error.error.errorCode == 1) {
                             this.toastr.error('', `Napaka pri iskanju torrentov: ${error.error.message}`, { timeOut: timingConst.error });
                             break;
-                        } else { this.toastr.error('', 'Napaka pri iskanju torrentov', { timeOut: timingConst.error }); break; }
+                        } else {
+                            this.toastr.error('', 'Napaka pri iskanju torrentov', { timeOut: timingConst.error }); break;
+                        }
+
                     case 401:
                         this.authService.unauthorizedHandler();
                         break;
