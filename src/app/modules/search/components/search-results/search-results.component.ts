@@ -103,7 +103,8 @@ export class SearchResultsComponent implements OnInit {
                             this.toastr.error('', `Napaka pri iskanju torrentov: ${error.error.message}`, { timeOut: timingConst.error });
                             break;
                         } else {
-                            this.toastr.error('', 'Napaka pri iskanju torrentov', { timeOut: timingConst.error }); break;
+                            this.toastr.error('', 'Napaka pri iskanju torrentov', { timeOut: timingConst.error });
+                            break;
                         }
 
                     case 401:
