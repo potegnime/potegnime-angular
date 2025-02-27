@@ -5,6 +5,7 @@
             <ul class="flex-column">
                 <li><a class="side-link" (click)="scrollToSection('recommend')">Izbrani torrenti</a></li>
                 <li><a class="side-link" (click)="scrollToSection('nadzor')">Nadzor uporabnikov</a></li>
+                <li><a class="side-link" (click)="scrollToSection('requests')">Prošnje za nalaglce</a></li>
             </ul>
         </nav>
     </div>
@@ -89,6 +90,20 @@
             </div>
 
 
+        </div>
+
+        <div class="admin'section" id="requests">
+            <h3>Prošnje za nalaglce</h3>
+            <!-- TODO check if any requests, pageable, accept/deny, response message -->
+            <hr>
+            <div class="row">
+                <ul>
+                    <li *ngFor="let request of uploaderRequests">
+                        <p>{{request}}</p>
+                    </li>
+                </ul>
+
+            </div>
         </div>
     </div>
 </div>

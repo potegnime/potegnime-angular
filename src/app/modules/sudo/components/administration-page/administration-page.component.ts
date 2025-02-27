@@ -15,12 +15,17 @@ import { UserService } from 'src/app/modules/user/services/user-service/user.ser
     styleUrls: ['./administration-page.component.scss']
 })
 export class AdministrationPageComponent {
+    // User control
     protected userFound: boolean | null = null;
     protected userUserId: number | null = null;
     protected userUsername: string | null = null;
     protected userRole: string | null = null;
     protected userPfpUrl: string | null = null;
 
+    // Uplader requests
+    protected uploaderRequests: any[] = [];
+
+    // Form groups
     protected setRecommendationForm: FormGroup;
     protected userControlForm: FormGroup
     protected userRoleChangeForm: FormGroup;
