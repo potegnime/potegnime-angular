@@ -296,6 +296,12 @@ export class AdministrationPageComponent {
                 return 'Naslov';
             case 'username':
                 return 'Uporabniško ime';
+            case 'user':
+                return 'Uporabnik';
+            case 'uploader':
+                return 'Nalagalec';
+            case 'admin':
+                return 'Administrator';
             default:
                 return controlName;
         }
