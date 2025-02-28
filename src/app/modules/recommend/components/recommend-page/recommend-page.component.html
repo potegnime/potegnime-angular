@@ -13,7 +13,8 @@
 <div class="row control-container">
     <div class="col-4 sel-cont">
         <label for="sectionSelect">Prikaži</label>
-        <select name="sectionSelect" id="sectionSelect" (change)="onSectionDropdownChanged($event.target)">
+        <select name="sectionSelect" id="sectionSelect" class="select"
+            (change)="onSectionDropdownChanged($event.target)">
             <option value="popular">Popularno</option>
             <option value="nowPlaying">Zdaj v kinu</option>
             <option value="topRated">Najbolj ocenjeno</option>
@@ -24,14 +25,14 @@
     </div>
     <div class="col-4 sel-cont">
         <label for="langSelect">Jezik</label>
-        <select name="langSelect" id="langSelect" (change)="updateLanguage($event.target)">
+        <select name="langSelect" id="langSelect" class="select" (change)="updateLanguage($event.target)">
             <option value="sl-SI" selected>Slovenščina</option>
             <option value="en-US">Angleščina</option>
         </select>
     </div>
     <div class="col-4 sel-cont">
         <label for="regionSelect">Regija</label>
-        <select name="regionSelect" id="regionSelect" (change)="updateRegion($event.target)">
+        <select name="regionSelect" id="regionSelect" class="select" (change)="updateRegion($event.target)">
             <option value="sl-SI" selected>Slovenija</option>
             <option value="en-US">Z.D.A.</option>
         </select>
@@ -44,7 +45,7 @@
 
 <div class="container mt-4">
     <h3 class="sectionTitle" id="popular">Popularno</h3>
-    <div class="row mb-5" *ngIf="popularMovies" >
+    <div class="row mb-5" *ngIf="popularMovies">
         <div *ngFor="let movie of popularMovies" class="col-md-4 mb-4" (click)="searchTitle(movie.title)">
             <div class="card" title="{{ movie.description }}">
                 <img [src]="posterUrl + movie.imageUrl" class="card-img-top" [alt]="movie.title">
@@ -56,7 +57,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
     <p *ngIf="popularMovies.length === 0" class="text-center no-results">Ni rezultatov :(</p>
 </div>
