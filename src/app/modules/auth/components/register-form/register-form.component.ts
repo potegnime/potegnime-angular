@@ -64,14 +64,14 @@ export class RegisterFormComponent implements OnInit {
     // Username validation
     if (this.registerForm?.value.username.length < 4) {
       this.showRegisterError = true;
-      this.registerErrorMessage = 'Uporabniško ime mora vsebovati vsaj 4 znake!';
+      this.registerErrorMessage = 'Uporabniško ime mora vsebovati vsaj 4 znake';
       this.handleErrorAnimation();
       return;
     }
     // Username cannot end with a trailing space
     if (this.registerForm?.value.username.endsWith(' ')) {
       this.showRegisterError = true;
-      this.registerErrorMessage = 'Uporabniško ime ne sme končati s presledkom!';
+      this.registerErrorMessage = 'Uporabniško ime ne sme končati s presledkom';
       this.handleErrorAnimation();
       return;
     }
@@ -80,7 +80,7 @@ export class RegisterFormComponent implements OnInit {
     // Length
     if (this.registerForm?.value.password.length < 8) {
       this.showRegisterError = true;
-      this.registerErrorMessage = 'Geslo mora vsebovati vsaj 8 znakov!';
+      this.registerErrorMessage = 'Geslo mora vsebovati vsaj 8 znakov';
       this.handleErrorAnimation();
       return;
     }
@@ -88,7 +88,7 @@ export class RegisterFormComponent implements OnInit {
     const numbers = /[0-9]/;
     if (!numbers.test(this.registerForm?.value.password)) {
       this.showRegisterError = true;
-      this.registerErrorMessage = 'Geslo mora vsebovati vsaj 1 številko!';
+      this.registerErrorMessage = 'Geslo mora vsebovati vsaj 1 številko';
       this.handleErrorAnimation();
       return;
     }
@@ -105,7 +105,7 @@ export class RegisterFormComponent implements OnInit {
     // Passwords match validation
     if (this.registerForm?.value.password !== this.registerForm?.value.passwordConfirm) {
       this.showRegisterError = true;
-      this.registerErrorMessage = 'Gesli se ne ujemata!';
+      this.registerErrorMessage = 'Gesli se ne ujemata';
       this.handleErrorAnimation();
       return;
     }
@@ -126,7 +126,7 @@ export class RegisterFormComponent implements OnInit {
         next: (resp) => {
           this.isSubmitting = false;
           if (resp.token) {
-            this.toastr.success('', 'Registracija uspešna!', { timeOut: timingConst.success });
+            this.toastr.success('', 'Registracija uspešna', { timeOut: timingConst.success });
 
             // Clear register form cache
             AuthHelper.removeRegisterForm();

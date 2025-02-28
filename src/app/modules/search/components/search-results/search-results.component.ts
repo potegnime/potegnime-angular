@@ -27,8 +27,8 @@ export class SearchResultsComponent implements OnInit {
     protected missingQuery: boolean = false;
 
     protected copyText: string = 'Magnet link';
-    protected copyHighlightText: string = 'Kopirano!';
-    protected downloadText: string = 'Potegni ga!';
+    protected copyHighlightText: string = 'Kopirano';
+    protected downloadText: string = 'Potegni ga';
 
     constructor(
         private readonly route: ActivatedRoute,
@@ -138,70 +138,70 @@ export class SearchResultsComponent implements OnInit {
                 try {
                     this.searchResults.sort((a, b) => a.title.localeCompare(b.title));
                 } catch {
-                    this.toastr.info('', 'Sortiranje po imenu naraščajoče ni uspelo!', { timeOut: timingConst.info });
+                    this.toastr.info('', 'Sortiranje po imenu naraščajoče ni uspelo', { timeOut: timingConst.info });
                 }
                 break;
             case 'name-desc':
                 try {
                     this.searchResults.sort((a, b) => b.title.localeCompare(a.title));
                 } catch {
-                    this.toastr.info('', 'Sortiranje po imenu padajoče ni uspelo!', { timeOut: timingConst.info });
+                    this.toastr.info('', 'Sortiranje po imenu padajoče ni uspelo', { timeOut: timingConst.info });
                 }
                 break;
             case 'uploader-asc':
                 try {
                     this.searchResults.sort((a, b) => a.source.localeCompare(b.source));
                 } catch {
-                    this.toastr.info('', 'Sortiranje po uploaderju naraščajoče ni uspelo!', { timeOut: timingConst.info });
+                    this.toastr.info('', 'Sortiranje po uploaderju naraščajoče ni uspelo', { timeOut: timingConst.info });
                 }
                 break;
             case 'uploader-desc':
                 try {
                     this.searchResults.sort((a, b) => b.source.localeCompare(a.source));
                 } catch {
-                    this.toastr.info('', 'Sortiranje po uploaderju padajoče ni uspelo!', { timeOut: timingConst.info });
+                    this.toastr.info('', 'Sortiranje po uploaderju padajoče ni uspelo', { timeOut: timingConst.info });
                 }
                 break;
             case 'date-asc':
                 try {
                     this.searchResults.sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
                 } catch {
-                    this.toastr.info('', 'Sortiranje po datumu naraščajoče ni uspelo!', { timeOut: timingConst.info });
+                    this.toastr.info('', 'Sortiranje po datumu naraščajoče ni uspelo', { timeOut: timingConst.info });
                 }
                 break;
             case 'date-desc':
                 try {
                     this.searchResults.sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime());
                 } catch {
-                    this.toastr.info('', 'Sortiranje po datumu padajoče ni uspelo!', { timeOut: timingConst.info });
+                    this.toastr.info('', 'Sortiranje po datumu padajoče ni uspelo', { timeOut: timingConst.info });
                 }
                 break;
             case 'seed-asc':
                 try {
                     this.searchResults.sort((a, b) => a.seeds - b.seeds);
                 } catch {
-                    this.toastr.info('', 'Sortiranje po sejalcih naraščajoče ni uspelo!', { timeOut: timingConst.info });
+                    this.toastr.info('', 'Sortiranje po sejalcih naraščajoče ni uspelo', { timeOut: timingConst.info });
                 }
                 break;
             case 'seed-desc':
                 try {
                     this.searchResults.sort((a, b) => b.seeds - a.seeds);
                 } catch {
-                    this.toastr.info('', 'Sortiranje po sejalcih padajoče ni uspelo!', { timeOut: timingConst.info });
+                    this.toastr.info('', 'Sortiranje po sejalcih padajoče ni uspelo', { timeOut: timingConst.info });
                 }
                 break;
             case 'peer-asc':
                 try {
                     this.searchResults.sort((a, b) => a.peers - b.peers);
                 } catch {
-                    this.toastr.info('', 'Sortiranje po peer naraščajoče ni uspelo!', { timeOut: timingConst.info });
+                    this.toastr.info('', 'Sortiranje po peer naraščajoče ni uspelo', { timeOut: timingConst.info });
                 }
                 break;
             case 'peer-desc':
                 try {
                     this.searchResults.sort((a, b) => b.peers - a.peers);
                 } catch {
-                    this.toastr.info('', 'Sortiranje po peer padajoče ni uspelo!', { timeOut: timingConst.info });
+                    this.toastr.info('', 'Sortiranje po peer padajoče ni uspelo', { timeOut: timingConst.info });
                 }
                 break;
             case 'size-asc':
@@ -212,7 +212,7 @@ export class SearchResultsComponent implements OnInit {
                         return sizeA - sizeB;
                     });
                 } catch {
-                    this.toastr.info('', 'Sortiranje po velikosti naraščajoče ni uspelo!', { timeOut: timingConst.info });
+                    this.toastr.info('', 'Sortiranje po velikosti naraščajoče ni uspelo', { timeOut: timingConst.info });
                 }
                 break;
             case 'size-desc':
@@ -223,7 +223,7 @@ export class SearchResultsComponent implements OnInit {
                         return sizeB - sizeA;
                     });
                 } catch {
-                    this.toastr.info('', 'Sortiranje po velikosti padajoče ni uspelo!', { timeOut: timingConst.info });
+                    this.toastr.info('', 'Sortiranje po velikosti padajoče ni uspelo', { timeOut: timingConst.info });
                 }
                 break;
             default:

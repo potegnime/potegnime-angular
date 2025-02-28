@@ -138,7 +138,7 @@ export class SettingsPageComponent {
 
             // Check if none of the fields have changed
             if (username === this.username && email === this.email && profilePicture === this.pristineProfilePicture) {
-                this.toastr.info('', 'Ni sprememb!', { timeOut: timingConst.info });
+                this.toastr.info('', 'Ni sprememb', { timeOut: timingConst.info });
                 return;
             }
 
@@ -149,7 +149,7 @@ export class SettingsPageComponent {
                 };
                 this.userService.updateUsername(updateUsernameDto).subscribe({
                     next: () => {
-                        this.toastr.success('Uporabniško ime uspešno posodobljeno!');
+                        this.toastr.success('Uporabniško ime uspešno posodobljeno');
                         // Update username in settings page
                         this.username = username;
                         this.changeUserDataForm.patchValue({
@@ -174,7 +174,7 @@ export class SettingsPageComponent {
                                 this.toastr.error('', error.error.message, { timeOut: timingConst.error });
                                 break;
                             default:
-                                this.toastr.error('', 'Napaka pri posodabljanju uporabniškega imena!', { timeOut: timingConst.error });
+                                this.toastr.error('', 'Napaka pri posodabljanju uporabniškega imena', { timeOut: timingConst.error });
                                 break;
                         }
                     }
@@ -187,7 +187,7 @@ export class SettingsPageComponent {
                 };
                 this.userService.updateEmail(updateEmailDto).subscribe({
                     next: () => {
-                        this.toastr.success('', 'Email uspešno posodobljen!', { timeOut: timingConst.success });
+                        this.toastr.success('', 'Email uspešno posodobljen', { timeOut: timingConst.success });
                         // Update email in settings page
                         this.email = email;
                         this.changeUserDataForm.patchValue({
@@ -212,7 +212,7 @@ export class SettingsPageComponent {
                                 this.toastr.error('', error.error.message, { timeOut: timingConst.error });
                                 break;
                             default:
-                                this.toastr.error('', 'Napaka pri posodabljanju e-pošte!', { timeOut: timingConst.error });
+                                this.toastr.error('', 'Napaka pri posodabljanju e-pošte', { timeOut: timingConst.error });
                                 break;
                         }
                     }
@@ -225,7 +225,7 @@ export class SettingsPageComponent {
                 };
                 this.userService.updatePfp(updatePfpDto).subscribe({
                     next: () => {
-                        this.toastr.success('', 'Profilna slika uspešno posodobljena!', { timeOut: timingConst.success });
+                        this.toastr.success('', 'Profilna slika uspešno posodobljena', { timeOut: timingConst.success });
                         // Update profile picture in settings page
                         this.pristineProfilePicture = this.selectedProfilePicture as File;
                         this.profilePictureUrl = this.getProfilePictureUrl();
@@ -247,7 +247,7 @@ export class SettingsPageComponent {
                                 this.toastr.error('', error.error.message, { timeOut: timingConst.error });
                                 break;
                             default:
-                                this.toastr.error('', 'Napaka pri posodabljanju profilne slike!', { timeOut: timingConst.error });
+                                this.toastr.error('', 'Napaka pri posodabljanju profilne slike', { timeOut: timingConst.error });
                                 break;
                         }
                     }
@@ -273,7 +273,7 @@ export class SettingsPageComponent {
             const agreeToTerms = this.uploaderRequestDataForm.get('agreeToTerms')?.value;
 
             if (agreeToTerms !== 'yes') {
-                this.toastr.error('', 'Strinjanje s pogoji je obvezno!', { timeOut: timingConst.error });
+                this.toastr.error('', 'Strinjanje s pogoji je obvezno', { timeOut: timingConst.error });
                 return;
             }
 
@@ -292,7 +292,7 @@ export class SettingsPageComponent {
 
             this.userService.submitUploaderRequest(uploaderRequestDto).subscribe({
                 next: () => {
-                    this.toastr.success('', 'Vloga za nalagalca uspešno poslana!', { timeOut: timingConst.success });
+                    this.toastr.success('', 'Vloga za nalagalca uspešno poslana', { timeOut: timingConst.success });
                     this.uploaderRequestStatus = UploaderRequestStatus.Review;
                     // Update JWT
                     this.authService.refreshToken().subscribe({
@@ -334,7 +334,7 @@ export class SettingsPageComponent {
             const newPasswordRepeat = this.changePasswordForm.get('newPasswordRepeat')?.value;
 
             if (newPassword !== newPasswordRepeat) {
-                this.toastr.error('', 'Gesli se ne ujemata!', { timeOut: timingConst.error });
+                this.toastr.error('', 'Gesli se ne ujemata', { timeOut: timingConst.error });
                 return;
             }
 
@@ -345,7 +345,7 @@ export class SettingsPageComponent {
 
             this.userService.updatePassword(updatePasswordDto).subscribe({
                 next: () => {
-                    this.toastr.success('', 'Geslo uspešno posodobljeno!', { timeOut: timingConst.success });
+                    this.toastr.success('', 'Geslo uspešno posodobljeno', { timeOut: timingConst.success });
                     this.changePasswordForm.reset();
                 },
                 error: (error) => {
@@ -357,7 +357,7 @@ export class SettingsPageComponent {
                             this.toastr.error('', error.error.message, { timeOut: timingConst.error });
                             break;
                         default:
-                            this.toastr.error('', 'Napaka pri posodabljanju gesla!', { timeOut: timingConst.error });
+                            this.toastr.error('', 'Napaka pri posodabljanju gesla', { timeOut: timingConst.error });
                             break;
                     }
                 }
@@ -385,7 +385,7 @@ export class SettingsPageComponent {
 
             this.userService.deleteProfile(deleteProfileDto).subscribe({
                 next: () => {
-                    this.toastr.success('', 'Profil uspešno izbrisan!', { timeOut: timingConst.success });
+                    this.toastr.success('', 'Profil uspešno izbrisan', { timeOut: timingConst.success });
                     this.authService.unauthorizedHandler();
                 },
                 error: (error) => {
@@ -397,7 +397,7 @@ export class SettingsPageComponent {
                             this.toastr.error('', error.error.message, { timeOut: timingConst.error });
                             break;
                         default:
-                            this.toastr.error('', 'Napaka pri brisanju profila!', { timeOut: timingConst.error });
+                            this.toastr.error('', 'Napaka pri brisanju profila', { timeOut: timingConst.error });
                             break;
                     }
                 }

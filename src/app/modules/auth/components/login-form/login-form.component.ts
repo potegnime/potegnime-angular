@@ -48,7 +48,7 @@ export class LoginFormComponent implements OnInit {
         next: (resp) => {
           this.isSubmitting = false;
           if (resp.token) {
-            this.toastr.success('', 'Prijava uspešna!', { timeOut: timingConst.success });
+            this.toastr.success('', 'Prijava uspešna', { timeOut: timingConst.success });
 
             // Clear register form cache
             AuthHelper.removeRegisterForm();

@@ -59,7 +59,7 @@ export class ResetPasswordFormComponent implements OnInit {
     // Length
     if (this.resetPasswordForm?.value.password.length < 8) {
       this.showResetError = true;
-      this.resetErrorMessage = 'Geslo mora vsebovati vsaj 8 znakov!';
+      this.resetErrorMessage = 'Geslo mora vsebovati vsaj 8 znakov';
       this.handleErrorAnimation();
       return;
     }
@@ -67,7 +67,7 @@ export class ResetPasswordFormComponent implements OnInit {
     const numbers = /[0-9]/;
     if (!numbers.test(this.resetPasswordForm?.value.password)) {
       this.showResetError = true;
-      this.resetErrorMessage = 'Geslo mora vsebovati vsaj 1 številko!';
+      this.resetErrorMessage = 'Geslo mora vsebovati vsaj 1 številko';
       this.handleErrorAnimation();
       return;
     }
@@ -84,7 +84,7 @@ export class ResetPasswordFormComponent implements OnInit {
     // Passwords match validation
     if (this.resetPasswordForm?.value.password !== this.resetPasswordForm?.value.passwordConfirm) {
       this.showResetError = true;
-      this.resetErrorMessage = 'Gesli se ne ujemata!';
+      this.resetErrorMessage = 'Gesli se ne ujemata';
       this.handleErrorAnimation();
       return;
     }
@@ -105,7 +105,7 @@ export class ResetPasswordFormComponent implements OnInit {
         next: (resp) => {
           this.isSubmitting = false;
           if (resp.token) {
-            this.toastr.success('', 'Geslo uspešno posodobljeno!', { timeOut: timingConst.success });
+            this.toastr.success('', 'Geslo uspešno posodobljeno', { timeOut: timingConst.success });
 
             // Save token and redirect
             localStorage.setItem('token', resp.token);

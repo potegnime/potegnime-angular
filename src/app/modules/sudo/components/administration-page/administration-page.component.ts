@@ -109,9 +109,9 @@ export class AdministrationPageComponent {
             this.recommendService.setAdminRecommendation(recommendationDto).subscribe({
                 next: () => {
                     if (type == 'movie') {
-                        this.toastr.success('', 'Izbrani film dnvea uspešno nastavljen!', { timeOut: timingConst.success });
+                        this.toastr.success('', 'Izbrani film dnvea uspešno nastavljen', { timeOut: timingConst.success });
                     } else if (type == 'series') {
-                        this.toastr.success('', 'Izbrana serija dnvea uspešno nastavljena!', { timeOut: timingConst.success });
+                        this.toastr.success('', 'Izbrana serija dnvea uspešno nastavljena', { timeOut: timingConst.success });
                     }
                 },
                 error: (error) => {
@@ -142,9 +142,9 @@ export class AdministrationPageComponent {
         this.recommendService.deleteAdminRecommendation(date, type).subscribe({
             next: () => {
                 if (type == 'movie') {
-                    this.toastr.success('', 'Izbrani film dnvea uspešno izbrisan!', { timeOut: timingConst.success });
+                    this.toastr.success('', 'Izbrani film dnvea uspešno izbrisan', { timeOut: timingConst.success });
                 } else if (type == 'series') {
-                    this.toastr.success('', 'Izbrana serija dnvea uspešno izbrisana!', { timeOut: timingConst.success });
+                    this.toastr.success('', 'Izbrana serija dnvea uspešno izbrisana', { timeOut: timingConst.success });
                 }
                 this.setRecommendationForm.patchValue({
                     name: ''
@@ -254,7 +254,7 @@ export class AdministrationPageComponent {
         if (this.userUsername) {
             this.userService.deleteProfileAdmin(this.userUsername).subscribe({
                 next: () => {
-                    this.toastr.success('', 'Profil uspešno izbrisan!', { timeOut: timingConst.success });
+                    this.toastr.success('', 'Profil uspešno izbrisan', { timeOut: timingConst.success });
                     this.userFound = null;
                     this.userUsername = null;
                     this.userRole = null;
@@ -269,7 +269,7 @@ export class AdministrationPageComponent {
                             this.toastr.error('', 'Uporabnik ne obstaja', { timeOut: timingConst.error });
                             break;
                         default:
-                            this.toastr.error('', 'Napaka pri brisanju profila!', { timeOut: timingConst.error });
+                            this.toastr.error('', 'Napaka pri brisanju profila', { timeOut: timingConst.error });
                             break;
                     }
                 }

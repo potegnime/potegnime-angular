@@ -31,6 +31,6 @@ export class DonatePageComponent {
   protected copyAddress(key: 'btc' | 'eth' | 'ltc' | 'xmr'): void {
     const address: string = this.walletAddresses[key];
     navigator.clipboard.writeText(address);
-    this.toastr.success('', `${key.toUpperCase()} naslov kopiran!`, { timeOut: timingConst.success });
+    this.toastr.success('', `${key.toUpperCase()} naslov kopiran`, { timeOut: timingConst.success });
   }
 }
