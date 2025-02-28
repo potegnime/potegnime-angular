@@ -15,6 +15,7 @@ export class ForgotPasswordFormComponent {
   protected forgotPasswordForm: FormGroup;
   protected isSubmitting: boolean = false;
   protected isSubmitted: boolean = false;
+  protected sendGridLimitExceeded: boolean = false;
 
   constructor(
     private readonly formBuilder: FormBuilder,
@@ -50,7 +51,13 @@ export class ForgotPasswordFormComponent {
         },
         error: (err) => {
           this.isSubmitting = false;
-          this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
+          if (err.status === 429) {
+            // SendGrid limit exceeded
+            this.isSubmitted = false;
+            this.sendGridLimitExceeded = true;
+          } else {
+            this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
+          }
         },
       });
     }

@@ -7,8 +7,8 @@ import { AuthGuard } from '../auth/guards/auth/auth.guard';
 import { LicensePageComponent } from './components/license-page/license-page.component';
 
 const routes: Routes = [
-    { path: 'o-nas', component: AboutPageComponent, canActivate: [AuthGuard], pathMatch: 'full' },
-    { path: 'donacije', component: DonatePageComponent, canActivate: [AuthGuard], pathMatch: 'full' },
+    { path: 'o-nas', component: AboutPageComponent, pathMatch: 'full' },
+    { path: 'donacije', component: DonatePageComponent, pathMatch: 'full' },
     { path: 'donate', redirectTo: 'donacije', pathMatch: 'full' },
     { path: 'doniraj', redirectTo: 'donacije', pathMatch: 'full' },
     { path: 'pogoji', component: TermsPageComponent, pathMatch: 'full' },

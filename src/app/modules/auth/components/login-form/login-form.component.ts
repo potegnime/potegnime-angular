@@ -34,6 +34,9 @@ export class LoginFormComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
+
+    // Get register form cache (to remove it if expired)
+    AuthHelper.getRegisterForm();
   }
 
   protected onSubmit(): void {
