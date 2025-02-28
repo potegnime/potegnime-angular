@@ -28,7 +28,7 @@
             <span class="checkmark">
                 <i [ngClass]="agreeToTermsBool ? 'fa-solid fa-square-check' : 'fa-regular fa-square'"></i>
             </span>
-            <span class="url">
+            <span class="url-white">
                 Strinjam se s <a routerLink="/pogoji">pravili in splošnimi pogoji uporabe</a>
             </span>
         </label>
@@ -40,4 +40,4 @@
     <p *ngIf="showRegisterError">{{ registerErrorMessage }}</p>
 </div>
 
-<p class="url">Že imaš račun? <a routerLink="/prijava">Prijavi se!</a></p>
+<p class="url-white">Že imaš račun? <a routerLink="/prijava">Prijavi se!</a></p>
