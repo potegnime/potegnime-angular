@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth-service/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserRegisterDto } from '../../models/user-register.interface';
+import { AuthHelper } from '../../helpers/auth-helper';
 
 @Component({
   selector: 'app-register-form',
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.scss']
 })
-export class RegisterFormComponent {
+export class RegisterFormComponent implements OnInit {
 
   registerForm!: FormGroup;
   protected showRegisterError: boolean = false;
@@ -27,7 +28,9 @@ export class RegisterFormComponent {
     private readonly authService: AuthService,
     private readonly router: Router,
     private readonly toastr: ToastrService
-  ) {
+  ) { }
+
+  ngOnInit() {
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       username: ['', [Validators.required]],
@@ -36,11 +39,17 @@ export class RegisterFormComponent {
       agreeToTerms: [false, Validators.required]
     });
 
-    this.registerForm.valueChanges.subscribe(() => {
+    this.registerForm.valueChanges.subscribe((formValue) => {
+      AuthHelper.setRegisterForm(formValue);
       if (this.agreeToTermsBool !== this.registerForm.value.agreeToTerms) {
         this.agreeToTermsBool = this.registerForm.value.agreeToTerms;
       }
     });
+
+    const registerFormCache = AuthHelper.getRegisterForm();
+    if (registerFormCache) {
+      this.registerForm.patchValue(registerFormCache);
+    }
   }
 
   protected togglePasswordVisibility(fieldNumber: number) {
@@ -118,6 +127,9 @@ export class RegisterFormComponent {
           this.isSubmitting = false;
           if (resp.token) {
             this.toastr.success('', 'Registracija uspešna!', { timeOut: timingConst.success });
+
+            // Clear register form cache
+            AuthHelper.removeRegisterForm();
 
             // Save token and redirect
             localStorage.setItem('token', resp.token);

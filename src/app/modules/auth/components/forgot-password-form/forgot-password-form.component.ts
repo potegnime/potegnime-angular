@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth-service/auth.service';
 import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 import { ToastrService } from 'ngx-toastr';
 import { ForgotPasswordDto } from '../../models/forgot-password.interface';
+import { AuthHelper } from '../../helpers/auth-helper';
 
 @Component({
   selector: 'app-forgot-password-form',
@@ -23,6 +24,17 @@ export class ForgotPasswordFormComponent {
     this.forgotPasswordForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
     });
+
+    const forgotPasswordTimeout = AuthHelper.getForgotPasswordTimeout();
+    if (forgotPasswordTimeout) {
+      if (new Date() < forgotPasswordTimeout) {
+        const minutesLeft = Math.ceil((forgotPasswordTimeout.getTime() - new Date().getTime()) / 60000);
+        this.toastr.warning('', this.warningMessage(minutesLeft), { timeOut: timingConst.long });
+        this.isSubmitted = true;
+      } else {
+        AuthHelper.removeForgotPasswordTimeout();
+      }
+    }
   }
 
   protected onSubmit(): void {
@@ -34,6 +46,7 @@ export class ForgotPasswordFormComponent {
         next: (resp) => {
           this.isSubmitting = false;
           this.isSubmitted = true;
+          AuthHelper.setForgotPasswordTimeout();
         },
         error: (err) => {
           this.isSubmitting = false;
@@ -42,4 +55,19 @@ export class ForgotPasswordFormComponent {
       });
     }
   }
+
+  private warningMessage(min: number): string {
+    switch (min) {
+      case 1:
+        return `Prosimo, počakajte ${min} minuto, preden ponovno pošljete zahtevo za ponastavitev gesla.`;
+      case 2:
+        return `Prosimo, počakajte ${min} minuti, preden ponovno pošljete zahtevo za ponastavitev gesla.`;
+      case 3:
+      case 4:
+        return `Prosimo, počakajte ${min} minute, preden ponovno pošljete zahtevo za ponastavitev gesla.`;
+      default:
+        return `Prosimo, počakajte ${min} minut, preden ponovno pošljete zahtevo za ponastavitev gesla.`;
+    }
+  }
 }
+

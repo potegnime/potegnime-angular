@@ -12,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./reset-password-form.component.scss']
 })
 export class ResetPasswordFormComponent implements OnInit {
-  protected resetPasswordForm: FormGroup;
+  protected resetPasswordForm!: FormGroup;
   protected showResetError: boolean = false;
   protected triggerErrorAnimation: boolean = false;
   protected resetErrorMessage: string = '';
@@ -28,14 +28,14 @@ export class ResetPasswordFormComponent implements OnInit {
     private readonly toastr: ToastrService,
     private readonly router: Router,
     private readonly route: ActivatedRoute
-  ) {
+  ) { }
+
+  ngOnInit(): void {
     this.resetPasswordForm = this.formBuilder.group({
       password: ['', Validators.required],
       passwordConfirm: ['', Validators.required],
     });
-  }
 
-  ngOnInit(): void {
     // Check if token is present in query params
     this.route.queryParams.subscribe(params => {
       this.token = params['token'] || null;

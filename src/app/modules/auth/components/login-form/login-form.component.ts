@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth-service/auth.service';
 import { TokenService } from 'src/app/modules/shared/services/token-service/token.service';
@@ -6,14 +6,15 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 import { UserLoginDto } from '../../models/user-login.interface';
+import { AuthHelper } from '../../helpers/auth-helper';
 
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss']
 })
-export class LoginFormComponent {
-  protected loginForm: FormGroup;
+export class LoginFormComponent implements OnInit {
+  protected loginForm!: FormGroup;
   protected showLoginError: boolean = false;
   protected triggerErrorAnimation: boolean = false;
   protected loginErrorMessage: string = '';
@@ -26,13 +27,14 @@ export class LoginFormComponent {
     private readonly tokenService: TokenService,
     private readonly router: Router,
     private readonly toastr: ToastrService
-  ) {
+  ) { }
+
+  ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
-
 
   protected onSubmit(): void {
     if (this.loginForm.valid && !this.isSubmitting) {
@@ -44,6 +46,9 @@ export class LoginFormComponent {
           this.isSubmitting = false;
           if (resp.token) {
             this.toastr.success('', 'Prijava uspešna!', { timeOut: timingConst.success });
+
+            // Clear register form cache
+            AuthHelper.removeRegisterForm();
 
             this.tokenService.setToken(resp.token);
             this.router.navigate(['/']);
