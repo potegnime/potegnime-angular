@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
 import { UserService } from 'src/app/modules/user/services/user-service/user.service';
 
@@ -7,15 +7,17 @@ import { UserService } from 'src/app/modules/user/services/user-service/user.ser
     templateUrl: './sudo-nav.component.html',
     styleUrls: ['./sudo-nav.component.scss']
 })
-export class SudoNavComponent {
-    protected uid: number | null;
+export class SudoNavComponent implements OnInit {
+    protected uid!: number | null;
     protected isAdmin: boolean = false;
     protected isUploader: boolean = false;
 
     constructor(
         private readonly authService: AuthService,
         private readonly userService: UserService
-    ) {
+    ) { }
+
+    public ngOnInit(): void {
         this.uid = this.userService.getLoggedUserId();
         if (!this.uid) {
             this.authService.logout();
@@ -24,7 +26,7 @@ export class SudoNavComponent {
         this.isUploader = this.userService.isUploaderLogged();
     }
 
-    public logout() {
+    protected logout() {
         this.authService.logout();
     }
 }

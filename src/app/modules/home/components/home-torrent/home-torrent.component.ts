@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
@@ -12,7 +12,7 @@ import { RecommendService } from 'src/app/modules/shared/services/recommend-serv
     templateUrl: './home-torrent.component.html',
     styleUrls: ['./home-torrent.component.scss']
 })
-export class HomeTorrentComponent {
+export class HomeTorrentComponent implements OnInit {
     protected language: 'sl-SI' | 'en-US' = 'sl-SI'
     protected region: 'SI' | 'US' = 'US';
     protected timeWindow: 'day' | 'week' = 'day';
@@ -30,7 +30,9 @@ export class HomeTorrentComponent {
         private readonly authService: AuthService,
         private readonly toastr: ToastrService,
         private readonly router: Router
-    ) {
+    ) { }
+
+    public ngOnInit(): void {
         // Load recommendations
         const requests = [
             this.recommendService.nowPlaying(this.language, 1, this.region),

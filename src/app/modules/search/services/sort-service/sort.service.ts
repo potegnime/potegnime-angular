@@ -8,9 +8,7 @@ export class SortService {
     private sortSource = new BehaviorSubject<string>('default');
     currentSort = this.sortSource.asObservable();
 
-    constructor() { }
-
-    changeSort(sort: string) {
+    public changeSort(sort: string) {
         this.sortSource.next(sort);
     }
 }

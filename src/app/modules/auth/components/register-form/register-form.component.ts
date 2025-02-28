@@ -30,7 +30,7 @@ export class RegisterFormComponent implements OnInit {
     private readonly toastr: ToastrService
   ) { }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       username: ['', [Validators.required]],

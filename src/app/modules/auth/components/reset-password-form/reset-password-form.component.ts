@@ -30,7 +30,7 @@ export class ResetPasswordFormComponent implements OnInit {
     private readonly route: ActivatedRoute
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.resetPasswordForm = this.formBuilder.group({
       password: ['', Validators.required],
       passwordConfirm: ['', Validators.required],

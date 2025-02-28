@@ -25,7 +25,7 @@ export class SearchBarSearchComponent implements OnInit, OnDestroy {
     protected selectedCategory: string = 'All';
     protected sort: string = 'default';
 
-    private sortSubscription: Subscription;
+    private sortSubscription!: Subscription;
 
     constructor(
         private readonly formBuilder: FormBuilder,
@@ -35,13 +35,13 @@ export class SearchBarSearchComponent implements OnInit, OnDestroy {
         private readonly authService: AuthService,
         private readonly recommendService: RecommendService,
         private readonly sortService: SortService
-    ) {
+    ) { }
+
+    public ngOnInit(): void {
         this.sortSubscription = this.sortService.currentSort.subscribe(sort => {
             this.sort = sort;
         })
-    }
 
-    ngOnInit(): void {
         // Get torrent provider categories
         this.searchService.getTorrentProviderCategories().subscribe({
             next: (data: TorrentProviderCategories) => {

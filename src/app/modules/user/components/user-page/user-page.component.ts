@@ -33,7 +33,7 @@ export class UserPageComponent implements OnInit {
         private readonly cacheService: CacheService
     ) { }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.route.params.subscribe(params => {
             this.token = this.tokenService.getToken();
             if (!this.token) {

@@ -1,4 +1,4 @@
-import { Component, NgZone, AfterViewChecked } from '@angular/core';
+import { Component, NgZone, AfterViewChecked, OnInit } from '@angular/core';
 import { RecommendService } from '../../../shared/services/recommend-service/recommend.service';
 import { TmdbMovieResponse } from '../../../shared/models/tmdb-movie-response.interface';
 import { TmdbTrendingResponse } from '../../../shared/models/tmdb-trending-response.interface';
@@ -13,7 +13,7 @@ import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
     templateUrl: './recommend-page.component.html',
     styleUrls: ['./recommend-page.component.scss']
 })
-export class RecommendPageComponent implements AfterViewChecked {
+export class RecommendPageComponent implements AfterViewChecked, OnInit {
     protected displayLoadingSpinner: boolean = true;
     private allDataLoaded: boolean = false;
     private sectionToScroll: string | null = null;
@@ -40,7 +40,9 @@ export class RecommendPageComponent implements AfterViewChecked {
         private readonly router: Router,
         private readonly route: ActivatedRoute,
         private readonly ngZone: NgZone
-    ) {
+    ) { }
+
+    public ngOnInit(): void {
         // Get params from url
         this.route.queryParams.subscribe((params) => {
             this.loadSite(

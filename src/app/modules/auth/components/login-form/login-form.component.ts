@@ -29,7 +29,7 @@ export class LoginFormComponent implements OnInit {
     private readonly toastr: ToastrService
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]

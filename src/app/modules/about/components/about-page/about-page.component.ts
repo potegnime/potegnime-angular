@@ -13,7 +13,7 @@ export class AboutPageComponent implements OnInit {
     private readonly authService: AuthService
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.isLoggedIn = this.authService.verifyToken();
   }
 }

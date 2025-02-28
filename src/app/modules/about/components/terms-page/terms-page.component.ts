@@ -15,7 +15,7 @@ export class TermsPageComponent implements OnInit {
     private authService: AuthService
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     // Route handling for auth
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {

@@ -39,7 +39,7 @@ export class SearchResultsComponent implements OnInit {
         private readonly datePipe: DatePipe
     ) { }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.noResults = false;
         this.route.queryParams.subscribe((params) => {
             this.searchQuery = params['q'];

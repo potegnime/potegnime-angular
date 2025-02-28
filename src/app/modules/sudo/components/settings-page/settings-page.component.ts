@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
@@ -19,7 +19,7 @@ import { UploaderRequestStatus } from '../../enums/uploader-request-status.enum'
     templateUrl: './settings-page.component.html',
     styleUrls: ['./settings-page.component.scss']
 })
-export class SettingsPageComponent {
+export class SettingsPageComponent implements OnInit {
     protected token: string | null = null;
     protected uid: number | null = null;
     protected username: string | null = null;
@@ -39,10 +39,10 @@ export class SettingsPageComponent {
         otherTrackers: 0
     };
 
-    changeUserDataForm: FormGroup;
-    uploaderRequestDataForm: FormGroup;
-    changePasswordForm: FormGroup;
-    deleteProfileForm: FormGroup;
+    changeUserDataForm!: FormGroup;
+    uploaderRequestDataForm!: FormGroup;
+    changePasswordForm!: FormGroup;
+    deleteProfileForm!: FormGroup;
 
     constructor(
         private readonly formBuilder: FormBuilder,
@@ -51,7 +51,9 @@ export class SettingsPageComponent {
         private readonly userService: UserService,
         private readonly toastr: ToastrService,
         private readonly cacheService: CacheService
-    ) {
+    ) { }
+
+    public ngOnInit(): void {
         // Form builders
         this.changeUserDataForm = this.formBuilder.group({
             username: ['', Validators.required],

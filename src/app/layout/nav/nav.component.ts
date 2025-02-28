@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
 import { CacheService } from 'src/app/modules/shared/services/cache-service/cache.service';
@@ -9,8 +9,8 @@ import { UserService } from 'src/app/modules/user/services/user-service/user.ser
     templateUrl: './nav.component.html',
     styleUrls: ['./nav.component.scss']
 })
-export class NavComponent {
-    protected uid: number | null;
+export class NavComponent implements OnInit {
+    protected uid!: number | null;
     protected username: string | null = null;
     protected profilePictureUrl: string | null = null;
     protected isAdmin: boolean = false;
@@ -22,10 +22,12 @@ export class NavComponent {
         private readonly userService: UserService,
         private readonly router: Router,
         private readonly cacheService: CacheService
-    ) {
-        this.uid = userService.getLoggedUserId();
-        this.isAdmin = userService.isAdminLogged();
-        this.isUploader = userService.isUploaderLogged();
+    ) { }
+
+    public ngOnInit(): void {
+        this.uid = this.userService.getLoggedUserId();
+        this.isAdmin = this.userService.isAdminLogged();
+        this.isUploader = this.userService.isUploaderLogged();
         if (this.uid) {
             // Get profile picture
             // Try to get from cache first

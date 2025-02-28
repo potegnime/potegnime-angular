@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { urlConst } from '../../enums/url.enum';
 
 @Component({
     selector: 'app-error',
@@ -7,5 +6,5 @@ import { urlConst } from '../../enums/url.enum';
     styleUrls: ['./error.component.scss']
 })
 export class ErrorComponent {
-    protected urlAppBase = urlConst.appBase;
+
 }

@@ -21,7 +21,7 @@ export class SearchBarComponent implements OnInit {
         private readonly searchService: SearchService
     ) { }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.searchForm = this.formBuilder.group({
             query: ['', Validators.required]
         });
@@ -33,7 +33,7 @@ export class SearchBarComponent implements OnInit {
     }
 
 
-    onSearch(): void {
+    protected onSearch(): void {
         // Use search service onSearch method
         if (!this.searchForm.valid) {
             this.toastr.warning('', 'Vnesite izraz za iskanje', { timeOut: timingConst.warning });

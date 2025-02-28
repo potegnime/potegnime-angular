@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth-service/auth.service';
 
 @Component({
@@ -7,18 +6,14 @@ import { AuthService } from '../../../auth/services/auth-service/auth.service';
   templateUrl: './license-page.component.html',
   styleUrls: ['./license-page.component.scss']
 })
-export class LicensePageComponent {
+export class LicensePageComponent implements OnInit {
   protected isLoggedIn: boolean = false;
 
   constructor(
-    private router: Router,
-    private authService: AuthService) {
+    private authService: AuthService
+  ) { }
 
-    // Route handling for auth
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.isLoggedIn = this.authService.verifyToken();
-      }
-    });
+  public ngOnInit(): void {
+    this.isLoggedIn = this.authService.verifyToken();
   }
 }

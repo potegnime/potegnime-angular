@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
 import { UserService } from 'src/app/modules/user/services/user-service/user.service';
@@ -8,15 +8,17 @@ import { UserService } from 'src/app/modules/user/services/user-service/user.ser
     templateUrl: './footer.component.html',
     styleUrls: ['./footer.component.scss']
 })
-export class FooterComponent {
-    protected uid: number | null;
+export class FooterComponent implements OnInit {
+    protected uid!: number | null;
     protected isAdmin: boolean = false;
 
     constructor(
         private readonly authService: AuthService,
         private readonly userService: UserService,
         private readonly router: Router
-    ) {
+    ) { }
+
+    public ngOnInit(): void {
         this.uid = this.userService.getLoggedUserId();
         this.isAdmin = this.userService.isAdminLogged();
         if (!this.uid) {

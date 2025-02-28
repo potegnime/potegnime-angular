@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
@@ -14,7 +14,7 @@ import { UserService } from 'src/app/modules/user/services/user-service/user.ser
     templateUrl: './administration-page.component.html',
     styleUrls: ['./administration-page.component.scss']
 })
-export class AdministrationPageComponent {
+export class AdministrationPageComponent implements OnInit {
     // User control
     protected userFound: boolean | null = null;
     protected userUserId: number | null = null;
@@ -26,9 +26,9 @@ export class AdministrationPageComponent {
     protected uploaderRequests: any[] = [];
 
     // Form groups
-    protected setRecommendationForm: FormGroup;
-    protected userControlForm: FormGroup
-    protected userRoleChangeForm: FormGroup;
+    protected setRecommendationForm!: FormGroup;
+    protected userControlForm!: FormGroup
+    protected userRoleChangeForm!: FormGroup;
 
     constructor(
         private readonly recommendService: RecommendService,
@@ -36,7 +36,9 @@ export class AdministrationPageComponent {
         private readonly formBuilder: FormBuilder,
         private readonly toastr: ToastrService,
         private readonly authService: AuthService
-    ) {
+    ) { }
+
+    public ngOnInit(): void {
         // Form builders
         const date: string = this.getFormattedDate();
         this.setRecommendationForm = this.formBuilder.group({

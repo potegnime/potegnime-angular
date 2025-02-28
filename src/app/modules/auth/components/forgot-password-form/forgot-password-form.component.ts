@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth-service/auth.service';
 import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
@@ -11,8 +11,8 @@ import { AuthHelper } from '../../helpers/auth-helper';
   templateUrl: './forgot-password-form.component.html',
   styleUrls: ['./forgot-password-form.component.scss']
 })
-export class ForgotPasswordFormComponent {
-  protected forgotPasswordForm: FormGroup;
+export class ForgotPasswordFormComponent implements OnInit {
+  protected forgotPasswordForm!: FormGroup;
   protected isSubmitting: boolean = false;
   protected isSubmitted: boolean = false;
   protected sendGridLimitExceeded: boolean = false;
@@ -21,7 +21,9 @@ export class ForgotPasswordFormComponent {
     private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
     private readonly toastr: ToastrService
-  ) {
+  ) { }
+
+  public ngOnInit(): void {
     this.forgotPasswordForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
     });
