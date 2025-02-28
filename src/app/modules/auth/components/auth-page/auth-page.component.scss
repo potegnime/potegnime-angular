@@ -68,6 +68,11 @@ a {
     text-decoration: none;
 }
 
+a:hover {
+    color: var(--white);
+    text-decoration: underline;
+}
+
 @media (max-width: 768px) {
     .auth-page {
         background: var(--page-background);

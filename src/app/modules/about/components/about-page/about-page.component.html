@@ -1,54 +1,70 @@
-<div class="row">
-    <div class="col-12 col-lg-8 p-4">
-        <h2>O potegni.me</h2>
-        <p>
-            Za zaključno nalogo sem v 4. letniku izdelal torrent iskalnik potegni.me. <br>
-            Začelni del (frontend) aplikacije sem izdelal s pomočjo ogrodja Angular, za zaledni del pa sem uporabil
-            ASP.NET, z vgrajenimi API-ji in knjižnjicami za izboljšano funkcionalnost.
-        </p>
-        <p>
-            Iskanje torrentov omogoča npm knjižnjica <a
-                href="https://www.npmjs.com/package/torrent-search-api?activeTab=readme" target="_blank"
-                class="hidden-link">torrent-search-api</a>,
-            priporočila na domači in razišči strani pa <a href="https://www.themoviedb.org/" target="_blank"
-                class="hidden-link">TMDB API</a>.
-        </p>
-        <p>
-            Spletna aplikacija ni torrent sledilnik (kot npr. <a href="https://www.partis.si" target="_blank"
-                class="hidden-link">partis.si</a>), temveč služi kot iskalnik torrentov iz drugih sledilnikov:
-        </p>
-        <ul>
-            <li>
-                <a href="https://thepiratebay.org/" target="_blank" class="hidden-link">The Pirate Bay</a>
-            </li>
-            <li>
-                <a href="https://yts.mx/" target="_blank" class="hidden-link">YTS</a>
-            </li>
-            <li>
-                <a href="https://torrentproject.cc/" target="_blank" class="hidden-link">TorrentProject</a>
-            </li>
-        </ul>
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-lg-8">
+            <div class="text-center d-block d-lg-none m-2" *ngIf="!isLoggedIn">
+                <a routerLink="/prijava">
+                    <img src="/assets/images/logo.png" alt="potegni.me" width="150">
+                </a>
+            </div>
+            <h2>O potegni.me</h2>
+            <p>
+                potegni.me je brezplačen torrent sledilnik (in iskalnik), preko katerega lahko brezplačno dostopate do
+                filmov, serij, iger, glasbe, knjig, risank... <br>
+                Se spomnite partis.si? Gre za isti koncept, le z malce bolj modenrim izgledom. <br>
+                Tukaj lahko naložite in prenesete torrent datoteke, katere so naložili drugi uporabniki, ali pa poiščete
+                torrent vsebine preko drugih sledilnikov (The Pirate Bay in YTS).
+            </p>
+            <p>
+                Uporaba je nadvse preprosta, v iskalnik vpišete naslov željene vsebine, in kliknete na ikono za iskanje.
+                Preko platforme lahko nalagate torrente, naložene na potegni.me s strani drugih
+                uporabnikov, ali pa torrente iz drugih javnih torrent slredilnikov
+                (<a href="https://thepiratebay.org/" target="_blank" class="hidden-link">The Pirate Bay</a> ali
+                <a href="https://yts.mx/" target="_blank" class="hidden-link">YTS</a>).
+            </p>
+            <h2>O platformi [nerd alert]</h2>
+            <p>
+                potegni.me sva razvila dva študenta računalništva.<br>
+                Frontend aplikacije je napisan Angular-ju, za backend pa je implementiran v ASP.NET. <br>
+                Iskanje torrentov pride na potegni.me deluje na dva načina:
+            </p>
+            <ul>
+                <li>
+                    Torrent tracker potegni.me,
+                </li>
+                <li>
+                    Torrent iskalnik, s pomočjo npm knjižnjice
+                    <a href="https://www.npmjs.com/package/torrent-search-api?activeTab=readme" target="_blank"
+                        class="hidden-link">torrent-search-api</a>.
+                </li>
+            </ul>
+            <p>
+                Priporočila vsebine omogoča
+                <a href="https://www.themoviedb.org/" target="_blank" class="hidden-link">TMDB API</a>.
+            </p>
 
-        <p>
-            potegni.me je odprtokodna programska oprema. Celotna izvorna koda je dostopna na GitHub-u pod <a
-                routerLink="/licenca" class="hidden-link">odprtokodno licenco MIT</a>.<br>
-            <a href="https://github.com/lebaaar/potegnime-angular" target="_blank" class="hidden-link">Angular
-                frontend</a>&nbsp;
-            <a href="https://github.com/lebaaar/potegnime-api" target="_blank" class="hidden-link hidden">ASP.NET
-                backend</a>
-        </p>
+            <hr>
+            <p>
+                potegni.me je odprtokodna programska oprema. Celotna izvorna koda je dostopna na GitHub-u
+                pod
+                <span class="url-white"><a routerLink="/licenca" class="url-white">odprtokodno licenco
+                        MIT</a>.</span>.
+                <br>
+                <span class="url-white">
+                    <a href="https://github.com/potegnime/potegnime-angular" target="_blank">Angular
+                        frontend</a>
+                </span>
+                &nbsp;
+                <span class="url-white">
+                    <a href="https://github.com/potegnime/potegnime-api" target="_blank">ASP.NET
+                        backend</a>
+                </span>
 
-        <address>
-            &copy; Lan Lebar <br>
-            <a href="https://www.linkedin.com/in/lan-lebar/" target="_blank" class="hidden-link">LinkedIn</a>
-            <br>
-            <a href="https://github.com/lebaaar" target="_blank" class="hidden-link">GitHub</a>
-        </address>
-
-    </div>
-    <div class="col-12 col-lg-4 img-cont">
-        <a routerLink="/">
-            <img src="/assets/images/logo.png" alt="potegni.me">
-        </a>
+            </p>
+        </div>
+        <div class="col-12 col-lg-4 img-cont">
+            <a routerLink="/">
+                <img src="/assets/images/logo.png" alt="potegni.me">
+            </a>
+        </div>
     </div>
 </div>

@@ -1,5 +1,6 @@
 ul {
     list-style-type: none;
+    padding-left: 0;
 }
 
 li {
@@ -10,6 +11,7 @@ li {
 .address {
     text-decoration: underline;
     cursor: pointer;
+    word-wrap: break-word;
 }
 
 img {
