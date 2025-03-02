@@ -2,6 +2,9 @@
     <div class="row">
         <div class="col-12 col-lg-8">
             <div class="text-center d-block d-lg-none m-2" *ngIf="!isLoggedIn">
+                <!--TODO, return to the site visited from,
+                login, register, forgot, reset
+                -->
                 <a routerLink="/prijava">
                     <img src="/assets/images/logo.png" alt="potegni.me" width="150">
                 </a>
@@ -10,29 +13,33 @@
             <p>
                 potegni.me je brezplačen torrent sledilnik (in iskalnik), preko katerega lahko brezplačno dostopate do
                 filmov, serij, iger, glasbe, knjig, risank... <br>
-                Se spomnite partis.si? Gre za isti koncept, le z malce bolj modenrim izgledom. <br>
-                Tukaj lahko naložite in prenesete torrent datoteke, katere so naložili drugi uporabniki, ali pa poiščete
-                torrent vsebine preko drugih sledilnikov (The Pirate Bay in YTS).
+                Se spomnite partis.si? Gre za podobno platformo, le z malce bolj modenrim izgledom. <br>
             </p>
             <p>
-                Uporaba je nadvse preprosta, v iskalnik vpišete naslov željene vsebine, in kliknete na ikono za iskanje.
                 Preko platforme lahko nalagate torrente, naložene na potegni.me s strani drugih
-                uporabnikov, ali pa torrente iz drugih javnih torrent slredilnikov
-                (<a href="https://thepiratebay.org/" target="_blank" class="hidden-link">The Pirate Bay</a> ali
-                <a href="https://yts.mx/" target="_blank" class="hidden-link">YTS</a>).
+                uporabnikov (priporočeno), ali pa torrente iz drugih javnih torrent sledilnikov
+                - <a href="https://thepiratebay.org/" target="_blank" class="hidden-link">The Pirate Bay</a> ali
+                <a href="https://yts.mx/" target="_blank" class="hidden-link">YTS</a>. <br>
+                Na ta način uporabnikom omogočamo dostop do široke palete vsebin.
             </p>
             <h2>O platformi [nerd alert]</h2>
             <p>
                 potegni.me sva razvila dva študenta računalništva.<br>
-                Frontend aplikacije je napisan Angular-ju, za backend pa je implementiran v ASP.NET. <br>
-                Iskanje torrentov pride na potegni.me deluje na dva načina:
+                Frontend aplikacije je napisan Angular-ju, backend pa je implementiran v ASP.NET. <br>
+                Iskanje torrentov na potegni.me deluje na dva načina:
             </p>
             <ul>
                 <li>
-                    Torrent tracker potegni.me,
+                    <i>Torrent tracker potegni.me</i><br>
+                    Torrenti, naloženi na direktno na potegni.me s strani drugih uporabnikov. Tracker implementiran v
+                    C-ju.
                 </li>
                 <li>
-                    Torrent iskalnik, s pomočjo npm knjižnjice
+                    <i>Torrent iskalnik</i> <br>
+                    Iskanje torrentov na drugih javnih torrent sledilnikih
+                    (<a href="https://thepiratebay.org/" target="_blank" class="hidden-link">The Pirate Bay</a> in
+                    <a href="https://yts.mx/" target="_blank" class="hidden-link">YTS</a>)
+                    omogoča
                     <a href="https://www.npmjs.com/package/torrent-search-api?activeTab=readme" target="_blank"
                         class="hidden-link">torrent-search-api</a>.
                 </li>
