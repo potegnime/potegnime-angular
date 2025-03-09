@@ -1,4 +1,9 @@
 <h2>Registracija</h2>
+<!--
+TODO
+save password is shown after going back to login, even if not register completed (issue mostly related to caching register form to local storage)
+same issue on reset password page
+-->
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <div class="top-row">
         <input type="text" id="username" name="username" placeholder="Uporabniško ime" required
