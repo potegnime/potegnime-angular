@@ -114,6 +114,11 @@ export class SearchResultsComponent implements OnInit {
                         // No results
                         this.handle404();
                         break;
+                    case 503:
+                        // TODO
+                        // Cannot use potegnime-scraper - display native only
+                        this.toastr.error('', 'Storitev trenutno ni na voljo', { timeOut: timingConst.error });
+                        break;
                     default:
                         this.toastr.error('', 'Napaka pri iskanju torrentov', { timeOut: timingConst.error });
                         break;

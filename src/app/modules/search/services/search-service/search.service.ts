@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { urlConst } from '../../../shared/enums/url.enum';
 import { TokenService } from '../../../shared/services/token-service/token.service';
 import { SearchRequestDto } from '../../models/search-request.interface';
-import { TorrentProviderCategories } from '../../models/torrent-provider-categories.interface';
 import { Router } from '@angular/router';
+import { TorrentCategories } from '../../models/torrent-categories.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -39,14 +39,24 @@ export class SearchService {
         return this.http.get<any>(url, { headers: headers });
     }
 
-    public getTorrentProviderCategories(): Observable<TorrentProviderCategories> {
+    public getCategories(): Observable<TorrentCategories> {
         const headers = new HttpHeaders({
             'accept': '*/*',
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${this.tokenService.getToken()}`
         });
 
-        return this.http.get<any>(`${urlConst.apiBase}/search/allProviderCategories`, { headers: headers });
+        return this.http.get<any>(`${urlConst.apiBase}/search/categories`, { headers: headers });
+    }
+
+    public getProviders(): Observable<string[]> {
+        const headers = new HttpHeaders({
+            'accept': '*/*',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.tokenService.getToken()}`
+        });
+
+        return this.http.get<any>(`${urlConst.apiBase}/search/providers`, { headers: headers });
     }
 
     public onSearchComponent(

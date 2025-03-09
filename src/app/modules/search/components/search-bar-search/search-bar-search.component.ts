@@ -3,12 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { SearchService } from '../../services/search-service/search.service';
-import { TorrentProviderCategories } from '../../models/torrent-provider-categories.interface';
 import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
 import { RecommendService } from 'src/app/modules/shared/services/recommend-service/recommend.service';
 import { SortService } from '../../services/sort-service/sort.service';
 import { Subscription } from 'rxjs';
 import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
+import { TorrentCategories } from '../../models/torrent-categories.interface';
 
 @Component({
     selector: 'app-search-bar-search',
@@ -18,7 +18,7 @@ import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 export class SearchBarSearchComponent implements OnInit, OnDestroy {
     protected searchForm!: FormGroup;
 
-    protected torrentProviderCategories: TorrentProviderCategories = {} as TorrentProviderCategories;
+    protected torrentCategories: TorrentCategories = {} as TorrentCategories;
     protected categories: string[] = [];
     protected providers: string[] = [];
     protected selectedProvider: string = 'All';
@@ -42,16 +42,31 @@ export class SearchBarSearchComponent implements OnInit, OnDestroy {
             this.sort = sort;
         })
 
-        // Get torrent provider categories
-        this.searchService.getTorrentProviderCategories().subscribe({
-            next: (data: TorrentProviderCategories) => {
-                this.torrentProviderCategories = data;
+        // Get torrent categories
+        this.searchService.getCategories().subscribe({
+            next: (data: TorrentCategories) => {
+                data['All'] = ['All'];
+                this.torrentCategories = data;
                 this.providers = Object.keys(data);
+                // Sort providers
+                this.providers.sort((a, b) => (a === 'All') ? -1 : (b === 'All') ? 1 : 0);
+
                 this.onProviderChange(this.selectedProvider);
             },
-            error: () => {
-                this.authService.logout();
-                this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
+            error: (error) => {
+                switch (error.status) {
+                    case 401:
+                        this.authService.unauthorizedHandler();
+                        break;
+                    case 503:
+                        // TODO
+                        // Cannot use potegnime-scraper - display native only
+                        this.toastr.error('', 'Storitev trenutno ni na voljo', { timeOut: timingConst.error });
+                        break;
+                    default:
+                        this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
+                        break;
+                }
             }
         });
 
@@ -69,7 +84,7 @@ export class SearchBarSearchComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this.sortSubscription.unsubscribe();
     }
 
@@ -119,7 +134,7 @@ export class SearchBarSearchComponent implements OnInit, OnDestroy {
     protected onProviderChange(selectedProvider: string): void {
         this.selectedProvider = selectedProvider;
 
-        this.categories = this.torrentProviderCategories[selectedProvider];
+        this.categories = this.torrentCategories[selectedProvider];
         this.selectedCategory = 'All';
 
         this.searchForm.patchValue({
