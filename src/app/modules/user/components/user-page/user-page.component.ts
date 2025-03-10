@@ -6,7 +6,14 @@ import { UserService } from 'src/app/modules/user/services/user-service/user.ser
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CacheService } from 'src/app/modules/shared/services/cache-service/cache.service';
-import { timeInterval } from 'rxjs';
+
+// TODO
+// Dont load no-pfp.png if user has profile picture (see network requests, it loads no-pfp.png first and then the actual profile picture)
+// Probaly same issue for nav bar component
+
+// TODO
+// Compress pfp (client side?) before uploading to server, or server side (before saving?)
+
 import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 
 @Component({
