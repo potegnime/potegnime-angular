@@ -1,4 +1,3 @@
-<br />
 <div align="center">
   <a href="https://potegni.me/">
     <img src="images/logo.png" alt="Logo" height="80">
