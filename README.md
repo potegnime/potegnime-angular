@@ -1,7 +1,6 @@
-<div id="readme-top"></div>
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://potegni.me/">
     <img src="images/logo.png" alt="Logo" height="80">
   </a>
   <h3 align="center" style="margin-top:0;">potegni.me Angular frontend</h3>
