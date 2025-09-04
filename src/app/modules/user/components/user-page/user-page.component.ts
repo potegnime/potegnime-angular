@@ -112,7 +112,7 @@ export class UserPageComponent implements OnInit {
             const cachedProfilePicture = this.cacheService.get(id.toString());
             if (cachedProfilePicture) {
                 this.createImageFromBlob(cachedProfilePicture);
-                return;
+                this.isLoading = false;
             } else {
                 this.userService.getUserPfp(id).subscribe({
                     next: (response) => {
