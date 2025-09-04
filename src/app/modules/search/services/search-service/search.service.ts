@@ -25,7 +25,7 @@ export class SearchService {
         });
 
         // Build URL
-        let url = `${urlConst.apiBase}/search?Query=${searchRequestDto.query}`;
+        let url = `${urlConst.scraperBase}/search?Query=${searchRequestDto.query}`;
         if (searchRequestDto.category && searchRequestDto.category !== 'All') {
             url += `&Category=${searchRequestDto.category}`;
         }
@@ -46,7 +46,7 @@ export class SearchService {
             'Authorization': `Bearer ${this.tokenService.getToken()}`
         });
 
-        return this.http.get<any>(`${urlConst.apiBase}/search/categories`, { headers: headers });
+        return this.http.get<any>(`${urlConst.scraperBase}/search/categories`, { headers: headers });
     }
 
     public getProviders(): Observable<string[]> {
@@ -56,7 +56,7 @@ export class SearchService {
             'Authorization': `Bearer ${this.tokenService.getToken()}`
         });
 
-        return this.http.get<any>(`${urlConst.apiBase}/search/providers`, { headers: headers });
+        return this.http.get<any>(`${urlConst.scraperBase}/search/providers`, { headers: headers });
     }
 
     public onSearchComponent(
