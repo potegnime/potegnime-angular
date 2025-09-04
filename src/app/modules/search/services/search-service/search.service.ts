@@ -17,6 +17,16 @@ export class SearchService {
         private readonly router: Router,
     ) { }
 
+    public ping(): Observable<any> {
+        const headers = new HttpHeaders({
+            'accept': '*/*',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.tokenService.getToken()}`
+        });
+
+        return this.http.get<any>(`${urlConst.scraperBase}/ping`, { headers: headers });
+    }
+
     public searchTorrents(searchRequestDto: SearchRequestDto): Observable<any> {
         const headers = new HttpHeaders({
             'accept': '*/*',
