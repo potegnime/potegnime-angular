@@ -33,7 +33,6 @@ export function tokenGetter() {
             config: {
                 tokenGetter: tokenGetter,
                 allowedDomains: [`${urlConst.appBase}`],
-                disallowedRoutes: ["http://example.com/examplebadroute/"],
             },
         }),
         AuthModule,
