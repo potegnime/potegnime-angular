@@ -20,26 +20,8 @@
                     aria-haspopup="true" aria-expanded="false">
                     <img src="/assets/images/notification.png" alt="Obvestila" class="notification-icon" width="20"
                         height="20">
-                    <span class="notification-counter" *ngIf="notificationCount > 0">{{ notificationCountUi }}</span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="notification-dropdown-link">
-                    <div class="dropdown-item">
-                        Obvestilo 1
-                        <button class="close-btn" (click)="removeNotification($event, 1)">x</button>
-                    </div>
-                    <div class="dropdown-item">
-                        Obvestilo 2
-                        <button class="close-btn" (click)="removeNotification($event, 2)">x</button>
-                    </div>
-                    <div class="dropdown-item">
-                        <div class="notification-item">
-                            <p class="notification-title">Title</p>
-                            <p class="notification-content">Notification conten skndfjsh sdnf sdnf sdnf ospnd
-                                Notification conten skndfjsh sdnf sdnf sdnf ospnd Notification conten skndfjsh sdnf sdnf
-                                sdnf ospnd</p>
-                        </div>
-                        <button class="close-btn" (click)="removeNotification($event, 3)">x</button>
-                    </div>
                 </div>
             </li>
             <li class="nav-item dropdown">
