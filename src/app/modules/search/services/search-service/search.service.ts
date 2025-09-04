@@ -30,7 +30,7 @@ export class SearchService {
             url += `&category=${searchRequestDto.category}`;
         }
         if (searchRequestDto.source && searchRequestDto.source !== 'All') {
-            url += `&source=${searchRequestDto.source}`;
+            url += `&source=${searchRequestDto.source.toLowerCase()}`;
         }
         if (searchRequestDto.limit) {
             url += `&limit=${searchRequestDto.limit}`;
