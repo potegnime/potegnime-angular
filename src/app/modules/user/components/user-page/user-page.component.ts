@@ -69,8 +69,6 @@ export class UserPageComponent implements OnInit {
             } else {
                 this.authService.unauthorizedHandler();
             }
-
-            this.isLoading = false;
         });
     }
 
@@ -91,7 +89,7 @@ export class UserPageComponent implements OnInit {
                 else {
                     this.setUserPage(user.uid, user.username, user.joined, user.role);
                 }
-
+                this.isLoading = false;
             },
             error: (error) => {
                 switch (error.status) {
@@ -106,6 +104,7 @@ export class UserPageComponent implements OnInit {
                         this.toastr.error('', 'Napaka pri pridobivanju podatkov o uporabniku', { timeOut: timingConst.error });
                         break;
                 }
+                this.isLoading = false;
             }
         });
 
