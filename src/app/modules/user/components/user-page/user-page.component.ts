@@ -89,7 +89,6 @@ export class UserPageComponent implements OnInit {
                 else {
                     this.setUserPage(user.uid, user.username, user.joined, user.role);
                 }
-                this.isLoading = false;
             },
             error: (error) => {
                 switch (error.status) {
@@ -104,7 +103,6 @@ export class UserPageComponent implements OnInit {
                         this.toastr.error('', 'Napaka pri pridobivanju podatkov o uporabniku', { timeOut: timingConst.error });
                         break;
                 }
-                this.isLoading = false;
             }
         });
 
@@ -120,6 +118,7 @@ export class UserPageComponent implements OnInit {
                     next: (response) => {
                         this.cacheService.put(id.toString(), response);
                         this.createImageFromBlob(response);
+                        this.isLoading = false;
                     },
                     error: (error) => {
                         this.profilePictureUrl = 'assets/images/no-pfp.png';
@@ -128,6 +127,7 @@ export class UserPageComponent implements OnInit {
                                 this.authService.unauthorizedHandler();
                                 break;
                         }
+                        this.isLoading = false;
                     }
                 });
             }
