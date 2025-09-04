@@ -1,4 +1,7 @@
-<!-- Home page component -->
-<!-- Combines home header and home torrents -->
-<app-home-header></app-home-header>
-<app-home-torrent></app-home-torrent>
+<app-home-header (loadingChange)="onHeaderLoadingChange($event)"></app-home-header>
+<app-home-torrent (loadingChange)="onTorrentLoadingChange($event)"></app-home-torrent>
+<!--
+<div class="spinner-overlay" *ngIf="isLoading">
+    <app-loading-spinner></app-loading-spinner>
+</div> -->
+<app-loading-spinner *ngIf="isLoading" class="spinner-overlay"></app-loading-spinner>

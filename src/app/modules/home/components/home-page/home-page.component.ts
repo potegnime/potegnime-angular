@@ -6,4 +6,18 @@ import { Component } from '@angular/core';
     styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent {
+    headerLoading = false;
+    torrentLoading = false;
+
+    get isLoading(): boolean {
+        return this.headerLoading || this.torrentLoading;
+    }
+
+    onHeaderLoadingChange(isLoading: boolean): void {
+        this.headerLoading = isLoading;
+    }
+
+    onTorrentLoadingChange(isLoading: boolean): void {
+        this.torrentLoading = isLoading;
+    }
 }

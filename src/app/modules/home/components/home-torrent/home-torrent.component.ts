@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
@@ -22,6 +22,8 @@ export class HomeTorrentComponent implements OnInit {
     protected nowPlayingMovies: TmdbMovieResponse[] = [];
     protected popularMovies: TmdbMovieResponse[] = [];
     protected topRatedMovies: TmdbMovieResponse[] = [];
+    protected isLoading: boolean = true;
+    @Output() loadingChange = new EventEmitter<boolean>();
 
     private errorToastShown: boolean = false;
 
@@ -33,6 +35,8 @@ export class HomeTorrentComponent implements OnInit {
     ) { }
 
     public ngOnInit(): void {
+        this.setLoading(true);
+
         // Load recommendations
         const requests = [
             this.recommendService.nowPlaying(this.language, 1, this.region),
@@ -45,6 +49,7 @@ export class HomeTorrentComponent implements OnInit {
                 this.nowPlayingMovies = responses[0];
                 this.popularMovies = responses[1];
                 this.topRatedMovies = responses[2];
+                this.setLoading(false);
             },
             error: (error: any) => {
                 switch (error.status) {
@@ -55,6 +60,7 @@ export class HomeTorrentComponent implements OnInit {
                         this.errorGettingRecommendations();
                         break;
                 }
+                this.setLoading(false);
             }
         });
     }
@@ -77,5 +83,11 @@ export class HomeTorrentComponent implements OnInit {
             s: section
         }
         this.router.navigate(['/razisci'], { queryParams: queryParams });
+    }
+
+
+    setLoading(isLoading: boolean): void {
+        this.isLoading = isLoading;
+        this.loadingChange.emit(this.isLoading);
     }
 }

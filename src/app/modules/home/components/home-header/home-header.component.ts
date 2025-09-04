@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
@@ -10,13 +10,20 @@ import { RecommendService } from 'src/app/modules/shared/services/recommend-serv
     templateUrl: './home-header.component.html',
     styleUrls: ['./home-header.component.scss']
 })
-export class HomeHeaderComponent {
+export class HomeHeaderComponent implements OnInit {
+    isLoading = true;
+    @Output() loadingChange = new EventEmitter<boolean>();
+
     constructor(
         private readonly recommendService: RecommendService,
         private readonly toastr: ToastrService,
         private readonly authService: AuthService,
         private readonly router: Router
     ) { }
+
+    ngOnInit(): void {
+        this.setLoading(false);
+    }
 
     protected searchTitle(text: string): void {
         this.router.navigate(['/iskanje'], { queryParams: { q: text } });
@@ -36,6 +43,7 @@ export class HomeHeaderComponent {
         this.recommendService.getAdminRecommendation(date, type).subscribe({
             next: (response: AdminRecommendation) => {
                 this.searchTitle(response.name);
+                this.setLoading(false);
             },
             error: (error) => {
                 switch (error.status) {
@@ -51,6 +59,7 @@ export class HomeHeaderComponent {
                         else this.toastr.error('', 'Napaka pri pridobivanju serije dneva', { timeOut: timingConst.error });
                         break;
                 }
+                this.setLoading(false);
             }
         });
     }
@@ -58,9 +67,11 @@ export class HomeHeaderComponent {
     protected searchRandomMovieTitle(): void {
         this.recommendService.getRandomRecommendation().subscribe({
             next: (response: AdminRecommendation) => {
-                this.searchTitle(response.name)
+                this.searchTitle(response.name);
+                this.setLoading(false);
             },
             error: (error) => {
+                this.setLoading(false);
                 switch (error.status) {
                     case 401:
                         this.authService.unauthorizedHandler();
@@ -78,5 +89,10 @@ export class HomeHeaderComponent {
             s: section
         }
         this.router.navigate(['/razisci'], { queryParams: queryParams });
+    }
+
+    setLoading(isLoading: boolean): void {
+        this.isLoading = isLoading;
+        this.loadingChange.emit(this.isLoading);
     }
 }

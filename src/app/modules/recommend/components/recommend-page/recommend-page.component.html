@@ -1,3 +1,4 @@
+<app-loading-spinner class="spinner-overlay" *ngIf="displayLoadingSpinner"></app-loading-spinner>
 <h2>Razišči</h2>
 <div class="mb-2">
     <div class="row">
@@ -37,10 +38,6 @@
             <option value="en-US">Z.D.A.</option>
         </select>
     </div>
-</div>
-
-<div class="loading-spinner mb-4" *ngIf="displayLoadingSpinner">
-    <app-loading-spinner></app-loading-spinner>
 </div>
 
 <div class="container mt-4">
