@@ -46,3 +46,7 @@ same issue on reset password page
 </div>
 
 <p class="url-white">Že imaš račun? <a routerLink="/prijava">Prijavi se!</a></p>
+
+<div class="spinner-overlay" *ngIf="isSubmitting">
+    <app-loading-spinner></app-loading-spinner>
+</div>

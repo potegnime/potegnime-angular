@@ -26,3 +26,7 @@ same issue on register and reset page
 
 <p class="url-white mb-1"><a routerLink="/pozabljeno-geslo">Pozabljeno geslo?</a></p>
 <p class="url-white">Še nimaš računa? <a routerLink="/registracija">Registriraj se!</a></p>
+
+<div class="spinner-overlay" *ngIf="isSubmitting">
+    <app-loading-spinner></app-loading-spinner>
+</div>
