@@ -1,4 +1,5 @@
 <app-sudo-nav *ngIf="isMyPage"></app-sudo-nav>
+<app-loading-spinner class="spinner-overlay" *ngIf="isLoading"></app-loading-spinner>
 <div class="row container-profile" [ngClass]="{'mt-2': !isMyPage}">
     <div class="row profile-info">
 

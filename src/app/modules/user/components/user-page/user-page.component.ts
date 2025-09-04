@@ -29,6 +29,7 @@ export class UserPageComponent implements OnInit {
     protected profilePictureUrl: string = 'assets/images/no-pfp.png';
     protected role: string | null = null;
     protected joined: string | null = null;
+    protected isLoading: boolean = true;
 
     constructor(
         private readonly router: Router,
@@ -68,6 +69,8 @@ export class UserPageComponent implements OnInit {
             } else {
                 this.authService.unauthorizedHandler();
             }
+
+            this.isLoading = false;
         });
     }
 
