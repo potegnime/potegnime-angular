@@ -7,9 +7,8 @@
 
 ## About The Project
 
-Backed: [potegnime-api](https://github.com/lebaaar/potegnime-api)
+Torrent search platform build with Angular on the frontend and ASP.NET on the backend. Formly known as nalozi.si.
 
-Torrent search platform build with Angular on the frontend and ASP.NET on the backend. PostgreSQL database.
 Features:
 -  User registration and login system
     -  Hashing passwords with BCrypt
@@ -21,7 +20,13 @@ Features:
     - I'm feeling lucky functionality
     - Movie/series of the day (set by admins then visible to other users)
 
-Project is not published. Formly known as nalozi.si.
+Project is 100% free to use and contains no ads. Because of this it runs entirely on free hosting, so things might be a little slow at times:
+- Frontend: hosted on [Cloudflare Pages](http://pages.cloudflare.com/)
+- APIs: hosted on [Render](https://render.com/)
+- Postgres: hosted on [Neon](https://neon.com/)
+
+Backed: [potegnime-api](https://github.com/lebaaar/potegnime-api)
+
 
 ## Frontend
 
@@ -45,5 +50,3 @@ Distributed under the MIT License. See [`LICENSE.txt`](LICENSE.txt) for more inf
 Lan Lebar - [LinkedIn](https://www.linkedin.com/in/lan-lebar) - lanlebar6@gmail.com
 
 Project Link: [https://github.com/lebaaar/potegnime-angular](https://github.com/lebaaar/potegnime-angular)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
