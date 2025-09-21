@@ -13,7 +13,7 @@ import { RecommendService } from 'src/app/modules/shared/services/recommend-serv
     styleUrls: ['./home-torrent.component.scss']
 })
 export class HomeTorrentComponent implements OnInit {
-    protected language: 'sl-SI' | 'en-US' = 'sl-SI'
+    protected language: 'sl-SI' | 'en-US' = 'en-US'
     protected region: 'SI' | 'US' = 'US';
     protected timeWindow: 'day' | 'week' = 'day';
 
@@ -74,7 +74,8 @@ export class HomeTorrentComponent implements OnInit {
     }
 
     protected searchTitle(text: string): void {
-        this.toastr.info('Za boljše rezultate, poskusite iskati v angleščini', 'Iskanje v slovenščini', { timeOut: timingConst.info });
+        // todo: setting for language, per user, configurable in settings
+        // this.toastr.info('Za boljše rezultate, poskusite iskati v angleščini', 'Iskanje v slovenščini', { timeOut: timingConst.info });
         this.router.navigate(['/iskanje'], { queryParams: { q: text } });
     }
 
