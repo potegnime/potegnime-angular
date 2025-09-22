@@ -345,7 +345,7 @@ export class SearchResultsComponent implements OnInit {
             },
             error: (error) => {
                 this.isDownloadingTorrentFile = false;
-                this.toastr.error('Prenos ni uspel', 'Prosimo uporabite magnet link', { timeOut: timingConst.error });
+                this.toastr.error('Prosimo uporabite magnet link', 'Prenos ni uspel', { timeOut: timingConst.error });
             }
         });
 
