@@ -216,6 +216,18 @@ a {
     background-color: #333;
 }
 
+button.action-button:disabled,
+button.action-button[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(60%);
+}
+
+button.action-button:disabled:hover,
+button.action-button[disabled]:hover {
+    background-color: #515151; // Keep original background, no hover effect
+}
+
 .no-select {
     -webkit-user-select: none;
     -moz-user-select: none;
