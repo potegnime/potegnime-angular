@@ -41,8 +41,8 @@
                     </td>
                     <td [ngClass]="{
                         'native': torrent.source.toLowerCase() === 'native',
-                        'tpb': torrent.source.toLowerCase() === 'thepiratebay', 
-                        'yts': torrent.source.toLowerCase() === 'yts', 
+                        'tpb': torrent.source.toLowerCase() === 'thepiratebay',
+                        'yts': torrent.source.toLowerCase() === 'yts',
                         'torrentproject': torrent.source.toLowerCase() === 'torrentproject'
                     }
                     ">
@@ -102,7 +102,8 @@
                                                     <p>{{ copyText }}</p>
                                                 </button>
                                                 <button #downloadButton class="action-button download-button"
-                                                    title="Potegni ga!" (click)="download($event, torrent.url)">
+                                                    title="Potegni ga!" [disabled]="isDownloadingTorrentFile"
+                                                    (click)="download($event, torrent.url, torrent.title)">
                                                     <img src="assets/images/download-green.png" alt="Potegni ga!">
                                                     <p>{{ downloadText }}</p>
                                                 </button>

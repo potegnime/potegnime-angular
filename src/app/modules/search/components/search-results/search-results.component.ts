@@ -9,6 +9,7 @@ import { Torrent } from 'src/app/modules/search/models/torrent.interface';
 import { DatePipe } from '@angular/common';
 import { SortService } from '../../services/sort-service/sort.service';
 import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
+import { TorrentFileDownloadService } from '../../services/torrent-file-download/torrent-file-download.service';
 
 @Component({
     selector: 'app-search-results',
@@ -29,11 +30,13 @@ export class SearchResultsComponent implements OnInit {
     protected copyText: string = 'Magnet link';
     protected copyHighlightText: string = 'Kopirano';
     protected downloadText: string = 'Potegni ga';
+    protected isDownloadingTorrentFile: boolean = false;
 
     constructor(
         private readonly route: ActivatedRoute,
         private readonly searchService: SearchService,
         private readonly toastr: ToastrService,
+        private readonly torrentFileDownloadService: TorrentFileDownloadService,
         private readonly authService: AuthService,
         private readonly sortService: SortService,
         private readonly datePipe: DatePipe
@@ -324,9 +327,28 @@ export class SearchResultsComponent implements OnInit {
         }
     }
 
-    protected download(event: any, torrentUrl: string): void {
+    protected download(event: any, magnetLink: string, fileName: string): void {
         event.stopPropagation();
-        window.open(torrentUrl, '_blank');
+        if (this.isDownloadingTorrentFile) return;
+        this.isDownloadingTorrentFile = true;
+        this.torrentFileDownloadService.downloadTorrentFile(magnetLink).subscribe({
+            next: (blob) => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${fileName}.torrent`
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+                this.isDownloadingTorrentFile = false;
+            },
+            error: (error) => {
+                this.isDownloadingTorrentFile = false;
+                this.toastr.error('Prenos ni uspel', 'Prosimo uporabite magnet link', { timeOut: timingConst.error });
+            }
+        });
+
     }
 
     private parseSize(size: string): number {
