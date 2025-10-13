@@ -101,7 +101,8 @@
                                                     <img src="assets/images/copy.png" alt="Kopiraj magnet link">
                                                     <p>{{ copyText }}</p>
                                                 </button>
-                                                <button #downloadButton class="action-button download-button"
+                                                <!-- currently not supported - scraper api is to slow, enabled this once on AWS -->
+                                                <button disabled #downloadButton class="action-button download-button"
                                                     title="Potegni ga!" [disabled]="isDownloadingTorrentFile"
                                                     (click)="download($event, torrent.url, torrent.title)">
                                                     <img src="assets/images/download-green.png" alt="Potegni ga!">
