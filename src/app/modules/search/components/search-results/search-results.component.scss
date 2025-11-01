@@ -166,6 +166,15 @@ a {
     text-decoration: underline;
 }
 
+.eztv a {
+    color: var(--eztv-color) !important;
+}
+
+.eztv a:hover {
+    color: var(--eztv-color-hover) !important;
+    text-decoration: underline;
+}
+
 .torrentproject a {
     color: var(--torrent-project-color) !important;
 }

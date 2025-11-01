@@ -30,6 +30,9 @@
                                 <img *ngIf="torrent.source.toLowerCase() === 'yts'" src="assets/images/yts.png"
                                     alt="{{ torrent.title }} Image" width="50">
 
+                                <img *ngIf="torrent.source.toLowerCase() === 'eztv'" src="assets/images/eztv.png"
+                                    alt="{{ torrent.title }} Image" width="50">
+
                                 <img *ngIf="torrent.source.toLowerCase() === 'torrentproject'"
                                     src="assets/images/torrentproject.png" alt="{{ torrent.title }} Image" width="50">
 
@@ -43,6 +46,7 @@
                         'native': torrent.source.toLowerCase() === 'native',
                         'tpb': torrent.source.toLowerCase() === 'thepiratebay',
                         'yts': torrent.source.toLowerCase() === 'yts',
+                        'eztv': torrent.source.toLowerCase() === 'eztv',
                         'torrentproject': torrent.source.toLowerCase() === 'torrentproject'
                     }
                     ">
@@ -70,6 +74,9 @@
                                     <img *ngIf="torrent.source.toLowerCase() === 'torrentproject'"
                                         src="assets/images/torrentproject.png" alt="{{ torrent.title }} Image"
                                         width="100" class="mr-3">
+
+                                    <img *ngIf="torrent.source.toLowerCase() === 'eztv'" src="assets/images/eztv.png"
+                                        alt="{{ torrent.title }} Image" width="50" class="mr-3">
 
                                     <div class="w-100 title-container">
                                         <h4>{{ torrent.title }}</h4>
@@ -102,9 +109,11 @@
                                                     <p>{{ copyText }}</p>
                                                 </button>
                                                 <!-- currently not supported - scraper api is to slow, enabled this once on AWS -->
+                                                <!-- [disabled]="isDownloadingTorrentFile" -->
                                                 <button disabled #downloadButton class="action-button download-button"
-                                                    title="Potegni ga!" [disabled]="isDownloadingTorrentFile"
-                                                    (click)="download($event, torrent.url, torrent.title)">
+                                                    title="Potegni ga!"
+                                                    (click)="download($event, torrent.url, torrent.title)"
+                                                    [disabled]="true">
                                                     <img src="assets/images/download-green.png" alt="Potegni ga!">
                                                     <p>{{ downloadText }}</p>
                                                 </button>

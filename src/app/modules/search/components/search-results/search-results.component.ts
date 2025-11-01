@@ -280,6 +280,8 @@ export class SearchResultsComponent implements OnInit {
                 return 'https://thepiratebay.org/';
             case 'yts':
                 return 'https://yts.mx/';
+            case 'eztv':
+                return 'https://eztv.re/';
             case 'torrentProject':
                 return 'https://en.wikipedia.org/wiki/Torrent_Project';
             default:
@@ -304,6 +306,21 @@ export class SearchResultsComponent implements OnInit {
             return formattedTime || '?';
         } catch {
             return '?';
+        }
+    }
+
+    protected displayProviderName(value: string): string {
+        switch (value) {
+            case 'thePirateBay':
+                return 'The Pirate Bay';
+            case 'yts':
+                return 'YTS';
+            case 'eztv':
+                return 'EZTV';
+            case 'torrentProject':
+                return 'Torrent Project';
+            default:
+                return value;
         }
     }
 
