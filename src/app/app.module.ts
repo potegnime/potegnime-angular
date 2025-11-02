@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
@@ -25,15 +25,12 @@ export function tokenGetter() {
     return localStorage.getItem('token');
 }
 
-@NgModule({
-    declarations: [
+@NgModule({ declarations: [
         AppComponent
     ],
-    imports: [
-        BrowserModule,
+    bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,
         RouterModule,
-        HttpClientModule,
         JwtModule.forRoot({
             config: {
                 tokenGetter: tokenGetter,
@@ -47,9 +44,7 @@ export function tokenGetter() {
         FormsModule,
         ToastrModule.forRoot(),
         BrowserAnimationsModule,
-        ReactiveFormsModule
-    ],
-    providers: [
+        ReactiveFormsModule], providers: [
         {
             provide: APP_INITIALIZER,
             useFactory: initConfig,
@@ -61,7 +56,6 @@ export function tokenGetter() {
             useClass: ApiInterceptor,
             multi: true
         },
-    ],
-    bootstrap: [AppComponent]
-})
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule { }
