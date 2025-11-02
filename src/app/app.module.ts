@@ -13,7 +13,6 @@ import { SharedModule } from './modules/shared/shared.module';
 import { AboutModule } from './modules/about/about.module';
 import { JwtModule } from '@auth0/angular-jwt';
 
-import { urlConst } from './modules/shared/enums/url.enum';
 import { ToastrModule } from 'ngx-toastr';
 import { ConfigService } from './core/services/config/config.service';
 import { ApiInterceptor } from './core/interceptor/api/api.interceptor';
@@ -38,7 +37,7 @@ export function tokenGetter() {
         JwtModule.forRoot({
             config: {
                 tokenGetter: tokenGetter,
-                allowedDomains: [`${urlConst.appBase}`],
+                allowedDomains: ['https://potegni.me'],
             },
         }),
         AuthModule,
