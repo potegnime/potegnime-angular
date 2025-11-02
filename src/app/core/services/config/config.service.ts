@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { ApiType } from '../../enums/api-type.enum';
-import { environment } from 'src/env';
+import { environment } from 'src/environment';
 
 @Injectable({
   providedIn: 'root'
