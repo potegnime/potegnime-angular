@@ -1,23 +1,27 @@
-<app-sudo-nav *ngIf="isMyPage"></app-sudo-nav>
-<app-loading-spinner class="spinner-overlay" *ngIf="isLoading"></app-loading-spinner>
+@if (isMyPage) {
+  <app-sudo-nav></app-sudo-nav>
+}
+@if (isLoading) {
+  <app-loading-spinner class="spinner-overlay"></app-loading-spinner>
+}
 <div class="row container-profile" [ngClass]="{'mt-2': !isMyPage}">
-    <div class="row profile-info">
+  <div class="row profile-info">
 
-        <div class="row user-data mb-3">
+    <div class="row user-data mb-3">
 
-            <div class="col-12 col-lg-3 img-cont">
-                <img [src]="profilePictureUrl" [alt]="username" [title]="username" class="profile-pic" width="200"
-                    height="200">
-            </div>
+      <div class="col-12 col-lg-3 img-cont">
+        <img [src]="profilePictureUrl" [alt]="username" [title]="username" class="profile-pic" width="200"
+          height="200">
+      </div>
 
-            <div class="col-12 col-lg-9 name-cont">
-                <div class="username-cont">
-                    <h3 class=" m-0 p-0 username">{{ username }}</h3>
-                    <p class="role mt-1">{{ roleName }}</p>
-                    <div class="title">Pridružil dne</div>
-                    <div class="value">{{ joined }}</div>
-                </div>
-            </div>
+      <div class="col-12 col-lg-9 name-cont">
+        <div class="username-cont">
+          <h3 class=" m-0 p-0 username">{{ username }}</h3>
+          <p class="role mt-1">{{ roleName }}</p>
+          <div class="title">Pridružil dne</div>
+          <div class="value">{{ joined }}</div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

@@ -1,57 +1,59 @@
 <div class="container text-center">
-    <div *ngIf="!isLoggedIn" class="m-2 text-center">
-        <a routerLink="/prijava">
-            <img src="assets/images/logo.png" alt="potegni.me" width="150">
-        </a>
+  @if (!isLoggedIn) {
+    <div class="m-2 text-center">
+      <a routerLink="/prijava">
+        <img src="assets/images/logo.png" alt="potegni.me" width="150">
+      </a>
     </div>
+  }
 
-    <div class="text-center">
-        <h2 class="mt-4 mb-4 text-center">Donacije</h2>
-    </div>
-    <p>
-        potegni.me je brezplačna storitev, in tako bo tudi ostalo. <br>
-        Vseeno pa vzdrževanje platforme ni brezplačno, zato vas prosimo, da razmilsite o donaciji.
-        <br>
-        Vaša donacija bo namenjena kritju stroškov gostovanja in vzdrževanja platforme.
+  <div class="text-center">
+    <h2 class="mt-4 mb-4 text-center">Donacije</h2>
+  </div>
+  <p>
+    potegni.me je brezplačna storitev, in tako bo tudi ostalo. <br>
+    Vseeno pa vzdrževanje platforme ni brezplačno, zato vas prosimo, da razmilsite o donaciji.
+    <br>
+      Vaša donacija bo namenjena kritju stroškov gostovanja in vzdrževanja platforme.
     </p>
 
     <p>
-        Donirate lahko preko PayPala:
+      Donirate lahko preko PayPala:
     </p>
 
     <ul class="donation-list my-4">
-        <li>
-            <a href="https://www.paypal.com/donate/?hosted_button_id=6TL4RBDZ84FDQ" id="paypal-link" target="_blank">
-                <img src="/assets/images/paypal.png" alt="" id="paypal-logo" title="PayPal">
-                <br>
-            </a>
+      <li>
+        <a href="https://www.paypal.com/donate/?hosted_button_id=6TL4RBDZ84FDQ" id="paypal-link" target="_blank">
+          <img src="/assets/images/paypal.png" alt="" id="paypal-logo" title="PayPal">
+          <br>
+          </a>
         </li>
         <!-- <li>
-            Bitcoin:
-            <span class="address" (click)="copyAddress('btc')">
-                {{ walletAddresses.btc }}<img src="assets/images/copy.png" alt="Kopiraj" width="20" height="20">
-            </span>
-        </li>
-        <li>
-            Ethereum:
-            <span class="address" (click)="copyAddress('eth')">
-                {{ walletAddresses.eth }}<img src="assets/images/copy.png" alt="Kopiraj" width="20" height="20">
-            </span>
-        </li>
-        <li>
-            Litecoin:
-            <span class="address" (click)="copyAddress('ltc')">
-                {{ walletAddresses.ltc }}<img src="assets/images/copy.png" alt="Kopiraj" width="20" height="20">
-            </span>
-        </li>
-        <li>
-            Monero:
-            <span class="address" (click)="copyAddress('xmr')">
-                {{ walletAddresses.xmr }}<img src="assets/images/copy.png" alt="Kopiraj" width="20" height="20">
-            </span>
-        </li> -->
+        Bitcoin:
+        <span class="address" (click)="copyAddress('btc')">
+          {{ walletAddresses.btc }}<img src="assets/images/copy.png" alt="Kopiraj" width="20" height="20">
+        </span>
+      </li>
+      <li>
+        Ethereum:
+        <span class="address" (click)="copyAddress('eth')">
+          {{ walletAddresses.eth }}<img src="assets/images/copy.png" alt="Kopiraj" width="20" height="20">
+        </span>
+      </li>
+      <li>
+        Litecoin:
+        <span class="address" (click)="copyAddress('ltc')">
+          {{ walletAddresses.ltc }}<img src="assets/images/copy.png" alt="Kopiraj" width="20" height="20">
+        </span>
+      </li>
+      <li>
+        Monero:
+        <span class="address" (click)="copyAddress('xmr')">
+          {{ walletAddresses.xmr }}<img src="assets/images/copy.png" alt="Kopiraj" width="20" height="20">
+        </span>
+      </li> -->
     </ul>
 
     <p class="mb-0">Niste prepričani? Preberite si več <a routerLink="/o-nas">o nas</a>.</p>
     <p>Hvaležni smo vsake donacije ❤️!</p>
-</div>
+  </div>

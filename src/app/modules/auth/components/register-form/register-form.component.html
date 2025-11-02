@@ -5,48 +5,52 @@ save password is shown after going back to login, even if not register completed
 same issue on reset password page
 -->
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <div class="top-row">
-        <input type="text" id="username" name="username" placeholder="Uporabniško ime" required
-            formControlName="username">
-        <input type="email" id="email" name="email" placeholder="E-pošta" required formControlName="email">
+  <div class="top-row">
+    <input type="text" id="username" name="username" placeholder="Uporabniško ime" required
+      formControlName="username">
+    <input type="email" id="email" name="email" placeholder="E-pošta" required formControlName="email">
+  </div>
+  <div class="bottom-row">
+    <div class="password-container">
+      <input type="{{ showPassword ? 'text' : 'password' }}" id="password" name="password" placeholder="Geslo"
+        required formControlName="password">
+      <span class="toggle-password" (click)="togglePasswordVisibility(1)">
+        <i class="eye-icon fa-solid" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
+      </span>
     </div>
-    <div class="bottom-row">
-        <div class="password-container">
-            <input type="{{ showPassword ? 'text' : 'password' }}" id="password" name="password" placeholder="Geslo"
-                required formControlName="password">
-            <span class="toggle-password" (click)="togglePasswordVisibility(1)">
-                <i class="eye-icon fa-solid" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
-            </span>
-        </div>
-        <div class="password-container">
-            <input type="{{ showPasswordConfirm ? 'text' : 'password' }}" id="password-confirm" name="password-confirm"
-                placeholder="Potrditev gesla" required formControlName="passwordConfirm">
-            <span class="toggle-password" (click)="togglePasswordVisibility(2)">
-                <i class="eye-icon fa-solid" [ngClass]="showPasswordConfirm ? 'fa-eye' : 'fa-eye-slash'"></i>
-            </span>
-        </div>
+    <div class="password-container">
+      <input type="{{ showPasswordConfirm ? 'text' : 'password' }}" id="password-confirm" name="password-confirm"
+        placeholder="Potrditev gesla" required formControlName="passwordConfirm">
+      <span class="toggle-password" (click)="togglePasswordVisibility(2)">
+        <i class="eye-icon fa-solid" [ngClass]="showPasswordConfirm ? 'fa-eye' : 'fa-eye-slash'"></i>
+      </span>
     </div>
-    <div class="terms-container">
-        <label class="terms-checkbox">
-            <input type="checkbox" id="terms-agreement" name="terms-agreement" formControlName="agreeToTerms"
-                class="hidden-checkbox">
-            <span class="checkmark">
-                <i [ngClass]="agreeToTermsBool ? 'fa-solid fa-square-check' : 'fa-regular fa-square'"></i>
-            </span>
-            <span class="url-white">
-                Strinjam se s <a routerLink="/pogoji">pravili in splošnimi pogoji uporabe</a>
-            </span>
-        </label>
-    </div>
-    <button type="submit" [disabled]="registerForm.invalid" class="register-button">Registracija</button>
+  </div>
+  <div class="terms-container">
+    <label class="terms-checkbox">
+      <input type="checkbox" id="terms-agreement" name="terms-agreement" formControlName="agreeToTerms"
+        class="hidden-checkbox">
+      <span class="checkmark">
+        <i [ngClass]="agreeToTermsBool ? 'fa-solid fa-square-check' : 'fa-regular fa-square'"></i>
+      </span>
+      <span class="url-white">
+        Strinjam se s <a routerLink="/pogoji">pravili in splošnimi pogoji uporabe</a>
+      </span>
+    </label>
+  </div>
+  <button type="submit" [disabled]="registerForm.invalid" class="register-button">Registracija</button>
 </form>
 
 <div class="register-error" [class.shake]="triggerErrorAnimation">
-    <p *ngIf="showRegisterError">{{ registerErrorMessage }}</p>
+  @if (showRegisterError) {
+    <p>{{ registerErrorMessage }}</p>
+  }
 </div>
 
 <p class="url-white">Že imaš račun? <a routerLink="/prijava">Prijavi se!</a></p>
 
-<div class="spinner-overlay" *ngIf="isSubmitting">
+@if (isSubmitting) {
+  <div class="spinner-overlay">
     <app-loading-spinner></app-loading-spinner>
-</div>
+  </div>
+}

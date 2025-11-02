@@ -1,170 +1,172 @@
 <app-sudo-nav></app-sudo-nav>
 <div class="row">
-    <div class="col-3">
-        <nav>
-            <ul class="flex-column">
-                <li><a class="side-link" (click)="scrollToSection('uredi')">Uredi profil</a></li>
-                <li><a class="side-link" (click)="scrollToSection('zasebnost')">Zasebnost</a></li>
-                <li *ngIf="uploaderRequestStatus !== uploaderRequestStatusEnum.Approved && isUser"><a class="side-link"
-                        (click)="scrollToSection('request-uploader')">Postani nalagalec</a></li>
-            </ul>
-        </nav>
-    </div>
-    <div class="col-9">
-        <div class="settings-section" id="uredi">
-            <h3>Uredi profil</h3>
-            <hr>
-            <form [formGroup]="changeUserDataForm" (ngSubmit)="onChnangeUserDataSubmit()">
-                <div class="change-container">
-                    <label for="change-user-username">Uporabniško ime:</label>
-                    <input type="text" name="change-user-username" id="change-user-username" formControlName="username"
-                        class="input">
-                </div>
-                <div class="change-container">
-                    <label for="change-user-email">E-pošta:</label>
-                    <input type="text" name="change-user-email" id="change-user-email" formControlName="email"
-                        class="input">
-                </div>
-                <div class="change-container">
-                    Profilna slika:
-                    <div class="profile-pic-container">
-                        <label for="change-user-pfp">
-                            <img [src]="profilePictureUrl" alt="{{ username }}" class="profile-pic" width="300"
-                                height="300">
-                            <div class="overlay-text">Spremeni profilno sliko</div>
-                        </label>
-                    </div>
-                    <button *ngIf="this.hasProfilePicture" class="button" id="remove-profile-picture-button"
-                        (click)="removeProfilePicture()">
-                        Odstrani profilno sliko
-                    </button>
-                    <input type="file" name="change-user-pfp" id="change-user-pfp"
-                        accept=".jpg, .jpeg, .png .webp .bmp .gif .tiff" (change)="onProfilePictureChange($event)">
-                </div>
-                <button type="submit" class="button">
-                    Shrani spremembe
-                </button>
-            </form>
+  <div class="col-3">
+    <nav>
+      <ul class="flex-column">
+        <li><a class="side-link" (click)="scrollToSection('uredi')">Uredi profil</a></li>
+        <li><a class="side-link" (click)="scrollToSection('zasebnost')">Zasebnost</a></li>
+        @if (uploaderRequestStatus !== uploaderRequestStatusEnum.Approved && isUser) {
+          <li><a class="side-link"
+          (click)="scrollToSection('request-uploader')">Postani nalagalec</a></li>
+        }
+      </ul>
+    </nav>
+  </div>
+  <div class="col-9">
+    <div class="settings-section" id="uredi">
+      <h3>Uredi profil</h3>
+      <hr>
+        <form [formGroup]="changeUserDataForm" (ngSubmit)="onChnangeUserDataSubmit()">
+          <div class="change-container">
+            <label for="change-user-username">Uporabniško ime:</label>
+            <input type="text" name="change-user-username" id="change-user-username" formControlName="username"
+              class="input">
+          </div>
+          <div class="change-container">
+            <label for="change-user-email">E-pošta:</label>
+            <input type="text" name="change-user-email" id="change-user-email" formControlName="email"
+              class="input">
+          </div>
+          <div class="change-container">
+            Profilna slika:
+            <div class="profile-pic-container">
+              <label for="change-user-pfp">
+                <img [src]="profilePictureUrl" alt="{{ username }}" class="profile-pic" width="300"
+                  height="300">
+                <div class="overlay-text">Spremeni profilno sliko</div>
+              </label>
+            </div>
+            @if (this.hasProfilePicture) {
+              <button class="button" id="remove-profile-picture-button"
+                (click)="removeProfilePicture()">
+                Odstrani profilno sliko
+              </button>
+            }
+            <input type="file" name="change-user-pfp" id="change-user-pfp"
+              accept=".jpg, .jpeg, .png .webp .bmp .gif .tiff" (change)="onProfilePictureChange($event)">
+          </div>
+          <button type="submit" class="button">
+            Shrani spremembe
+          </button>
+        </form>
+      </div>
+
+      <div class="settings-section" id="zasebnost">
+        <h3>Zasebnost</h3>
+        <hr>
+          <h4 class="section-title">Sprememba gesla</h4>
+          <form [formGroup]="changePasswordForm" (ngSubmit)="onChangePasswordSubmit()">
+            <div class="change-container">
+              <label for="change-password-old">Staro geslo:</label>
+              <input type="password" name="change-password-old" id="change-password-old"
+                formControlName="oldPassword" class="input">
+            </div>
+            <div class="change-container">
+              <label for="change-password-new">Novo geslo:</label>
+              <input type="password" name="change-password-new" id="change-password-new"
+                formControlName="newPassword" class="input">
+            </div>
+            <div class="change-container">
+              <label for="change-password-repeat">Potrditev novega gesla:</label>
+              <input type="password" name="change-password-repeat" id="change-password-repeat"
+                formControlName="newPasswordRepeat" class="input">
+            </div>
+
+            <button type="submit" [disabled]="changePasswordForm.invalid" class="button">
+              Shrani spremembe
+            </button>
+          </form>
+
+          <h4>Izbris profila</h4>
+          <form [formGroup]="deleteProfileForm" (ngSubmit)="onDeleteProfileSubmit()">
+            <div class="change-container">
+              <label for="delete-profile-password">Geslo:</label>
+              <input type="password" name="delete-profile-password" id="delete-profile-password"
+                formControlName="password" class="input">
+            </div>
+            <button type="submit" [disabled]="deleteProfileForm.invalid" class="danger-button button"
+              id="delete-profile-button">
+              Izbriši profil
+            </button>
+          </form>
         </div>
 
-        <div class="settings-section" id="zasebnost">
-            <h3>Zasebnost</h3>
-            <hr>
-            <h4 class="section-title">Sprememba gesla</h4>
-            <form [formGroup]="changePasswordForm" (ngSubmit)="onChangePasswordSubmit()">
-                <div class="change-container">
-                    <label for="change-password-old">Staro geslo:</label>
-                    <input type="password" name="change-password-old" id="change-password-old"
-                        formControlName="oldPassword" class="input">
-                </div>
-                <div class="change-container">
-                    <label for="change-password-new">Novo geslo:</label>
-                    <input type="password" name="change-password-new" id="change-password-new"
-                        formControlName="newPassword" class="input">
-                </div>
-                <div class="change-container">
-                    <label for="change-password-repeat">Potrditev novega gesla:</label>
-                    <input type="password" name="change-password-repeat" id="change-password-repeat"
-                        formControlName="newPasswordRepeat" class="input">
-                </div>
-
-                <button type="submit" [disabled]="changePasswordForm.invalid" class="button">
-                    Shrani spremembe
-                </button>
-            </form>
-
-            <h4>Izbris profila</h4>
-            <form [formGroup]="deleteProfileForm" (ngSubmit)="onDeleteProfileSubmit()">
-                <div class="change-container">
-                    <label for="delete-profile-password">Geslo:</label>
-                    <input type="password" name="delete-profile-password" id="delete-profile-password"
-                        formControlName="password" class="input">
-                </div>
-                <button type="submit" [disabled]="deleteProfileForm.invalid" class="danger-button button"
-                    id="delete-profile-button">
-                    Izbriši profil
-                </button>
-            </form>
-        </div>
-
-        <div class="settings-section" id="request-uploader"
-            *ngIf="uploaderRequestStatus !== uploaderRequestStatusEnum.Approved && isUser">
+        @if (uploaderRequestStatus !== uploaderRequestStatusEnum.Approved && isUser) {
+          <div class="settings-section" id="request-uploader"
+            >
             <h3>Postani nalagalec</h3>
             <hr>
-
-            <div *ngIf="!uploaderRequestStatus">
-                <p>
+              @if (!uploaderRequestStatus) {
+                <div>
+                  <p>
                     Nalagalec je uporabnik, ki lahko nalaga torrente na potegni.me. Če želiš postati nalagalec izploni
                     spodnji obrazec, in admin bo pregledal tvojo vlogo. <br>
                     Če bo sprejeta, boš lahko začel nalagati torrente na potegni.me. O odločitvi te bomo obvestili preko
                     e-pošte.
-                </p>
-
-                <form [formGroup]="uploaderRequestDataForm" (ngSubmit)="onUploaderRequestSubmit()">
+                  </p>
+                  <form [formGroup]="uploaderRequestDataForm" (ngSubmit)="onUploaderRequestSubmit()">
                     <div class="change-container">
-                        <label for="experience">Imaš kaj izkušenj z nalaganje torrentov? (na kratko razloži)<span
-                                class="red">*</span></label>
-                        <textarea id="experience" name="experience" formControlName="experience" rows="4"
-                            maxlength="1000" class="text-area" required
-                            (input)="updateCharacterCount('experience')"></textarea>
-                        <small class="character-count">{{ uploaderRequestFormCharacterCount.experience }}/1000</small>
+                      <label for="experience">Imaš kaj izkušenj z nalaganje torrentov? (na kratko razloži)<span
+                      class="red">*</span></label>
+                      <textarea id="experience" name="experience" formControlName="experience" rows="4"
+                        maxlength="1000" class="text-area" required
+                      (input)="updateCharacterCount('experience')"></textarea>
+                      <small class="character-count">{{ uploaderRequestFormCharacterCount.experience }}/1000</small>
                     </div>
-
                     <div class="change-container">
-                        <label for="content">Kakšno vrsto vsebine nameravaš nalagati?<span class="red">*</span></label>
-                        <textarea id="content" name="content" formControlName="content" rows="4" maxlength="1000"
-                            class="text-area" required (input)="updateCharacterCount('content')"></textarea>
-                        <small class="character-count">{{ uploaderRequestFormCharacterCount.content }}/1000</small>
+                      <label for="content">Kakšno vrsto vsebine nameravaš nalagati?<span class="red">*</span></label>
+                      <textarea id="content" name="content" formControlName="content" rows="4" maxlength="1000"
+                      class="text-area" required (input)="updateCharacterCount('content')"></textarea>
+                      <small class="character-count">{{ uploaderRequestFormCharacterCount.content }}/1000</small>
                     </div>
-
                     <div class="change-container">
-                        <label for="proof">Povezave do prejšnjih nalaganj (če obstajajo):</label>
-                        <textarea id="proof" name="proof" formControlName="proof" rows="4" maxlength="3000"
-                            class="text-area" (input)="updateCharacterCount('proof')"></textarea>
-                        <small class="character-count">{{ uploaderRequestFormCharacterCount.proof }}/3000</small>
+                      <label for="proof">Povezave do prejšnjih nalaganj (če obstajajo):</label>
+                      <textarea id="proof" name="proof" formControlName="proof" rows="4" maxlength="3000"
+                      class="text-area" (input)="updateCharacterCount('proof')"></textarea>
+                      <small class="character-count">{{ uploaderRequestFormCharacterCount.proof }}/3000</small>
                     </div>
-
                     <div class="change-container">
-                        <label for="other-trackers">Ali si že član_ica drugih zasebnih trackerjev? Če ja,
-                            katerih?</label>
-                        <textarea id="other-trackers" name="other-trackers" formControlName="otherTrackers" rows="4"
-                            maxlength="1000" class="text-area"
-                            (input)="updateCharacterCount('otherTrackers')"></textarea>
-                        <small class="character-count">{{ uploaderRequestFormCharacterCount.otherTrackers
-                            }}/1000</small>
+                      <label for="other-trackers">Ali si že član_ica drugih zasebnih trackerjev? Če ja,
+                      katerih?</label>
+                      <textarea id="other-trackers" name="other-trackers" formControlName="otherTrackers" rows="4"
+                        maxlength="1000" class="text-area"
+                      (input)="updateCharacterCount('otherTrackers')"></textarea>
+                      <small class="character-count">{{ uploaderRequestFormCharacterCount.otherTrackers
+                      }}/1000</small>
                     </div>
-
                     <div class="change-container">
-                        <label for="terms-acknowledge">Prebral_a sem in strinjam se s <a [routerLink]="['/pogoji']"
-                                fragment="nalagalci" target="_blank">pogoji uporabe</a> (še posebej s sekcijo za
-                            nalagalce)<span class="red">*</span></label>
-                        <select id="terms-acknowledge" name="terms-acknowledge" class="select"
-                            formControlName="agreeToTerms" required>
-                            <option value="no">Ne</option>
-                            <option value="yes">Da</option>
-                        </select>
+                      <label for="terms-acknowledge">Prebral_a sem in strinjam se s <a [routerLink]="['/pogoji']"
+                      fragment="nalagalci" target="_blank">pogoji uporabe</a> (še posebej s sekcijo za
+                      nalagalce)<span class="red">*</span></label>
+                      <select id="terms-acknowledge" name="terms-acknowledge" class="select"
+                        formControlName="agreeToTerms" required>
+                        <option value="no">Ne</option>
+                        <option value="yes">Da</option>
+                      </select>
                     </div>
-
                     <button type="submit" class="button">
-                        Oddaj vlogo
+                      Oddaj vlogo
                     </button>
-                </form>
-
-            </div>
-
-            <div *ngIf="uploaderRequestStatus === uploaderRequestStatusEnum.Review">
-                <p>
+                  </form>
+                </div>
+              }
+              @if (uploaderRequestStatus === uploaderRequestStatusEnum.Review) {
+                <div>
+                  <p>
                     Tvoja vloga za nalagalca je trenutno v pregledu. O odločitvi te bomo obvestili preko e-pošte.
-                </p>
-            </div>
-
-            <div *ngIf="uploaderRequestStatus === uploaderRequestStatusEnum.Denied">
-                <p>
+                  </p>
+                </div>
+              }
+              @if (uploaderRequestStatus === uploaderRequestStatusEnum.Denied) {
+                <div>
+                  <p>
                     Tvoja vloga za nalagalca je bila zavrnjena :( <br>
                     Več informacij o zavrnitvi najdeš v e-pošti, ki smo ti jo poslali.
-                </p>
+                  </p>
+                </div>
+              }
             </div>
-        </div>
+          }
 
-    </div>
-</div>
+        </div>
+      </div>

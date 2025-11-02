@@ -1,110 +1,118 @@
 <app-sudo-nav></app-sudo-nav>
 <div class="row">
-    <div class="col-3">
-        <nav>
-            <ul class="flex-column">
-                <li><a class="side-link" (click)="scrollToSection('recommend')">Izbrani torrenti</a></li>
-                <li><a class="side-link" (click)="scrollToSection('nadzor')">Nadzor uporabnikov</a></li>
-                <li><a class="side-link" (click)="scrollToSection('requests')">Prošnje za nalaglce</a></li>
-            </ul>
-        </nav>
-    </div>
+  <div class="col-3">
+    <nav>
+      <ul class="flex-column">
+        <li><a class="side-link" (click)="scrollToSection('recommend')">Izbrani torrenti</a></li>
+        <li><a class="side-link" (click)="scrollToSection('nadzor')">Nadzor uporabnikov</a></li>
+        <li><a class="side-link" (click)="scrollToSection('requests')">Prošnje za nalaglce</a></li>
+      </ul>
+    </nav>
+  </div>
 
-    <div class="col-9">
-        <div class="admin-section" id="recommend">
-            <h3>Izbrani torrenti</h3>
-            <hr>
-            <form [formGroup]="setRecommendationForm" (ngSubmit)="onSetRecommendationFormSubmit()">
-                <div class="change-container">
-                    <label for="set-recommendation-date">Datum:</label>
-                    <input type="date" name="set-recommendation-date" id="set-recommendation-date"
-                        formControlName="date" class="input" (change)="onRecommendationDateChanged()">
-                </div>
-                <div class="change-container">
-                    <label for="set-recommendation-type">Tip:</label>
-                    <select name="set-recommendation-type" id="set-recommendation-type" formControlName="type"
-                        class="input" (change)="onRecommendationTypeChange($event.target)">
-                        <option value="movie">Film</option>
-                        <option value="series">Serija</option>
-                    </select>
-                </div>
-                <div class="change-container">
-                    <label for="set-recommendation-name">Naslov:</label>
-                    <input type="text" name="set-recommendation-name" id="set-recommendation-name"
-                        formControlName="name" class="input">
-                </div>
+  <div class="col-9">
+    <div class="admin-section" id="recommend">
+      <h3>Izbrani torrenti</h3>
+      <hr>
+        <form [formGroup]="setRecommendationForm" (ngSubmit)="onSetRecommendationFormSubmit()">
+          <div class="change-container">
+            <label for="set-recommendation-date">Datum:</label>
+            <input type="date" name="set-recommendation-date" id="set-recommendation-date"
+              formControlName="date" class="input" (change)="onRecommendationDateChanged()">
+          </div>
+          <div class="change-container">
+            <label for="set-recommendation-type">Tip:</label>
+            <select name="set-recommendation-type" id="set-recommendation-type" formControlName="type"
+              class="input" (change)="onRecommendationTypeChange($event.target)">
+              <option value="movie">Film</option>
+              <option value="series">Serija</option>
+            </select>
+          </div>
+          <div class="change-container">
+            <label for="set-recommendation-name">Naslov:</label>
+            <input type="text" name="set-recommendation-name" id="set-recommendation-name"
+              formControlName="name" class="input">
+          </div>
 
-                <div class="row">
-                    <div class="col-6 left-button-container">
-                        <button type="submit" class="button" id="save-recommendation-button">
-                            Shrani spremembe
-                        </button>
-                    </div>
-                    <div class="col-6 right-button-container">
-                        <button type="button" class="button danger-button button col-6"
-                            id="delete-recommendation-button" (click)="onDeleteTodaysRecommendation()">
-                            Izbriši izbran torrent
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-        <div class="admin-section" id="nadzor">
-            <h3>Nadzor uporabnikov</h3>
-            <hr>
-            <form [formGroup]="userControlForm" (ngSubmit)="onUserControlFormSubmit()">
-                <div class="change-container">
-                    <label for="user-control-username">Uporabniško ime:</label>
-                    <input type="text" name="user-control-username" id="user-control-username"
-                        formControlName="username" class="input">
-                </div>
-                <button type="submit" class="button">
-                    Išči
-                </button>
-            </form>
-
-            <div class="row">
-                <p *ngIf="userFound === false" class="error-text">Uporabnik s tem uporabniškim imenom ne obstaja!</p>
-                <div class="col-8">
-                    <div *ngIf="userFound === true" class="user-display-container">
-                        <p class="text-center">Uporabniško ime: {{userUsername}}</p>
-                        <p class="text-center">Role: {{userRole}}</p>
-                        <img [src]="userPfpUrl" [alt]="userUsername" id="profile-pic">
-                    </div>
-                </div>
-                <div class="col-4" *ngIf="userFound === true">
-                    <form [formGroup]="userRoleChangeForm">
-                        <label for="changeUserRole">Spremeni role</label>
-                        <select name="changeUserRole" id="changeUserRole" class="input" formControlName="role"
-                            (change)="onUserRoleChangeForm()">
-                            <option value="user">Uporabnik</option>
-                            <option value="uploader">Nalagalec</option>
-                            <option value="admin">Admin</option>
-                        </select>
-                    </form>
-                    <button class="button" class="danger-button button" id="delete-profile-button"
-                        (click)="onDeleteUser()">
-                        Izbriši uporabnika
-                    </button>
-                </div>
+          <div class="row">
+            <div class="col-6 left-button-container">
+              <button type="submit" class="button" id="save-recommendation-button">
+                Shrani spremembe
+              </button>
             </div>
+            <div class="col-6 right-button-container">
+              <button type="button" class="button danger-button button col-6"
+                id="delete-recommendation-button" (click)="onDeleteTodaysRecommendation()">
+                Izbriši izbran torrent
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="admin-section" id="nadzor">
+        <h3>Nadzor uporabnikov</h3>
+        <hr>
+          <form [formGroup]="userControlForm" (ngSubmit)="onUserControlFormSubmit()">
+            <div class="change-container">
+              <label for="user-control-username">Uporabniško ime:</label>
+              <input type="text" name="user-control-username" id="user-control-username"
+                formControlName="username" class="input">
+            </div>
+            <button type="submit" class="button">
+              Išči
+            </button>
+          </form>
+
+          <div class="row">
+            @if (userFound === false) {
+              <p class="error-text">Uporabnik s tem uporabniškim imenom ne obstaja!</p>
+            }
+            <div class="col-8">
+              @if (userFound === true) {
+                <div class="user-display-container">
+                  <p class="text-center">Uporabniško ime: {{userUsername}}</p>
+                  <p class="text-center">Role: {{userRole}}</p>
+                  <img [src]="userPfpUrl" [alt]="userUsername" id="profile-pic">
+                </div>
+              }
+            </div>
+            @if (userFound === true) {
+              <div class="col-4">
+                <form [formGroup]="userRoleChangeForm">
+                  <label for="changeUserRole">Spremeni role</label>
+                  <select name="changeUserRole" id="changeUserRole" class="input" formControlName="role"
+                    (change)="onUserRoleChangeForm()">
+                    <option value="user">Uporabnik</option>
+                    <option value="uploader">Nalagalec</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                </form>
+                <button class="button" class="danger-button button" id="delete-profile-button"
+                  (click)="onDeleteUser()">
+                  Izbriši uporabnika
+                </button>
+              </div>
+            }
+          </div>
 
 
         </div>
 
         <div class="admin'section" id="requests">
-            <h3>Prošnje za nalaglce</h3>
-            <!-- TODO check if any requests, pageable, accept/deny, response message -->
-            <hr>
+          <h3>Prošnje za nalaglce</h3>
+          <!-- TODO check if any requests, pageable, accept/deny, response message -->
+          <hr>
             <div class="row">
-                <ul>
-                    <li *ngFor="let request of uploaderRequests">
-                        <p>{{request}}</p>
-                    </li>
-                </ul>
+              <ul>
+                @for (request of uploaderRequests; track request) {
+                  <li>
+                    <p>{{request}}</p>
+                  </li>
+                }
+              </ul>
 
             </div>
+          </div>
         </div>
-    </div>
-</div>
+      </div>

@@ -1,7 +1,11 @@
 <div class="app-wrapper">
-    <div [ngClass]="{'logged-in-style': isLoggedIn}">
-        <app-header *ngIf="isLoggedIn"></app-header>
-        <router-outlet></router-outlet>
-        <app-footer *ngIf="isLoggedIn"></app-footer>
-    </div>
+  <div [ngClass]="{'logged-in-style': isLoggedIn}">
+    @if (isLoggedIn) {
+      <app-header></app-header>
+    }
+    <router-outlet></router-outlet>
+    @if (isLoggedIn) {
+      <app-footer></app-footer>
+    }
+  </div>
 </div>

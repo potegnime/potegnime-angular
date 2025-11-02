@@ -2,6 +2,8 @@
 <app-home-torrent (loadingChange)="onTorrentLoadingChange($event)"></app-home-torrent>
 <!--
 <div class="spinner-overlay" *ngIf="isLoading">
-    <app-loading-spinner></app-loading-spinner>
+  <app-loading-spinner></app-loading-spinner>
 </div> -->
-<app-loading-spinner *ngIf="isLoading" class="spinner-overlay"></app-loading-spinner>
+@if (isLoading) {
+  <app-loading-spinner class="spinner-overlay"></app-loading-spinner>
+}
