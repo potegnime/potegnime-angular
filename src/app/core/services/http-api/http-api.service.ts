@@ -76,9 +76,6 @@ export class HttpApiService {
       case 401:
         this.tokenService.deleteToken();
         this.router.navigate(['/prijava']);
-        if (this.router.url !== '/prijava') {
-          this.toastr.warning('', 'Vaša seja je potekla. Prosimo, prijavite se ponovno.', { timeOut: timingConst.long });
-        }
         break;
     }
     return throwError(() => error);

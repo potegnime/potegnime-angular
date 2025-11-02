@@ -3,7 +3,7 @@ import { HttpApiService } from '../http-api/http-api.service';
 import { ApiType } from '../../enums/api-type.enum';
 import { Observable } from 'rxjs';
 import { ConfigService } from '../config/config.service';
-import { HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
