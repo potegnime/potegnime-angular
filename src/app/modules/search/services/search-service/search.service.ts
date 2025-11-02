@@ -26,12 +26,12 @@ export class SearchService extends BaseHttpService {
     public ping(): Observable<any> {
         // used to wake up scraper API (render free tier sleeps after inactivity)
         // this can be removed after better hosting is in place
-        return this.getJson<any>(`search/ping`);
+        return this.getJson<any>(`ping`);
     }
 
     public searchTorrents(searchRequestDto: SearchRequestDto): Observable<any> {
         // Build URL
-        let url = `/search?query=${searchRequestDto.query}`;
+        let url = `search?query=${searchRequestDto.query}`;
         if (searchRequestDto.category && searchRequestDto.category !== 'All') {
             url += `&category=${searchRequestDto.category}`;
         }
@@ -47,13 +47,13 @@ export class SearchService extends BaseHttpService {
 
     public getCategories(): Observable<TorrentCategories> {
         // TODO - remove, hardcoded in frontend
-        return this.getJson<TorrentCategories>(`/categories`);
+        return this.getJson<TorrentCategories>(`categories`);
     }
 
 
     public getProviders(): Observable<string[]> {
         // TODO - remove, hardcoded in frontend
-        return this.getJson<string[]>(`/providers`);
+        return this.getJson<string[]>(`providers`);
     }
 
     public onSearchComponent(
