@@ -41,6 +41,17 @@ export class UserPageComponent implements OnInit {
         private readonly cacheService: CacheService
     ) { }
 
+    public get roleName(): string {
+        switch (this.role) {
+            case 'admin':
+                return 'Administrator';
+            case 'uploader':
+                return 'Nalagatelj';
+            default:
+                return 'Uporabnik';
+        }
+    }
+
     public ngOnInit(): void {
         this.route.params.subscribe(params => {
             this.token = this.tokenService.getToken();
