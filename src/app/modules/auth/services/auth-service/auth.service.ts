@@ -1,7 +1,5 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map, of, catchError } from 'rxjs';
-import { urlConst } from 'src/app/modules/shared/enums/url.enum';
 import { UserRegisterDto } from '../../models/user-register.interface';
 import { UserLoginDto } from '../../models/user-login.interface';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -11,33 +9,31 @@ import { TokenService } from 'src/app/modules/shared/services/token-service/toke
 import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 import { ForgotPasswordDto } from '../../models/forgot-password.interface';
 import { ResetPasswordDto } from '../../models/reset-password.interface';
+import { BaseHttpService } from 'src/app/core/services/base-http/base-http.service';
+import { HttpApiService } from 'src/app/core/services/http-api/http-api.service';
+import { ConfigService } from 'src/app/core/services/config/config.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class AuthService {
+export class AuthService extends BaseHttpService {
     constructor(
-        private readonly http: HttpClient,
+        httpApiService: HttpApiService,
+        configService: ConfigService,
+        private readonly jwtHelperService: JwtHelperService,
         private readonly router: Router,
-        private readonly jwtHelper: JwtHelperService,
+        private readonly toastr: ToastrService,
         private readonly tokenService: TokenService,
-        private readonly toastr: ToastrService
-    ) { }
+    ) {
+        super(httpApiService, configService);
+    }
 
     public register(userRegisterDto: UserRegisterDto): Observable<any> {
-        const headers = new HttpHeaders({
-            'Content-Type': 'application/json'
-        });
-
-        return this.http.post<any>(`${urlConst.apiBase}/auth/register`, userRegisterDto, { headers: headers });
+        return this.postJson<UserRegisterDto, any>(`auth/register`, userRegisterDto);
     };
 
     public login(userLoginDto: UserLoginDto): Observable<any> {
-        const headers = new HttpHeaders({
-            'Content-Type': 'application/json'
-        });
-
-        return this.http.post<any>(`${urlConst.apiBase}/auth/login`, userLoginDto, { headers: headers });
+        return this.postJson<UserLoginDto, any>(`auth/login`, userLoginDto);
     };
 
     public logout(): void {
@@ -54,40 +50,20 @@ export class AuthService {
 
     public verifyToken(): boolean {
         const token = this.tokenService.getToken();
-        if (!token) {
-            return false;
-        }
-        if (this.jwtHelper.isTokenExpired(token)) {
-            return false;
-        }
-
+        if (!token) return false;
         return true;
+        // return this.jwtHelperService.decodeToken(token) ? true : false;
     }
 
     public refreshToken(): Observable<any> {
-        const httpOptions = {
-            headers: new HttpHeaders({
-                'accept': '*/*',
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.tokenService.getToken()}`
-            })
-        };
-        return this.http.post<string>(`${urlConst.apiBase}/auth/refresh`, {}, httpOptions);
+        return this.postJson<any, string>(`auth/refresh`, {});
     }
 
     public forgotPassword(forgorPasswordDto: ForgotPasswordDto): Observable<any> {
-        const headers = new HttpHeaders({
-            'Content-Type': 'application/json'
-        });
-
-        return this.http.post<any>(`${urlConst.apiBase}/auth/forgotPassword`, forgorPasswordDto, { headers: headers });
+        return this.postJson<ForgotPasswordDto, any>(`auth/forgotPassword`, forgorPasswordDto);
     }
 
     public resetPassword(resetPasswordDto: ResetPasswordDto): Observable<any> {
-        const headers = new HttpHeaders({
-            'Content-Type': 'application/json'
-        });
-
-        return this.http.post<any>(`${urlConst.apiBase}/auth/resetPassword`, resetPasswordDto, { headers: headers });
+        return this.postJson<ResetPasswordDto, any>(`auth/resetPassword`, resetPasswordDto);
     }
 }

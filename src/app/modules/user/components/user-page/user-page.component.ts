@@ -41,6 +41,17 @@ export class UserPageComponent implements OnInit {
         private readonly cacheService: CacheService
     ) { }
 
+    public get roleName(): string {
+        switch (this.role) {
+            case 'admin':
+                return 'Administrator';
+            case 'uploader':
+                return 'Nalagatelj';
+            default:
+                return 'Uporabnik';
+        }
+    }
+
     public ngOnInit(): void {
         this.route.params.subscribe(params => {
             this.token = this.tokenService.getToken();
@@ -92,9 +103,6 @@ export class UserPageComponent implements OnInit {
             },
             error: (error) => {
                 switch (error.status) {
-                    case 401:
-                        this.authService.unauthorizedHandler();
-                        break;
                     case 404:
                         // Redirect to 404 page
                         this.router.navigate(['404']);
@@ -122,11 +130,6 @@ export class UserPageComponent implements OnInit {
                     },
                     error: (error) => {
                         this.profilePictureUrl = 'assets/images/no-pfp.png';
-                        switch (error.status) {
-                            case 401:
-                                this.authService.unauthorizedHandler();
-                                break;
-                        }
                         this.isLoading = false;
                     }
                 });

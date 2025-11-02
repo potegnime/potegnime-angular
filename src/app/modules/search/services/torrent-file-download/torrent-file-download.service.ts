@@ -1,29 +1,24 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { urlConst } from 'src/app/modules/shared/enums/url.enum';
+import { BaseHttpService } from 'src/app/core/services/base-http/base-http.service';
+import { ConfigService } from 'src/app/core/services/config/config.service';
+import { HttpApiService } from 'src/app/core/services/http-api/http-api.service';
 import { TokenService } from 'src/app/modules/shared/services/token-service/token.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TorrentFileDownloadService {
+export class TorrentFileDownloadService extends BaseHttpService {
 
   constructor(
-    private readonly http: HttpClient,
+    httpApiService: HttpApiService,
+    configService: ConfigService,
     private readonly tokenService: TokenService,
-  ) { }
+  ) {
+    super(httpApiService, configService);
+  }
 
   public downloadTorrentFile(magnetUrl: string): Observable<Blob> {
-    const headers = new HttpHeaders({
-      'accept': '*/*',
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.tokenService.getToken()}`
-    });
-
-    // add magnet as query parameter
-    const url = `${urlConst.scraperBase}/download?magnet=${encodeURIComponent(magnetUrl)}`;
-
-    return this.http.get(url, { headers: headers, responseType: 'blob' });
+    return this.getBlob('download?magnet=' + encodeURIComponent(magnetUrl));
   }
 }

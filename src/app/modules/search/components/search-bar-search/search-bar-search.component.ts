@@ -55,9 +55,6 @@ export class SearchBarSearchComponent implements OnInit, OnDestroy {
             },
             error: (error) => {
                 switch (error.status) {
-                    case 401:
-                        this.authService.unauthorizedHandler();
-                        break;
                     case 503:
                         // TODO
                         // Cannot use potegnime-scraper - display native only
@@ -119,14 +116,7 @@ export class SearchBarSearchComponent implements OnInit, OnDestroy {
                 this.onSearch();
             },
             error: (error) => {
-                switch (error.status) {
-                    case 401:
-                        this.authService.unauthorizedHandler();
-                        break;
-                    default:
-                        this.toastr.error('', 'Napaka pri pridobivanju priporočila', { timeOut: timingConst.error });
-                        break;
-                }
+                this.toastr.error('', 'Napaka pri pridobivanju priporočila', { timeOut: timingConst.error });
             }
         })
     }

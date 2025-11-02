@@ -90,14 +90,7 @@ export class RecommendPageComponent implements AfterViewChecked, OnInit {
             },
             error: (error: any) => {
                 this.displayLoadingSpinner = false;
-                switch (error.status) {
-                    case 401:
-                        this.authService.unauthorizedHandler();
-                        break;
-                    default:
-                        this.errorGettingRecommendations();
-                        break;
-                }
+                this.errorGettingRecommendations();
             }
         });
     }

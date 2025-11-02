@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
@@ -13,8 +13,13 @@ import { SharedModule } from './modules/shared/shared.module';
 import { AboutModule } from './modules/about/about.module';
 import { JwtModule } from '@auth0/angular-jwt';
 
-import { urlConst } from './modules/shared/enums/url.enum';
 import { ToastrModule } from 'ngx-toastr';
+import { ConfigService } from './core/services/config/config.service';
+import { ApiInterceptor } from './core/interceptor/api/api.interceptor';
+
+export function initConfig(config: ConfigService) {
+    return () => config.loadConfig();
+}
 
 export function tokenGetter() {
     return localStorage.getItem('token');
@@ -32,7 +37,7 @@ export function tokenGetter() {
         JwtModule.forRoot({
             config: {
                 tokenGetter: tokenGetter,
-                allowedDomains: [`${urlConst.appBase}`],
+                allowedDomains: ['https://potegni.me'],
             },
         }),
         AuthModule,
@@ -44,7 +49,19 @@ export function tokenGetter() {
         BrowserAnimationsModule,
         ReactiveFormsModule
     ],
-    providers: [],
+    providers: [
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initConfig,
+            deps: [ConfigService],
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ApiInterceptor,
+            multi: true
+        },
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

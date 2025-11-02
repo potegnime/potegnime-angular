@@ -115,11 +115,6 @@ export class SettingsPageComponent implements OnInit {
                             this.changeUserDataForm.patchValue({
                                 profilePicture: this.profilePictureUrl
                             });
-                            switch (error.status) {
-                                case 401:
-                                    this.authService.unauthorizedHandler();
-                                    break;
-                            }
                         }
                     });
                 }
@@ -169,9 +164,6 @@ export class SettingsPageComponent implements OnInit {
                     },
                     error: (error) => {
                         switch (error.status) {
-                            case 401:
-                                this.authService.unauthorizedHandler();
-                                break;
                             case 409:
                                 this.toastr.error('', error.error.message, { timeOut: timingConst.error });
                                 break;
@@ -207,9 +199,6 @@ export class SettingsPageComponent implements OnInit {
                     },
                     error: (error) => {
                         switch (error.status) {
-                            case 401:
-                                this.authService.unauthorizedHandler();
-                                break;
                             case 409:
                                 this.toastr.error('', error.error.message, { timeOut: timingConst.error });
                                 break;
@@ -242,9 +231,6 @@ export class SettingsPageComponent implements OnInit {
                     },
                     error: (error) => {
                         switch (error.status) {
-                            case 401:
-                                this.authService.unauthorizedHandler();
-                                break;
                             case 409:
                                 this.toastr.error('', error.error.message, { timeOut: timingConst.error });
                                 break;
@@ -308,9 +294,6 @@ export class SettingsPageComponent implements OnInit {
                 },
                 error: (error) => {
                     switch (error.status) {
-                        case 401:
-                            this.authService.unauthorizedHandler();
-                            break;
                         default:
                             this.toastr.error('', 'Napaka pri pošiljanju vloge za nalagalca', { timeOut: timingConst.error });
                             break;
@@ -352,9 +335,6 @@ export class SettingsPageComponent implements OnInit {
                 },
                 error: (error) => {
                     switch (error.status) {
-                        case 401:
-                            this.authService.unauthorizedHandler();
-                            break;
                         case 403:
                             this.toastr.error('', error.error.message, { timeOut: timingConst.error });
                             break;
@@ -392,9 +372,6 @@ export class SettingsPageComponent implements OnInit {
                 },
                 error: (error) => {
                     switch (error.status) {
-                        case 401:
-                            this.authService.unauthorizedHandler();
-                            break;
                         case 403:
                             this.toastr.error('', error.error.message, { timeOut: timingConst.error });
                             break;

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { SearchService } from 'src/app/modules/search/services/search-service/search.service';
-import { urlConst } from 'src/app/modules/shared/enums/url.enum';
 import { SearchRequestDto } from '../../models/search-request.interface';
 import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
 import { Torrent } from 'src/app/modules/search/models/torrent.interface';
@@ -109,10 +108,6 @@ export class SearchResultsComponent implements OnInit {
                             this.toastr.error('', 'Napaka pri iskanju torrentov', { timeOut: timingConst.error });
                             break;
                         }
-
-                    case 401:
-                        this.authService.unauthorizedHandler();
-                        break;
                     case 404:
                         // No results
                         this.handle404();
@@ -275,8 +270,8 @@ export class SearchResultsComponent implements OnInit {
     }
 
     protected getUploaderUrl(torrent: any): string {
-        switch (torrent.source) {
-            case 'thePirateBay':
+        switch (torrent.source.toLowerCase()) {
+            case 'thepiratebay':
                 return 'https://thepiratebay.org/';
             case 'yts':
                 return 'https://yts.mx/';
@@ -285,7 +280,7 @@ export class SearchResultsComponent implements OnInit {
             case 'torrentProject':
                 return 'https://en.wikipedia.org/wiki/Torrent_Project';
             default:
-                return urlConst.appBase;
+                return '#';
         }
     }
 
@@ -365,7 +360,6 @@ export class SearchResultsComponent implements OnInit {
                 this.toastr.error('Prosimo uporabite magnet link', 'Prenos ni uspel', { timeOut: timingConst.error });
             }
         });
-
     }
 
     private parseSize(size: string): number {
