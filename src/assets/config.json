@@ -1,0 +1,11 @@
+{
+    "api": {
+        "production": "https://potegnime-api.onrender.com",
+        "development": "http://localhost:5194"
+    },
+    "scraper": {
+        "production": "https://potegnime-scraper.onrender.com",
+        "development": "http://localhost:1337"
+    },
+    "language": "sl-SI"
+}

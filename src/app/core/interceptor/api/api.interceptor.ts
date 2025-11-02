@@ -1,0 +1,24 @@
+import { Injectable } from '@angular/core';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { TokenService } from 'src/app/modules/shared/services/token-service/token.service';
+
+@Injectable()
+export class ApiInterceptor implements HttpInterceptor {
+
+  constructor(
+    private readonly tokenService: TokenService
+  ) { }
+
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    // TODO - check if API request, switch between scraper and api token if needed
+    const token = this.tokenService.getToken();
+    if (token) {
+      const cloned = request.clone({
+        headers: request.headers.set('Authorization', `Bearer ${token}`)
+      });
+      return next.handle(cloned);
+    }
+    return next.handle(request);
+  }
+}
