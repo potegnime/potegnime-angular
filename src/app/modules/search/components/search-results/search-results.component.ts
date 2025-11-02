@@ -13,7 +13,8 @@ import { TorrentFileDownloadService } from '../../services/torrent-file-download
 @Component({
     selector: 'app-search-results',
     templateUrl: './search-results.component.html',
-    styleUrls: ['./search-results.component.scss']
+    styleUrls: ['./search-results.component.scss'],
+    standalone: false
 })
 export class SearchResultsComponent implements OnInit {
     private searchQuery: string = '';

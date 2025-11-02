@@ -8,9 +8,10 @@ import { UserRegisterDto } from '../../models/user-register.interface';
 import { AuthHelper } from '../../helpers/auth-helper';
 
 @Component({
-  selector: 'app-register-form',
-  templateUrl: './register-form.component.html',
-  styleUrls: ['./register-form.component.scss']
+    selector: 'app-register-form',
+    templateUrl: './register-form.component.html',
+    styleUrls: ['./register-form.component.scss'],
+    standalone: false
 })
 export class RegisterFormComponent implements OnInit {
 

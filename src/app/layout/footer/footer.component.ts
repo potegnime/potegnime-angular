@@ -6,7 +6,8 @@ import { UserService } from 'src/app/modules/user/services/user-service/user.ser
 @Component({
     selector: 'app-footer',
     templateUrl: './footer.component.html',
-    styleUrls: ['./footer.component.scss']
+    styleUrls: ['./footer.component.scss'],
+    standalone: false
 })
 export class FooterComponent implements OnInit {
     protected uid!: number | null;

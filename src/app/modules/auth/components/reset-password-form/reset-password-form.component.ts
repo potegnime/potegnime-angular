@@ -7,9 +7,10 @@ import { ResetPasswordDto } from '../../models/reset-password.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-reset-password-form',
-  templateUrl: './reset-password-form.component.html',
-  styleUrls: ['./reset-password-form.component.scss']
+    selector: 'app-reset-password-form',
+    templateUrl: './reset-password-form.component.html',
+    styleUrls: ['./reset-password-form.component.scss'],
+    standalone: false
 })
 export class ResetPasswordFormComponent implements OnInit {
   protected resetPasswordForm!: FormGroup;

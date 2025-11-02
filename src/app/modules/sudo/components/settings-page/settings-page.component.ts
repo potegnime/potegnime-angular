@@ -17,7 +17,8 @@ import { UploaderRequestStatus } from '../../enums/uploader-request-status.enum'
 @Component({
     selector: 'app-settings-page',
     templateUrl: './settings-page.component.html',
-    styleUrls: ['./settings-page.component.scss']
+    styleUrls: ['./settings-page.component.scss'],
+    standalone: false
 })
 export class SettingsPageComponent implements OnInit {
     protected token: string | null = null;

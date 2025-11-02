@@ -7,9 +7,10 @@ import { ForgotPasswordDto } from '../../models/forgot-password.interface';
 import { AuthHelper } from '../../helpers/auth-helper';
 
 @Component({
-  selector: 'app-forgot-password-form',
-  templateUrl: './forgot-password-form.component.html',
-  styleUrls: ['./forgot-password-form.component.scss']
+    selector: 'app-forgot-password-form',
+    templateUrl: './forgot-password-form.component.html',
+    styleUrls: ['./forgot-password-form.component.scss'],
+    standalone: false
 })
 export class ForgotPasswordFormComponent implements OnInit {
   protected forgotPasswordForm!: FormGroup;

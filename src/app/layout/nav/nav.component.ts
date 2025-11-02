@@ -7,7 +7,8 @@ import { UserService } from 'src/app/modules/user/services/user-service/user.ser
 @Component({
     selector: 'app-nav',
     templateUrl: './nav.component.html',
-    styleUrls: ['./nav.component.scss']
+    styleUrls: ['./nav.component.scss'],
+    standalone: false
 })
 export class NavComponent implements OnInit {
     protected uid!: number | null;

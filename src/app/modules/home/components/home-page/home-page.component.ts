@@ -4,7 +4,8 @@ import { SearchService } from 'src/app/modules/search/services/search-service/se
 @Component({
     selector: 'app-home-page',
     templateUrl: './home-page.component.html',
-    styleUrls: ['./home-page.component.scss']
+    styleUrls: ['./home-page.component.scss'],
+    standalone: false
 })
 export class HomePageComponent implements OnInit {
     headerLoading = false;

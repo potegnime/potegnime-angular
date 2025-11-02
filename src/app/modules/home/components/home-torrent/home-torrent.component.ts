@@ -10,7 +10,8 @@ import { RecommendService } from 'src/app/modules/shared/services/recommend-serv
 @Component({
     selector: 'app-home-torrent',
     templateUrl: './home-torrent.component.html',
-    styleUrls: ['./home-torrent.component.scss']
+    styleUrls: ['./home-torrent.component.scss'],
+    standalone: false
 })
 export class HomeTorrentComponent implements OnInit {
     protected language: 'sl-SI' | 'en-US' = 'en-US'

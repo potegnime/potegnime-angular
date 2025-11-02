@@ -8,7 +8,8 @@ import { RecommendService } from 'src/app/modules/shared/services/recommend-serv
 @Component({
     selector: 'app-home-header',
     templateUrl: './home-header.component.html',
-    styleUrls: ['./home-header.component.scss']
+    styleUrls: ['./home-header.component.scss'],
+    standalone: false
 })
 export class HomeHeaderComponent implements OnInit {
     isLoading = true;

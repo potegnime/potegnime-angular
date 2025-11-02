@@ -19,7 +19,8 @@ import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 @Component({
     selector: 'app-user-page',
     templateUrl: './user-page.component.html',
-    styleUrls: ['./user-page.component.scss']
+    styleUrls: ['./user-page.component.scss'],
+    standalone: false
 })
 export class UserPageComponent implements OnInit {
     protected isMyPage: boolean = false;

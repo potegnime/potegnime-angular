@@ -13,7 +13,8 @@ import { AdminService } from '../../services/admin-service/admin.service';
 @Component({
     selector: 'app-administration-page',
     templateUrl: './administration-page.component.html',
-    styleUrls: ['./administration-page.component.scss']
+    styleUrls: ['./administration-page.component.scss'],
+    standalone: false
 })
 export class AdministrationPageComponent implements OnInit {
     // User control

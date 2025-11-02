@@ -11,7 +11,8 @@ import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 @Component({
     selector: 'app-recommend-page',
     templateUrl: './recommend-page.component.html',
-    styleUrls: ['./recommend-page.component.scss']
+    styleUrls: ['./recommend-page.component.scss'],
+    standalone: false
 })
 export class RecommendPageComponent implements AfterViewChecked, OnInit {
     protected displayLoadingSpinner: boolean = true;

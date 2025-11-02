@@ -4,9 +4,10 @@ import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.ser
 import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 
 @Component({
-  selector: 'app-donate-page',
-  templateUrl: './donate-page.component.html',
-  styleUrls: ['./donate-page.component.scss']
+    selector: 'app-donate-page',
+    templateUrl: './donate-page.component.html',
+    styleUrls: ['./donate-page.component.scss'],
+    standalone: false
 })
 export class DonatePageComponent implements OnInit {
   protected isLoggedIn: boolean = false;

@@ -9,9 +9,10 @@ import { UserLoginDto } from '../../models/user-login.interface';
 import { AuthHelper } from '../../helpers/auth-helper';
 
 @Component({
-  selector: 'app-login-form',
-  templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.scss']
+    selector: 'app-login-form',
+    templateUrl: './login-form.component.html',
+    styleUrls: ['./login-form.component.scss'],
+    standalone: false
 })
 export class LoginFormComponent implements OnInit {
   protected loginForm!: FormGroup;

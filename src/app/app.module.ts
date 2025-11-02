@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule, inject, provideAppInitializer } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -45,12 +45,10 @@ export function tokenGetter() {
         ToastrModule.forRoot(),
         BrowserAnimationsModule,
         ReactiveFormsModule], providers: [
-        {
-            provide: APP_INITIALIZER,
-            useFactory: initConfig,
-            deps: [ConfigService],
-            multi: true
-        },
+        provideAppInitializer(() => {
+        const initializerFn = (initConfig)(inject(ConfigService));
+        return initializerFn();
+      }),
         {
             provide: HTTP_INTERCEPTORS,
             useClass: ApiInterceptor,

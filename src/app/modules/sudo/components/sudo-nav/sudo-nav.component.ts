@@ -5,7 +5,8 @@ import { UserService } from 'src/app/modules/user/services/user-service/user.ser
 @Component({
     selector: 'app-sudo-nav',
     templateUrl: './sudo-nav.component.html',
-    styleUrls: ['./sudo-nav.component.scss']
+    styleUrls: ['./sudo-nav.component.scss'],
+    standalone: false
 })
 export class SudoNavComponent implements OnInit {
     protected uid!: number | null;

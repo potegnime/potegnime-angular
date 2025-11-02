@@ -13,7 +13,8 @@ import { TorrentCategories } from '../../models/torrent-categories.interface';
 @Component({
     selector: 'app-search-bar-search',
     templateUrl: './search-bar-search.component.html',
-    styleUrls: ['./search-bar-search.component.scss']
+    styleUrls: ['./search-bar-search.component.scss'],
+    standalone: false
 })
 export class SearchBarSearchComponent implements OnInit, OnDestroy {
     protected searchForm!: FormGroup;

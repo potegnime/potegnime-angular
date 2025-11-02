@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-    name: 'torrentSource'
+    name: 'torrentSource',
+    standalone: false
 })
 export class TorrentSourcePipe implements PipeTransform {
 
