@@ -1,21 +1,21 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TokenService } from '../token-service/token.service';
+import { BaseHttpService } from 'src/app/core/services/base-http/base-http.service';
+import { HttpApiService } from 'src/app/core/services/http-api/http-api.service';
+import { ConfigService } from 'src/app/core/services/config/config.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class NotificationService {
+export class NotificationService extends BaseHttpService {
 
   constructor(
-    private http: HttpClient,
-    private readonly tokenService: TokenService
-  ) { }
+    httpApiService: HttpApiService,
+    configService: ConfigService,
+  ) {
+    super(httpApiService, configService);
+  }
 
   public getNotifications() {
-    // Get notifications
-    const headers: HttpHeaders = new HttpHeaders({
-      'Authorization': `Bearer ${this.tokenService.getToken()}`
-    });
+    // TODO - Implement notifications
   }
 }

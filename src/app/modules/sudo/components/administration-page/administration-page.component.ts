@@ -8,6 +8,7 @@ import { RecommendationDto } from 'src/app/modules/shared/models/recommendation-
 import { RecommendService } from 'src/app/modules/shared/services/recommend-service/recommend.service';
 import { UpdateRoleDto } from 'src/app/modules/user/models/update-role.interface';
 import { UserService } from 'src/app/modules/user/services/user-service/user.service';
+import { AdminService } from '../../services/admin-service/admin.service';
 
 @Component({
     selector: 'app-administration-page',
@@ -22,7 +23,7 @@ export class AdministrationPageComponent implements OnInit {
     protected userRole: string | null = null;
     protected userPfpUrl: string | null = null;
 
-    // Uplader requests
+    // Uploader requests
     protected uploaderRequests: any[] = [];
 
     // Form groups
@@ -33,6 +34,7 @@ export class AdministrationPageComponent implements OnInit {
     constructor(
         private readonly recommendService: RecommendService,
         private readonly userService: UserService,
+        private readonly adminService: AdminService,
         private readonly formBuilder: FormBuilder,
         private readonly toastr: ToastrService,
         private readonly authService: AuthService
@@ -229,7 +231,7 @@ export class AdministrationPageComponent implements OnInit {
                 roleName: role
             };
 
-            this.userService.updateRole(updateRoleDto).subscribe({
+            this.adminService.updateRole(updateRoleDto).subscribe({
                 next: () => {
                     this.toastr.success('', `Role za uporabnika ${this.userUsername} uspešno nastavljen na ${this.getUiAppropriateControlName(role)}`, { timeOut: timingConst.success });
                     this.onUserControlFormSubmit();
@@ -254,7 +256,7 @@ export class AdministrationPageComponent implements OnInit {
         }
 
         if (this.userUsername) {
-            this.userService.deleteProfileAdmin(this.userUsername).subscribe({
+            this.adminService.deleteProfileAdmin(this.userUsername).subscribe({
                 next: () => {
                     this.toastr.success('', 'Profil uspešno izbrisan', { timeOut: timingConst.success });
                     this.userFound = null;

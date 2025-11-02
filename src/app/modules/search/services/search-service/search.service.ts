@@ -1,41 +1,37 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { urlConst } from '../../../shared/enums/url.enum';
 import { TokenService } from '../../../shared/services/token-service/token.service';
 import { SearchRequestDto } from '../../models/search-request.interface';
 import { Router } from '@angular/router';
 import { TorrentCategories } from '../../models/torrent-categories.interface';
+import { BaseHttpService } from 'src/app/core/services/base-http/base-http.service';
+import { HttpApiService } from 'src/app/core/services/http-api/http-api.service';
+import { ConfigService } from 'src/app/core/services/config/config.service';
+import { ApiType } from 'src/app/core/enums/api-type.enum';
 
 @Injectable({
     providedIn: 'root'
 })
-export class SearchService {
+export class SearchService extends BaseHttpService {
     constructor(
-        private readonly http: HttpClient,
+        httpApiService: HttpApiService,
+        configService: ConfigService,
         private readonly tokenService: TokenService,
         private readonly router: Router,
-    ) { }
+    ) {
+        super(httpApiService, configService);
+    }
 
     public ping(): Observable<any> {
-        const headers = new HttpHeaders({
-            'accept': '*/*',
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.tokenService.getToken()}`
-        });
-
-        return this.http.get<any>(`${urlConst.scraperBase}/ping`, { headers: headers });
+        // used to wake up scraper API (render free tier sleeps after inactivity)
+        // this can be removed after better hosting is in place
+        return this.getJson<any>(`search/ping`);
     }
 
     public searchTorrents(searchRequestDto: SearchRequestDto): Observable<any> {
-        const headers = new HttpHeaders({
-            'accept': '*/*',
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.tokenService.getToken()}`
-        });
-
         // Build URL
-        let url = `${urlConst.scraperBase}/search?query=${searchRequestDto.query}`;
+        let url = `/search?query=${searchRequestDto.query}`;
         if (searchRequestDto.category && searchRequestDto.category !== 'All') {
             url += `&category=${searchRequestDto.category}`;
         }
@@ -46,27 +42,18 @@ export class SearchService {
             url += `&limit=${searchRequestDto.limit}`;
         }
 
-        return this.http.get<any>(url, { headers: headers });
+        return this.getJson<any>(url);
     }
 
     public getCategories(): Observable<TorrentCategories> {
-        const headers = new HttpHeaders({
-            'accept': '*/*',
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.tokenService.getToken()}`
-        });
-
-        return this.http.get<any>(`${urlConst.scraperBase}/categories`, { headers: headers });
+        // TODO - remove, hardcoded in frontend
+        return this.getJson<TorrentCategories>(`/categories`);
     }
 
-    public getProviders(): Observable<string[]> {
-        const headers = new HttpHeaders({
-            'accept': '*/*',
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.tokenService.getToken()}`
-        });
 
-        return this.http.get<any>(`${urlConst.scraperBase}/providers`, { headers: headers });
+    public getProviders(): Observable<string[]> {
+        // TODO - remove, hardcoded in frontend
+        return this.getJson<string[]>(`/providers`);
     }
 
     public onSearchComponent(
@@ -95,5 +82,9 @@ export class SearchService {
         }
 
         this.router.navigate(['/iskanje'], { queryParams: queryParams });
+    }
+
+    protected override getJson<Response>(urlPath: string, apiType?: ApiType): Observable<Response> {
+        return super.getJson<Response>(urlPath, ApiType.Scraper);
     }
 }

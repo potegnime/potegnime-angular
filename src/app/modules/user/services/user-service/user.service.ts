@@ -1,8 +1,5 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TokenService } from '../../../shared/services/token-service/token.service';
-import { urlConst } from '../../../shared/enums/url.enum';
 import { UpdateUsernameDto } from 'src/app/modules/user/models/update-username.interface';
 import { UpdateEmailDto } from 'src/app/modules/user/models/update-email.interface';
 import { UpdatePfpDto } from 'src/app/modules/user/models/update-pfp.interface';
@@ -10,180 +7,84 @@ import { UpdatePasswordDto } from 'src/app/modules/user/models/update-password.i
 import { DeleteProfileDto } from 'src/app/modules/user/models/delete-profile.interface';
 import { UpdateRoleDto } from '../../models/update-role.interface';
 import { UploaderRequestDto } from '../../models/uploader-request.interface';
+import { BaseHttpService } from 'src/app/core/services/base-http/base-http.service';
+import { HttpApiService } from 'src/app/core/services/http-api/http-api.service';
+import { ConfigService } from 'src/app/core/services/config/config.service';
+import { TokenService } from 'src/app/modules/shared/services/token-service/token.service';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root' // TODO - make lazy loaded
 })
-export class UserService {
+export class UserService extends BaseHttpService {
     constructor(
-        private readonly http: HttpClient,
-        private readonly tokenService: TokenService
-    ) { }
+        httpApiService: HttpApiService,
+        configService: ConfigService,
+        private readonly tokenService: TokenService,
+    ) {
+        super(httpApiService, configService);
+    }
 
     public getUserById(userId: number | string): Observable<any> {
-        const headers = new HttpHeaders({
-            'accept': '*/*',
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.tokenService.getToken()}`
-        });
-
-        return this.http.get(`${urlConst.apiBase}/user/userId?userId=${userId}`, { headers: headers });
+        return this.getJson<any>(`user/userId?userId=${userId}`);
     }
 
     public getUserByUsername(username: string): Observable<any> {
-        const headers = new HttpHeaders({
-            'accept': '*/*',
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.tokenService.getToken()}`
-        });
-
-        return this.http.get(`${urlConst.apiBase}/user/username?username=${username}`, { headers: headers });
+        return this.getJson<any>(`user/username?username=${encodeURIComponent(username)}`);
     }
 
     public getUserPfp(userId: number | string): Observable<Blob> {
-        const headers: HttpHeaders = new HttpHeaders({
-            'Authorization': `Bearer ${this.tokenService.getToken()}`
-        });
-
-        return this.http.get(`${urlConst.apiBase}/user/pfp/${userId}`, { headers, responseType: 'blob' });
+        return this.getBlob(`user/pfp/${userId}`);
     }
 
-    public updateUsername(UpdateUsernameDto: UpdateUsernameDto): Observable<any> {
-        const headers: HttpHeaders = new HttpHeaders({
-            'Authorization': `Bearer ${this.tokenService.getToken()}`
-        });
-
-        const formData = new FormData();
-        formData.append("Username", UpdateUsernameDto.username);
-
-        return this.http.post<any>(`${urlConst.apiBase}/user/updateUsername`, formData, { headers });
+    public updateUsername(updateUsernameDto: UpdateUsernameDto): Observable<any> {
+        return this.postJson<UpdateUsernameDto, any>(`user/updateUsername`, updateUsernameDto);
     }
 
     public updateEmail(updateEmailDto: UpdateEmailDto): Observable<any> {
-        const headers: HttpHeaders = new HttpHeaders({
-            'Authorization': `Bearer ${this.tokenService.getToken()}`
-        });
-
-        const formData = new FormData();
-        formData.append("Email", updateEmailDto.email);
-
-        return this.http.post<any>(`${urlConst.apiBase}/user/updateEmail`, formData, { headers });
+        return this.postJson<UpdateEmailDto, any>(`user/updateEmail`, updateEmailDto);
     }
 
     public updatePfp(updatePfpDto: UpdatePfpDto): Observable<any> {
-        const headers = new HttpHeaders({
-            'Authorization': `Bearer ${this.tokenService.getToken()}`
-        });
-
         const formData = new FormData();
-        if (updatePfpDto.profilePicFile) {
-            formData.append("ProfilePicFile", updatePfpDto.profilePicFile);
-        }
+        if (updatePfpDto.profilePicFile) formData.append("ProfilePicFile", updatePfpDto.profilePicFile);
 
-        return this.http.post<any>(`${urlConst.apiBase}/user/updatePfp`, formData, { headers });
+        return this.postFormData<any>(`user/updatePfp`, formData);
     }
 
     public updatePassword(updatePasswordDto: UpdatePasswordDto): Observable<any> {
-        const headers = new HttpHeaders({
-            'Authorization': `Bearer ${this.tokenService.getToken()}`
-        });
-
-        const formData = new FormData();
-        formData.append("OldPassword", updatePasswordDto.oldPassword);
-        formData.append("NewPassword", updatePasswordDto.newPassword);
-
-        return this.http.post<any>(`${urlConst.apiBase}/user/updatePassword`, formData, { headers });
+        return this.postJson<UpdatePasswordDto, any>(`user/updatePassword`, updatePasswordDto);
     }
 
     public deleteProfile(deleteProfileDto: DeleteProfileDto): Observable<any> {
-        const headers = new HttpHeaders({
-            'Authorization': `Bearer ${this.tokenService.getToken()}`
-        });
-
-        const formData: FormData = new FormData();
-        formData.append('Password', deleteProfileDto.password);
-
-        return this.http.delete<any>(`${urlConst.apiBase}/user/deleteUser`, { headers: headers, body: formData });
-    }
-
-    public deleteProfileAdmin(username: string): Observable<any> {
-        const headers = new HttpHeaders({
-            'Authorization': `Bearer ${this.tokenService.getToken()}`
-        });
-
-        return this.http.delete<any>(`${urlConst.apiBase}/user/adminDelete?username=${username}`, { headers: headers });
-    }
-
-    public updateRole(updateRoleDto: UpdateRoleDto): Observable<any> {
-        const headers = new HttpHeaders({
-            'Authorization': `Bearer ${this.tokenService.getToken()}`
-        });
-
-        const formData: FormData = new FormData();
-        formData.append('UserId', updateRoleDto.userId.toString());
-        formData.append('RoleName', updateRoleDto.roleName);
-
-        return this.http.post<any>(`${urlConst.apiBase}/user/updateRole`, formData, { headers });
+        return this.deleteJson<DeleteProfileDto, any>(`user/deleteUser`, deleteProfileDto);
     }
 
     public submitUploaderRequest(uploaderRequestDto: UploaderRequestDto): Observable<any> {
-        const headers = new HttpHeaders({
-            'Authorization': `Bearer ${this.tokenService.getToken()}`
-        });
-
-        const formData: FormData = new FormData();
-        formData.append('RequestedRole', uploaderRequestDto.requestedRole);
-        formData.append('Experience', uploaderRequestDto.experience);
-        formData.append('Content', uploaderRequestDto.content);
-        if (uploaderRequestDto.proof) {
-            formData.append('Proof', uploaderRequestDto.proof);
-        }
-        if (uploaderRequestDto.otherTrackers) {
-            formData.append('OtherTrackers', uploaderRequestDto.otherTrackers);
-        }
-
-        return this.http.post<any>(`${urlConst.apiBase}/user/submitUploaderRequest`, formData, { headers });
+        return this.postJson<UploaderRequestDto, any>(`user/submitUploaderRequest`, uploaderRequestDto);
     }
 
     public getLoggedUserId(): number | null {
         const decodedToken = this.tokenService.decodeToken();
-        if (decodedToken) {
-            return decodedToken.uid;
-        } else {
-            return null;
-        }
+        return decodedToken ? decodedToken.uid : null;
     }
 
     public isAdminLogged(): boolean {
         const role = this.getUserRole();
-        if (role) {
-            return role === 'admin';
-        }
-        return false;
+        return role === 'admin';
     }
 
     public isUploaderLogged(): boolean {
         const role = this.getUserRole();
-        if (role) {
-            return role === 'uploader';
-        }
-        return false;
+        return role === 'uploader';
     }
 
     public isUserLogged(): boolean {
         const role = this.getUserRole();
-        if (role) {
-            return role === 'user';
-        }
-        return false;
+        return role === 'user';
     }
 
     private getUserRole(): string | null {
         const decodedToken = this.tokenService.decodeToken();
-        if (decodedToken) {
-            return decodedToken.role.toLowerCase();
-        } else {
-            return null;
-        }
+        return decodedToken ? decodedToken.role.toLowerCase() : null;
     }
 }
