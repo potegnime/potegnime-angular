@@ -103,9 +103,6 @@ export class UserPageComponent implements OnInit {
             },
             error: (error) => {
                 switch (error.status) {
-                    case 401:
-                        this.authService.unauthorizedHandler();
-                        break;
                     case 404:
                         // Redirect to 404 page
                         this.router.navigate(['404']);
@@ -133,11 +130,6 @@ export class UserPageComponent implements OnInit {
                     },
                     error: (error) => {
                         this.profilePictureUrl = 'assets/images/no-pfp.png';
-                        switch (error.status) {
-                            case 401:
-                                this.authService.unauthorizedHandler();
-                                break;
-                        }
                         this.isLoading = false;
                     }
                 });

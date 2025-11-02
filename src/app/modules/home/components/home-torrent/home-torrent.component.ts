@@ -53,9 +53,6 @@ export class HomeTorrentComponent implements OnInit {
             },
             error: (error: any) => {
                 switch (error.status) {
-                    case 401:
-                        this.authService.unauthorizedHandler();
-                        break;
                     default:
                         this.errorGettingRecommendations();
                         break;

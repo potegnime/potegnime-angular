@@ -1,6 +1,10 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { catchError, Observable, throwError } from 'rxjs';
+import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
+import { TokenService } from 'src/app/modules/shared/services/token-service/token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +13,9 @@ export class HttpApiService {
 
   constructor(
     private readonly httpClient: HttpClient,
-    // private readonly authService: AuthService // circular dependency
+    private readonly router: Router,
+    private readonly tokenService: TokenService,
+    private readonly toastr: ToastrService,
   ) { }
 
   public get<Response>(
@@ -68,7 +74,11 @@ export class HttpApiService {
     // move 401 handling here or to the interceptor?
     switch (error.status) {
       case 401:
-        // this.authService.unauthorizedHandler(); // TODO
+        this.tokenService.deleteToken();
+        this.router.navigate(['/prijava']);
+        if (this.router.url !== '/prijava') {
+          this.toastr.warning('', 'Vaša seja je potekla. Prosimo, prijavite se ponovno.', { timeOut: timingConst.long });
+        }
         break;
     }
     return throwError(() => error);

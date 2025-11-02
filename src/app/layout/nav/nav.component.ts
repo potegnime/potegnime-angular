@@ -41,11 +41,6 @@ export class NavComponent implements OnInit {
                         this.createImageFromBlob(response);
                     },
                     error: (error) => {
-                        switch (error.status) {
-                            case 401:
-                                this.authService.unauthorizedHandler();
-                                break;
-                        }
                         this.profilePictureUrl = 'assets/images/no-pfp.png';
                     }
                 });

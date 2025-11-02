@@ -56,9 +56,6 @@ export class AdministrationPageComponent implements OnInit {
             },
             error: (error) => {
                 switch (error.status) {
-                    case 401:
-                        this.authService.unauthorizedHandler();
-                        break;
                     case 404:
                         this.setRecommendationForm = this.formBuilder.group({
                             date: [date, Validators.required],
@@ -119,14 +116,7 @@ export class AdministrationPageComponent implements OnInit {
                     }
                 },
                 error: (error) => {
-                    switch (error.status) {
-                        case 401:
-                            this.authService.unauthorizedHandler();
-                            break;
-                        default:
-                            this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
-                            break;
-                    }
+                    this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
                 }
             });
         } else {
@@ -155,14 +145,7 @@ export class AdministrationPageComponent implements OnInit {
                 });
             },
             error: (error: any) => {
-                switch (error.status) {
-                    case 401:
-                        this.authService.unauthorizedHandler();
-                        break;
-                    default:
-                        this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
-                        break;
-                }
+                this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
             }
         })
     }
@@ -190,19 +173,11 @@ export class AdministrationPageComponent implements OnInit {
                         },
                         error: (error2) => {
                             this.userPfpUrl = 'assets/images/no-pfp.png';
-                            switch (error2.status) {
-                                case 401:
-                                    this.authService.unauthorizedHandler();
-                                    break;
-                            }
                         }
                     });
                 },
                 error: (error1) => {
                     switch (error1.status) {
-                        case 401:
-                            this.authService.unauthorizedHandler();
-                            break;
                         case 404:
                             this.userFound = false;
                             break;
@@ -238,9 +213,6 @@ export class AdministrationPageComponent implements OnInit {
                 },
                 error: (error) => {
                     switch (error.status) {
-                        case 401:
-                            this.authService.unauthorizedHandler();
-                            break;
                         default:
                             this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
                             break;
@@ -266,9 +238,6 @@ export class AdministrationPageComponent implements OnInit {
                 },
                 error: (error) => {
                     switch (error.status) {
-                        case 401:
-                            this.authService.unauthorizedHandler();
-                            break;
                         case 404:
                             this.toastr.error('', 'Uporabnik ne obstaja', { timeOut: timingConst.error });
                             break;
@@ -338,9 +307,6 @@ export class AdministrationPageComponent implements OnInit {
             },
             error: (error) => {
                 switch (error.status) {
-                    case 401:
-                        this.authService.unauthorizedHandler();
-                        break;
                     case 404:
                         this.setRecommendationForm = this.formBuilder.group({
                             date: [date, Validators.required],

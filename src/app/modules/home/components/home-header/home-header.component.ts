@@ -47,9 +47,6 @@ export class HomeHeaderComponent implements OnInit {
             },
             error: (error) => {
                 switch (error.status) {
-                    case 401:
-                        this.authService.unauthorizedHandler();
-                        break;
                     case 404:
                         if (type == 'movie') this.toastr.info('', 'Film dneva še ni bil nastavljen', { timeOut: timingConst.info });
                         else this.toastr.info('', 'Serija dneva še ni bila nastavljena', { timeOut: timingConst.info });
@@ -72,14 +69,7 @@ export class HomeHeaderComponent implements OnInit {
             },
             error: (error) => {
                 this.setLoading(false);
-                switch (error.status) {
-                    case 401:
-                        this.authService.unauthorizedHandler();
-                        break;
-                    default:
-                        this.toastr.error('', 'Napaka pri pridobivanju priporočila', { timeOut: timingConst.error });
-                        break;
-                }
+                this.toastr.error('', 'Napaka pri pridobivanju priporočila', { timeOut: timingConst.error });
             }
         });
     }

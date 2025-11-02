@@ -108,10 +108,6 @@ export class SearchResultsComponent implements OnInit {
                             this.toastr.error('', 'Napaka pri iskanju torrentov', { timeOut: timingConst.error });
                             break;
                         }
-
-                    case 401:
-                        this.authService.unauthorizedHandler();
-                        break;
                     case 404:
                         // No results
                         this.handle404();
