@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { SearchService } from 'src/app/modules/search/services/search-service/search.service';
 import { timingConst } from '../../enums/toastr-timing.enum';
@@ -9,18 +9,16 @@ import { timingConst } from '../../enums/toastr-timing.enum';
     selector: 'app-search-bar',
     templateUrl: './search-bar.component.html',
     styleUrls: ['./search-bar.component.scss'],
-    standalone: false
+    imports: [ReactiveFormsModule],
+    standalone: true
 })
 export class SearchBarComponent implements OnInit {
-    searchForm!: FormGroup;
+    private readonly formBuilder = inject(FormBuilder);
+    private readonly toastr = inject(ToastrService);
+    private readonly route = inject(ActivatedRoute);
+    private readonly searchService = inject(SearchService);
 
-    constructor(
-        private readonly formBuilder: FormBuilder,
-        private readonly router: Router,
-        private readonly toastr: ToastrService,
-        private readonly route: ActivatedRoute,
-        private readonly searchService: SearchService
-    ) { }
+    searchForm!: FormGroup;
 
     public ngOnInit(): void {
         this.searchForm = this.formBuilder.group({

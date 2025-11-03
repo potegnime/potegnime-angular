@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
 import { UserService } from 'src/app/modules/user/services/user-service/user.service';
 
@@ -7,17 +7,16 @@ import { UserService } from 'src/app/modules/user/services/user-service/user.ser
     selector: 'app-footer',
     templateUrl: './footer.component.html',
     styleUrls: ['./footer.component.scss'],
-    standalone: false
+    imports: [RouterLink],
+    standalone: true
 })
 export class FooterComponent implements OnInit {
+    private readonly authService = inject(AuthService);
+    private readonly userService = inject(UserService);
+    private readonly router = inject(Router);
+
     protected uid!: number | null;
     protected isAdmin: boolean = false;
-
-    constructor(
-        private readonly authService: AuthService,
-        private readonly userService: UserService,
-        private readonly router: Router
-    ) { }
 
     public ngOnInit(): void {
         this.uid = this.userService.getLoggedUserId();

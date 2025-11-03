@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
 import { CacheService } from 'src/app/modules/shared/services/cache-service/cache.service';
 import { UserService } from 'src/app/modules/user/services/user-service/user.service';
@@ -8,22 +8,21 @@ import { UserService } from 'src/app/modules/user/services/user-service/user.ser
     selector: 'app-nav',
     templateUrl: './nav.component.html',
     styleUrls: ['./nav.component.scss'],
-    standalone: false
+    imports: [RouterLink],
+    standalone: true
 })
 export class NavComponent implements OnInit {
+    private readonly authService = inject(AuthService);
+    private readonly userService = inject(UserService);
+    private readonly router = inject(Router);
+    private readonly cacheService = inject(CacheService);
+
     protected uid!: number | null;
     protected username: string | null = null;
     protected profilePictureUrl: string | null = null;
     protected isAdmin: boolean = false;
     protected isUploader: boolean = false;
     protected notificationCount: number = 10;
-
-    constructor(
-        private readonly authService: AuthService,
-        private readonly userService: UserService,
-        private readonly router: Router,
-        private readonly cacheService: CacheService
-    ) { }
 
     public ngOnInit(): void {
         this.uid = this.userService.getLoggedUserId();

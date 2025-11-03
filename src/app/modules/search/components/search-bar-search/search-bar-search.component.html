@@ -13,8 +13,7 @@
 
       <div class="dropdown-container">
         <label for="source">Vir</label>
-        <select [(ngModel)]="selectedProvider" (change)="onProviderChange(selectedProvider)" class="dropdown"
-          formControlName="source" id="source" name="source">
+        <select formControlName="source" (change)="onProviderChange(searchForm.value.source)" class="dropdown">
           @for (provider of providers; track provider) {
             <option [value]="provider">{{translate(provider)}}</option>
           }
@@ -35,7 +34,7 @@
 
       <div class="dropdown-container">
         <label for="sort">Sortiranje</label>
-        <select class="dropdown" formControlName="sort" id="sort" name="sort" [(ngModel)]="sort"
+        <select class="dropdown" formControlName="sort" id="sort" name="sort"
           (change)="onSortChange(sort)">
           <option value="default">Privzeto</option>
           <option value="name-asc">Imenu ↑</option>

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, inject } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
 import { CacheService } from 'src/app/modules/shared/services/cache-service/cache.service';
@@ -13,14 +13,24 @@ import { DeleteProfileDto } from 'src/app/modules/user/models/delete-profile.int
 import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 import { UploaderRequestDto } from 'src/app/modules/user/models/uploader-request.interface';
 import { UploaderRequestStatus } from '../../enums/uploader-request-status.enum';
+import { RouterLink } from '@angular/router';
+import { SudoNavComponent } from '../sudo-nav/sudo-nav.component';
 
 @Component({
     selector: 'app-settings-page',
     templateUrl: './settings-page.component.html',
     styleUrls: ['./settings-page.component.scss'],
-    standalone: false
+    imports: [RouterLink, ReactiveFormsModule, SudoNavComponent],
+    standalone: true
 })
 export class SettingsPageComponent implements OnInit {
+    private readonly formBuilder = inject(FormBuilder);
+    private readonly authService = inject(AuthService);
+    private readonly tokenService = inject(TokenService);
+    private readonly userService = inject(UserService);
+    private readonly toastr = inject(ToastrService);
+    private readonly cacheService = inject(CacheService);
+
     protected token: string | null = null;
     protected uid: number | null = null;
     protected username: string | null = null;
@@ -44,15 +54,6 @@ export class SettingsPageComponent implements OnInit {
     uploaderRequestDataForm!: FormGroup;
     changePasswordForm!: FormGroup;
     deleteProfileForm!: FormGroup;
-
-    constructor(
-        private readonly formBuilder: FormBuilder,
-        private readonly authService: AuthService,
-        private readonly tokenService: TokenService,
-        private readonly userService: UserService,
-        private readonly toastr: ToastrService,
-        private readonly cacheService: CacheService
-    ) { }
 
     public ngOnInit(): void {
         // Form builders

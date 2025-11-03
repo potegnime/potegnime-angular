@@ -1,28 +1,19 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UpdateUsernameDto } from 'src/app/modules/user/models/update-username.interface';
 import { UpdateEmailDto } from 'src/app/modules/user/models/update-email.interface';
 import { UpdatePfpDto } from 'src/app/modules/user/models/update-pfp.interface';
 import { UpdatePasswordDto } from 'src/app/modules/user/models/update-password.interface';
 import { DeleteProfileDto } from 'src/app/modules/user/models/delete-profile.interface';
-import { UpdateRoleDto } from '../../models/update-role.interface';
 import { UploaderRequestDto } from '../../models/uploader-request.interface';
 import { BaseHttpService } from 'src/app/core/services/base-http/base-http.service';
-import { HttpApiService } from 'src/app/core/services/http-api/http-api.service';
-import { ConfigService } from 'src/app/core/services/config/config.service';
 import { TokenService } from 'src/app/modules/shared/services/token-service/token.service';
 
 @Injectable({
     providedIn: 'root' // TODO - make lazy loaded
 })
 export class UserService extends BaseHttpService {
-    constructor(
-        httpApiService: HttpApiService,
-        configService: ConfigService,
-        private readonly tokenService: TokenService,
-    ) {
-        super(httpApiService, configService);
-    }
+    private readonly tokenService = inject(TokenService);
 
     public getUserById(userId: number | string): Observable<any> {
         return this.getJson<any>(`user/userId?userId=${userId}`);

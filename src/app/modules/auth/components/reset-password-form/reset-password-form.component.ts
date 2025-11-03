@@ -1,18 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, inject } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth-service/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 import { ResetPasswordDto } from '../../models/reset-password.interface';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgClass } from '@angular/common';
 
 @Component({
     selector: 'app-reset-password-form',
     templateUrl: './reset-password-form.component.html',
     styleUrls: ['./reset-password-form.component.scss'],
-    standalone: false
+    imports: [ReactiveFormsModule, NgClass],
+    standalone: true
 })
 export class ResetPasswordFormComponent implements OnInit {
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly authService = inject(AuthService);
+  private readonly toastr = inject(ToastrService);
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+
   protected resetPasswordForm!: FormGroup;
   protected showResetError: boolean = false;
   protected triggerErrorAnimation: boolean = false;
@@ -22,14 +30,6 @@ export class ResetPasswordFormComponent implements OnInit {
   protected isSubmitting: boolean = false;
   protected isSubmitted: boolean = false;
   private token: string | null = null;
-
-  constructor(
-    private readonly formBuilder: FormBuilder,
-    private readonly authService: AuthService,
-    private readonly toastr: ToastrService,
-    private readonly router: Router,
-    private readonly route: ActivatedRoute
-  ) { }
 
   public ngOnInit(): void {
     this.resetPasswordForm = this.formBuilder.group({

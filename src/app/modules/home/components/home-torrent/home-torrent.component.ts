@@ -1,8 +1,8 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { SlicePipe } from '@angular/common';
+import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
-import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
 import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 import { TmdbMovieResponse } from 'src/app/modules/shared/models/tmdb-movie-response.interface';
 import { RecommendService } from 'src/app/modules/shared/services/recommend-service/recommend.service';
@@ -11,9 +11,14 @@ import { RecommendService } from 'src/app/modules/shared/services/recommend-serv
     selector: 'app-home-torrent',
     templateUrl: './home-torrent.component.html',
     styleUrls: ['./home-torrent.component.scss'],
-    standalone: false
+    imports: [SlicePipe],
+    standalone: true
 })
 export class HomeTorrentComponent implements OnInit {
+    private readonly recommendService = inject(RecommendService);
+    private readonly toastr = inject(ToastrService);
+    private readonly router = inject(Router);
+
     protected language: 'sl-SI' | 'en-US' = 'en-US'
     protected region: 'SI' | 'US' = 'US';
     protected timeWindow: 'day' | 'week' = 'day';
@@ -27,13 +32,6 @@ export class HomeTorrentComponent implements OnInit {
     @Output() loadingChange = new EventEmitter<boolean>();
 
     private errorToastShown: boolean = false;
-
-    constructor(
-        private readonly recommendService: RecommendService,
-        private readonly authService: AuthService,
-        private readonly toastr: ToastrService,
-        private readonly router: Router
-    ) { }
 
     public ngOnInit(): void {
         this.setLoading(true);

@@ -1,22 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { SearchService } from 'src/app/modules/search/services/search-service/search.service';
 import { SearchRequestDto } from '../../models/search-request.interface';
-import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
 import { Torrent } from 'src/app/modules/search/models/torrent.interface';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 import { SortService } from '../../services/sort-service/sort.service';
 import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 import { TorrentFileDownloadService } from '../../services/torrent-file-download/torrent-file-download.service';
+import { LoadingSpinnerComponent } from 'src/app/modules/shared/components/loading-spinner/loading-spinner.component';
+import { TorrentSourcePipe } from 'src/app/modules/shared/pipes/torrent-source.pipe';
+import { AboutResultsComponent } from '../about-results/about-results.component';
+import { SearchBarSearchComponent } from '../search-bar-search/search-bar-search.component';
 
 @Component({
     selector: 'app-search-results',
     templateUrl: './search-results.component.html',
     styleUrls: ['./search-results.component.scss'],
-    standalone: false
+    imports: [SearchBarSearchComponent, AboutResultsComponent, LoadingSpinnerComponent, TorrentSourcePipe, NgClass],
+    providers: [DatePipe],
+    standalone: true
 })
 export class SearchResultsComponent implements OnInit {
+    private readonly route = inject(ActivatedRoute);
+    private readonly searchService = inject(SearchService);
+    private readonly toastr = inject(ToastrService);
+    private readonly torrentFileDownloadService = inject(TorrentFileDownloadService);
+    private readonly sortService = inject(SortService);
+    private readonly datePipe = inject(DatePipe);
+
     private searchQuery: string = '';
     private category: string | null = null;
     private source: string | null = null;
@@ -31,16 +43,6 @@ export class SearchResultsComponent implements OnInit {
     protected copyHighlightText: string = 'Kopirano';
     protected downloadText: string = 'Potegni ga';
     protected isDownloadingTorrentFile: boolean = false;
-
-    constructor(
-        private readonly route: ActivatedRoute,
-        private readonly searchService: SearchService,
-        private readonly toastr: ToastrService,
-        private readonly torrentFileDownloadService: TorrentFileDownloadService,
-        private readonly authService: AuthService,
-        private readonly sortService: SortService,
-        private readonly datePipe: DatePipe
-    ) { }
 
     public ngOnInit(): void {
         this.noResults = false;

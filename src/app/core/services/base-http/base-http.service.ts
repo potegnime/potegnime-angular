@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpApiService } from '../http-api/http-api.service';
 import { ApiType } from '../../enums/api-type.enum';
 import { Observable } from 'rxjs';
@@ -9,11 +9,8 @@ import { HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export abstract class BaseHttpService {
-
-  constructor(
-    private readonly httpApiService: HttpApiService,
-    private readonly configService: ConfigService
-  ) { }
+  private readonly httpApiService = inject(HttpApiService);
+  private readonly configService = inject(ConfigService);
 
   protected getJson<Response>(
     urlPath: string,

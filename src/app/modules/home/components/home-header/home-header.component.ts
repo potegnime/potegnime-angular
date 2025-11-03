@@ -1,7 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
 import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 import { AdminRecommendation } from 'src/app/modules/shared/models/admin-recommendation.interface';
 import { RecommendService } from 'src/app/modules/shared/services/recommend-service/recommend.service';
@@ -9,18 +8,16 @@ import { RecommendService } from 'src/app/modules/shared/services/recommend-serv
     selector: 'app-home-header',
     templateUrl: './home-header.component.html',
     styleUrls: ['./home-header.component.scss'],
-    standalone: false
+    standalone: true
 })
 export class HomeHeaderComponent implements OnInit {
-    isLoading = true;
-    @Output() loadingChange = new EventEmitter<boolean>();
+    private readonly recommendService = inject(RecommendService);
+    private readonly toastr = inject(ToastrService);
+    private readonly router = inject(Router);
 
-    constructor(
-        private readonly recommendService: RecommendService,
-        private readonly toastr: ToastrService,
-        private readonly authService: AuthService,
-        private readonly router: Router
-    ) { }
+    isLoading = true;
+
+    @Output() loadingChange = new EventEmitter<boolean>();
 
     ngOnInit(): void {
         this.setLoading(false);

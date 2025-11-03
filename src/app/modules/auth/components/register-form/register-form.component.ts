@@ -1,19 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth-service/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserRegisterDto } from '../../models/user-register.interface';
 import { AuthHelper } from '../../helpers/auth-helper';
+import { NgClass } from '@angular/common';
+import { LoadingSpinnerComponent } from 'src/app/modules/shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
     selector: 'app-register-form',
     templateUrl: './register-form.component.html',
     styleUrls: ['./register-form.component.scss'],
-    standalone: false
+    imports: [NgClass, ReactiveFormsModule, LoadingSpinnerComponent, RouterLink],
+    standalone: true
 })
 export class RegisterFormComponent implements OnInit {
+  private formBuilder = inject(FormBuilder);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly toastr = inject(ToastrService);
 
   registerForm!: FormGroup;
   protected showRegisterError: boolean = false;
@@ -23,13 +30,6 @@ export class RegisterFormComponent implements OnInit {
   protected showPasswordConfirm: boolean = false;
   protected agreeToTermsBool: boolean = false;
   protected isSubmitting: boolean = false;
-
-  constructor(
-    private formBuilder: FormBuilder,
-    private readonly authService: AuthService,
-    private readonly router: Router,
-    private readonly toastr: ToastrService
-  ) { }
 
   public ngOnInit() {
     this.registerForm = this.formBuilder.group({

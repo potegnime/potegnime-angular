@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
     selector: 'app-about-results',
     templateUrl: './about-results.component.html',
     styleUrls: ['./about-results.component.scss'],
-    standalone: false
+    standalone: true
 })
 export class AboutResultsComponent {
     protected expanded = false;

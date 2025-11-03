@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth-service/auth.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-license-page',
     templateUrl: './license-page.component.html',
     styleUrls: ['./license-page.component.scss'],
-    standalone: false
+    imports: [RouterLink],
+    standalone: true
 })
 export class LicensePageComponent implements OnInit {
-  protected isLoggedIn: boolean = false;
+  private authService = inject(AuthService);
 
-  constructor(
-    private authService: AuthService
-  ) { }
+  protected isLoggedIn: boolean = false;
 
   public ngOnInit(): void {
     this.isLoggedIn = this.authService.verifyToken();

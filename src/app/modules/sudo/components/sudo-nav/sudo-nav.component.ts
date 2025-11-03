@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
 import { UserService } from 'src/app/modules/user/services/user-service/user.service';
 
@@ -6,17 +7,16 @@ import { UserService } from 'src/app/modules/user/services/user-service/user.ser
     selector: 'app-sudo-nav',
     templateUrl: './sudo-nav.component.html',
     styleUrls: ['./sudo-nav.component.scss'],
-    standalone: false
+    imports: [RouterLink],
+    standalone: true
 })
 export class SudoNavComponent implements OnInit {
+    private readonly authService = inject(AuthService);
+    private readonly userService = inject(UserService);
+
     protected uid!: number | null;
     protected isAdmin: boolean = false;
     protected isUploader: boolean = false;
-
-    constructor(
-        private readonly authService: AuthService,
-        private readonly userService: UserService
-    ) { }
 
     public ngOnInit(): void {
         this.uid = this.userService.getLoggedUserId();

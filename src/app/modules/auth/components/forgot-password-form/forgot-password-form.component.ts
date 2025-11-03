@@ -1,28 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, inject } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth-service/auth.service';
 import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 import { ToastrService } from 'ngx-toastr';
 import { ForgotPasswordDto } from '../../models/forgot-password.interface';
 import { AuthHelper } from '../../helpers/auth-helper';
+import { LoadingSpinnerComponent } from 'src/app/modules/shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
     selector: 'app-forgot-password-form',
     templateUrl: './forgot-password-form.component.html',
     styleUrls: ['./forgot-password-form.component.scss'],
-    standalone: false
+    imports: [ReactiveFormsModule, LoadingSpinnerComponent],
+    standalone: true
 })
 export class ForgotPasswordFormComponent implements OnInit {
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly authService = inject(AuthService);
+  private readonly toastr = inject(ToastrService);
+
   protected forgotPasswordForm!: FormGroup;
   protected isSubmitting: boolean = false;
   protected isSubmitted: boolean = false;
   protected sendGridLimitExceeded: boolean = false;
-
-  constructor(
-    private readonly formBuilder: FormBuilder,
-    private readonly authService: AuthService,
-    private readonly toastr: ToastrService
-  ) { }
 
   public ngOnInit(): void {
     this.forgotPasswordForm = this.formBuilder.group({

@@ -1,27 +1,16 @@
-import { HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TokenService } from '../../../shared/services/token-service/token.service';
 import { SearchRequestDto } from '../../models/search-request.interface';
 import { Router } from '@angular/router';
 import { TorrentCategories } from '../../models/torrent-categories.interface';
 import { BaseHttpService } from 'src/app/core/services/base-http/base-http.service';
-import { HttpApiService } from 'src/app/core/services/http-api/http-api.service';
-import { ConfigService } from 'src/app/core/services/config/config.service';
 import { ApiType } from 'src/app/core/enums/api-type.enum';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SearchService extends BaseHttpService {
-    constructor(
-        httpApiService: HttpApiService,
-        configService: ConfigService,
-        private readonly tokenService: TokenService,
-        private readonly router: Router,
-    ) {
-        super(httpApiService, configService);
-    }
+    private readonly router = inject(Router);
 
     public ping(): Observable<any> {
         // used to wake up scraper API (render free tier sleeps after inactivity)

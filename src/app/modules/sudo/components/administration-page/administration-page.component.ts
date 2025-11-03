@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, inject } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
 import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 import { AdminRecommendation } from 'src/app/modules/shared/models/admin-recommendation.interface';
 import { RecommendationDto } from 'src/app/modules/shared/models/recommendation-dto.interface';
@@ -9,14 +8,22 @@ import { RecommendService } from 'src/app/modules/shared/services/recommend-serv
 import { UpdateRoleDto } from 'src/app/modules/user/models/update-role.interface';
 import { UserService } from 'src/app/modules/user/services/user-service/user.service';
 import { AdminService } from '../../services/admin-service/admin.service';
+import { SudoNavComponent } from '../sudo-nav/sudo-nav.component';
 
 @Component({
     selector: 'app-administration-page',
     templateUrl: './administration-page.component.html',
     styleUrls: ['./administration-page.component.scss'],
-    standalone: false
+    imports: [ReactiveFormsModule, SudoNavComponent],
+    standalone: true
 })
 export class AdministrationPageComponent implements OnInit {
+    private readonly recommendService = inject(RecommendService);
+    private readonly userService = inject(UserService);
+    private readonly adminService = inject(AdminService);
+    private readonly formBuilder = inject(FormBuilder);
+    private readonly toastr = inject(ToastrService);
+
     // User control
     protected userFound: boolean | null = null;
     protected userUserId: number | null = null;
@@ -31,15 +38,6 @@ export class AdministrationPageComponent implements OnInit {
     protected setRecommendationForm!: FormGroup;
     protected userControlForm!: FormGroup
     protected userRoleChangeForm!: FormGroup;
-
-    constructor(
-        private readonly recommendService: RecommendService,
-        private readonly userService: UserService,
-        private readonly adminService: AdminService,
-        private readonly formBuilder: FormBuilder,
-        private readonly toastr: ToastrService,
-        private readonly authService: AuthService
-    ) { }
 
     public ngOnInit(): void {
         // Form builders

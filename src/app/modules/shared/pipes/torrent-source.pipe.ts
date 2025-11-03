@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
     name: 'torrentSource',
-    standalone: false
+    standalone: true
 })
 export class TorrentSourcePipe implements PipeTransform {
 

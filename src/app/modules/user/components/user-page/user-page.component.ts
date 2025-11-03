@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
 import { TokenService } from 'src/app/modules/shared/services/token-service/token.service';
@@ -6,23 +6,34 @@ import { UserService } from 'src/app/modules/user/services/user-service/user.ser
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CacheService } from 'src/app/modules/shared/services/cache-service/cache.service';
+import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
+import { LoadingSpinnerComponent } from 'src/app/modules/shared/components/loading-spinner/loading-spinner.component';
+import { NgClass } from '@angular/common';
+import { SudoNavComponent } from 'src/app/modules/sudo/components/sudo-nav/sudo-nav.component';
 
 // TODO
-// Dont load no-pfp.png if user has profile picture (see network requests, it loads no-pfp.png first and then the actual profile picture)
-// Probaly same issue for nav bar component
+// Don't load no-pfp.png if user has profile picture (see network requests, it loads no-pfp.png first and then the actual profile picture)
+// Probably same issue for nav bar component
 
 // TODO
 // Compress pfp (client side?) before uploading to server, or server side (before saving?)
-
-import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 
 @Component({
     selector: 'app-user-page',
     templateUrl: './user-page.component.html',
     styleUrls: ['./user-page.component.scss'],
-    standalone: false
+    imports: [LoadingSpinnerComponent, NgClass, SudoNavComponent],
+    standalone: true
 })
 export class UserPageComponent implements OnInit {
+    private readonly router = inject(Router);
+    private readonly userService = inject(UserService);
+    private readonly tokenService = inject(TokenService);
+    private readonly authService = inject(AuthService);
+    private readonly route = inject(ActivatedRoute);
+    private readonly toastr = inject(ToastrService);
+    private readonly cacheService = inject(CacheService);
+
     protected isMyPage: boolean = false;
     protected token: string | null = null;
     protected uid: number | null = null;
@@ -31,16 +42,6 @@ export class UserPageComponent implements OnInit {
     protected role: string | null = null;
     protected joined: string | null = null;
     protected isLoading: boolean = true;
-
-    constructor(
-        private readonly router: Router,
-        private readonly userService: UserService,
-        private readonly tokenService: TokenService,
-        private readonly authService: AuthService,
-        private readonly route: ActivatedRoute,
-        private readonly toastr: ToastrService,
-        private readonly cacheService: CacheService
-    ) { }
 
     public get roleName(): string {
         switch (this.role) {

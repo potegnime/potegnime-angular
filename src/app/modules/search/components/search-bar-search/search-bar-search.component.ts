@@ -1,9 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { SearchService } from '../../services/search-service/search.service';
-import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
 import { RecommendService } from 'src/app/modules/shared/services/recommend-service/recommend.service';
 import { SortService } from '../../services/sort-service/sort.service';
 import { Subscription } from 'rxjs';
@@ -14,9 +13,17 @@ import { TorrentCategories } from '../../models/torrent-categories.interface';
     selector: 'app-search-bar-search',
     templateUrl: './search-bar-search.component.html',
     styleUrls: ['./search-bar-search.component.scss'],
-    standalone: false
+    imports: [ReactiveFormsModule],
+    standalone: true
 })
 export class SearchBarSearchComponent implements OnInit, OnDestroy {
+    private readonly formBuilder = inject(FormBuilder);
+    private readonly toastr = inject(ToastrService);
+    private readonly route = inject(ActivatedRoute);
+    private readonly searchService = inject(SearchService);
+    private readonly recommendService = inject(RecommendService);
+    private readonly sortService = inject(SortService);
+
     protected searchForm!: FormGroup;
 
     protected torrentCategories: TorrentCategories = {} as TorrentCategories;
@@ -27,16 +34,6 @@ export class SearchBarSearchComponent implements OnInit, OnDestroy {
     protected sort: string = 'default';
 
     private sortSubscription!: Subscription;
-
-    constructor(
-        private readonly formBuilder: FormBuilder,
-        private readonly toastr: ToastrService,
-        private readonly route: ActivatedRoute,
-        private readonly searchService: SearchService,
-        private readonly authService: AuthService,
-        private readonly recommendService: RecommendService,
-        private readonly sortService: SortService
-    ) { }
 
     public ngOnInit(): void {
         this.sortSubscription = this.sortService.currentSort.subscribe(sort => {

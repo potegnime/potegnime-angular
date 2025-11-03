@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
 import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
@@ -7,9 +7,12 @@ import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
     selector: 'app-donate-page',
     templateUrl: './donate-page.component.html',
     styleUrls: ['./donate-page.component.scss'],
-    standalone: false
+    standalone: true
 })
 export class DonatePageComponent implements OnInit {
+  private readonly toastr = inject(ToastrService);
+  private readonly authService = inject(AuthService);
+
   protected isLoggedIn: boolean = false;
   protected walletAddresses = {
     'btc': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
@@ -17,11 +20,6 @@ export class DonatePageComponent implements OnInit {
     'ltc': 'cccccccccccccccccccccccccccccccccccccccc',
     'xmr': 'dddddddddddddddddddddddddddddddddddddddd'
   }
-
-  constructor(
-    private readonly toastr: ToastrService,
-    private readonly authService: AuthService
-  ) { }
 
   public ngOnInit(): void {
     this.isLoggedIn = this.authService.verifyToken();

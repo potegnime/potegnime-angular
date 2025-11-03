@@ -1,20 +1,28 @@
-import { Component, NgZone, AfterViewChecked, OnInit } from '@angular/core';
+import { Component, NgZone, AfterViewChecked, OnInit, inject } from '@angular/core';
 import { RecommendService } from '../../../shared/services/recommend-service/recommend.service';
 import { TmdbMovieResponse } from '../../../shared/models/tmdb-movie-response.interface';
 import { TmdbTrendingResponse } from '../../../shared/models/tmdb-trending-response.interface';
-import { AuthService } from '../../../auth/services/auth-service/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
+import { LoadingSpinnerComponent } from 'src/app/modules/shared/components/loading-spinner/loading-spinner.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-recommend-page',
     templateUrl: './recommend-page.component.html',
     styleUrls: ['./recommend-page.component.scss'],
-    standalone: false
+    imports: [LoadingSpinnerComponent, DatePipe],
+    standalone: true
 })
 export class RecommendPageComponent implements AfterViewChecked, OnInit {
+    private readonly recommendService = inject(RecommendService);
+    private readonly toastr = inject(ToastrService);
+    private readonly router = inject(Router);
+    private readonly route = inject(ActivatedRoute);
+    private readonly ngZone = inject(NgZone);
+
     protected displayLoadingSpinner: boolean = true;
     private allDataLoaded: boolean = false;
     private sectionToScroll: string | null = null;
@@ -33,15 +41,6 @@ export class RecommendPageComponent implements AfterViewChecked, OnInit {
     protected trendingTvShows: TmdbTrendingResponse[] = [];
 
     private errorToastShown: boolean = false;
-
-    constructor(
-        private readonly recommendService: RecommendService,
-        private readonly authService: AuthService,
-        private readonly toastr: ToastrService,
-        private readonly router: Router,
-        private readonly route: ActivatedRoute,
-        private readonly ngZone: NgZone
-    ) { }
 
     public ngOnInit(): void {
         // Get params from url

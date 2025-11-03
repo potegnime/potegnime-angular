@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Observable, map, of, catchError } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
+import { Observable } from 'rxjs';
 import { UserRegisterDto } from '../../models/user-register.interface';
 import { UserLoginDto } from '../../models/user-login.interface';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -10,23 +10,14 @@ import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 import { ForgotPasswordDto } from '../../models/forgot-password.interface';
 import { ResetPasswordDto } from '../../models/reset-password.interface';
 import { BaseHttpService } from 'src/app/core/services/base-http/base-http.service';
-import { HttpApiService } from 'src/app/core/services/http-api/http-api.service';
-import { ConfigService } from 'src/app/core/services/config/config.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService extends BaseHttpService {
-    constructor(
-        httpApiService: HttpApiService,
-        configService: ConfigService,
-        private readonly jwtHelperService: JwtHelperService,
-        private readonly router: Router,
-        private readonly toastr: ToastrService,
-        private readonly tokenService: TokenService,
-    ) {
-        super(httpApiService, configService);
-    }
+    private readonly router = inject(Router);
+    private readonly toastr = inject(ToastrService);
+    private readonly tokenService = inject(TokenService);
 
     public register(userRegisterDto: UserRegisterDto): Observable<any> {
         return this.postJson<UserRegisterDto, any>(`auth/register`, userRegisterDto);
@@ -35,6 +26,10 @@ export class AuthService extends BaseHttpService {
     public login(userLoginDto: UserLoginDto): Observable<any> {
         return this.postJson<UserLoginDto, any>(`auth/login`, userLoginDto);
     };
+
+    public test(): void {
+        this.router.navigate(['/dashboard']);
+    }
 
     public logout(): void {
         this.tokenService.deleteToken();
