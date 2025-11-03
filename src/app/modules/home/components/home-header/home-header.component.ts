@@ -15,7 +15,7 @@ export class HomeHeaderComponent implements OnInit {
     private readonly toastr = inject(ToastrService);
     private readonly router = inject(Router);
 
-    isLoading = true;
+    protected isLoading: boolean = true;
 
     @Output() loadingChange = new EventEmitter<boolean>();
 

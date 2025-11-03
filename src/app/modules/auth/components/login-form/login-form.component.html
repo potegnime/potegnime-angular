@@ -31,7 +31,5 @@ same issue on register and reset page
 <p class="url-white">Še nimaš računa? <a routerLink="/registracija">Registriraj se!</a></p>
 
 @if (isSubmitting) {
-  <div class="spinner-overlay">
-    <app-loading-spinner></app-loading-spinner>
-  </div>
+    <app-loading-spinner [active]="isSubmitting" [overlay]="true"></app-loading-spinner>
 }

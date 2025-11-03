@@ -14,8 +14,8 @@ import { LoadingSpinnerComponent } from 'src/app/modules/shared/components/loadi
 export class HomePageComponent implements OnInit {
     private readonly searchService = inject(SearchService);
 
-    headerLoading = false;
-    torrentLoading = false;
+    protected headerLoading: boolean = false;
+    protected torrentLoading: boolean = false;
 
     ngOnInit(): void {
         this.searchService.ping().subscribe({

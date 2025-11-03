@@ -50,7 +50,5 @@ same issue on reset password page
 <p class="url-white">Že imaš račun? <a routerLink="/prijava">Prijavi se!</a></p>
 
 @if (isSubmitting) {
-  <div class="spinner-overlay">
-    <app-loading-spinner></app-loading-spinner>
-  </div>
+  <app-loading-spinner [active]="isSubmitting" [overlay]="true"></app-loading-spinner>
 }

@@ -1,5 +1,5 @@
 @if (displayLoadingSpinner) {
-  <app-loading-spinner class="spinner-overlay"></app-loading-spinner>
+  <app-loading-spinner [active]="displayLoadingSpinner" [overlay]="true"></app-loading-spinner>
 }
 <h2>Razišči</h2>
 <div class="mb-2">

@@ -2,7 +2,7 @@
   <app-sudo-nav></app-sudo-nav>
 }
 @if (isLoading) {
-  <app-loading-spinner class="spinner-overlay"></app-loading-spinner>
+  <app-loading-spinner [active]="isLoading" [overlay]="true"></app-loading-spinner>
 }
 <div class="row container-profile" [ngClass]="{'mt-2': !isMyPage}">
   <div class="row profile-info">

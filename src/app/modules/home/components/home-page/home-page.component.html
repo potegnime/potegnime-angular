@@ -1,5 +1,5 @@
 <app-home-header (loadingChange)="onHeaderLoadingChange($event)"></app-home-header>
 <app-home-torrent (loadingChange)="onTorrentLoadingChange($event)"></app-home-torrent>
 @if (isLoading) {
-  <app-loading-spinner class="spinner-overlay"></app-loading-spinner>
+  <app-loading-spinner [active]="isLoading" [overlay]="true"></app-loading-spinner>
 }

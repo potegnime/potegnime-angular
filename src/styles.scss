@@ -175,3 +175,24 @@ a {
 .ngx-toastr {
     box-shadow: none !important;
 }
+
+// Loading spinner overlay
+.spinner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 9999;
+    pointer-events: all;
+}
+
+// disable page scroll when spinner is active
+body.no-scroll {
+    overflow: hidden !important;
+    touch-action: none;
+}
