@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router";
-import { RecommendPageComponent } from "./components/recommend-page/recommend-page.component";
+
 
 export const RECOMMEND_ROUTES: Routes = [
-    { path: '', component: RecommendPageComponent }
+    { path: '', loadComponent: () => import('./components/recommend-page/recommend-page.component').then(m => m.RecommendPageComponent) }
 ];

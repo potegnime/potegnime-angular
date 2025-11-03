@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { UserPageComponent } from './components/user-page/user-page.component';
+
 
 export const USER_ROUTES: Routes = [
-    { path: ':id', component: UserPageComponent }
+    { path: ':id', loadComponent: () => import('./components/user-page/user-page.component').then(m => m.UserPageComponent) }
 ];
