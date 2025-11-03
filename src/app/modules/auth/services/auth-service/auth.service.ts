@@ -27,10 +27,6 @@ export class AuthService extends BaseHttpService {
         return this.postJson<UserLoginDto, any>(`auth/login`, userLoginDto);
     };
 
-    public test(): void {
-        this.router.navigate(['/dashboard']);
-    }
-
     public logout(): void {
         this.tokenService.deleteToken();
         this.router.navigate(['/prijava']);

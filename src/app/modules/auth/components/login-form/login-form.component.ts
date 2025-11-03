@@ -41,10 +41,6 @@ export class LoginFormComponent implements OnInit {
     AuthHelper.getRegisterForm();
   }
 
-  public test() {
-    this.authService.test();
-  }
-
   protected onSubmit(): void {
     if (this.loginForm.valid && !this.isSubmitting) {
       this.isSubmitting = true; // prevent multiple requests
