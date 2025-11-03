@@ -18,28 +18,12 @@ import { ToastrModule } from 'ngx-toastr';
 export class AppComponent {
     private readonly router = inject(Router);
     private readonly authService = inject(AuthService);
-
-    title = 'potegni.me';
-    currentPath: string = new URL(window.location.href).pathname;
-
     public isLoggedIn: boolean = false;
-    public error: boolean = false;
 
     constructor() {
-        this.router.events
-            .pipe(filter(event => event instanceof NavigationEnd))
-            .subscribe(() => {
+        this.router.events.pipe(
+            filter(event => event instanceof NavigationEnd)).subscribe(() => {
                 this.isLoggedIn = this.authService.verifyToken();
-                this.checkCurrentUrlInRoutes();
             })
-    }
-
-    private checkCurrentUrlInRoutes() {
-        this.currentPath = new URL(window.location.href).pathname.slice(1);
-        if (DefinedRoutes.includes(this.currentPath)) {
-            this.error = false;
-        } else {
-            this.error = true;
-        }
     }
 }
