@@ -10,11 +10,11 @@ export class LoggedInAuthGuard implements CanActivate {
     private readonly router = inject(Router);
 
     canActivate() {
-        if (this.authService.verifyToken()) {
+        const isTokenValid = this.authService.verifyToken();
+        if (isTokenValid) {
             this.router.navigate(['/']);
             return false;
-        } else {
-            return true;
         }
+        return true;
     }
 }

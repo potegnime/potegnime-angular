@@ -1,12 +1,11 @@
-import { ApplicationConfig, importProvidersFrom, inject, provideAppInitializer } from '@angular/core';
+import { ApplicationConfig, inject, provideAppInitializer } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { routes } from './app.routes';
 import { ApiInterceptor } from './app/core/interceptor/api/api.interceptor';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { JWT_OPTIONS } from '@auth0/angular-jwt';
-import { provideToastr, ToastrModule } from 'ngx-toastr';
+import { provideToastr } from 'ngx-toastr';
 import { ConfigService } from './app/core/services/config/config.service';
 
 export const appConfig: ApplicationConfig = {
@@ -20,10 +19,6 @@ export const appConfig: ApplicationConfig = {
     }),
     // provideClientHydration(withEventReplay()), // TODO - enable for SSR
     provideToastr(),
-    {
-      provide: JWT_OPTIONS,
-      useValue: { tokenGetter: () => localStorage.getItem('token') }
-    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ApiInterceptor,

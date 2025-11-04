@@ -10,11 +10,10 @@ export class AuthGuard implements CanActivate {
     private readonly router = inject(Router);
 
     canActivate() {
-        if (this.authService.verifyToken()) {
-            return true;
-        } else {
-            this.router.navigate(['/prijava']);
-            return false;
-        }
+        const isTokenValid = this.authService.verifyToken();
+        if (isTokenValid) return true;
+
+        this.router.navigate(['/prijava']);
+        return false;
     }
 }

@@ -2,7 +2,6 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserRegisterDto } from '../../models/user-register.interface';
 import { UserLoginDto } from '../../models/user-login.interface';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { TokenService } from 'src/app/modules/shared/services/token-service/token.service';
@@ -10,6 +9,7 @@ import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 import { ForgotPasswordDto } from '../../models/forgot-password.interface';
 import { ResetPasswordDto } from '../../models/reset-password.interface';
 import { BaseHttpService } from 'src/app/core/services/base-http/base-http.service';
+import { AuthHelper } from '../../helpers/auth-helper';
 
 @Injectable({
     providedIn: 'root'
@@ -39,11 +39,19 @@ export class AuthService extends BaseHttpService {
         this.router.navigate(['/prijava']);
     }
 
+    /**
+     * Verifies JWT token expiration on client side
+     * If token is expired, returns false
+     * Doesn't check token validity - that is done on server side, client only checks expiration
+     * @returns true if token is still valid, false if expired or not present
+     */
     public verifyToken(): boolean {
         const token = this.tokenService.getToken();
         if (!token) return false;
-        return true;
-        // return this.jwtHelperService.decodeToken(token) ? true : false;
+
+        const jwtPayload = AuthHelper.decodeJWT(token);
+        const isExpired = jwtPayload.exp < Math.floor(Date.now() / 1000);
+        return !isExpired;
     }
 
     public refreshToken(): Observable<any> {

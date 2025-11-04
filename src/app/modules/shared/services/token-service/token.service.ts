@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import jwtDecode from "jwt-decode";
 import { DecodedTokenModel } from '../../models/decoded-token.interface';
 import { UploaderRequestStatus } from 'src/app/modules/sudo/enums/uploader-request-status.enum';
+import { AuthHelper } from 'src/app/modules/auth/helpers/auth-helper';
 
 @Injectable({
     providedIn: 'root'
@@ -30,17 +30,16 @@ export class TokenService {
 
     public decodeToken(): DecodedTokenModel | null {
         const token = this.getToken();
-        if (!token) {
-            return null;
-        }
-        const decodedToken = jwtDecode(token) as DecodedTokenModel;
-        try {
+        if (!token) return null;
 
+        const decodedToken = AuthHelper.decodeJWT(token);
+        try {
             const formattedToken: DecodedTokenModel = {
                 uid: Number(decodedToken.uid),
                 username: decodedToken.username,
                 email: decodedToken.email,
                 role: decodedToken.role.toLowerCase(),
+                uploaderRequestStatus: decodedToken.uploaderRequestStatus.toLowerCase(),
                 joined: decodedToken.joined,
                 iss: decodedToken.iss,
                 aud: decodedToken.aud,
@@ -57,5 +56,4 @@ export class TokenService {
             return null;
         }
     }
-
 }

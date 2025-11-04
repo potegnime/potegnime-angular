@@ -2,6 +2,14 @@ export class AuthHelper {
     private static forgotPasswordTimeoutCacheKey = 'potegnime-forgot-password-timeout';
     private static registerFormCacheKey = 'potegnime-register-form';
 
+    public static decodeJWT(token: string): any {
+        try {
+            return JSON.parse(atob(token.split('.')[1]));
+        } catch (error) {
+            return null;
+        }
+    }
+
     public static setForgotPasswordTimeout(): void {
         const timeout = new Date();
         timeout.setMinutes(timeout.getUTCMinutes() + 5);
