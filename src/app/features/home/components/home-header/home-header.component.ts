@@ -1,9 +1,11 @@
 import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { timingConst } from 'src/app/core/enums/toastr-timing.enum';
-import { AdminRecommendation } from 'src/app/models/admin-recommendation.interface';
-import { RecommendService } from 'src/app/shared/services/recommend/recommend.service';
+
+import { timingConst } from '@core/enums/toastr-timing.enum';
+import { AdminRecommendation } from '@models/admin-recommendation.interface';
+import { RecommendService } from '@shared/services/recommend/recommend.service';
+
 @Component({
     selector: 'app-home-header',
     templateUrl: './home-header.component.html',

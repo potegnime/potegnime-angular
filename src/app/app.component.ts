@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
-import { filter } from 'rxjs/operators';
-import { AuthService } from './features/auth/services/auth/auth.service';
-import { HeaderComponent } from './layout/header/header.component';
-import { FooterComponent } from './layout/footer/footer.component';
 import { NgClass } from '@angular/common';
+import { filter } from 'rxjs/operators';
 import { ToastrModule } from 'ngx-toastr';
+
+import { AuthService } from '@features/auth/services/auth/auth.service';
+import { HeaderComponent } from '@layout/header/header.component';
+import { FooterComponent } from '@layout/footer/footer.component';
 
 @Component({
     selector: 'app-root',

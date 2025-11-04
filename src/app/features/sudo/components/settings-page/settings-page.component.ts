@@ -1,21 +1,22 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { AuthService } from 'src/app/features/auth/services/auth/auth.service';
-import { CacheService } from 'src/app/core/services/cache/cache.service';
-import { TokenService } from 'src/app/core/services/token-service/token.service';
-import { UserService } from 'src/app/features/user/services/user/user.service';
-import { UpdateUsernameDto } from 'src/app/features/user/models/update-username.interface';
-import { UpdateEmailDto } from 'src/app/features/user/models/update-email.interface';
-import { UpdatePfpDto } from 'src/app/features/user/models/update-pfp.interface';
-import { UpdatePasswordDto } from 'src/app/features/user/models/update-password.interface';
-import { DeleteProfileDto } from 'src/app/features/user/models/delete-profile.interface';
-import { timingConst } from 'src/app/core/enums/toastr-timing.enum';
-import { UploaderRequestDto } from 'src/app/features/user/models/uploader-request.interface';
-import { UploaderRequestStatus } from '../../../../core/enums/uploader-request-status.enum';
 import { RouterLink } from '@angular/router';
-import { SudoNavComponent } from '../sudo-nav/sudo-nav.component';
-import { UserModel } from 'src/app/models/user.interface';
+import { ToastrService } from 'ngx-toastr';
+
+import { AuthService } from '@features/auth/services/auth/auth.service';
+import { CacheService } from '@core/services/cache/cache.service';
+import { TokenService } from '@core/services/token-service/token.service';
+import { UserService } from '@features/user/services/user/user.service';
+import { UpdateUsernameDto } from '@features/user/models/update-username.interface';
+import { UpdateEmailDto } from '@features/user/models/update-email.interface';
+import { UpdatePfpDto } from '@features/user/models/update-pfp.interface';
+import { UpdatePasswordDto } from '@features/user/models/update-password.interface';
+import { DeleteProfileDto } from '@features/user/models/delete-profile.interface';
+import { timingConst } from '@core/enums/toastr-timing.enum';
+import { UploaderRequestDto } from '@features/user/models/uploader-request.interface';
+import { UploaderRequestStatus } from '@core/enums/uploader-request-status.enum';
+import { SudoNavComponent } from '@features/sudo/components/sudo-nav/sudo-nav.component';
+import { UserModel } from '@models/user.interface';
 
 @Component({
     selector: 'app-settings-page',

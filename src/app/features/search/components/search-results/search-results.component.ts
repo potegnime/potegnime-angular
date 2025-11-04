@@ -1,17 +1,18 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { DatePipe, NgClass } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { SearchService } from 'src/app/features/search/services/search/search.service';
-import { SearchRequestDto } from '../../models/search-request.interface';
-import { Torrent } from 'src/app/features/search/models/torrent.interface';
-import { DatePipe, NgClass } from '@angular/common';
-import { SortService } from '../../services/sort/sort.service';
-import { timingConst } from 'src/app/core/enums/toastr-timing.enum';
-import { TorrentFileDownloadService } from '../../services/torrent-file-download/torrent-file-download.service';
-import { LoadingSpinnerComponent } from 'src/app/shared/components/loading-spinner/loading-spinner.component';
-import { TorrentSourcePipe } from 'src/app/shared/pipes/torrent-source.pipe';
-import { AboutResultsComponent } from '../about-results/about-results.component';
-import { SearchBarSearchComponent } from '../search-bar-search/search-bar-search.component';
+
+import { SearchService } from '@features/search/services/search/search.service';
+import { SearchRequestDto } from '@features/search/models/search-request.interface';
+import { Torrent } from '@features/search/models/torrent.interface';
+import { SortService } from '@features/search/services/sort/sort.service';
+import { timingConst } from '@core/enums/toastr-timing.enum';
+import { TorrentFileDownloadService } from '@features/search/services/torrent-file-download/torrent-file-download.service';
+import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
+import { TorrentSourcePipe } from '@shared/pipes/torrent-source.pipe';
+import { AboutResultsComponent } from '@features/search/components/about-results/about-results.component';
+import { SearchBarSearchComponent } from '@features/search/components/search-bar-search/search-bar-search.component';
 
 @Component({
     selector: 'app-search-results',

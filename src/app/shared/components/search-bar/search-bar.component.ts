@@ -2,8 +2,9 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { SearchService } from 'src/app/features/search/services/search/search.service';
-import { timingConst } from '../../../core/enums/toastr-timing.enum';
+
+import { SearchService } from '@features/search/services/search/search.service';
+import { timingConst } from '@core/enums/toastr-timing.enum';
 
 @Component({
     selector: 'app-search-bar',

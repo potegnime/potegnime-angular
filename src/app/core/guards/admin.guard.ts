@@ -1,11 +1,12 @@
 import { Injectable, inject } from '@angular/core'
 import { CanActivate, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { UserService } from 'src/app/features/user/services/user/user.service';
-import { timingConst } from 'src/app/core/enums/toastr-timing.enum';
+
+import { UserService } from '@features/user/services/user/user.service';
+import { timingConst } from '@core/enums/toastr-timing.enum';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AdminGuard implements CanActivate {
     private readonly userService = inject(UserService);

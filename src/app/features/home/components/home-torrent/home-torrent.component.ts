@@ -3,9 +3,10 @@ import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
-import { timingConst } from 'src/app/core/enums/toastr-timing.enum';
-import { TmdbMovieResponse } from 'src/app/models/tmdb-movie-response.interface';
-import { RecommendService } from 'src/app/shared/services/recommend/recommend.service';
+
+import { timingConst } from '@core/enums/toastr-timing.enum';
+import { TmdbMovieResponse } from '@models/tmdb-movie-response.interface';
+import { RecommendService } from '@shared/services/recommend/recommend.service';
 
 @Component({
     selector: 'app-home-torrent',

@@ -1,8 +1,9 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpApiService } from '../http-api/http-api.service';
-import { ApiType } from '../../enums/api-type.enum';
 import { Observable } from 'rxjs';
-import { ConfigService } from '../config/config.service';
+
+import { ApiType } from '@core/enums/api-type.enum';
+import { HttpApiService } from '@core/services/http-api/http-api.service';
+import { ConfigService } from '@core/services/config/config.service';
 import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({

@@ -1,7 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AuthService } from 'src/app/features/auth/services/auth/auth.service';
-import { UserService } from 'src/app/features/user/services/user/user.service';
+
+import { AuthService } from '@features/auth/services/auth/auth.service';
+import { UserService } from '@features/user/services/user/user.service';
 
 @Component({
     selector: 'app-sudo-nav',

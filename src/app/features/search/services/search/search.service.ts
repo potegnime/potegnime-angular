@@ -1,10 +1,11 @@
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
-import { SearchRequestDto } from '../../models/search-request.interface';
 import { Router } from '@angular/router';
-import { TorrentCategories } from '../../models/torrent-categories.interface';
-import { BaseHttpService } from 'src/app/core/services/base-http/base-http.service';
-import { ApiType } from 'src/app/core/enums/api-type.enum';
+import { Observable } from 'rxjs';
+
+import { SearchRequestDto } from '@features/search/models/search-request.interface';
+import { TorrentCategories } from '@features/search/models/torrent-categories.interface';
+import { BaseHttpService } from '@core/services/base-http/base-http.service';
+import { ApiType } from '@core/enums/api-type.enum';
 
 @Injectable({
     providedIn: 'root'

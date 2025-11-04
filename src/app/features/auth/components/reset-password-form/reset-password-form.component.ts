@@ -1,18 +1,19 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth/auth.service';
-import { ToastrService } from 'ngx-toastr';
-import { timingConst } from 'src/app/core/enums/toastr-timing.enum';
-import { ResetPasswordDto } from '../../models/reset-password.interface';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgClass } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
+
+import { AuthService } from '@features/auth/services/auth/auth.service';
+import { timingConst } from '@core/enums/toastr-timing.enum';
+import { ResetPasswordDto } from '@features/auth/models/reset-password.interface';
 
 @Component({
-    selector: 'app-reset-password-form',
-    templateUrl: './reset-password-form.component.html',
-    styleUrls: ['./reset-password-form.component.scss'],
-    imports: [ReactiveFormsModule, NgClass],
-    standalone: true
+  selector: 'app-reset-password-form',
+  templateUrl: './reset-password-form.component.html',
+  styleUrls: ['./reset-password-form.component.scss'],
+  imports: [ReactiveFormsModule, NgClass],
+  standalone: true
 })
 export class ResetPasswordFormComponent implements OnInit {
   private readonly formBuilder = inject(FormBuilder);

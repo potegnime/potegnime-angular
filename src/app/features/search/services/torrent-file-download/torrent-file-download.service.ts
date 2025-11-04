@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BaseHttpService } from 'src/app/core/services/base-http/base-http.service';
+
+import { BaseHttpService } from '@core/services/base-http/base-http.service';
 
 @Injectable({
   providedIn: 'root'

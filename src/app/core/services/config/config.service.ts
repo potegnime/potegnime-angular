@@ -1,7 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
-import { ApiType } from '../../enums/api-type.enum';
+
+import { ApiType } from '@core/enums/api-type.enum';
 import { environment } from 'src/environment';
 
 @Injectable({

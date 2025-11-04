@@ -3,10 +3,10 @@ import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { routes } from './app.routes';
-import { ApiInterceptor } from './app/core/interceptor/api/api.interceptor';
+import { ApiInterceptor } from '@core/interceptor/api/api.interceptor';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideToastr } from 'ngx-toastr';
-import { ConfigService } from './app/core/services/config/config.service';
+import { ConfigService } from '@core/services/config/config.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [

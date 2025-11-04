@@ -1,20 +1,21 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { timingConst } from 'src/app/core/enums/toastr-timing.enum';
+import { NgClass } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { UserRegisterDto } from '../../models/user-register.interface';
-import { AuthResetHelper } from '../../helpers/auth-reset-helper';
-import { NgClass } from '@angular/common';
-import { LoadingSpinnerComponent } from 'src/app/shared/components/loading-spinner/loading-spinner.component';
+
+import { timingConst } from '@core/enums/toastr-timing.enum';
+import { AuthService } from '@features/auth/services/auth/auth.service';
+import { UserRegisterDto } from '@features/auth/models/user-register.interface';
+import { AuthResetHelper } from '@features/auth/helpers/auth-reset-helper';
+import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
-    selector: 'app-register-form',
-    templateUrl: './register-form.component.html',
-    styleUrls: ['./register-form.component.scss'],
-    imports: [NgClass, ReactiveFormsModule, LoadingSpinnerComponent, RouterLink],
-    standalone: true
+  selector: 'app-register-form',
+  templateUrl: './register-form.component.html',
+  styleUrls: ['./register-form.component.scss'],
+  imports: [NgClass, ReactiveFormsModule, LoadingSpinnerComponent, RouterLink],
+  standalone: true
 })
 export class RegisterFormComponent implements OnInit {
   private formBuilder = inject(FormBuilder);

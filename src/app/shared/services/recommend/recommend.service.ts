@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TmdbTrendingResponse } from '../../../models/tmdb-trending-response.interface';
-import { TmdbMovieResponse } from '../../../models/tmdb-movie-response.interface';
-import { AdminRecommendation } from '../../../models/admin-recommendation.interface';
-import { RecommendationDto } from '../../../models/recommendation-dto.interface';
-import { BaseHttpService } from 'src/app/core/services/base-http/base-http.service';
+
+import { TmdbTrendingResponse } from '@models/tmdb-trending-response.interface';
+import { TmdbMovieResponse } from '@models/tmdb-movie-response.interface';
+import { AdminRecommendation } from '@models/admin-recommendation.interface';
+import { RecommendationDto } from '@models/recommendation-dto.interface';
+import { BaseHttpService } from '@core/services/base-http/base-http.service';
 
 @Injectable({
     providedIn: 'root'

@@ -1,17 +1,18 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/features/auth/services/auth/auth.service';
-import { TokenService } from 'src/app/core/services/token-service/token.service';
-import { UserService } from 'src/app/features/user/services/user/user.service';
 import { ActivatedRoute } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { CacheService } from 'src/app/core/services/cache/cache.service';
-import { timingConst } from 'src/app/core/enums/toastr-timing.enum';
-import { LoadingSpinnerComponent } from 'src/app/shared/components/loading-spinner/loading-spinner.component';
 import { DatePipe, NgClass } from '@angular/common';
-import { SudoNavComponent } from 'src/app/features/sudo/components/sudo-nav/sudo-nav.component';
-import { UserModel } from 'src/app/models/user.interface';
-import { GetUserModel } from 'src/app/models/get-user.interface';
+import { ToastrService } from 'ngx-toastr';
+
+import { AuthService } from '@features/auth/services/auth/auth.service';
+import { TokenService } from '@core/services/token-service/token.service';
+import { UserService } from '@features/user/services/user/user.service';
+import { CacheService } from '@core/services/cache/cache.service';
+import { timingConst } from '@core/enums/toastr-timing.enum';
+import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
+import { SudoNavComponent } from '@features/sudo/components/sudo-nav/sudo-nav.component';
+import { UserModel } from '@models/user.interface';
+import { GetUserModel } from '@models/get-user.interface';
 
 // TODO
 // Don't load no-pfp.png if user has profile picture (see network requests, it loads no-pfp.png first and then the actual profile picture)

@@ -1,8 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { SearchService } from 'src/app/features/search/services/search/search.service';
-import { HomeHeaderComponent } from '../home-header/home-header.component';
-import { HomeTorrentComponent } from '../home-torrent/home-torrent.component';
-import { LoadingSpinnerComponent } from 'src/app/shared/components/loading-spinner/loading-spinner.component';
+
+import { SearchService } from '@features/search/services/search/search.service';
+import { HomeHeaderComponent } from '@features/home/components/home-header/home-header.component';
+import { HomeTorrentComponent } from '@features/home/components/home-torrent/home-torrent.component';
+import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
     selector: 'app-home-page',

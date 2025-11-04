@@ -1,18 +1,19 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth/auth.service';
-import { timingConst } from 'src/app/core/enums/toastr-timing.enum';
 import { ToastrService } from 'ngx-toastr';
-import { ForgotPasswordDto } from '../../models/forgot-password.interface';
-import { AuthResetHelper } from '../../helpers/auth-reset-helper';
-import { LoadingSpinnerComponent } from 'src/app/shared/components/loading-spinner/loading-spinner.component';
+
+import { AuthService } from '@features/auth/services/auth/auth.service';
+import { timingConst } from '@core/enums/toastr-timing.enum';
+import { ForgotPasswordDto } from '@features/auth/models/forgot-password.interface';
+import { AuthResetHelper } from '@features/auth/helpers/auth-reset-helper';
+import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
-    selector: 'app-forgot-password-form',
-    templateUrl: './forgot-password-form.component.html',
-    styleUrls: ['./forgot-password-form.component.scss'],
-    imports: [ReactiveFormsModule, LoadingSpinnerComponent],
-    standalone: true
+  selector: 'app-forgot-password-form',
+  templateUrl: './forgot-password-form.component.html',
+  styleUrls: ['./forgot-password-form.component.scss'],
+  imports: [ReactiveFormsModule, LoadingSpinnerComponent],
+  standalone: true
 })
 export class ForgotPasswordFormComponent implements OnInit {
   private readonly formBuilder = inject(FormBuilder);

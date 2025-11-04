@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { DecodedTokenModel } from '../../../models/decoded-token.interface';
-import { UploaderRequestStatus } from 'src/app/core/enums/uploader-request-status.enum';
-import { AuthService } from 'src/app/features/auth/services/auth/auth.service';
-import { AuthHelper } from 'src/app/core/helpers/auth-helper';
+
+import { DecodedTokenModel } from '@models/decoded-token.interface';
+import { UploaderRequestStatus } from '@core/enums/uploader-request-status.enum';
+import { AuthHelper } from '@core/helpers/auth-helper';
 
 @Injectable({
     providedIn: 'root'
@@ -38,7 +38,7 @@ export class TokenService {
                 username: decodedToken.username,
                 email: decodedToken.email,
                 role: decodedToken.role.toLowerCase(),
-                hasPfp:  decodedToken.hasPfp === "true",
+                hasPfp: decodedToken.hasPfp === "true",
                 uploaderRequestStatus: decodedToken.uploaderRequestStatus.toLowerCase(),
                 joined: decodedToken.joined,
                 iss: decodedToken.iss,

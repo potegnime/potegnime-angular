@@ -1,13 +1,14 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from 'src/app/features/auth/services/auth/auth.service';
-import { timingConst } from 'src/app/core/enums/toastr-timing.enum';
+
+import { AuthService } from '@features/auth/services/auth/auth.service';
+import { timingConst } from '@core/enums/toastr-timing.enum';
 
 @Component({
-    selector: 'app-donate-page',
-    templateUrl: './donate-page.component.html',
-    styleUrls: ['./donate-page.component.scss'],
-    standalone: true
+  selector: 'app-donate-page',
+  templateUrl: './donate-page.component.html',
+  styleUrls: ['./donate-page.component.scss'],
+  standalone: true
 })
 export class DonatePageComponent implements OnInit {
   private readonly toastr = inject(ToastrService);

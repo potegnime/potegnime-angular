@@ -1,21 +1,22 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth/auth.service';
-import { TokenService } from 'src/app/core/services/token-service/token.service';
 import { Router, RouterLink } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { timingConst } from 'src/app/core/enums/toastr-timing.enum';
-import { UserLoginDto } from '../../models/user-login.interface';
-import { AuthResetHelper } from '../../helpers/auth-reset-helper';
 import { NgClass } from '@angular/common';
-import { LoadingSpinnerComponent } from 'src/app/shared/components/loading-spinner/loading-spinner.component';
+import { ToastrService } from 'ngx-toastr';
+
+import { AuthService } from '@features/auth/services/auth/auth.service';
+import { TokenService } from '@core/services/token-service/token.service';
+import { timingConst } from '@core/enums/toastr-timing.enum';
+import { UserLoginDto } from '@features/auth/models/user-login.interface';
+import { AuthResetHelper } from '@features/auth//helpers/auth-reset-helper';
+import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
-    selector: 'app-login-form',
-    templateUrl: './login-form.component.html',
-    styleUrls: ['./login-form.component.scss'],
-    imports: [ReactiveFormsModule, NgClass, LoadingSpinnerComponent, RouterLink],
-    standalone: true
+  selector: 'app-login-form',
+  templateUrl: './login-form.component.html',
+  styleUrls: ['./login-form.component.scss'],
+  imports: [ReactiveFormsModule, NgClass, LoadingSpinnerComponent, RouterLink],
+  standalone: true
 })
 export class LoginFormComponent implements OnInit {
   private readonly formBuilder = inject(FormBuilder);

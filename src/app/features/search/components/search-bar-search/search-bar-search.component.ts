@@ -2,12 +2,13 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { SearchService } from '../../services/search/search.service';
-import { RecommendService } from 'src/app/shared/services/recommend/recommend.service';
-import { SortService } from '../../services/sort/sort.service';
+
+import { SearchService } from '@features/search/services/search/search.service';
+import { RecommendService } from '@shared/services/recommend/recommend.service';
+import { SortService } from '@features/search/services/sort/sort.service';
 import { Subscription } from 'rxjs';
-import { timingConst } from 'src/app/core/enums/toastr-timing.enum';
-import { TorrentCategories } from '../../models/torrent-categories.interface';
+import { timingConst } from '@core/enums/toastr-timing.enum';
+import { TorrentCategories } from '@features/search/models/torrent-categories.interface';
 
 @Component({
     selector: 'app-search-bar-search',

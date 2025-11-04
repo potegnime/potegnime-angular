@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SudoNavComponent } from '../sudo-nav/sudo-nav.component';
+import { SudoNavComponent } from '@features/sudo/components/sudo-nav/sudo-nav.component';
 
 @Component({
     selector: 'app-upload-torrent-page',

@@ -1,14 +1,15 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { timingConst } from 'src/app/core/enums/toastr-timing.enum';
-import { AdminRecommendation } from 'src/app/models/admin-recommendation.interface';
-import { RecommendationDto } from 'src/app/models/recommendation-dto.interface';
-import { RecommendService } from 'src/app/shared/services/recommend/recommend.service';
-import { UpdateRoleDto } from 'src/app/features/user/models/update-role.interface';
-import { UserService } from 'src/app/features/user/services/user/user.service';
-import { AdminService } from '../../services/admin/admin.service';
-import { SudoNavComponent } from '../sudo-nav/sudo-nav.component';
+
+import { timingConst } from '@core/enums/toastr-timing.enum';
+import { AdminRecommendation } from '@models/admin-recommendation.interface';
+import { RecommendationDto } from '@models/recommendation-dto.interface';
+import { RecommendService } from '@shared/services/recommend/recommend.service';
+import { UpdateRoleDto } from '@features/user/models/update-role.interface';
+import { UserService } from '@features/user/services/user/user.service';
+import { AdminService } from '@features/sudo/services/admin/admin.service';
+import { SudoNavComponent } from '@features/sudo/components/sudo-nav/sudo-nav.component';
 
 @Component({
     selector: 'app-administration-page',

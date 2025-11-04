@@ -1,7 +1,7 @@
 import { Routes } from "@angular/router";
-import { AdminGuard } from "src/app/core/guards/admin.guard";
-import { AuthGuard } from "src/app/core/guards/auth.guard";
-import { UploaderGuard } from "src/app/core/guards/uploader.guard";
+import { AdminGuard } from "@core/guards/admin.guard";
+import { AuthGuard } from "@core/guards/auth.guard";
+import { UploaderGuard } from "@core/guards/uploader.guard";
 
 export const SUDO_ROUTES: Routes = [
     { path: 'nastavitve', loadComponent: () => import('./components/settings-page/settings-page.component').then(m => m.SettingsPageComponent), canActivate: [AuthGuard] },

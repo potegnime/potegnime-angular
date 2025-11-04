@@ -1,13 +1,14 @@
 import { Component, NgZone, AfterViewChecked, OnInit, inject } from '@angular/core';
-import { RecommendService } from '../../../../shared/services/recommend/recommend.service';
-import { TmdbMovieResponse } from '../../../../models/tmdb-movie-response.interface';
-import { TmdbTrendingResponse } from '../../../../models/tmdb-trending-response.interface';
-import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute, Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
-import { timingConst } from 'src/app/core/enums/toastr-timing.enum';
-import { LoadingSpinnerComponent } from 'src/app/shared/components/loading-spinner/loading-spinner.component';
 import { DatePipe } from '@angular/common';
+import { forkJoin } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+
+import { RecommendService } from '@shared/services/recommend/recommend.service';
+import { TmdbMovieResponse } from '@models/tmdb-movie-response.interface';
+import { TmdbTrendingResponse } from '@models/tmdb-trending-response.interface';
+import { ActivatedRoute, Router } from '@angular/router';
+import { timingConst } from '@core/enums/toastr-timing.enum';
+import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
     selector: 'app-recommend-page',

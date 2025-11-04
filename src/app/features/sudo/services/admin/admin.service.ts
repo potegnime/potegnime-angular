@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BaseHttpService } from 'src/app/core/services/base-http/base-http.service';
-import { UpdateRoleDto } from 'src/app/features/user/models/update-role.interface';
-import { UploaderRequestDto } from 'src/app/features/user/models/uploader-request.interface';
+
+import { BaseHttpService } from '@core/services/base-http/base-http.service';
+import { UpdateRoleDto } from '@features/user/models/update-role.interface';
+import { UploaderRequestDto } from '@features/user/models/uploader-request.interface';
 
 @Injectable({
     providedIn: 'root' // TODO - make lazy loaded

@@ -1,15 +1,17 @@
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
-import { UserRegisterDto } from '../../models/user-register.interface';
-import { UserLoginDto } from '../../models/user-login.interface';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { TokenService } from 'src/app/core/services/token-service/token.service';
-import { timingConst } from 'src/app/core/enums/toastr-timing.enum';
-import { ForgotPasswordDto } from '../../models/forgot-password.interface';
-import { ResetPasswordDto } from '../../models/reset-password.interface';
-import { BaseHttpService } from 'src/app/core/services/base-http/base-http.service';
-import { AuthHelper } from 'src/app/core/helpers/auth-helper';
+
+import { TokenService } from '@core/services/token-service/token.service';
+import { AuthHelper } from '@core/helpers/auth-helper';
+import { timingConst } from '@core/enums/toastr-timing.enum';
+import { BaseHttpService } from '@core/services/base-http/base-http.service';
+import { UserRegisterDto } from '@features/auth/models/user-register.interface';
+import { UserLoginDto } from '@features/auth/models/user-login.interface';
+import { ForgotPasswordDto } from '@features/auth/models/forgot-password.interface';
+import { ResetPasswordDto } from '@features/auth/models/reset-password.interface';
+
 
 @Injectable({
     providedIn: 'root'
