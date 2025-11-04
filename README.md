@@ -1,4 +1,5 @@
 # [potegni.me](https://potegni.me) Frontend
+To learn more about the project, visit [GitHub organization](https://github.com/potegnime)
 
 ## Technologies used
 
@@ -8,7 +9,7 @@
 - **Icons:** Font Awesome
 - **Notifications**: Toastr
 
-## Development
+## Development setup
 Prerequisites:
 - Node.js and npm
 - Angular CLI
@@ -21,6 +22,10 @@ npm install
 npm start
 ```
 Browser opens in http://localhost:4200
+
+## Development guidelines
+- Use @ import syntax defined in
+- Blank line between Angular and app imports
 
 ## Folder structure
 App follows Angular v20 folder structure:
