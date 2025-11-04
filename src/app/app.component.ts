@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { AuthService } from './modules/auth/services/auth-service/auth.service';
+import { AuthService } from './features/auth/services/auth/auth.service';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { NgClass } from '@angular/common';

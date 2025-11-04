@@ -1,9 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
-import { UserModel } from 'src/app/modules/shared/models/user.interface';
-import { CacheService } from 'src/app/modules/shared/services/cache-service/cache.service';
-import { UserService } from 'src/app/modules/user/services/user-service/user.service';
+import { AuthService } from 'src/app/features/auth/services/auth/auth.service';
+import { UserModel } from 'src/app/models/user.interface';
+import { CacheService } from 'src/app/core/services/cache/cache.service';
+import { UserService } from 'src/app/features/user/services/user/user.service';
 
 @Component({
     selector: 'app-nav',

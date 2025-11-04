@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { TokenService } from 'src/app/modules/shared/services/token-service/token.service';
+import { TokenService } from 'src/app/core/services/token-service/token.service';
 
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {

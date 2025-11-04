@@ -3,8 +3,8 @@ import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, Observable, throwError } from 'rxjs';
-import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
-import { TokenService } from 'src/app/modules/shared/services/token-service/token.service';
+import { timingConst } from 'src/app/core/enums/toastr-timing.enum';
+import { TokenService } from 'src/app/core/services/token-service/token.service';
 
 @Injectable({
   providedIn: 'root'
