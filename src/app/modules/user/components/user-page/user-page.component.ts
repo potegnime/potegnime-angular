@@ -8,8 +8,10 @@ import { ToastrService } from 'ngx-toastr';
 import { CacheService } from 'src/app/modules/shared/services/cache-service/cache.service';
 import { timingConst } from 'src/app/modules/shared/enums/toastr-timing.enum';
 import { LoadingSpinnerComponent } from 'src/app/modules/shared/components/loading-spinner/loading-spinner.component';
-import { NgClass } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 import { SudoNavComponent } from 'src/app/modules/sudo/components/sudo-nav/sudo-nav.component';
+import { UserModel } from 'src/app/modules/shared/models/user.interface';
+import { GetUserModel } from 'src/app/modules/shared/models/get-user.interface';
 
 // TODO
 // Don't load no-pfp.png if user has profile picture (see network requests, it loads no-pfp.png first and then the actual profile picture)
@@ -22,7 +24,7 @@ import { SudoNavComponent } from 'src/app/modules/sudo/components/sudo-nav/sudo-
     selector: 'app-user-page',
     templateUrl: './user-page.component.html',
     styleUrls: ['./user-page.component.scss'],
-    imports: [LoadingSpinnerComponent, NgClass, SudoNavComponent],
+    imports: [LoadingSpinnerComponent, NgClass, SudoNavComponent, DatePipe],
     standalone: true
 })
 export class UserPageComponent implements OnInit {
@@ -34,17 +36,24 @@ export class UserPageComponent implements OnInit {
     private readonly toastr = inject(ToastrService);
     private readonly cacheService = inject(CacheService);
 
+    protected user: UserModel | null = null;
+    protected otherUser: GetUserModel | null = null;
     protected isMyPage: boolean = false;
-    protected token: string | null = null;
-    protected uid: number | null = null;
-    protected username: string | null = null;
     protected profilePictureUrl: string = 'assets/images/no-pfp.png';
-    protected role: string | null = null;
-    protected joined: string | null = null;
     protected isLoading: boolean = true;
 
-    public get roleName(): string {
-        switch (this.role) {
+    public get displayUserName(): string | undefined {
+        if (this.isMyPage) return this.user?.username;
+        else return this.otherUser?.username;
+    }
+
+    public get displayJoined(): string | undefined {
+        if (this.isMyPage) return this.user?.joined;
+        else return this.otherUser?.joined;
+    }
+
+    public get displayRole(): string {
+        switch (this.user?.role) {
             case 'admin':
                 return 'Administrator';
             case 'uploader':
@@ -56,31 +65,19 @@ export class UserPageComponent implements OnInit {
 
     public ngOnInit(): void {
         this.route.params.subscribe(params => {
-            this.token = this.tokenService.getToken();
-            if (!this.token) {
+            const loggedInUser: UserModel | null = this.userService.getUserInfoFromToken();
+            if (!loggedInUser) {
                 this.authService.unauthorizedHandler();
             }
 
             const urlUid: number | null = parseInt(this.router.url.split('/')[2]);
-            if (!urlUid) {
-                const decodedToken = this.tokenService.decodeToken();
-                if (decodedToken) {
-                    this.router.navigate(['u', decodedToken.uid]);
-                } else {
-                    this.authService.unauthorizedHandler();
-                }
-            }
-
-            const decodedToken = this.tokenService.decodeToken();
-            if (decodedToken) {
-                this.isMyPage = decodedToken.uid == urlUid;
-                if (this.isMyPage) {
-                    this.getCompleteUserData(decodedToken.uid);
-                } else {
-                    this.getCompleteUserData(urlUid);
-                }
+            this.isMyPage = loggedInUser.uid == urlUid;
+            if (this.isMyPage && urlUid) {
+                this.user = loggedInUser;
+                if (this.user?.hasPfp) this.setPfp(this.user.uid);
+                this.isLoading = false;
             } else {
-                this.authService.unauthorizedHandler();
+                this.getUserData(urlUid);
             }
         });
     }
@@ -93,15 +90,14 @@ export class UserPageComponent implements OnInit {
         reader.readAsDataURL(image);
     }
 
-    protected getCompleteUserData(id: number): void {
-        this.userService.getUserById(id).subscribe({
-            next: (user) => {
-                if (this.isMyPage) {
-                    this.setMyPage(user.uid, user.username, user.joined, user.role);
-                }
-                else {
-                    this.setUserPage(user.uid, user.username, user.joined, user.role);
-                }
+    private getUserData(userId: number): void {
+        this.userService.getUserById(userId).subscribe({
+            next: (user: GetUserModel) => {
+                console.log(user);
+                this.otherUser = user;
+                console.log(this.otherUser);
+                if (this.otherUser?.hasPfp) this.setPfp(this.otherUser.userId);
+                this.isLoading = false;
             },
             error: (error) => {
                 switch (error.status) {
@@ -115,18 +111,20 @@ export class UserPageComponent implements OnInit {
                 }
             }
         });
+    }
 
+    private setPfp(userId: number): void {
         // Get profile picture
         // Wait 0.5 second to avoid unnecessary double api calls for profile picture - other component already has it cached
         setTimeout(() => {
-            const cachedProfilePicture = this.cacheService.get(id.toString());
+            const cachedProfilePicture = this.cacheService.get(userId.toString());
             if (cachedProfilePicture) {
                 this.createImageFromBlob(cachedProfilePicture);
                 this.isLoading = false;
             } else {
-                this.userService.getUserPfp(id).subscribe({
+                this.userService.getUserPfp(userId).subscribe({
                     next: (response) => {
-                        this.cacheService.put(id.toString(), response);
+                        this.cacheService.put(userId.toString(), response);
                         this.createImageFromBlob(response);
                         this.isLoading = false;
                     },
@@ -137,21 +135,5 @@ export class UserPageComponent implements OnInit {
                 });
             }
         }, 500);
-    }
-
-    protected setMyPage(uid: number, username: string, joined: string, role: string): void {
-        this.uid = uid;
-        this.username = username;
-        this.role = role;
-        this.joined = joined;
-        this.isMyPage = true;
-    }
-
-    protected setUserPage(uid: number, username: string, joined: string, role: string): void {
-        this.uid = uid;
-        this.username = username;
-        this.role = role;
-        this.joined = joined;
-        this.isMyPage = false;
     }
 }

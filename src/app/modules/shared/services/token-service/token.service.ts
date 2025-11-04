@@ -9,9 +9,7 @@ import { AuthHelper } from 'src/app/modules/auth/helpers/auth-helper';
 export class TokenService {
     public getToken(): string | null {
         const token = localStorage.getItem('token');
-        if (!token) {
-            return null;
-        }
+        if (!token) return null;
         return token;
     }
 
@@ -39,6 +37,7 @@ export class TokenService {
                 username: decodedToken.username,
                 email: decodedToken.email,
                 role: decodedToken.role.toLowerCase(),
+                hasPfp:  decodedToken.hasPfp === "true",
                 uploaderRequestStatus: decodedToken.uploaderRequestStatus.toLowerCase(),
                 joined: decodedToken.joined,
                 iss: decodedToken.iss,
@@ -53,6 +52,7 @@ export class TokenService {
 
             return formattedToken;
         } catch (error) {
+            console.error('Error decoding token:', error);
             return null;
         }
     }

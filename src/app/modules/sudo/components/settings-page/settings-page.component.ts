@@ -15,6 +15,7 @@ import { UploaderRequestDto } from 'src/app/modules/user/models/uploader-request
 import { UploaderRequestStatus } from '../../enums/uploader-request-status.enum';
 import { RouterLink } from '@angular/router';
 import { SudoNavComponent } from '../sudo-nav/sudo-nav.component';
+import { UserModel } from 'src/app/modules/shared/models/user.interface';
 
 @Component({
     selector: 'app-settings-page',
@@ -86,37 +87,45 @@ export class SettingsPageComponent implements OnInit {
         if (!this.token) {
             this.authService.unauthorizedHandler();
         }
-        const decodedToken = this.tokenService.decodeToken();
-        if (decodedToken) {
-            if (decodedToken.uploaderRequestStatus) {
-                this.uploaderRequestStatus = decodedToken.uploaderRequestStatus;
+        const user: UserModel = this.userService.getUserInfoFromToken();
+        if (user) {
+            if (user.uploaderRequestStatus) {
+                this.uploaderRequestStatus = user.uploaderRequestStatus;
             }
             // Get user data from JWT
             this.setSettingsPage(
-                decodedToken.username,
-                decodedToken.email
+                user.username,
+                user.email
             );
 
             // Get user pfp
             // Wait 0.5 second to avoid unnecessary double api calls for profile picture - other component already has it cached
             setTimeout(() => {
-                const cachedProfilePicture = this.cacheService.get(decodedToken.uid.toString());
+                const cachedProfilePicture = this.cacheService.get(user.uid.toString());
                 if (cachedProfilePicture) {
                     this.createImageFromBlob(cachedProfilePicture);
                     this.pristineProfilePicture = cachedProfilePicture;
                     return;
                 } else {
-                    this.userService.getUserPfp(decodedToken.uid).subscribe({
+                    this.userService.getUserPfp(user.uid).subscribe({
                         next: (response) => {
-                            this.cacheService.put(decodedToken.uid.toString(), response);
+                            this.cacheService.put(user.uid.toString(), response);
                             this.createImageFromBlob(response);
                             this.pristineProfilePicture = response;
                         },
                         error: (error) => {
-                            this.profilePictureUrl = 'assets/images/no-pfp.png';
-                            this.changeUserDataForm.patchValue({
-                                profilePicture: this.profilePictureUrl
-                            });
+                            switch (error.status) {
+                                case 404:
+                                    this.profilePictureUrl = 'assets/images/no-pfp.png';
+                                    this.changeUserDataForm.patchValue({
+                                        profilePicture: this.profilePictureUrl
+                                    });
+                                    break;
+                                default:
+                                    this.toastr.error('', 'Napaka pri nalaganju profilne slike', { timeOut: timingConst.error });
+                                    break;
+                            }
+
                         }
                     });
                 }

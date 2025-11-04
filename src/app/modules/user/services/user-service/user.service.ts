@@ -8,6 +8,9 @@ import { DeleteProfileDto } from 'src/app/modules/user/models/delete-profile.int
 import { UploaderRequestDto } from '../../models/uploader-request.interface';
 import { BaseHttpService } from 'src/app/core/services/base-http/base-http.service';
 import { TokenService } from 'src/app/modules/shared/services/token-service/token.service';
+import { UserModel } from 'src/app/modules/shared/models/user.interface';
+import { GetUserModel } from 'src/app/modules/shared/models/get-user.interface';
+import { DecodedTokenModel } from 'src/app/modules/shared/models/decoded-token.interface';
 
 @Injectable({
     providedIn: 'root' // TODO - make lazy loaded
@@ -15,12 +18,29 @@ import { TokenService } from 'src/app/modules/shared/services/token-service/toke
 export class UserService extends BaseHttpService {
     private readonly tokenService = inject(TokenService);
 
-    public getUserById(userId: number | string): Observable<any> {
-        return this.getJson<any>(`user/userId?userId=${userId}`);
+    public getUserInfoFromToken(): UserModel {
+        const decodedToken = this.tokenService.decodeToken();
+
+        if (!decodedToken) throw new Error("No token found");
+        const user: UserModel = {
+            uid: decodedToken.uid,
+            username: decodedToken.username,
+            email: decodedToken.email,
+            role: decodedToken.role,
+            hasPfp: decodedToken.hasPfp,
+            joined: decodedToken.joined,
+            uploaderRequestStatus: decodedToken.uploaderRequestStatus
+        };
+
+        return user;
     }
 
-    public getUserByUsername(username: string): Observable<any> {
-        return this.getJson<any>(`user/username?username=${encodeURIComponent(username)}`);
+    public getUserById(userId: number | string): Observable<GetUserModel> {
+        return this.getJson<GetUserModel>(`user/userId?userId=${userId}`);
+    }
+
+    public getUserByUsername(username: string): Observable<GetUserModel> {
+        return this.getJson<GetUserModel>(`user/username?username=${encodeURIComponent(username)}`);
     }
 
     public getUserPfp(userId: number | string): Observable<Blob> {
@@ -55,7 +75,7 @@ export class UserService extends BaseHttpService {
     }
 
     public getLoggedUserId(): number | null {
-        const decodedToken = this.tokenService.decodeToken();
+        const decodedToken: DecodedTokenModel | null = this.tokenService.decodeToken();
         return decodedToken ? decodedToken.uid : null;
     }
 

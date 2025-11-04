@@ -53,12 +53,12 @@
         </div>
       </a>
       <div class="dropdown-menu text-center" aria-labelledby="o-nas-dropdown-link">
-        <a class="dropdown-item" [routerLink]="['/u', this.uid]">Moj profil</a>
+        <a class="dropdown-item" [routerLink]="['/u', this.user!.uid]">Moj profil</a>
         <a class="dropdown-item" routerLink="/nastavitve">Nastavitve</a>
-        @if (isAdmin || isUploader) {
+        @if (user?.role === 'admin' || user?.role === 'uploader') {
           <a class="dropdown-item" routerLink="/ustvari">Ustvari torrent</a>
         }
-        @if (isAdmin) {
+        @if (user?.role === 'admin') {
           <a class="dropdown-item" routerLink="/admin">Administracija</a>
         }
         <a class="dropdown-item" id="logout-dropdown" (click)="logout()">Odjava</a>
