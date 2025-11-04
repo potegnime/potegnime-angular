@@ -58,9 +58,6 @@ export class SearchBarSearchComponent implements OnInit, OnDestroy {
                         // Cannot use potegnime-scraper - display native only
                         this.toastr.error('', 'Storitev trenutno ni na voljo', { timeOut: timingConst.error });
                         break;
-                    default:
-                        this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
-                        break;
                 }
             }
         });

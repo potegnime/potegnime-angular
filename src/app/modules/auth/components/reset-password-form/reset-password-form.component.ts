@@ -111,8 +111,6 @@ export class ResetPasswordFormComponent implements OnInit {
             // Save token and redirect
             localStorage.setItem('token', resp.token);
             this.router.navigate(['/']);
-          } else {
-            this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
           }
         },
         error: (err) => {
@@ -121,16 +119,12 @@ export class ResetPasswordFormComponent implements OnInit {
             case 400:
               // Token expired or invalid
               // Check if message is present and can be displayed
+              // TODO - generalize this across the app
               if (err.error.message && err.error.errorCode == 1) {
                 this.toastr.error('', `${err.error.message}`, { timeOut: timingConst.long });
-              } else {
-                this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
               }
 
               this.router.navigate(['/']);
-              break;
-            default:
-              this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
               break;
           }
         },

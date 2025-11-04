@@ -114,9 +114,6 @@ export class AdministrationPageComponent implements OnInit {
                         this.toastr.success('', 'Izbrana serija dnvea uspešno nastavljena', { timeOut: timingConst.success });
                     }
                 },
-                error: (error) => {
-                    this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
-                }
             });
         } else {
             for (const controlName of Object.keys(this.setRecommendationForm.controls)) {
@@ -143,9 +140,6 @@ export class AdministrationPageComponent implements OnInit {
                     name: ''
                 });
             },
-            error: (error: any) => {
-                this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
-            }
         })
     }
 
@@ -180,9 +174,6 @@ export class AdministrationPageComponent implements OnInit {
                         case 404:
                             this.userFound = false;
                             break;
-                        default:
-                            this.toastr.error('Napaka na strežniku');
-                            break;
                     }
                 }
             });
@@ -210,13 +201,6 @@ export class AdministrationPageComponent implements OnInit {
                     this.toastr.success('', `Role za uporabnika ${this.userUsername} uspešno nastavljen na ${this.getUiAppropriateControlName(role)}`, { timeOut: timingConst.success });
                     this.onUserControlFormSubmit();
                 },
-                error: (error) => {
-                    switch (error.status) {
-                        default:
-                            this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
-                            break;
-                    }
-                }
             });
         }
     }

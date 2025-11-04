@@ -58,8 +58,6 @@ export class ForgotPasswordFormComponent implements OnInit {
             // SendGrid limit exceeded
             this.isSubmitted = false;
             this.sendGridLimitExceeded = true;
-          } else {
-            this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
           }
         },
       });

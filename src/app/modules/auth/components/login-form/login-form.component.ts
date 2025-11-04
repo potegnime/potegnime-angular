@@ -57,8 +57,6 @@ export class LoginFormComponent implements OnInit {
 
             this.tokenService.setToken(resp.token);
             this.router.navigate(['/']);
-          } else {
-            this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
           }
         },
         error: (err) => {
@@ -67,8 +65,6 @@ export class LoginFormComponent implements OnInit {
             this.showLoginError = true;
             this.loginErrorMessage = err.error.message;
             this.handleErrorAnimation();
-          } else {
-            this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
           }
         },
       });

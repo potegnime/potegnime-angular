@@ -135,8 +135,6 @@ export class RegisterFormComponent implements OnInit {
             // Save token and redirect
             localStorage.setItem('token', resp.token);
             this.router.navigate(['/']);
-          } else {
-            this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
           }
         },
         error: (err) => {
@@ -151,9 +149,6 @@ export class RegisterFormComponent implements OnInit {
             this.showRegisterError = true;
             this.registerErrorMessage = err.error.message;
             this.handleErrorAnimation();
-          } else {
-            // Unexpected error, show toast
-            this.toastr.error('', 'Napaka na strežniku', { timeOut: timingConst.error });
           }
         },
       });
