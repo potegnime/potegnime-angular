@@ -22,8 +22,8 @@
                             "base": "dist/potegnime-angular",
                             "browser": ""
                         },
-                        "baseHref": "./",
-                        "deployUrl": "./",
+                        "baseHref": "/",
+                        "deployUrl": "/",
                         "index": "src/index.html",
                         "polyfills": [
                             "zone.js"
