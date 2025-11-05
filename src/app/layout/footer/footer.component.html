@@ -1,5 +1,4 @@
 <footer class="row">
-
   <div class="col-4 text-center">
     <h3>Torrenti</h3>
     <ul>
@@ -25,14 +24,13 @@
         <a routerLink="/nastavitve">Nastavitve</a>
       </li>
       @if (isAdmin) {
-      <li>
-        <a routerLink="/admin">Administracija</a>
-      </li>
-      }
-      @else {
-      <li>
-        <a routerLink="" (click)="logout()">Odjava</a>
-      </li>
+        <li>
+          <a routerLink="/admin">Administracija</a>
+        </li>
+      } @else {
+        <li>
+          <a routerLink="" (click)="logout()">Odjava</a>
+        </li>
       }
     </ul>
   </div>
@@ -51,5 +49,4 @@
       </li>
     </ul>
   </div>
-
 </footer>

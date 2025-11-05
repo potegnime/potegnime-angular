@@ -9,21 +9,20 @@ import { HeaderComponent } from '@layout/header/header.component';
 import { FooterComponent } from '@layout/footer/footer.component';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    imports: [HeaderComponent, FooterComponent, RouterOutlet, NgClass, ToastrModule],
-    standalone: true
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+  imports: [HeaderComponent, FooterComponent, RouterOutlet, NgClass, ToastrModule],
+  standalone: true
 })
 export class AppComponent {
-    private readonly router = inject(Router);
-    private readonly authService = inject(AuthService);
-    public isLoggedIn: boolean = false;
+  private readonly router = inject(Router);
+  private readonly authService = inject(AuthService);
+  public isLoggedIn: boolean = false;
 
-    constructor() {
-        this.router.events.pipe(
-            filter(event => event instanceof NavigationEnd)).subscribe(() => {
-                this.isLoggedIn = this.authService.verifyToken();
-            })
-    }
+  constructor() {
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
+      this.isLoggedIn = this.authService.verifyToken();
+    });
+  }
 }

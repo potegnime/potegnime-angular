@@ -6,12 +6,24 @@ same issue on register and reset page
 -->
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <div>
-    <input type="text" id="username" name="username" placeholder="Uporabniško ime" required
-      formControlName="username">
+    <input
+      type="text"
+      id="username"
+      name="username"
+      placeholder="Uporabniško ime"
+      required
+      formControlName="username"
+    />
   </div>
   <div class="password-container">
-    <input type="{{ showPassword ? 'text' : 'password' }}" id="password" name="password" placeholder="Geslo"
-      required formControlName="password">
+    <input
+      type="{{ showPassword ? 'text' : 'password' }}"
+      id="password"
+      name="password"
+      placeholder="Geslo"
+      required
+      formControlName="password"
+    />
     <span class="toggle-password" (click)="togglePasswordVisibility()">
       <i class="eye-icon fa-solid" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
     </span>
@@ -31,5 +43,5 @@ same issue on register and reset page
 <p class="url-white">Še nimaš računa? <a routerLink="/registracija">Registriraj se!</a></p>
 
 @if (isSubmitting) {
-    <app-loading-spinner [active]="isSubmitting" [overlay]="true"></app-loading-spinner>
+  <app-loading-spinner [active]="isSubmitting" [overlay]="true"></app-loading-spinner>
 }

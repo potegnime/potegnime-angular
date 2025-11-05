@@ -1,3 +1,3 @@
 export interface UpdateEmailDto {
-    email: string;
+  email: string;
 }

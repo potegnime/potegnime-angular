@@ -1,3 +1,3 @@
 export interface TorrentCategories {
-    [key: string]: string[];
+  [key: string]: string[];
 }

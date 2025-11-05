@@ -5,7 +5,7 @@
 <div class="mb-2">
   <div class="row">
     <div class="col-1 img-cont">
-      <img id="question-icon" src="assets/images/question-icon.png" alt="O rezultatih">
+      <img id="question-icon" src="assets/images/question-icon.png" alt="O rezultatih" />
     </div>
     <div class="col-11 center-cont">
       <p>Vir podatkov: <a href="https://www.themoviedb.org/" target="_blank">TMDB</a></p>
@@ -16,8 +16,12 @@
 <div class="row control-container">
   <div class="col-4 sel-cont">
     <label for="sectionSelect">Prikaži</label>
-    <select name="sectionSelect" id="sectionSelect" class="select"
-      (change)="onSectionDropdownChanged($event.target)">
+    <select
+      name="sectionSelect"
+      id="sectionSelect"
+      class="select"
+      (change)="onSectionDropdownChanged($event.target)"
+    >
       <option value="popular">Popularno</option>
       <option value="nowPlaying">Zdaj v kinu</option>
       <option value="topRated">Najbolj ocenjeno</option>
@@ -28,14 +32,24 @@
   </div>
   <div class="col-4 sel-cont">
     <label for="langSelect">Jezik</label>
-    <select name="langSelect" id="langSelect" class="select" (change)="updateLanguage($event.target)">
+    <select
+      name="langSelect"
+      id="langSelect"
+      class="select"
+      (change)="updateLanguage($event.target)"
+    >
       <option value="sl-SI" selected>Slovenščina</option>
       <option value="en-US">Angleščina</option>
     </select>
   </div>
   <div class="col-4 sel-cont">
     <label for="regionSelect">Regija</label>
-    <select name="regionSelect" id="regionSelect" class="select" (change)="updateRegion($event.target)">
+    <select
+      name="regionSelect"
+      id="regionSelect"
+      class="select"
+      (change)="updateRegion($event.target)"
+    >
       <option value="sl-SI" selected>Slovenija</option>
       <option value="en-US">Z.D.A.</option>
     </select>
@@ -49,12 +63,16 @@
       @for (movie of popularMovies; track movie) {
         <div class="col-md-4 mb-4" (click)="searchTitle(movie.title)">
           <div class="card" title="{{ movie.description }}">
-            <img [src]="posterUrl + movie.imageUrl" class="card-img-top" [alt]="movie.title">
+            <img [src]="posterUrl + movie.imageUrl" class="card-img-top" [alt]="movie.title" />
             <div class="card-body">
-              <h5 class="card-title">{{movie.title}}</h5>
-              <p class="card-text">{{movie.description}}</p>
-              <p class="card-text"><small>Datum izdaje: {{movie.releaseDate | date: 'd.M.y' }}</small></p>
-              <p class="card-text"><small>Kategorije: {{movie.genres.join(', ')}}</small></p>
+              <h5 class="card-title">{{ movie.title }}</h5>
+              <p class="card-text">{{ movie.description }}</p>
+              <p class="card-text">
+                <small>Datum izdaje: {{ movie.releaseDate | date: 'd.M.y' }}</small>
+              </p>
+              <p class="card-text">
+                <small>Kategorije: {{ movie.genres.join(', ') }}</small>
+              </p>
             </div>
           </div>
         </div>
@@ -66,7 +84,6 @@
   }
 </div>
 
-
 <div class="container mt-4">
   <h3 class="sectionTitle" id="nowPlaying">Zdaj v kinu</h3>
   @if (nowPlayingMovies) {
@@ -74,12 +91,16 @@
       @for (movie of nowPlayingMovies; track movie) {
         <div class="col-md-4 mb-4" (click)="searchTitle(movie.title)">
           <div class="card" title="{{ movie.description }}">
-            <img [src]="posterUrl + movie.imageUrl" class="card-img-top" [alt]="movie.title">
+            <img [src]="posterUrl + movie.imageUrl" class="card-img-top" [alt]="movie.title" />
             <div class="card-body">
-              <h5 class="card-title">{{movie.title}}</h5>
-              <p class="card-text">{{movie.description}}</p>
-              <p class="card-text"><small>Datum izdaje: {{movie.releaseDate | date: 'd.M.y' }}</small></p>
-              <p class="card-text"><small>Kategorije: {{movie.genres.join(', ')}}</small></p>
+              <h5 class="card-title">{{ movie.title }}</h5>
+              <p class="card-text">{{ movie.description }}</p>
+              <p class="card-text">
+                <small>Datum izdaje: {{ movie.releaseDate | date: 'd.M.y' }}</small>
+              </p>
+              <p class="card-text">
+                <small>Kategorije: {{ movie.genres.join(', ') }}</small>
+              </p>
             </div>
           </div>
         </div>
@@ -91,7 +112,6 @@
   }
 </div>
 
-
 <div class="container mt-4">
   <h3 class="sectionTitle" id="topRated">Najbolj ocenjeno</h3>
   @if (topRatedMovies) {
@@ -99,12 +119,16 @@
       @for (movie of topRatedMovies; track movie) {
         <div class="col-md-4 mb-4" (click)="searchTitle(movie.title)">
           <div class="card" title="{{ movie.description }}">
-            <img [src]="posterUrl + movie.imageUrl" class="card-img-top" [alt]="movie.title">
+            <img [src]="posterUrl + movie.imageUrl" class="card-img-top" [alt]="movie.title" />
             <div class="card-body">
-              <h5 class="card-title">{{movie.title}}</h5>
-              <p class="card-text">{{movie.description}}</p>
-              <p class="card-text"><small>Datum izdaje: {{movie.releaseDate | date: 'd.M.y' }}</small></p>
-              <p class="card-text"><small>Kategorije: {{movie.genres.join(', ')}}</small></p>
+              <h5 class="card-title">{{ movie.title }}</h5>
+              <p class="card-text">{{ movie.description }}</p>
+              <p class="card-text">
+                <small>Datum izdaje: {{ movie.releaseDate | date: 'd.M.y' }}</small>
+              </p>
+              <p class="card-text">
+                <small>Kategorije: {{ movie.genres.join(', ') }}</small>
+              </p>
             </div>
           </div>
         </div>
@@ -123,12 +147,16 @@
       @for (movie of upcomingMovies; track movie) {
         <div class="col-md-4 mb-4" (click)="searchTitle(movie.title)">
           <div class="card" title="{{ movie.description }}">
-            <img [src]="posterUrl + movie.imageUrl" class="card-img-top" [alt]="movie.title">
+            <img [src]="posterUrl + movie.imageUrl" class="card-img-top" [alt]="movie.title" />
             <div class="card-body">
-              <h5 class="card-title">{{movie.title}}</h5>
-              <p class="card-text">{{movie.description}}</p>
-              <p class="card-text"><small>Datum izdaje: {{movie.releaseDate | date: 'd.M.y' }}</small></p>
-              <p class="card-text"><small>Kategorije: {{movie.genres.join(', ')}}</small></p>
+              <h5 class="card-title">{{ movie.title }}</h5>
+              <p class="card-text">{{ movie.description }}</p>
+              <p class="card-text">
+                <small>Datum izdaje: {{ movie.releaseDate | date: 'd.M.y' }}</small>
+              </p>
+              <p class="card-text">
+                <small>Kategorije: {{ movie.genres.join(', ') }}</small>
+              </p>
             </div>
           </div>
         </div>
@@ -147,11 +175,13 @@
       @for (movie of trendingMovies; track movie) {
         <div class="col-md-4 mb-4" (click)="searchTitle(movie.title)">
           <div class="card" title="{{ movie.description }}">
-            <img [src]="posterUrl + movie.imageUrl" class="card-img-top" [alt]="movie.title">
+            <img [src]="posterUrl + movie.imageUrl" class="card-img-top" [alt]="movie.title" />
             <div class="card-body">
-              <h5 class="card-title">{{movie.title}}</h5>
-              <p class="card-text">{{movie.description}}</p>
-              <p class="card-text"><small>Kategorije: {{movie.genres.join(', ')}}</small></p>
+              <h5 class="card-title">{{ movie.title }}</h5>
+              <p class="card-text">{{ movie.description }}</p>
+              <p class="card-text">
+                <small>Kategorije: {{ movie.genres.join(', ') }}</small>
+              </p>
             </div>
           </div>
         </div>
@@ -170,11 +200,13 @@
       @for (movie of trendingTvShows; track movie) {
         <div class="col-md-4 mb-4" (click)="searchTitle(movie.title)">
           <div class="card" title="{{ movie.description }}">
-            <img [src]="posterUrl + movie.imageUrl" class="card-img-top" [alt]="movie.title">
+            <img [src]="posterUrl + movie.imageUrl" class="card-img-top" [alt]="movie.title" />
             <div class="card-body">
-              <h5 class="card-title">{{movie.title}}</h5>
-              <p class="card-text">{{movie.description}}</p>
-              <p class="card-text"><small>Kategorije: {{movie.genres.join(', ')}}</small></p>
+              <h5 class="card-title">{{ movie.title }}</h5>
+              <p class="card-text">{{ movie.description }}</p>
+              <p class="card-text">
+                <small>Kategorije: {{ movie.genres.join(', ') }}</small>
+              </p>
             </div>
           </div>
         </div>

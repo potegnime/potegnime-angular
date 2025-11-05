@@ -67,7 +67,7 @@ export class LoginFormComponent implements OnInit {
             this.loginErrorMessage = err.error.message;
             this.handleErrorAnimation();
           }
-        },
+        }
       });
     }
   }

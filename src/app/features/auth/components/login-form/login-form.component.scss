@@ -2,110 +2,110 @@
 
 // Form
 form {
-    margin: 30px 0;
+  margin: 30px 0;
 }
 
-.password-container input[type="text"],
-.password-container input[type="password"] {
-    width: 100%;
-    padding-right: 45px;
+.password-container input[type='text'],
+.password-container input[type='password'] {
+  width: 100%;
+  padding-right: 45px;
 }
 
 // Input fields
-input[type="text"],
-input[type="password"] {
-    box-sizing: border-box;
-    width: 100%;
-    color: white;
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: transparent;
-    border: 2px solid var(--button-background);
+input[type='text'],
+input[type='password'] {
+  box-sizing: border-box;
+  width: 100%;
+  color: white;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: transparent;
+  border: 2px solid var(--button-background);
 }
 
 // Toggle password visibility
 .password-container {
-    position: relative;
+  position: relative;
 }
 
 .password-container input {
-    width: 200px;
+  width: 200px;
 }
 
 .password-container i {
-    display: inline;
-    position: absolute;
-    top: 100%;
-    margin-left: -50px;
-    transform: translateY(-50%);
-    cursor: pointer;
+  display: inline;
+  position: absolute;
+  top: 100%;
+  margin-left: -50px;
+  transform: translateY(-50%);
+  cursor: pointer;
 }
 
 .toggle-password {
-    position: absolute;
-    top: 42%;
-    right: -15px;
-    transform: translateY(-50%);
-    cursor: pointer;
+  position: absolute;
+  top: 42%;
+  right: -15px;
+  transform: translateY(-50%);
+  cursor: pointer;
 }
 
 .eye-icon {
-    color: var(--button-background);
+  color: var(--button-background);
 }
 
 button.login-button {
-    width: 150px;
-    padding: 10px 20px;
-    background: linear-gradient(var(--dark-purple), var(--light-purple) 100%);
-    border-radius: 20px;
-    border: none;
-    color: white;
-    font-weight: 600;
-    padding: 10px 20px;
-    cursor: pointer;
+  width: 150px;
+  padding: 10px 20px;
+  background: linear-gradient(var(--dark-purple), var(--light-purple) 100%);
+  border-radius: 20px;
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 10px 20px;
+  cursor: pointer;
 }
 
 button.login-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .login-error {
-    margin-top: 10px;
-    color: var(--red-primary);
+  margin-top: 10px;
+  color: var(--red-primary);
 }
 
 @media (max-width: 768px) {
-    button.login-button {
-        width: 100%;
-    }
+  button.login-button {
+    width: 100%;
+  }
 }
 
 @keyframes shake {
-    0% {
-        transform: translateX(0);
-    }
+  0% {
+    transform: translateX(0);
+  }
 
-    25% {
-        transform: translateX(-5px);
-    }
+  25% {
+    transform: translateX(-5px);
+  }
 
-    50% {
-        transform: translateX(5px);
-    }
+  50% {
+    transform: translateX(5px);
+  }
 
-    75% {
-        transform: translateX(-5px);
-    }
+  75% {
+    transform: translateX(-5px);
+  }
 
-    100% {
-        transform: translateX(0);
-    }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .login-error.shake {
-    animation: shake 0.3s ease-in-out;
+  animation: shake 0.3s ease-in-out;
 }

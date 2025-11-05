@@ -22,6 +22,6 @@ export class TermsPageComponent implements OnInit {
       if (event instanceof NavigationEnd) {
         this.isLoggedIn = this.authService.verifyToken();
       }
-    })
+    });
   }
 }

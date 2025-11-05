@@ -115,7 +115,8 @@ export class RegisterFormComponent implements OnInit {
     // Terms validation
     if (!this.registerForm?.value.agreeToTerms) {
       this.showRegisterError = true;
-      this.registerErrorMessage = 'Za nadaljevanje je potrebno strinjanje s spošnimi pogoji uporabe';
+      this.registerErrorMessage =
+        'Za nadaljevanje je potrebno strinjanje s spošnimi pogoji uporabe';
       this.handleErrorAnimation();
       return;
     }
@@ -151,7 +152,7 @@ export class RegisterFormComponent implements OnInit {
             this.registerErrorMessage = err.error.message;
             this.handleErrorAnimation();
           }
-        },
+        }
       });
     }
   }

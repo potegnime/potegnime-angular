@@ -12,13 +12,16 @@
       <tr>
         <td>
           <ul class="list-unstyled">
-            @for (movie of popularMovies | slice:0:5; track movie) {
-              <li
-                class="d-flex align-items-start mb-2 li-movie" (click)="searchTitle(movie.title)">
-                <img [src]="posterUrl + movie.imageUrl" class="img-fluid mr-2" alt="{{movie.title}}">
+            @for (movie of popularMovies | slice: 0 : 5; track movie) {
+              <li class="d-flex align-items-start mb-2 li-movie" (click)="searchTitle(movie.title)">
+                <img
+                  [src]="posterUrl + movie.imageUrl"
+                  class="img-fluid mr-2"
+                  alt="{{ movie.title }}"
+                />
                 <div class="m-auto">
-                  <h5 class="mb-0">{{movie.title}}</h5>
-                  <p class="genres">{{movie.genres.join(', ')}}</p>
+                  <h5 class="mb-0">{{ movie.title }}</h5>
+                  <p class="genres">{{ movie.genres.join(', ') }}</p>
                 </div>
               </li>
             }
@@ -29,13 +32,16 @@
         </td>
         <td>
           <ul class="list-unstyled">
-            @for (movie of topRatedMovies | slice:0:5; track movie) {
-              <li
-                class="d-flex align-items-start mb-2 li-movie" (click)="searchTitle(movie.title)">
-                <img [src]="posterUrl + movie.imageUrl" class="img-fluid mr-2" alt="{{movie.title}}">
+            @for (movie of topRatedMovies | slice: 0 : 5; track movie) {
+              <li class="d-flex align-items-start mb-2 li-movie" (click)="searchTitle(movie.title)">
+                <img
+                  [src]="posterUrl + movie.imageUrl"
+                  class="img-fluid mr-2"
+                  alt="{{ movie.title }}"
+                />
                 <div class="m-auto">
-                  <h5 class="mb-0">{{movie.title}}</h5>
-                  <p class="genres">{{movie.genres.join(', ')}}</p>
+                  <h5 class="mb-0">{{ movie.title }}</h5>
+                  <p class="genres">{{ movie.genres.join(', ') }}</p>
                 </div>
               </li>
             }
@@ -46,13 +52,16 @@
         </td>
         <td>
           <ul class="list-unstyled">
-            @for (movie of nowPlayingMovies | slice:0:5; track movie) {
-              <li
-                class="d-flex align-items-start mb-2 li-movie" (click)="searchTitle(movie.title)">
-                <img [src]="posterUrl + movie.imageUrl" class="img-fluid mr-2" alt="{{movie.title}}">
+            @for (movie of nowPlayingMovies | slice: 0 : 5; track movie) {
+              <li class="d-flex align-items-start mb-2 li-movie" (click)="searchTitle(movie.title)">
+                <img
+                  [src]="posterUrl + movie.imageUrl"
+                  class="img-fluid mr-2"
+                  alt="{{ movie.title }}"
+                />
                 <div class="m-auto">
-                  <h5 class="mb-0">{{movie.title}}</h5>
-                  <p class="genres">{{movie.genres.join(', ')}}</p>
+                  <h5 class="mb-0">{{ movie.title }}</h5>
+                  <p class="genres">{{ movie.genres.join(', ') }}</p>
                 </div>
               </li>
             }

@@ -35,11 +35,11 @@ export class ResetPasswordFormComponent implements OnInit {
   public ngOnInit(): void {
     this.resetPasswordForm = this.formBuilder.group({
       password: ['', Validators.required],
-      passwordConfirm: ['', Validators.required],
+      passwordConfirm: ['', Validators.required]
     });
 
     // Check if token is present in query params
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       this.token = params['token'] || null;
       if (!this.token) {
         // No need to display toast here, the only way to get to this page is through email link
@@ -101,7 +101,7 @@ export class ResetPasswordFormComponent implements OnInit {
       const resetPasswordDto: ResetPasswordDto = {
         password: this.resetPasswordForm.value.password,
         token: this.token
-      }
+      };
 
       this.authService.resetPassword(resetPasswordDto).subscribe({
         next: (resp) => {
@@ -128,7 +128,7 @@ export class ResetPasswordFormComponent implements OnInit {
               this.router.navigate(['/']);
               break;
           }
-        },
+        }
       });
     }
   }

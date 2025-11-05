@@ -5,32 +5,30 @@
   <div class="d-flex justify-content-center my-4">
     <app-loading-spinner [active]="isLoading" [overlay]="false"></app-loading-spinner>
   </div>
-}
-@else {
-<div class="row container-profile" [ngClass]="{'mt-2': !isMyPage}">
-  <div class="row profile-info">
+} @else {
+  <div class="row container-profile" [ngClass]="{ 'mt-2': !isMyPage }">
+    <div class="row profile-info">
+      <div class="row user-data mb-3">
+        <div class="col-12 col-lg-3 img-cont">
+          <img
+            [src]="profilePictureUrl"
+            [alt]="displayUserName"
+            [title]="displayUserName"
+            class="profile-pic"
+            width="200"
+            height="200"
+          />
+        </div>
 
-    <div class="row user-data mb-3">
-
-      <div class="col-12 col-lg-3 img-cont">
-        <img
-          [src]="profilePictureUrl"
-          [alt]="displayUserName"
-          [title]="displayUserName"
-          class="profile-pic"
-          width="200"
-          height="200">
-      </div>
-
-      <div class="col-12 col-lg-9 name-cont">
-        <div class="username-cont">
-          <h3 class=" m-0 p-0 username">{{ displayUserName }}</h3>
-          <p class="role mt-1">{{ displayRole }}</p>
-          <div class="title">Pridružil dne</div>
-          <div class="value">{{ displayJoined | date: 'd.M.y' }}</div>
+        <div class="col-12 col-lg-9 name-cont">
+          <div class="username-cont">
+            <h3 class="m-0 p-0 username">{{ displayUserName }}</h3>
+            <p class="role mt-1">{{ displayRole }}</p>
+            <div class="title">Pridružil dne</div>
+            <div class="value">{{ displayJoined | date: 'd.M.y' }}</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 }

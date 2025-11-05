@@ -6,193 +6,192 @@
   Global styles
 */
 :root {
-    // Basic colors
-    --dark-purple: #590E87;
-    --light-purple: #9E00FF;
-    --white: #ffffff;
-    --black: #000000;
-    --lightgray: #b3b3b3;
-    --darkgray: #5d5d5d;
-    --red-primary: #ff0000;
-    --red-secondary: #ff6c6c;
-    --green-primary: #00ff00;
-    --green-icon: #21b21d;
-    --green-secondary: #e5f8f0;
-    --blue: #0d6efd;
-    --dark-blue: #0a58ca;
-    --tpb-color: #AF7A53;
-    --tpb-color-hover: #8F5F3B;
-    --yts-color: #6AC045;
-    --yts-color-hover: #4E8A2E;
-    --torrent-project-color: #4a7cd1;
-    --torrent-project-color-hover: #375fa3;
-    --eztv-color: #6AC045;
-    --eztv-color-hover: #4E8A2E;
+  // Basic colors
+  --dark-purple: #590e87;
+  --light-purple: #9e00ff;
+  --white: #ffffff;
+  --black: #000000;
+  --lightgray: #b3b3b3;
+  --darkgray: #5d5d5d;
+  --red-primary: #ff0000;
+  --red-secondary: #ff6c6c;
+  --green-primary: #00ff00;
+  --green-icon: #21b21d;
+  --green-secondary: #e5f8f0;
+  --blue: #0d6efd;
+  --dark-blue: #0a58ca;
+  --tpb-color: #af7a53;
+  --tpb-color-hover: #8f5f3b;
+  --yts-color: #6ac045;
+  --yts-color-hover: #4e8a2e;
+  --torrent-project-color: #4a7cd1;
+  --torrent-project-color-hover: #375fa3;
+  --eztv-color: #6ac045;
+  --eztv-color-hover: #4e8a2e;
 
-    // Components
-    --page-background: #121212;
-    --page-component: #1e1e1e;
-    --button-background: #5d5d5d;
-    --button-background-hover: #4d4d4d;
-    --button-background-disabled: #303030;
+  // Components
+  --page-background: #121212;
+  --page-component: #1e1e1e;
+  --button-background: #5d5d5d;
+  --button-background-hover: #4d4d4d;
+  --button-background-disabled: #303030;
 
-    // Toast
-    --toast-error-primary: #ff8a84;
-    --toast-error-secondary: #fd6666;
-    --toast-success-primary: #e5f8f0;
-    --toast-success-secondary: #32b088;
+  // Toast
+  --toast-error-primary: #ff8a84;
+  --toast-error-secondary: #fd6666;
+  --toast-success-primary: #e5f8f0;
+  --toast-success-secondary: #32b088;
 
-    // Border radius
-    --border-radius: 5px;
+  // Border radius
+  --border-radius: 5px;
 }
 
 * {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 h1,
 h2 {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 body {
-    color: var(--white);
-    font-family: 'Open Sans', sans-serif;
-    background-color: var(--page-background);
+  color: var(--white);
+  font-family: 'Open Sans', sans-serif;
+  background-color: var(--page-background);
 }
 
 .page-component {
-    background-color: var(--page-component);
+  background-color: var(--page-component);
 }
 
 // Buttons
 .button {
-    text-decoration: none;
-    color: var(--white);
-    display: block;
-    padding: 5px 10px;
-    background-color: var(--button-background);
-    border-radius: var(--border-radius);
-    transition: background-color 0.1s;
-    border: none;
+  text-decoration: none;
+  color: var(--white);
+  display: block;
+  padding: 5px 10px;
+  background-color: var(--button-background);
+  border-radius: var(--border-radius);
+  transition: background-color 0.1s;
+  border: none;
 }
 
 .button:hover {
-    background-color: var(--button-background-hover);
-    cursor: pointer;
+  background-color: var(--button-background-hover);
+  cursor: pointer;
 }
 
 .button:disabled {
-    background-color: var(--button-background-disabled);
-    cursor: not-allowed;
+  background-color: var(--button-background-disabled);
+  cursor: not-allowed;
 }
 
 // Inputs
 .input {
-    background-color: var(--darkgray);
-    color: var(--white);
-    border: none;
-    border-radius: var(--border-radius);
-    padding: 5px 10px;
-    transition: background-color 0.1s;
+  background-color: var(--darkgray);
+  color: var(--white);
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 5px 10px;
+  transition: background-color 0.1s;
 }
 
 .text-area {
-    background-color: var(--darkgray);
-    color: var(--white);
-    border: none;
-    border-radius: var(--border-radius);
-    padding: 5px 10px;
-    transition: background-color 0.1s;
-    width: 100%;
+  background-color: var(--darkgray);
+  color: var(--white);
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 5px 10px;
+  transition: background-color 0.1s;
+  width: 100%;
 }
 
 .select {
-    background-color: var(--button-background);
-    color: white;
-    text-align: center;
-    padding: 6px 10px;
-    border: none;
-    border-radius: var(--border-radius);
+  background-color: var(--button-background);
+  color: white;
+  text-align: center;
+  padding: 6px 10px;
+  border: none;
+  border-radius: var(--border-radius);
 }
 
 select:hover {
-    background-color: var(--button-background-hover);
-    cursor: pointer;
+  background-color: var(--button-background-hover);
+  cursor: pointer;
 }
-
 
 // Lists
 ul.list {
-    list-style-type: none;
-    padding: 0;
-    margin-bottom: 0;
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 0;
 }
 
 ul.list li {
-    margin: 5px 10px;
-    display: inline-block;
+  margin: 5px 10px;
+  display: inline-block;
 }
 
 // Links
 .url a {
-    color: var(--blue);
+  color: var(--blue);
 }
 
 .url-white a {
-    color: var(--white);
-    text-decoration: underline;
+  color: var(--white);
+  text-decoration: underline;
 }
 
 .url a:hover {
-    color: var(--dark-blue);
-    text-decoration: underline;
+  color: var(--dark-blue);
+  text-decoration: underline;
 }
 
 .url-white a:hover {
-    color: var(--blue);
-    text-decoration: underline;
+  color: var(--blue);
+  text-decoration: underline;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 // Boostrap
 .w-100 {
-    width: 100%;
+  width: 100%;
 }
 
 .w-75 {
-    width: 75%;
+  width: 75%;
 }
 
 // ngx-toastr overrides
 .toast-error {
-    box-shadow: none !important;
+  box-shadow: none !important;
 }
 
 .ngx-toastr {
-    box-shadow: none !important;
+  box-shadow: none !important;
 }
 
 // Loading spinner overlay
 .spinner-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 9999;
-    pointer-events: all;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  pointer-events: all;
 }
 
 // disable page scroll when spinner is active
 body.no-scroll {
-    overflow: hidden !important;
-    touch-action: none;
+  overflow: hidden !important;
+  touch-action: none;
 }

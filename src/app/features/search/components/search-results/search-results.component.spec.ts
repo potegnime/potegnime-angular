@@ -3,19 +3,19 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchResultsComponent } from './search-results.component';
 
 describe('SearchPageComponent', () => {
-    let component: SearchResultsComponent;
-    let fixture: ComponentFixture<SearchResultsComponent>;
+  let component: SearchResultsComponent;
+  let fixture: ComponentFixture<SearchResultsComponent>;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            declarations: [SearchResultsComponent]
-        });
-        fixture = TestBed.createComponent(SearchResultsComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [SearchResultsComponent]
     });
+    fixture = TestBed.createComponent(SearchResultsComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

@@ -23,6 +23,6 @@ export const appConfig: ApplicationConfig = {
       provide: HTTP_INTERCEPTORS,
       useClass: ApiInterceptor,
       multi: true
-    },
+    }
   ]
 };

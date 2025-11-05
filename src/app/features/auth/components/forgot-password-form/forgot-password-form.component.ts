@@ -27,13 +27,15 @@ export class ForgotPasswordFormComponent implements OnInit {
 
   public ngOnInit(): void {
     this.forgotPasswordForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]]
     });
 
     const forgotPasswordTimeout = AuthResetHelper.getForgotPasswordTimeout();
     if (forgotPasswordTimeout) {
       if (new Date() < forgotPasswordTimeout) {
-        const minutesLeft = Math.ceil((forgotPasswordTimeout.getTime() - new Date().getTime()) / 60000);
+        const minutesLeft = Math.ceil(
+          (forgotPasswordTimeout.getTime() - new Date().getTime()) / 60000
+        );
         this.toastr.warning('', this.warningMessage(minutesLeft), { timeOut: timingConst.long });
         this.isSubmitted = true;
       } else {
@@ -60,7 +62,7 @@ export class ForgotPasswordFormComponent implements OnInit {
             this.isSubmitted = false;
             this.sendGridLimitExceeded = true;
           }
-        },
+        }
       });
     }
   }
@@ -79,4 +81,3 @@ export class ForgotPasswordFormComponent implements OnInit {
     }
   }
 }
-

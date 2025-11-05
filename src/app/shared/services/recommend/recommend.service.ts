@@ -8,46 +8,73 @@ import { RecommendationDto } from '@models/recommendation-dto.interface';
 import { BaseHttpService } from '@core/services/base-http/base-http.service';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class RecommendService extends BaseHttpService {
-    public nowPlaying(language: 'sl-SI' | 'en-US', page: number, region: 'SI' | 'US'): Observable<TmdbMovieResponse> {
-        return this.getJson(`recommend/nowPlaying?language=${language}&page=${page}&region=${region}`);
-    }
+  public nowPlaying(
+    language: 'sl-SI' | 'en-US',
+    page: number,
+    region: 'SI' | 'US'
+  ): Observable<TmdbMovieResponse> {
+    return this.getJson(`recommend/nowPlaying?language=${language}&page=${page}&region=${region}`);
+  }
 
-    public popular(language: 'sl-SI' | 'en-US', page: number, region: 'SI' | 'US'): Observable<TmdbMovieResponse> {
-        return this.getJson(`recommend/popular?language=${language}&page=${page}&region=${region}`);
-    }
+  public popular(
+    language: 'sl-SI' | 'en-US',
+    page: number,
+    region: 'SI' | 'US'
+  ): Observable<TmdbMovieResponse> {
+    return this.getJson(`recommend/popular?language=${language}&page=${page}&region=${region}`);
+  }
 
-    public topRated(language: 'sl-SI' | 'en-US', page: number, region: 'SI' | 'US'): Observable<TmdbMovieResponse> {
-        return this.getJson(`recommend/topRated?language=${language}&page=${page}&region=${region}`);
-    }
+  public topRated(
+    language: 'sl-SI' | 'en-US',
+    page: number,
+    region: 'SI' | 'US'
+  ): Observable<TmdbMovieResponse> {
+    return this.getJson(`recommend/topRated?language=${language}&page=${page}&region=${region}`);
+  }
 
-    public upcoming(language: 'sl-SI' | 'en-US', page: number, region: 'SI' | 'US'): Observable<TmdbMovieResponse> {
-        return this.getJson(`recommend/upcoming?language=${language}&page=${page}&region=${region}`);
-    }
+  public upcoming(
+    language: 'sl-SI' | 'en-US',
+    page: number,
+    region: 'SI' | 'US'
+  ): Observable<TmdbMovieResponse> {
+    return this.getJson(`recommend/upcoming?language=${language}&page=${page}&region=${region}`);
+  }
 
-    public trendingMovie(timeWindow: 'day' | 'week', language: 'sl-SI' | 'en-US'): Observable<TmdbTrendingResponse> {
-        return this.getJson(`recommend/trendingMovie?language=${language}&timeWindow=${timeWindow}`);
-    }
+  public trendingMovie(
+    timeWindow: 'day' | 'week',
+    language: 'sl-SI' | 'en-US'
+  ): Observable<TmdbTrendingResponse> {
+    return this.getJson(`recommend/trendingMovie?language=${language}&timeWindow=${timeWindow}`);
+  }
 
-    public trendingTv(timeWindow: 'day' | 'week', language: 'sl-SI' | 'en-US'): Observable<TmdbTrendingResponse> {
-        return this.getJson(`recommend/trendingTv?language=${language}&timeWindow=${timeWindow}`);
-    }
+  public trendingTv(
+    timeWindow: 'day' | 'week',
+    language: 'sl-SI' | 'en-US'
+  ): Observable<TmdbTrendingResponse> {
+    return this.getJson(`recommend/trendingTv?language=${language}&timeWindow=${timeWindow}`);
+  }
 
-    public setAdminRecommendation(recommendationDto: RecommendationDto): Observable<AdminRecommendation> {
-        return this.postJson<RecommendationDto, AdminRecommendation>(`recommend`, recommendationDto);
-    }
+  public setAdminRecommendation(
+    recommendationDto: RecommendationDto
+  ): Observable<AdminRecommendation> {
+    return this.postJson<RecommendationDto, AdminRecommendation>(`recommend`, recommendationDto);
+  }
 
-    public getAdminRecommendation(date: string, type: 'movie' | 'series'): Observable<AdminRecommendation> {
-        return this.getJson<AdminRecommendation>(`recommend?date=${date}&type=${type}`);
-    }
+  public getAdminRecommendation(
+    date: string,
+    type: 'movie' | 'series'
+  ): Observable<AdminRecommendation> {
+    return this.getJson<AdminRecommendation>(`recommend?date=${date}&type=${type}`);
+  }
 
-    public deleteAdminRecommendation(date: string, type: 'movie' | 'series'): Observable<any> {
-        return this.deleteJson<any, any>(`recommend?date=${date}&type=${type}`);
-    }
+  public deleteAdminRecommendation(date: string, type: 'movie' | 'series'): Observable<any> {
+    return this.deleteJson<any, any>(`recommend?date=${date}&type=${type}`);
+  }
 
-    public getRandomRecommendation(): Observable<AdminRecommendation> {
-        return this.getJson<AdminRecommendation>(`recommend/random`);
-    }
+  public getRandomRecommendation(): Observable<AdminRecommendation> {
+    return this.getJson<AdminRecommendation>(`recommend/random`);
+  }
 }

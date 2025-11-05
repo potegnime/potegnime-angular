@@ -16,11 +16,11 @@ export class DonatePageComponent implements OnInit {
 
   protected isLoggedIn: boolean = false;
   protected walletAddresses = {
-    'btc': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-    'eth': 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
-    'ltc': 'cccccccccccccccccccccccccccccccccccccccc',
-    'xmr': 'dddddddddddddddddddddddddddddddddddddddd'
-  }
+    btc: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+    eth: 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+    ltc: 'cccccccccccccccccccccccccccccccccccccccc',
+    xmr: 'dddddddddddddddddddddddddddddddddddddddd'
+  };
 
   public ngOnInit(): void {
     this.isLoggedIn = this.authService.verifyToken();
@@ -29,6 +29,8 @@ export class DonatePageComponent implements OnInit {
   protected copyAddress(key: 'btc' | 'eth' | 'ltc' | 'xmr'): void {
     const address: string = this.walletAddresses[key];
     navigator.clipboard.writeText(address);
-    this.toastr.success('', `${key.toUpperCase()} naslov kopiran`, { timeOut: timingConst.success });
+    this.toastr.success('', `${key.toUpperCase()} naslov kopiran`, {
+      timeOut: timingConst.success
+    });
   }
 }

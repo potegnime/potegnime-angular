@@ -1,18 +1,18 @@
 .profile-pic {
-    width: 200px;
-    height: 200px;
-    border-radius: var(--border-radius);
-    margin: 0 auto;
-    display: block;
-    object-fit: cover;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+  width: 200px;
+  height: 200px;
+  border-radius: var(--border-radius);
+  margin: 0 auto;
+  display: block;
+  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 @media (max-width: 992px) {
-    .name-cont {
-        margin: auto;
-        text-align: center;
-    }
+  .name-cont {
+    margin: auto;
+    text-align: center;
+  }
 }

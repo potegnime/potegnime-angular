@@ -1,3 +1,3 @@
 export interface UpdatePfpDto {
-    profilePicFile: File | null;
+  profilePicFile: File | null;
 }

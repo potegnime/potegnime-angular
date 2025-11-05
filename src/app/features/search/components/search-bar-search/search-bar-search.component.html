@@ -1,21 +1,37 @@
 <div class="search-bar">
   <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
     <div class="input-top-row">
-      <input type="text" id="search-input" formControlName="query" placeholder="Iskanje...">
+      <input type="text" id="search-input" formControlName="query" placeholder="Iskanje..." />
       <button type="submit" class="search-button" id="search-button">
-        <img src="assets/images/search-icon.png" class="search-img" alt="Iskanje" width="20px" height="20px">
+        <img
+          src="assets/images/search-icon.png"
+          class="search-img"
+          alt="Iskanje"
+          width="20px"
+          height="20px"
+        />
       </button>
     </div>
 
     <div class="options-search">
-      <input type="button" class="options-button" name="predlagaj" id="predlagaj-button" value="Preseneti me"
-        (click)="searchRandomTitle()">
+      <input
+        type="button"
+        class="options-button"
+        name="predlagaj"
+        id="predlagaj-button"
+        value="Preseneti me"
+        (click)="searchRandomTitle()"
+      />
 
       <div class="dropdown-container">
         <label for="source">Vir</label>
-        <select formControlName="source" (change)="onProviderChange(searchForm.value.source)" class="dropdown">
+        <select
+          formControlName="source"
+          (change)="onProviderChange(searchForm.value.source)"
+          class="dropdown"
+        >
           @for (provider of providers; track provider) {
-            <option [value]="provider">{{translate(provider)}}</option>
+            <option [value]="provider">{{ translate(provider) }}</option>
           }
         </select>
       </div>
@@ -23,10 +39,15 @@
       <div class="dropdown-container">
         <label for="category">Kategorija</label>
         @if (categories && categories.length > 0) {
-          <select (change)="onCategoryChange()" class="dropdown"
-            formControlName="category" id="category" name="category">
+          <select
+            (change)="onCategoryChange()"
+            class="dropdown"
+            formControlName="category"
+            id="category"
+            name="category"
+          >
             @for (category of categories; track category) {
-              <option [value]="category">{{translate(category)}}</option>
+              <option [value]="category">{{ translate(category) }}</option>
             }
           </select>
         }
@@ -34,8 +55,13 @@
 
       <div class="dropdown-container">
         <label for="sort">Sortiranje</label>
-        <select class="dropdown" formControlName="sort" id="sort" name="sort"
-          (change)="onSortChange(sort)">
+        <select
+          class="dropdown"
+          formControlName="sort"
+          id="sort"
+          name="sort"
+          (change)="onSortChange(sort)"
+        >
           <option value="default">Privzeto</option>
           <option value="name-asc">Imenu ↑</option>
           <option value="name-desc">Imenu ↓</option>
@@ -52,6 +78,5 @@
         </select>
       </div>
     </div>
-
   </form>
 </div>

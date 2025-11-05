@@ -1,3 +1,3 @@
 export interface DeleteProfileDto {
-    password: string;
+  password: string;
 }
