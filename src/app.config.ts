@@ -17,7 +17,7 @@ export const appConfig: ApplicationConfig = {
       const configService = inject(ConfigService);
       return configService.loadConfig();
     }),
-    // provideClientHydration(withEventReplay()), // TODO - enable for SSR
+    provideClientHydration(withEventReplay()), // TODO - enable for SSR
     provideToastr(),
     {
       provide: HTTP_INTERCEPTORS,
