@@ -18,8 +18,11 @@
                     "builder": "@angular/build:application",
                     "options": {
                         "browser": "src/main.ts",
-                        "outputPath": "dist/potegnime-angular",
-                        "baseHref": ",/",
+                        "outputPath": {
+                            "base": "dist/potegnime-angular",
+                            "browser": "dist/potegnime-angular"
+                        },
+                        "baseHref": "./",
                         "deployUrl": "./",
                         "index": "src/index.html",
                         "polyfills": [
