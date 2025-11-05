@@ -1,4 +1,4 @@
-# [potegni.me](https://potegni.me) Frontend
+# [potegni.me](https://potegni.me) frontend
 
 To learn more about the project, visit [GitHub organization](https://github.com/potegnime)
 
