@@ -19,7 +19,7 @@ Prerequisites:
 
 Getting started:
 
-- Set `production: false` in `src/environment.ts`. This will use development URLs from `src//assets/config.json`
+- Set `production: false` in `src/environment.ts`. This will use development URLs from `src/assets/config.json`
 - Run the app:
 
 ```
@@ -31,9 +31,23 @@ Browser opens in http://localhost:4200
 
 ## Development guidelines
 
-- Use npm `run format` to format project, or `npm run format:check` to check formatting
+- Use `npm run format` to format project, or `npm run format:check` to check formatting
 - Use @ import syntax defined in `tsconfig.json`
 - Blank line between Angular and app imports
+
+## Deployment
+
+App is deployed on [Cloudflare Pages](https://pages.cloudflare.com/) via the `npm run build:prod` command.
+
+If you want to try out the production build locally:
+
+```
+npm run build:prod
+cd dist/potegnime-angular
+http-server
+```
+
+App will open on http://127.0.0.1:8080/prijava
 
 ## Folder structure
 
@@ -120,7 +134,3 @@ App follows Angular v20 folder structure:
 └── assets
     └── images
 ```
-
-## Deployment
-
-Deployed on [Cloudflare Pages](https://pages.cloudflare.com/)
