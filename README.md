@@ -2,7 +2,7 @@
 
 To learn more about the project, visit [GitHub organization](https://github.com/potegnime)
 
-## Technologies used
+## Overview
 
 - **Framework:** Angular v20
 - **UI Library:** Bootstrap 5
@@ -10,14 +10,14 @@ To learn more about the project, visit [GitHub organization](https://github.com/
 - **Icons:** Font Awesome
 - **Notifications**: Toastr
 
-## Development setup
+## Development
 
 Prerequisites:
 
 - Node.js and npm
 - Angular CLI
 
-Getting started:
+Running the app:
 
 - Set `production: false` in `src/environment.ts`. This will use development URLs from `src/assets/config.json`
 - Run the app:
