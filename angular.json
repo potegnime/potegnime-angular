@@ -17,8 +17,10 @@
                 "build": {
                     "builder": "@angular/build:application",
                     "options": {
+                        "browser": "src/main.ts",
                         "outputPath": "dist/potegnime-angular",
-                        "baseHref": "/",
+                        "baseHref": ",/",
+                        "deployUrl": "./",
                         "index": "src/index.html",
                         "polyfills": [
                             "zone.js"
@@ -36,8 +38,7 @@
                         "scripts": [
                             "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
                         ],
-                        "allowedCommonJsDependencies": [],
-                        "browser": "src/main.ts"
+                        "allowedCommonJsDependencies": []
                     },
                     "configurations": {
                         "production": {
