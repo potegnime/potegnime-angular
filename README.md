@@ -47,7 +47,7 @@ cd dist/potegnime-angular
 http-server
 ```
 
-App will open on http://127.0.0.1:8080/prijava
+App will open on http://127.0.0.1:8080/
 
 ## Folder structure
 
