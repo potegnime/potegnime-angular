@@ -17,9 +17,7 @@
                 "build": {
                     "builder": "@angular/build:application",
                     "options": {
-                        "outputPath": {
-                          "base": "dist/potegnime-angular"
-                        },
+                        "outputPath": "dist/potegnime-angular",
                         "baseHref": "/",
                         "index": "src/index.html",
                         "polyfills": [
