@@ -23,6 +23,7 @@ import { UploaderRequestDto } from '@features/user/models/uploader-request.inter
 import { UploaderRequestStatus } from '@core/enums/uploader-request-status.enum';
 import { SudoNavComponent } from '@features/sudo/components/sudo-nav/sudo-nav.component';
 import { UserModel } from '@models/user.interface';
+import { APP_CONSTANTS } from '@constants/constants';
 
 @Component({
   selector: 'app-settings-page',
@@ -43,10 +44,10 @@ export class SettingsPageComponent implements OnInit {
   protected uid: number | null = null;
   protected username: string | null = null;
   protected email: string | null = null;
-  protected pristineProfilePicture: string | Blob = 'assets/images/no-pfp.png';
+  protected pristineProfilePicture: string | Blob = APP_CONSTANTS.DEFAULT_PFP_PATH;
   protected hasProfilePicture: boolean = false;
   protected selectedProfilePicture: File | null = null;
-  protected profilePictureUrl: string = 'assets/images/no-pfp.png';
+  protected profilePictureUrl: string = APP_CONSTANTS.DEFAULT_PFP_PATH;
   protected pfpChanged: boolean = false;
   protected isUser: boolean = false;
   protected uploaderRequestStatus: UploaderRequestStatus | null = null;
@@ -123,7 +124,7 @@ export class SettingsPageComponent implements OnInit {
             error: (error) => {
               switch (error.status) {
                 case 404:
-                  this.profilePictureUrl = 'assets/images/no-pfp.png';
+                  this.profilePictureUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
                   this.changeUserDataForm.patchValue({
                     profilePicture: this.profilePictureUrl
                   });
@@ -484,7 +485,7 @@ export class SettingsPageComponent implements OnInit {
 
   protected getProfilePictureUrl() {
     if (!this.hasProfilePicture) {
-      return 'assets/images/no-pfp.png';
+      return APP_CONSTANTS.DEFAULT_PFP_PATH;
     } else {
       if (this.selectedProfilePicture) {
         return URL.createObjectURL(this.selectedProfilePicture);

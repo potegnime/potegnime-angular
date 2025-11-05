@@ -19,6 +19,9 @@
       ],
       "@models/*": [
         "src/app/models/*"
+      ],
+      "@constants/*": [
+        "src/app/constants/*"
       ]
     },
     "forceConsistentCasingInFileNames": true,

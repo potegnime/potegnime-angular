@@ -5,6 +5,7 @@ import { AuthService } from '@features/auth/services/auth/auth.service';
 import { UserModel } from '@models/user.interface';
 import { CacheService } from '@core/services/cache/cache.service';
 import { UserService } from '@features/user/services/user/user.service';
+import { APP_CONSTANTS } from '@constants/constants';
 
 @Component({
   selector: 'app-nav',
@@ -20,7 +21,7 @@ export class NavComponent implements OnInit {
   private readonly cacheService = inject(CacheService);
 
   protected user: UserModel | null = null;
-  protected profilePictureUrl: string = 'assets/images/no-pfp.png';
+  protected profilePictureUrl: string = APP_CONSTANTS.DEFAULT_PFP_PATH;
   protected notificationCount: number = 10;
 
   public ngOnInit(): void {
@@ -38,7 +39,7 @@ export class NavComponent implements OnInit {
             this.createImageFromBlob(response);
           },
           error: (error) => {
-            this.profilePictureUrl = 'assets/images/no-pfp.png';
+            this.profilePictureUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
           }
         });
       }

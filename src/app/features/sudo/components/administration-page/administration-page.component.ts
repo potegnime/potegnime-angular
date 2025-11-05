@@ -10,6 +10,7 @@ import { UpdateRoleDto } from '@features/user/models/update-role.interface';
 import { UserService } from '@features/user/services/user/user.service';
 import { AdminService } from '@features/sudo/services/admin/admin.service';
 import { SudoNavComponent } from '@features/sudo/components/sudo-nav/sudo-nav.component';
+import { APP_CONSTANTS } from '@constants/constants';
 
 @Component({
   selector: 'app-administration-page',
@@ -180,7 +181,7 @@ export class AdministrationPageComponent implements OnInit {
               this.createImageFromBlob(response2);
             },
             error: (error2) => {
-              this.userPfpUrl = 'assets/images/no-pfp.png';
+              this.userPfpUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
             }
           });
         },

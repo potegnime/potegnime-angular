@@ -13,10 +13,7 @@ import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/load
 import { SudoNavComponent } from '@features/sudo/components/sudo-nav/sudo-nav.component';
 import { UserModel } from '@models/user.interface';
 import { GetUserModel } from '@models/get-user.interface';
-
-// TODO
-// Don't load no-pfp.png if user has profile picture (see network requests, it loads no-pfp.png first and then the actual profile picture)
-// Probably same issue for nav bar component
+import { APP_CONSTANTS } from '@constants/constants';
 
 // TODO
 // Compress pfp (client side?) before uploading to server, or server side (before saving?)
@@ -40,7 +37,7 @@ export class UserPageComponent implements OnInit {
   protected user: UserModel | null = null;
   protected otherUser: GetUserModel | null = null;
   protected isMyPage: boolean = false;
-  protected profilePictureUrl: string = 'assets/images/no-pfp.png';
+  protected profilePictureUrl: string = APP_CONSTANTS.DEFAULT_PFP_PATH;
   protected isLoading: boolean = true;
 
   public get displayUserName(): string | undefined {
@@ -94,9 +91,7 @@ export class UserPageComponent implements OnInit {
   private getUserData(userId: number): void {
     this.userService.getUserById(userId).subscribe({
       next: (user: GetUserModel) => {
-        console.log(user);
         this.otherUser = user;
-        console.log(this.otherUser);
         if (this.otherUser?.hasPfp) this.setPfp(this.otherUser.userId);
         this.isLoading = false;
       },
@@ -132,7 +127,7 @@ export class UserPageComponent implements OnInit {
             this.isLoading = false;
           },
           error: (error) => {
-            this.profilePictureUrl = 'assets/images/no-pfp.png';
+            this.profilePictureUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
             this.isLoading = false;
           }
         });
