@@ -8,6 +8,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:prod": "ng build --configuration production --base-href ./ --deploy-url ./",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "format": "prettier --write \"src/**/*.{ts,html,scss,json}\"",
