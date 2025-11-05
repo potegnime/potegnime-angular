@@ -20,7 +20,7 @@
                         "browser": "src/main.ts",
                         "outputPath": {
                             "base": "dist/potegnime-angular",
-                            "browser": "dist/potegnime-angular"
+                            "browser": ""
                         },
                         "baseHref": "./",
                         "deployUrl": "./",
