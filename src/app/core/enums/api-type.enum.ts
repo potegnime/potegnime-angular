@@ -1,4 +1,4 @@
 export enum ApiType {
-    Api = 1,
-    Scraper = 2
+  Api = 1,
+  Scraper = 2
 }

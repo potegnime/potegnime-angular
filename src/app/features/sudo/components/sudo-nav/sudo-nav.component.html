@@ -1,0 +1,26 @@
+<nav class="row navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <div class="d-flex">
+      <button class="sudo-button" type="button" [routerLink]="['/u', this.uid]" routerLinkActive="active-link">
+        Moj profil
+      </button>
+      <button class="sudo-button" type="button" routerLink="/nastavitve" routerLinkActive="active-link">
+        Nastavitve
+      </button>
+      @if (isAdmin || isUploader) {
+        <button class="sudo-button" type="button" routerLink="/ustvari" routerLinkActive="active-link">
+          Ustvari torrent
+        </button>
+      }
+      @if (isAdmin) {
+        <button class="sudo-button" type="button" routerLink="/admin" routerLinkActive="active-link">
+          Administracija
+        </button>
+      }
+    </div>
+
+    <div class="d-flex">
+      <button class="sudo-button sudo-logout" type="button" (click)="logout()">Odjava</button>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,185 @@
+<app-search-bar-search class="row"></app-search-bar-search>
+<app-about-results class="row"></app-about-results>
+@if (searchResults.length > 0) {
+  <div class="row search-results mb-4">
+    <table class="dark-table">
+      <thead>
+        <tr>
+          <th scope="col" class="no-select" (click)="sortRowColumnClick('name')">Datoteka</th>
+          <th scope="col" class="text-center no-select" (click)="sortRowColumnClick('uploader')">Uploader</th>
+          <th scope="col" class="text-center no-select" (click)="sortRowColumnClick('size')">Velikost</th>
+          <th scope="col" class="text-center no-select" title="Seeds" (click)="sortRowColumnClick('se')">SE</th>
+          <th scope="col" class="text-center no-select" title="Peers" (click)="sortRowColumnClick('pe')">PE</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (torrent of searchResults; track torrent) {
+          @if (!torrent.expanded) {
+            <tr (click)="toggleRow(torrent)" title="{{ torrent.title }}">
+              <td>
+                <div class="d-flex align-items-center">
+                  <div>
+                    @if (torrent.source.toLowerCase() === 'native') {
+                      <img src="assets/images/logo.png" alt="{{ torrent.title }} Image" width="50" />
+                    }
+                    @if (torrent.source.toLowerCase() === 'none') {
+                      <img
+                        src="assets/images/no-image.png"
+                        alt="{{ torrent.title }} Image"
+                        width="50"
+                        class="mr-2 p-2"
+                      />
+                    }
+                    @if (torrent.source.toLowerCase() === 'thepiratebay') {
+                      <img src="assets/images/tpb.png" alt="{{ torrent.title }} Image" width="50" />
+                    }
+                    @if (torrent.source.toLowerCase() === 'yts') {
+                      <img src="assets/images/yts.png" alt="{{ torrent.title }} Image" width="50" />
+                    }
+                    @if (torrent.source.toLowerCase() === 'eztv') {
+                      <img src="assets/images/eztv.png" alt="{{ torrent.title }} Image" width="50" />
+                    }
+                    @if (torrent.source.toLowerCase() === 'torrentproject') {
+                      <img src="assets/images/torrentproject.png" alt="{{ torrent.title }} Image" width="50" />
+                    }
+                  </div>
+                  <div class="title-container">
+                    <h4>{{ torrent.title }}</h4>
+                  </div>
+                </div>
+              </td>
+              <td
+                [ngClass]="{
+                  native: torrent.source.toLowerCase() === 'native',
+                  tpb: torrent.source.toLowerCase() === 'thepiratebay',
+                  yts: torrent.source.toLowerCase() === 'yts',
+                  eztv: torrent.source.toLowerCase() === 'eztv',
+                  torrentproject: torrent.source.toLowerCase() === 'torrentproject'
+                }"
+              >
+                <a href="{{ getUploaderUrl(torrent) }}" target="_blank">
+                  {{ torrent.source | torrentSource }}
+                </a>
+              </td>
+              <td>{{ torrent.size }}</td>
+              <td>
+                {{ displaySePe(torrent.seeds) }}
+              </td>
+              <td>
+                {{ displaySePe(torrent.peers) }}
+              </td>
+            </tr>
+          }
+          @if (torrent.expanded) {
+            <tr (click)="toggleRow(torrent)" title="{{ torrent.title }}">
+              <td class="m-0 p-0" colspan="5">
+                <div class="expanded-info">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center w-100">
+                      @if (torrent.source.toLowerCase() === 'thepiratebay') {
+                        <img src="assets/images/tpb.png" alt="{{ torrent.title }} Image" width="100" class="mr-3" />
+                      }
+                      @if (torrent.source.toLowerCase() === 'yts') {
+                        <img src="assets/images/yts.png" alt="{{ torrent.title }} Image" width="100" class="mr-3" />
+                      }
+                      @if (torrent.source.toLowerCase() === 'torrentproject') {
+                        <img
+                          src="assets/images/torrentproject.png"
+                          alt="{{ torrent.title }} Image"
+                          width="100"
+                          class="mr-3"
+                        />
+                      }
+                      @if (torrent.source.toLowerCase() === 'eztv') {
+                        <img src="assets/images/eztv.png" alt="{{ torrent.title }} Image" width="50" class="mr-3" />
+                      }
+                      <div class="w-100 title-container">
+                        <h4>
+                          {{ torrent.title }}
+                        </h4>
+                        <div class="d-flex justify-content-between align-items-center">
+                          <div class="expanded-details-container d-flex justify-content-between align-items-center">
+                            <div class="expanded-details">
+                              <p>Velikost</p>
+                              <p>
+                                {{ torrent.size }}
+                              </p>
+                            </div>
+                            <div class="expanded-details">
+                              <p>Seeds</p>
+                              <p>
+                                {{ displaySePe(torrent.seeds) }}
+                              </p>
+                            </div>
+                            <div class="expanded-details">
+                              <p>Peers</p>
+                              <p>
+                                {{ displaySePe(torrent.peers) }}
+                              </p>
+                            </div>
+                            <div class="expanded-details">
+                              <p>Naloženo</p>
+                              <p>
+                                {{ displayTime(torrent.time) }}
+                              </p>
+                            </div>
+                          </div>
+                          <div class="buttons-container">
+                            <button
+                              #copyButton
+                              class="action-button copy-button"
+                              title="Kopiraj magnet link"
+                              (click)="copy($event, copyButton, torrent.url)"
+                            >
+                              <img src="assets/images/copy.png" alt="Kopiraj magnet link" />
+                              <p>
+                                {{ copyText }}
+                              </p>
+                            </button>
+                            <!-- currently not supported - scraper api is to slow, enabled this once on AWS -->
+                            <!-- [disabled]="isDownloadingTorrentFile" -->
+                            <button
+                              disabled
+                              #downloadButton
+                              class="action-button download-button"
+                              title="Potegni ga!"
+                              (click)="download($event, torrent.url, torrent.title)"
+                              [disabled]="true"
+                            >
+                              <img src="assets/images/download-green.png" alt="Potegni ga!" />
+                              <p>
+                                {{ downloadText }}
+                              </p>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          }
+        }
+      </tbody>
+    </table>
+  </div>
+}
+
+@if (displayLoadingSpinner) {
+  <div class="loading-spinner mb-4">
+    <app-loading-spinner [active]="displayLoadingSpinner"></app-loading-spinner>
+  </div>
+}
+
+@if (noResults) {
+  <div class="no-results mb-4">
+    <h3>Ni rezultatov :(</h3>
+  </div>
+}
+
+@if (missingQuery) {
+  <div class="no-results mb-4">
+    <h3>Vnesite izraz za iskanje</h3>
+  </div>
+}

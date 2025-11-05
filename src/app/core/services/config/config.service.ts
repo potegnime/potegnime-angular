@@ -1,17 +1,16 @@
-// ...existing code...
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
-import { ApiType } from '../../enums/api-type.enum';
+
+import { ApiType } from '@core/enums/api-type.enum';
 import { environment } from 'src/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigService {
+  private readonly http = inject(HttpClient);
   private config: any | null = null;
-
-  constructor(private http: HttpClient) { }
 
   async loadConfig(): Promise<void> {
     const path = 'assets/config.json';

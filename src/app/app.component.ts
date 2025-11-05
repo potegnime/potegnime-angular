@@ -1,39 +1,28 @@
-import { Component } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
+import { NgClass } from '@angular/common';
 import { filter } from 'rxjs/operators';
-import { AuthService } from './modules/auth/services/auth-service/auth.service';
-import { DefinedRoutes } from './modules/shared/enums/routes.enum';
+import { ToastrModule } from 'ngx-toastr';
+
+import { AuthService } from '@features/auth/services/auth/auth.service';
+import { HeaderComponent } from '@layout/header/header.component';
+import { FooterComponent } from '@layout/footer/footer.component';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+  imports: [HeaderComponent, FooterComponent, RouterOutlet, NgClass, ToastrModule],
+  standalone: true
 })
 export class AppComponent {
-    title = 'potegni.me';
-    currentPath: string = new URL(window.location.href).pathname;
+  private readonly router = inject(Router);
+  private readonly authService = inject(AuthService);
+  public isLoggedIn: boolean = false;
 
-    public isLoggedIn: boolean = false;
-    public error: boolean = false;
-
-    constructor(
-        private router: Router,
-        private authService: AuthService) {
-        this.router.events
-            .pipe(filter(event => event instanceof NavigationEnd))
-            .subscribe(() => {
-                this.isLoggedIn = this.authService.verifyToken();
-                this.checkCurrentUrlInRoutes();
-            })
-    }
-
-    private checkCurrentUrlInRoutes() {
-        this.currentPath = new URL(window.location.href).pathname.slice(1);
-        if (DefinedRoutes.includes(this.currentPath)) {
-            this.error = false;
-        } else {
-            this.error = true;
-        }
-    }
-
+  constructor() {
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
+      this.isLoggedIn = this.authService.verifyToken();
+    });
+  }
 }

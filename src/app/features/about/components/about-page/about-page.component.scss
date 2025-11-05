@@ -1,0 +1,30 @@
+img {
+  max-width: 100%;
+}
+
+.img-cont {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+h2 {
+  margin-top: 10px;
+}
+
+.hidden-link {
+  color: white;
+}
+
+.hidden-link:hover {
+  color: var(--blue);
+}
+
+address {
+  margin-top: 50px;
+}
+@media (max-width: 992px) {
+  .img-cont {
+    display: none;
+  }
+}

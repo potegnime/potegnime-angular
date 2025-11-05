@@ -1,88 +1,84 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from 'src/app/modules/auth/services/auth-service/auth.service';
-import { CacheService } from 'src/app/modules/shared/services/cache-service/cache.service';
-import { UserService } from 'src/app/modules/user/services/user-service/user.service';
+import { Component, OnInit, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+
+import { AuthService } from '@features/auth/services/auth/auth.service';
+import { UserModel } from '@models/user.interface';
+import { CacheService } from '@core/services/cache/cache.service';
+import { UserService } from '@features/user/services/user/user.service';
+import { APP_CONSTANTS } from '@constants/constants';
 
 @Component({
-    selector: 'app-nav',
-    templateUrl: './nav.component.html',
-    styleUrls: ['./nav.component.scss']
+  selector: 'app-nav',
+  templateUrl: './nav.component.html',
+  styleUrls: ['./nav.component.scss'],
+  imports: [RouterLink],
+  standalone: true
 })
 export class NavComponent implements OnInit {
-    protected uid!: number | null;
-    protected username: string | null = null;
-    protected profilePictureUrl: string | null = null;
-    protected isAdmin: boolean = false;
-    protected isUploader: boolean = false;
-    protected notificationCount: number = 10;
+  private readonly authService = inject(AuthService);
+  private readonly userService = inject(UserService);
+  private readonly router = inject(Router);
+  private readonly cacheService = inject(CacheService);
 
-    constructor(
-        private readonly authService: AuthService,
-        private readonly userService: UserService,
-        private readonly router: Router,
-        private readonly cacheService: CacheService
-    ) { }
+  protected user: UserModel | null = null;
+  protected profilePictureUrl: string = APP_CONSTANTS.DEFAULT_PFP_PATH;
+  protected notificationCount: number = 10;
 
-    public ngOnInit(): void {
-        this.uid = this.userService.getLoggedUserId();
-        this.isAdmin = this.userService.isAdminLogged();
-        this.isUploader = this.userService.isUploaderLogged();
-        if (this.uid) {
-            // Get profile picture
-            // Try to get from cache first
-            const cachedProfilePicture = this.cacheService.get(this.uid.toString());
-            if (cachedProfilePicture) {
-                this.createImageFromBlob(cachedProfilePicture);
-            } else {
-                this.userService.getUserPfp(this.uid).subscribe({
-                    next: (response) => {
-                        this.cacheService.put(this.uid!.toString(), response);
-                        this.createImageFromBlob(response);
-                    },
-                    error: (error) => {
-                        this.profilePictureUrl = 'assets/images/no-pfp.png';
-                    }
-                });
-            }
-        } else {
-            this.authService.unauthorizedHandler();
-        }
+  public ngOnInit(): void {
+    this.user = this.userService.getUserInfoFromToken();
+    // check if user has profile picture
+    if (this.user.hasPfp) {
+      // Get profile picture -try to get from cache first
+      const cachedProfilePicture = this.cacheService.get(this.user.uid.toString());
+      if (cachedProfilePicture) {
+        this.createImageFromBlob(cachedProfilePicture);
+      } else {
+        this.userService.getUserPfp(this.user.uid).subscribe({
+          next: (response) => {
+            this.cacheService.put(this.user!.uid.toString(), response);
+            this.createImageFromBlob(response);
+          },
+          error: (error) => {
+            this.profilePictureUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
+          }
+        });
+      }
     }
+  }
 
-    protected get notificationCountUi(): string {
-        return this.notificationCount > 9 ? '9+' : this.notificationCount.toString();
-    }
+  protected get notificationCountUi(): string {
+    return this.notificationCount > 9 ? '9+' : this.notificationCount.toString();
+  }
 
-    protected exploreClick(section: string | null) {
-        if (!section) {
-            this.router.navigate(['/razisci']);
-        }
-        let queryParams = {
-            s: section
-        }
-        this.router.navigate(['/razisci'], { queryParams: queryParams });
+  protected exploreClick(section: string | null) {
+    if (!section) {
+      this.router.navigate(['/razisci']);
     }
+    let queryParams = {
+      s: section
+    };
+    this.router.navigate(['/razisci'], { queryParams: queryParams });
+  }
 
-    protected createImageFromBlob(image: Blob) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            this.profilePictureUrl = reader.result as string;
-        }
-        reader.readAsDataURL(image);
-    }
+  protected createImageFromBlob(image: Blob) {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      this.profilePictureUrl = reader.result as string;
+    };
+    reader.readAsDataURL(image);
+  }
 
-    protected removeNotification(event: Event, notificationId: number) {
-        /**
-         * TODO
-         * Remove notification from database
-         * Handle notification count (better?)
-         */
-        event.stopPropagation();
-        this.notificationCount--;
-    }
+  protected removeNotification(event: Event, notificationId: number) {
+    /**
+     * TODO
+     * Remove notification from database
+     * Handle notification count (better?)
+     */
+    event.stopPropagation();
+    this.notificationCount--;
+  }
 
-    protected logout() {
-        this.authService.logout();
-    }
+  protected logout() {
+    this.authService.logout();
+  }
 }

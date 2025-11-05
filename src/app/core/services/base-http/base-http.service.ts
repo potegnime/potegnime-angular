@@ -1,38 +1,27 @@
-import { Injectable } from '@angular/core';
-import { HttpApiService } from '../http-api/http-api.service';
-import { ApiType } from '../../enums/api-type.enum';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ConfigService } from '../config/config.service';
+
+import { ApiType } from '@core/enums/api-type.enum';
+import { HttpApiService } from '@core/services/http-api/http-api.service';
+import { ConfigService } from '@core/services/config/config.service';
 import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export abstract class BaseHttpService {
+  private readonly httpApiService = inject(HttpApiService);
+  private readonly configService = inject(ConfigService);
 
-  constructor(
-    private readonly httpApiService: HttpApiService,
-    private readonly configService: ConfigService
-  ) { }
-
-  protected getJson<Response>(
-    urlPath: string,
-    apiType: ApiType = ApiType.Api
-  ) {
+  protected getJson<Response>(urlPath: string, apiType: ApiType = ApiType.Api) {
     return this.httpApiService.get<Response>(
       this.createUrl(urlPath, apiType),
       this.createHeaders()
-    )
+    );
   }
 
-  protected getBlob(
-    urlPath: string,
-    apiType: ApiType = ApiType.Api
-  ): Observable<Blob> {
-    return this.httpApiService.getBlob(
-      this.createUrl(urlPath, apiType),
-      this.createHeaders()
-    );
+  protected getBlob(urlPath: string, apiType: ApiType = ApiType.Api): Observable<Blob> {
+    return this.httpApiService.getBlob(this.createUrl(urlPath, apiType), this.createHeaders());
   }
 
   protected postJson<Request, Response>(
@@ -87,10 +76,7 @@ export abstract class BaseHttpService {
     );
   }
 
-  private createUrl(
-    urlPath: string,
-    apiType: ApiType
-  ): string {
+  private createUrl(urlPath: string, apiType: ApiType): string {
     let apiUrl: string = this.configService.getApiUrl(apiType);
     apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl;
     urlPath.startsWith('/') ? urlPath.slice(1) : urlPath;

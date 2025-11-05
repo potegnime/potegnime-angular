@@ -1,51 +1,52 @@
 <footer class="row">
+  <div class="col-4 text-center">
+    <h3>Torrenti</h3>
+    <ul>
+      <li>
+        <a routerLink="" (click)="exploreClick('popular')">Popularno</a>
+      </li>
+      <li>
+        <a routerLink="" (click)="exploreClick('trendingMovie')">Trending</a>
+      </li>
+      <li>
+        <a routerLink="" (click)="exploreClick('upcoming')">Kmalu v kinu</a>
+      </li>
+    </ul>
+  </div>
 
-    <div class="col-4 text-center">
-        <h3>Torrenti</h3>
-        <ul>
-            <li>
-                <a routerLink="" (click)="exploreClick('popular')">Popularno</a>
-            </li>
-            <li>
-                <a routerLink="" (click)="exploreClick('trendingMovie')">Trending</a>
-            </li>
-            <li>
-                <a routerLink="" (click)="exploreClick('upcoming')">Kmalu v kinu</a>
-            </li>
-        </ul>
-    </div>
+  <div class="col-4 text-center">
+    <h3>Profil</h3>
+    <ul>
+      <li>
+        <a [routerLink]="['/u', this.uid]">Moj profil</a>
+      </li>
+      <li>
+        <a routerLink="/nastavitve">Nastavitve</a>
+      </li>
+      @if (isAdmin) {
+        <li>
+          <a routerLink="/admin">Administracija</a>
+        </li>
+      } @else {
+        <li>
+          <a routerLink="" (click)="logout()">Odjava</a>
+        </li>
+      }
+    </ul>
+  </div>
 
-    <div class="col-4 text-center">
-        <h3>Profil</h3>
-        <ul>
-            <li>
-                <a [routerLink]="['/u', this.uid]">Moj profil</a>
-            </li>
-            <li>
-                <a routerLink="/nastavitve">Nastavitve</a>
-            </li>
-            <li *ngIf="isAdmin">
-                <a routerLink="/admin">Administracija</a>
-            </li>
-            <li *ngIf="!isAdmin">
-                <a routerLink="" (click)="logout()">Odjava</a>
-            </li>
-        </ul>
-    </div>
-
-    <div class="col-4 text-center">
-        <h3>potegni.me</h3>
-        <ul>
-            <li>
-                <a routerLink="/o-nas">O nas</a>
-            </li>
-            <li>
-                <a routerLink="/donacije">Donacije</a>
-            </li>
-            <li>
-                <a routerLink="/pogoji">Pravila in pogoji</a>
-            </li>
-        </ul>
-    </div>
-
+  <div class="col-4 text-center">
+    <h3>potegni.me</h3>
+    <ul>
+      <li>
+        <a routerLink="/o-nas">O nas</a>
+      </li>
+      <li>
+        <a routerLink="/donacije">Donacije</a>
+      </li>
+      <li>
+        <a routerLink="/pogoji">Pravila in pogoji</a>
+      </li>
+    </ul>
+  </div>
 </footer>

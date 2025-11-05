@@ -1,0 +1,25 @@
+.navbar {
+  margin: 7px 0;
+}
+
+.sudo-button {
+  background-color: transparent;
+  color: #ccc;
+  border: none;
+}
+
+.sudo-button:hover {
+  color: var(--white);
+}
+
+.sudo-logout {
+  color: var(--red-primary);
+}
+
+.sudo-logout:hover {
+  color: var(--red-secondary);
+}
+
+.active-link {
+  color: var(--white);
+}
