@@ -1,4 +1,4 @@
-import { ApplicationConfig, inject, provideAppInitializer } from '@angular/core';
+import { ApplicationConfig, inject, provideAppInitializer, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
@@ -17,7 +17,8 @@ export const appConfig: ApplicationConfig = {
       const configService = inject(ConfigService);
       return configService.loadConfig();
     }),
-    provideClientHydration(withEventReplay()), // TODO - enable for SSR
+    provideClientHydration(withEventReplay()), // TODO - remove?
+    provideZoneChangeDetection(),
     provideToastr(),
     {
       provide: HTTP_INTERCEPTORS,
