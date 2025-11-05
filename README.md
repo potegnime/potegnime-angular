@@ -1,4 +1,5 @@
 # [potegni.me](https://potegni.me) Frontend
+
 To learn more about the project, visit [GitHub organization](https://github.com/potegnime)
 
 ## Technologies used
@@ -10,25 +11,34 @@ To learn more about the project, visit [GitHub organization](https://github.com/
 - **Notifications**: Toastr
 
 ## Development setup
+
 Prerequisites:
+
 - Node.js and npm
 - Angular CLI
 
 Getting started:
+
 - Set `production: false` in `src/environment.ts`. This will use development URLs from `src//assets/config.json`
 - Run the app:
+
 ```
 npm install
 npm start
 ```
+
 Browser opens in http://localhost:4200
 
 ## Development guidelines
-- Use @ import syntax defined in
+
+- Use npm `run format` to format project, or `npm run format:check` to check formatting
+- Use @ import syntax defined in `tsconfig.json`
 - Blank line between Angular and app imports
 
 ## Folder structure
+
 App follows Angular v20 folder structure:
+
 ```
 ├── app
 │   ├── core
@@ -112,4 +122,5 @@ App follows Angular v20 folder structure:
 ```
 
 ## Deployment
+
 Deployed on [Cloudflare Pages](https://pages.cloudflare.com/)
