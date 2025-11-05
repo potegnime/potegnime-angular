@@ -8,7 +8,10 @@
       <img id="question-icon" src="assets/images/question-icon.png" alt="O rezultatih" />
     </div>
     <div class="col-11 center-cont">
-      <p>Vir podatkov: <a href="https://www.themoviedb.org/" target="_blank">TMDB</a></p>
+      <p>
+        Vir podatkov:
+        <a href="https://www.themoviedb.org/" target="_blank">TMDB</a>
+      </p>
     </div>
   </div>
 </div>
@@ -16,12 +19,7 @@
 <div class="row control-container">
   <div class="col-4 sel-cont">
     <label for="sectionSelect">Prikaži</label>
-    <select
-      name="sectionSelect"
-      id="sectionSelect"
-      class="select"
-      (change)="onSectionDropdownChanged($event.target)"
-    >
+    <select name="sectionSelect" id="sectionSelect" class="select" (change)="onSectionDropdownChanged($event.target)">
       <option value="popular">Popularno</option>
       <option value="nowPlaying">Zdaj v kinu</option>
       <option value="topRated">Najbolj ocenjeno</option>
@@ -32,24 +30,14 @@
   </div>
   <div class="col-4 sel-cont">
     <label for="langSelect">Jezik</label>
-    <select
-      name="langSelect"
-      id="langSelect"
-      class="select"
-      (change)="updateLanguage($event.target)"
-    >
+    <select name="langSelect" id="langSelect" class="select" (change)="updateLanguage($event.target)">
       <option value="sl-SI" selected>Slovenščina</option>
       <option value="en-US">Angleščina</option>
     </select>
   </div>
   <div class="col-4 sel-cont">
     <label for="regionSelect">Regija</label>
-    <select
-      name="regionSelect"
-      id="regionSelect"
-      class="select"
-      (change)="updateRegion($event.target)"
-    >
+    <select name="regionSelect" id="regionSelect" class="select" (change)="updateRegion($event.target)">
       <option value="sl-SI" selected>Slovenija</option>
       <option value="en-US">Z.D.A.</option>
     </select>
@@ -65,8 +53,12 @@
           <div class="card" title="{{ movie.description }}">
             <img [src]="posterUrl + movie.imageUrl" class="card-img-top" [alt]="movie.title" />
             <div class="card-body">
-              <h5 class="card-title">{{ movie.title }}</h5>
-              <p class="card-text">{{ movie.description }}</p>
+              <h5 class="card-title">
+                {{ movie.title }}
+              </h5>
+              <p class="card-text">
+                {{ movie.description }}
+              </p>
               <p class="card-text">
                 <small>Datum izdaje: {{ movie.releaseDate | date: 'd.M.y' }}</small>
               </p>
@@ -93,8 +85,12 @@
           <div class="card" title="{{ movie.description }}">
             <img [src]="posterUrl + movie.imageUrl" class="card-img-top" [alt]="movie.title" />
             <div class="card-body">
-              <h5 class="card-title">{{ movie.title }}</h5>
-              <p class="card-text">{{ movie.description }}</p>
+              <h5 class="card-title">
+                {{ movie.title }}
+              </h5>
+              <p class="card-text">
+                {{ movie.description }}
+              </p>
               <p class="card-text">
                 <small>Datum izdaje: {{ movie.releaseDate | date: 'd.M.y' }}</small>
               </p>
@@ -121,8 +117,12 @@
           <div class="card" title="{{ movie.description }}">
             <img [src]="posterUrl + movie.imageUrl" class="card-img-top" [alt]="movie.title" />
             <div class="card-body">
-              <h5 class="card-title">{{ movie.title }}</h5>
-              <p class="card-text">{{ movie.description }}</p>
+              <h5 class="card-title">
+                {{ movie.title }}
+              </h5>
+              <p class="card-text">
+                {{ movie.description }}
+              </p>
               <p class="card-text">
                 <small>Datum izdaje: {{ movie.releaseDate | date: 'd.M.y' }}</small>
               </p>
@@ -149,8 +149,12 @@
           <div class="card" title="{{ movie.description }}">
             <img [src]="posterUrl + movie.imageUrl" class="card-img-top" [alt]="movie.title" />
             <div class="card-body">
-              <h5 class="card-title">{{ movie.title }}</h5>
-              <p class="card-text">{{ movie.description }}</p>
+              <h5 class="card-title">
+                {{ movie.title }}
+              </h5>
+              <p class="card-text">
+                {{ movie.description }}
+              </p>
               <p class="card-text">
                 <small>Datum izdaje: {{ movie.releaseDate | date: 'd.M.y' }}</small>
               </p>
@@ -177,8 +181,12 @@
           <div class="card" title="{{ movie.description }}">
             <img [src]="posterUrl + movie.imageUrl" class="card-img-top" [alt]="movie.title" />
             <div class="card-body">
-              <h5 class="card-title">{{ movie.title }}</h5>
-              <p class="card-text">{{ movie.description }}</p>
+              <h5 class="card-title">
+                {{ movie.title }}
+              </h5>
+              <p class="card-text">
+                {{ movie.description }}
+              </p>
               <p class="card-text">
                 <small>Kategorije: {{ movie.genres.join(', ') }}</small>
               </p>
@@ -202,8 +210,12 @@
           <div class="card" title="{{ movie.description }}">
             <img [src]="posterUrl + movie.imageUrl" class="card-img-top" [alt]="movie.title" />
             <div class="card-body">
-              <h5 class="card-title">{{ movie.title }}</h5>
-              <p class="card-text">{{ movie.description }}</p>
+              <h5 class="card-title">
+                {{ movie.title }}
+              </h5>
+              <p class="card-text">
+                {{ movie.description }}
+              </p>
               <p class="card-text">
                 <small>Kategorije: {{ movie.genres.join(', ') }}</small>
               </p>

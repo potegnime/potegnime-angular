@@ -6,26 +6,17 @@ import { UploaderGuard } from '@core/guards/uploader.guard';
 export const SUDO_ROUTES: Routes = [
   {
     path: 'nastavitve',
-    loadComponent: () =>
-      import('./components/settings-page/settings-page.component').then(
-        (m) => m.SettingsPageComponent
-      ),
+    loadComponent: () => import('./components/settings-page/settings-page.component').then((m) => m.SettingsPageComponent),
     canActivate: [AuthGuard]
   },
   {
     path: 'admin',
-    loadComponent: () =>
-      import('./components/administration-page/administration-page.component').then(
-        (m) => m.AdministrationPageComponent
-      ),
+    loadComponent: () => import('./components/administration-page/administration-page.component').then((m) => m.AdministrationPageComponent),
     canActivate: [AdminGuard]
   },
   {
     path: 'ustvari',
-    loadComponent: () =>
-      import('./components/upload-torrent-page/upload-torrent-page.component').then(
-        (m) => m.UploadTorrentPageComponent
-      ),
+    loadComponent: () => import('./components/upload-torrent-page/upload-torrent-page.component').then((m) => m.UploadTorrentPageComponent),
     canActivate: [UploaderGuard]
   }
 ];

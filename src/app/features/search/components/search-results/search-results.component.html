@@ -6,28 +6,10 @@
       <thead>
         <tr>
           <th scope="col" class="no-select" (click)="sortRowColumnClick('name')">Datoteka</th>
-          <th scope="col" class="text-center no-select" (click)="sortRowColumnClick('uploader')">
-            Uploader
-          </th>
-          <th scope="col" class="text-center no-select" (click)="sortRowColumnClick('size')">
-            Velikost
-          </th>
-          <th
-            scope="col"
-            class="text-center no-select"
-            title="Seeds"
-            (click)="sortRowColumnClick('se')"
-          >
-            SE
-          </th>
-          <th
-            scope="col"
-            class="text-center no-select"
-            title="Peers"
-            (click)="sortRowColumnClick('pe')"
-          >
-            PE
-          </th>
+          <th scope="col" class="text-center no-select" (click)="sortRowColumnClick('uploader')">Uploader</th>
+          <th scope="col" class="text-center no-select" (click)="sortRowColumnClick('size')">Velikost</th>
+          <th scope="col" class="text-center no-select" title="Seeds" (click)="sortRowColumnClick('se')">SE</th>
+          <th scope="col" class="text-center no-select" title="Peers" (click)="sortRowColumnClick('pe')">PE</th>
         </tr>
       </thead>
       <tbody>
@@ -38,11 +20,7 @@
                 <div class="d-flex align-items-center">
                   <div>
                     @if (torrent.source.toLowerCase() === 'native') {
-                      <img
-                        src="assets/images/logo.png"
-                        alt="{{ torrent.title }} Image"
-                        width="50"
-                      />
+                      <img src="assets/images/logo.png" alt="{{ torrent.title }} Image" width="50" />
                     }
                     @if (torrent.source.toLowerCase() === 'none') {
                       <img
@@ -59,18 +37,10 @@
                       <img src="assets/images/yts.png" alt="{{ torrent.title }} Image" width="50" />
                     }
                     @if (torrent.source.toLowerCase() === 'eztv') {
-                      <img
-                        src="assets/images/eztv.png"
-                        alt="{{ torrent.title }} Image"
-                        width="50"
-                      />
+                      <img src="assets/images/eztv.png" alt="{{ torrent.title }} Image" width="50" />
                     }
                     @if (torrent.source.toLowerCase() === 'torrentproject') {
-                      <img
-                        src="assets/images/torrentproject.png"
-                        alt="{{ torrent.title }} Image"
-                        width="50"
-                      />
+                      <img src="assets/images/torrentproject.png" alt="{{ torrent.title }} Image" width="50" />
                     }
                   </div>
                   <div class="title-container">
@@ -92,8 +62,12 @@
                 </a>
               </td>
               <td>{{ torrent.size }}</td>
-              <td>{{ displaySePe(torrent.seeds) }}</td>
-              <td>{{ displaySePe(torrent.peers) }}</td>
+              <td>
+                {{ displaySePe(torrent.seeds) }}
+              </td>
+              <td>
+                {{ displaySePe(torrent.peers) }}
+              </td>
             </tr>
           }
           @if (torrent.expanded) {
@@ -103,20 +77,10 @@
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex align-items-center w-100">
                       @if (torrent.source.toLowerCase() === 'thepiratebay') {
-                        <img
-                          src="assets/images/tpb.png"
-                          alt="{{ torrent.title }} Image"
-                          width="100"
-                          class="mr-3"
-                        />
+                        <img src="assets/images/tpb.png" alt="{{ torrent.title }} Image" width="100" class="mr-3" />
                       }
                       @if (torrent.source.toLowerCase() === 'yts') {
-                        <img
-                          src="assets/images/yts.png"
-                          alt="{{ torrent.title }} Image"
-                          width="100"
-                          class="mr-3"
-                        />
+                        <img src="assets/images/yts.png" alt="{{ torrent.title }} Image" width="100" class="mr-3" />
                       }
                       @if (torrent.source.toLowerCase() === 'torrentproject') {
                         <img
@@ -127,34 +91,37 @@
                         />
                       }
                       @if (torrent.source.toLowerCase() === 'eztv') {
-                        <img
-                          src="assets/images/eztv.png"
-                          alt="{{ torrent.title }} Image"
-                          width="50"
-                          class="mr-3"
-                        />
+                        <img src="assets/images/eztv.png" alt="{{ torrent.title }} Image" width="50" class="mr-3" />
                       }
                       <div class="w-100 title-container">
-                        <h4>{{ torrent.title }}</h4>
+                        <h4>
+                          {{ torrent.title }}
+                        </h4>
                         <div class="d-flex justify-content-between align-items-center">
-                          <div
-                            class="expanded-details-container d-flex justify-content-between align-items-center"
-                          >
+                          <div class="expanded-details-container d-flex justify-content-between align-items-center">
                             <div class="expanded-details">
                               <p>Velikost</p>
-                              <p>{{ torrent.size }}</p>
+                              <p>
+                                {{ torrent.size }}
+                              </p>
                             </div>
                             <div class="expanded-details">
                               <p>Seeds</p>
-                              <p>{{ displaySePe(torrent.seeds) }}</p>
+                              <p>
+                                {{ displaySePe(torrent.seeds) }}
+                              </p>
                             </div>
                             <div class="expanded-details">
                               <p>Peers</p>
-                              <p>{{ displaySePe(torrent.peers) }}</p>
+                              <p>
+                                {{ displaySePe(torrent.peers) }}
+                              </p>
                             </div>
                             <div class="expanded-details">
                               <p>Naloženo</p>
-                              <p>{{ displayTime(torrent.time) }}</p>
+                              <p>
+                                {{ displayTime(torrent.time) }}
+                              </p>
                             </div>
                           </div>
                           <div class="buttons-container">
@@ -165,7 +132,9 @@
                               (click)="copy($event, copyButton, torrent.url)"
                             >
                               <img src="assets/images/copy.png" alt="Kopiraj magnet link" />
-                              <p>{{ copyText }}</p>
+                              <p>
+                                {{ copyText }}
+                              </p>
                             </button>
                             <!-- currently not supported - scraper api is to slow, enabled this once on AWS -->
                             <!-- [disabled]="isDownloadingTorrentFile" -->
@@ -178,7 +147,9 @@
                               [disabled]="true"
                             >
                               <img src="assets/images/download-green.png" alt="Potegni ga!" />
-                              <p>{{ downloadText }}</p>
+                              <p>
+                                {{ downloadText }}
+                              </p>
                             </button>
                           </div>
                         </div>

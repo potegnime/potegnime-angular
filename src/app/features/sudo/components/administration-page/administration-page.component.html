@@ -3,9 +3,15 @@
   <div class="col-3">
     <nav>
       <ul class="flex-column">
-        <li><a class="side-link" (click)="scrollToSection('recommend')">Izbrani torrenti</a></li>
-        <li><a class="side-link" (click)="scrollToSection('nadzor')">Nadzor uporabnikov</a></li>
-        <li><a class="side-link" (click)="scrollToSection('requests')">Prošnje za nalaglce</a></li>
+        <li>
+          <a class="side-link" (click)="scrollToSection('recommend')">Izbrani torrenti</a>
+        </li>
+        <li>
+          <a class="side-link" (click)="scrollToSection('nadzor')">Nadzor uporabnikov</a>
+        </li>
+        <li>
+          <a class="side-link" (click)="scrollToSection('requests')">Prošnje za nalaglce</a>
+        </li>
       </ul>
     </nav>
   </div>
@@ -52,9 +58,7 @@
 
         <div class="row">
           <div class="col-6 left-button-container">
-            <button type="submit" class="button" id="save-recommendation-button">
-              Shrani spremembe
-            </button>
+            <button type="submit" class="button" id="save-recommendation-button">Shrani spremembe</button>
           </div>
           <div class="col-6 right-button-container">
             <button
@@ -94,7 +98,10 @@
         <div class="col-8">
           @if (userFound === true) {
             <div class="user-display-container">
-              <p class="text-center">Uporabniško ime: {{ userUsername }}</p>
+              <p class="text-center">
+                Uporabniško ime:
+                {{ userUsername }}
+              </p>
               <p class="text-center">Role: {{ userRole }}</p>
               <img [src]="userPfpUrl" [alt]="userUsername" id="profile-pic" />
             </div>
@@ -116,12 +123,7 @@
                 <option value="admin">Admin</option>
               </select>
             </form>
-            <button
-              class="button"
-              class="danger-button button"
-              id="delete-profile-button"
-              (click)="onDeleteUser()"
-            >
+            <button class="button" class="danger-button button" id="delete-profile-button" (click)="onDeleteUser()">
               Izbriši uporabnika
             </button>
           </div>

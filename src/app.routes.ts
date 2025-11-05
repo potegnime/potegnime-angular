@@ -13,43 +13,28 @@ export const routes: Routes = [
   // Auth module
   {
     path: '',
-    loadComponent: () =>
-      import('@features/auth/components/auth-page/auth-page.component').then(
-        (m) => m.AuthPageComponent
-      ),
+    loadComponent: () => import('@features/auth/components/auth-page/auth-page.component').then((m) => m.AuthPageComponent),
     children: [
       {
         path: 'prijava',
-        loadComponent: () =>
-          import('@features/auth/components/login-form/login-form.component').then(
-            (m) => m.LoginFormComponent
-          ),
+        loadComponent: () => import('@features/auth/components/login-form/login-form.component').then((m) => m.LoginFormComponent),
         canActivate: [LoggedInAuthGuard]
       },
       { path: 'login', redirectTo: 'prijava', pathMatch: 'full' },
       {
         path: 'registracija',
-        loadComponent: () =>
-          import('@features/auth/components/register-form/register-form.component').then(
-            (m) => m.RegisterFormComponent
-          ),
+        loadComponent: () => import('@features/auth/components/register-form/register-form.component').then((m) => m.RegisterFormComponent),
         canActivate: [LoggedInAuthGuard]
       },
       { path: 'register', redirectTo: 'registracija', pathMatch: 'full' },
       {
         path: 'pozabljeno-geslo',
-        loadComponent: () =>
-          import(
-            '@features/auth/components/forgot-password-form/forgot-password-form.component'
-          ).then((m) => m.ForgotPasswordFormComponent),
+        loadComponent: () => import('@features/auth/components/forgot-password-form/forgot-password-form.component').then((m) => m.ForgotPasswordFormComponent),
         canActivate: [LoggedInAuthGuard]
       },
       {
         path: 'ponastavi-geslo',
-        loadComponent: () =>
-          import(
-            '@features/auth/components/reset-password-form/reset-password-form.component'
-          ).then((m) => m.ResetPasswordFormComponent),
+        loadComponent: () => import('@features/auth/components/reset-password-form/reset-password-form.component').then((m) => m.ResetPasswordFormComponent),
         canActivate: [LoggedInAuthGuard]
       }
     ]
@@ -72,8 +57,7 @@ export const routes: Routes = [
   // Recommend module
   {
     path: 'razisci',
-    loadChildren: () =>
-      import('@features/recommend/recommend.routes').then((m) => m.RECOMMEND_ROUTES),
+    loadChildren: () => import('@features/recommend/recommend.routes').then((m) => m.RECOMMEND_ROUTES),
     canActivate: [AuthGuard]
   },
 
@@ -89,8 +73,7 @@ export const routes: Routes = [
   // 404 error page
   {
     path: '**',
-    loadComponent: () =>
-      import('@shared/components/error/error.component').then((m) => m.ErrorComponent),
+    loadComponent: () => import('@shared/components/error/error.component').then((m) => m.ErrorComponent),
     canActivate: [AuthGuard]
   }
 ];

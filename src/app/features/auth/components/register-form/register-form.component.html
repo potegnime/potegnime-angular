@@ -14,14 +14,7 @@ same issue on reset password page
       required
       formControlName="username"
     />
-    <input
-      type="email"
-      id="email"
-      name="email"
-      placeholder="E-pošta"
-      required
-      formControlName="email"
-    />
+    <input type="email" id="email" name="email" placeholder="E-pošta" required formControlName="email" />
   </div>
   <div class="bottom-row">
     <div class="password-container">
@@ -47,10 +40,7 @@ same issue on reset password page
         formControlName="passwordConfirm"
       />
       <span class="toggle-password" (click)="togglePasswordVisibility(2)">
-        <i
-          class="eye-icon fa-solid"
-          [ngClass]="showPasswordConfirm ? 'fa-eye' : 'fa-eye-slash'"
-        ></i>
+        <i class="eye-icon fa-solid" [ngClass]="showPasswordConfirm ? 'fa-eye' : 'fa-eye-slash'"></i>
       </span>
     </div>
   </div>
@@ -67,13 +57,12 @@ same issue on reset password page
         <i [ngClass]="agreeToTermsBool ? 'fa-solid fa-square-check' : 'fa-regular fa-square'"></i>
       </span>
       <span class="url-white">
-        Strinjam se s <a routerLink="/pogoji">pravili in splošnimi pogoji uporabe</a>
+        Strinjam se s
+        <a routerLink="/pogoji">pravili in splošnimi pogoji uporabe</a>
       </span>
     </label>
   </div>
-  <button type="submit" [disabled]="registerForm.invalid" class="register-button">
-    Registracija
-  </button>
+  <button type="submit" [disabled]="registerForm.invalid" class="register-button">Registracija</button>
 </form>
 
 <div class="register-error" [class.shake]="triggerErrorAnimation">
@@ -82,7 +71,10 @@ same issue on reset password page
   }
 </div>
 
-<p class="url-white">Že imaš račun? <a routerLink="/prijava">Prijavi se!</a></p>
+<p class="url-white">
+  Že imaš račun?
+  <a routerLink="/prijava">Prijavi se!</a>
+</p>
 
 @if (isSubmitting) {
   <app-loading-spinner [active]="isSubmitting" [overlay]="true"></app-loading-spinner>
