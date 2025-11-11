@@ -1,6 +1,6 @@
 {
   "api": {
-    "production": "https://api.potegni.me",
+    "production": "https://potegnime-api.onrender.com",
     "development": "http://localhost:5194"
   },
   "scraper": {
