@@ -37,8 +37,7 @@ Browser opens in http://localhost:4200
 
 ## Deployment
 
-App is deployed on [Cloudflare Pages](https://pages.cloudflare.com/) via the `npm run build:prod` command.
-
+App is deployed on [Cloudflare Pages](https://pages.cloudflare.com/) via the `npm run build:prod` command.<br>
 If you want to try out the production build locally:
 
 ```
