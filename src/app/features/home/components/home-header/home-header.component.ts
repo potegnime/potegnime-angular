@@ -5,13 +5,11 @@ import { ToastrService } from 'ngx-toastr';
 import { timingConst } from '@core/enums/toastr-timing.enum';
 import { AdminRecommendation } from '@models/admin-recommendation.interface';
 import { RecommendService } from '@shared/services/recommend/recommend.service';
-import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-home-header',
   templateUrl: './home-header.component.html',
   styleUrls: ['./home-header.component.scss'],
-  imports: [LoadingSpinnerComponent],
   standalone: true
 })
 export class HomeHeaderComponent implements OnInit {
