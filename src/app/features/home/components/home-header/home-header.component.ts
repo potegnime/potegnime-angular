@@ -5,11 +5,13 @@ import { ToastrService } from 'ngx-toastr';
 import { timingConst } from '@core/enums/toastr-timing.enum';
 import { AdminRecommendation } from '@models/admin-recommendation.interface';
 import { RecommendService } from '@shared/services/recommend/recommend.service';
+import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-home-header',
   templateUrl: './home-header.component.html',
   styleUrls: ['./home-header.component.scss'],
+  imports: [LoadingSpinnerComponent],
   standalone: true
 })
 export class HomeHeaderComponent implements OnInit {
@@ -38,9 +40,9 @@ export class HomeHeaderComponent implements OnInit {
   }
 
   protected searchAdminRecommendationOfTheDay(type: 'movie' | 'series'): void {
-    const date = this.getFormattedDate();
-
-    this.recommendService.getAdminRecommendation(date, type).subscribe({
+    this.setLoading(true);
+    setTimeout(() => {
+          this.recommendService.getAdminRecommendation(date, type).subscribe({
       next: (response: AdminRecommendation) => {
         this.searchTitle(response.name);
         this.setLoading(false);
@@ -71,9 +73,14 @@ export class HomeHeaderComponent implements OnInit {
         this.setLoading(false);
       }
     });
+    }, 5000);
+    const date = this.getFormattedDate();
+
+
   }
 
   protected searchRandomMovieTitle(): void {
+    this.setLoading(true);
     this.recommendService.getRandomRecommendation().subscribe({
       next: (response: AdminRecommendation) => {
         this.searchTitle(response.name);
@@ -89,10 +96,8 @@ export class HomeHeaderComponent implements OnInit {
   }
 
   protected seeMore(section: string) {
-    let queryParams = {
-      s: section
-    };
-    this.router.navigate(['/razisci'], { queryParams: queryParams });
+    this.setLoading(true);
+    this.router.navigate(['/razisci'], { queryParams: { s: section } });
   }
 
   setLoading(isLoading: boolean): void {
