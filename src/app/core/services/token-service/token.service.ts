@@ -54,7 +54,6 @@ export class TokenService {
 
       return formattedToken;
     } catch (error) {
-      console.error('Error decoding token:', error);
       return null;
     }
   }
