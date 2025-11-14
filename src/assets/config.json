@@ -4,7 +4,7 @@
     "development": "http://localhost:5194"
   },
   "scraper": {
-    "production": "https://potegnime-scraper.onrender.com",
+    "production": "https://scraper.potegni.me",
     "development": "http://localhost:1337"
   },
   "language": "sl-SI"
