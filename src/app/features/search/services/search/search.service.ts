@@ -13,12 +13,6 @@ import { ApiType } from '@core/enums/api-type.enum';
 export class SearchService extends BaseHttpService {
   private readonly router = inject(Router);
 
-  public ping(): Observable<any> {
-    // used to wake up scraper API (render free tier sleeps after inactivity)
-    // this can be removed after better hosting is in place
-    return this.getJson<any>(`ping`);
-  }
-
   public searchTorrents(searchRequestDto: SearchRequestDto): Observable<any> {
     // Build URL
     let url = `search?query=${searchRequestDto.query}`;
