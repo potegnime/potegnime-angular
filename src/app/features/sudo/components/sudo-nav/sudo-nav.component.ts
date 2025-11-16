@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 
 import { AuthService } from '@features/auth/services/auth/auth.service';
 import { UserService } from '@features/user/services/user/user.service';
+import { DecodedTokenModel } from '@models/decoded-token.interface';
 
 @Component({
   selector: 'app-sudo-nav',
@@ -15,13 +16,13 @@ export class SudoNavComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly userService = inject(UserService);
 
-  protected uid!: number | null;
+  protected user: DecodedTokenModel | undefined;
   protected isAdmin: boolean = false;
   protected isUploader: boolean = false;
 
   public ngOnInit(): void {
-    this.uid = this.userService.getLoggedUserId();
-    if (!this.uid) {
+    this.user = this.userService.getLoggedUser();
+    if (!this.user) {
       this.authService.logout();
     }
     this.isAdmin = this.userService.isAdminLogged();

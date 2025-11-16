@@ -75,9 +75,9 @@ export class UserService extends BaseHttpService {
     return this.postJson<UploaderRequestDto, any>(`user/submitUploaderRequest`, uploaderRequestDto);
   }
 
-  public getLoggedUserId(): number | null {
+  public getLoggedUser(): DecodedTokenModel | undefined {
     const decodedToken: DecodedTokenModel | null = this.tokenService.decodeToken();
-    return decodedToken ? decodedToken.uid : null;
+    return decodedToken ? decodedToken : undefined;
   }
 
   public isAdminLogged(): boolean {

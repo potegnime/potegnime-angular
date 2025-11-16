@@ -26,9 +26,9 @@ import { APP_CONSTANTS } from '@constants/constants';
   standalone: true
 })
 export class UserPageComponent implements OnInit {
+  private readonly activatedRoute = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly userService = inject(UserService);
-  private readonly tokenService = inject(TokenService);
   private readonly authService = inject(AuthService);
   private readonly route = inject(ActivatedRoute);
   private readonly toastr = inject(ToastrService);
@@ -68,14 +68,14 @@ export class UserPageComponent implements OnInit {
         this.authService.unauthorizedHandler();
       }
 
-      const urlUid: number | null = parseInt(this.router.url.split('/')[2]);
-      this.isMyPage = loggedInUser.uid == urlUid;
-      if (this.isMyPage && urlUid) {
+      const urlUsername: string | null = this.activatedRoute.snapshot.paramMap.get('username');
+      this.isMyPage = loggedInUser.username == urlUsername;
+      if (this.isMyPage && urlUsername) {
         this.user = loggedInUser;
         if (this.user?.hasPfp) this.setPfp(this.user.uid);
         this.isLoading = false;
       } else {
-        this.getUserData(urlUid);
+        this.getUserData(urlUsername!);
       }
     });
   }
@@ -88,8 +88,8 @@ export class UserPageComponent implements OnInit {
     reader.readAsDataURL(image);
   }
 
-  private getUserData(userId: number): void {
-    this.userService.getUserById(userId).subscribe({
+  private getUserData(username: string): void {
+    this.userService.getUserByUsername(username).subscribe({
       next: (user: GetUserModel) => {
         this.otherUser = user;
         if (this.otherUser?.hasPfp) this.setPfp(this.otherUser.userId);

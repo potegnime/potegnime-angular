@@ -179,6 +179,9 @@ export class SettingsPageComponent implements OnInit {
             this.authService.refreshToken().subscribe({
               next: (response) => {
                 this.tokenService.updateToken(response.token);
+                setTimeout(() => {
+                  window.location.reload();
+                }, 500);
               },
               error: () => {
                 this.authService.unauthorizedHandler();
@@ -216,6 +219,9 @@ export class SettingsPageComponent implements OnInit {
             this.authService.refreshToken().subscribe({
               next: (response) => {
                 this.tokenService.updateToken(response.token);
+                setTimeout(() => {
+                  window.location.reload();
+                }, 500);
               },
               error: () => {
                 this.authService.unauthorizedHandler();
@@ -253,10 +259,10 @@ export class SettingsPageComponent implements OnInit {
               profilePicture: this.profilePictureUrl
             });
 
-            // Refresh site to update profile picture across the site
+            // Refresh site to update token and profile picture across the site
             setTimeout(() => {
               window.location.reload();
-            }, 1000);
+            }, 500);
           },
           error: (error) => {
             switch (error.status) {
@@ -323,6 +329,9 @@ export class SettingsPageComponent implements OnInit {
           this.authService.refreshToken().subscribe({
             next: (response) => {
               this.tokenService.updateToken(response.token);
+                setTimeout(() => {
+                  window.location.reload();
+                }, 500);
             },
             error: () => {
               this.authService.unauthorizedHandler();
