@@ -75,6 +75,7 @@ export class HttpApiService {
     switch (error.status) {
       case 401:
         this.tokenService.deleteToken();
+        this.toastr.warning('', 'Seja je potekla, prosimo prijavite se znova.', { timeOut: timingConst.warning });
         this.router.navigate(['/prijava']);
         break;
       case 404:
