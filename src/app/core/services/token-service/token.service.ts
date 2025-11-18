@@ -38,7 +38,7 @@ export class TokenService {
         username: decodedToken.username,
         email: decodedToken.email,
         role: decodedToken.role.toLowerCase(),
-        hasPfp: decodedToken.hasPfp === 'true',
+        pfp: decodedToken.pfp,
         uploaderRequestStatus: decodedToken.uploaderRequestStatus.toLowerCase(),
         joined: decodedToken.joined,
         iss: decodedToken.iss,

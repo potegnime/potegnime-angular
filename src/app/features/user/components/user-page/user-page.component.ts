@@ -72,7 +72,7 @@ export class UserPageComponent implements OnInit {
       this.isMyPage = loggedInUser.username == urlUsername;
       if (this.isMyPage && urlUsername) {
         this.user = loggedInUser;
-        if (this.user?.hasPfp) this.setPfp(this.user.uid);
+         this.setPfp(this.user.username);
         this.isLoading = false;
       } else {
         this.getUserData(urlUsername!);
@@ -80,19 +80,11 @@ export class UserPageComponent implements OnInit {
     });
   }
 
-  protected createImageFromBlob(image: Blob) {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      this.profilePictureUrl = reader.result as string;
-    };
-    reader.readAsDataURL(image);
-  }
-
   private getUserData(username: string): void {
     this.userService.getUserByUsername(username).subscribe({
       next: (user: GetUserModel) => {
         this.otherUser = user;
-        if (this.otherUser?.hasPfp) this.setPfp(this.otherUser.userId);
+        if (this.otherUser?.hasPfp) this.setPfp(this.otherUser.username);
         this.isLoading = false;
       },
       error: (error) => {
@@ -111,27 +103,16 @@ export class UserPageComponent implements OnInit {
     });
   }
 
-  private setPfp(userId: number): void {
-    // Get profile picture
-    // Wait 0.5 second to avoid unnecessary double api calls for profile picture - other component already has it cached
-    setTimeout(() => {
-      const cachedProfilePicture = this.cacheService.get(userId.toString());
-      if (cachedProfilePicture) {
-        this.createImageFromBlob(cachedProfilePicture);
+  private setPfp(username: string): void {
+    this.userService.getUserPfp(username).subscribe({
+      next: (blob) => {
+        this.profilePictureUrl = URL.createObjectURL(blob);
         this.isLoading = false;
-      } else {
-        this.userService.getUserPfp(userId).subscribe({
-          next: (response) => {
-            this.cacheService.put(userId.toString(), response);
-            this.createImageFromBlob(response);
-            this.isLoading = false;
-          },
-          error: (error) => {
-            this.profilePictureUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
-            this.isLoading = false;
-          }
-        });
+      },
+      error: (err) => {
+        this.profilePictureUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
+        this.isLoading = false;
       }
-    }, 500);
+    });
   }
 }

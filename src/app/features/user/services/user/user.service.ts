@@ -12,12 +12,14 @@ import { TokenService } from '@core/services/token-service/token.service';
 import { UserModel } from '@models/user.interface';
 import { GetUserModel } from '@models/get-user.interface';
 import { DecodedTokenModel } from '@models/decoded-token.interface';
+import { HttpApiService } from '@core/services/http-api/http-api.service';
 
 @Injectable({
   providedIn: 'root' // TODO - make lazy loaded
 })
 export class UserService extends BaseHttpService {
   private readonly tokenService = inject(TokenService);
+  private readonly http = inject(HttpApiService); // TMP
 
   public getUserInfoFromToken(): UserModel {
     const decodedToken = this.tokenService.decodeToken();
@@ -28,7 +30,6 @@ export class UserService extends BaseHttpService {
       username: decodedToken.username,
       email: decodedToken.email,
       role: decodedToken.role,
-      hasPfp: decodedToken.hasPfp,
       joined: decodedToken.joined,
       uploaderRequestStatus: decodedToken.uploaderRequestStatus
     };
@@ -44,8 +45,8 @@ export class UserService extends BaseHttpService {
     return this.getJson<GetUserModel>(`user/username?username=${encodeURIComponent(username)}`);
   }
 
-  public getUserPfp(userId: number | string): Observable<Blob> {
-    return this.getBlob(`user/pfp/${userId}`);
+  public getUserPfp(pfpPath: string): Observable<Blob> {
+    return this.getBlob(`pfp/${pfpPath}`);
   }
 
   public updateUsername(updateUsernameDto: UpdateUsernameDto): Observable<any> {

@@ -26,24 +26,15 @@ export class NavComponent implements OnInit {
 
   public ngOnInit(): void {
     this.user = this.userService.getUserInfoFromToken();
-    // check if user has profile picture
-    if (this.user.hasPfp) {
-      // Get profile picture -try to get from cache first
-      const cachedProfilePicture = this.cacheService.get(this.user.uid.toString());
-      if (cachedProfilePicture) {
-        this.createImageFromBlob(cachedProfilePicture);
-      } else {
-        this.userService.getUserPfp(this.user.uid).subscribe({
-          next: (response) => {
-            this.cacheService.put(this.user!.uid.toString(), response);
-            this.createImageFromBlob(response);
-          },
-          error: (error) => {
-            this.profilePictureUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
-          }
-        });
+
+    this.userService.getUserPfp(this.user.username).subscribe({
+      next: (blob) => {
+        this.profilePictureUrl = URL.createObjectURL(blob);
+      },
+      error: (err) => {
+        this.profilePictureUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
       }
-    }
+    });
   }
 
   protected get notificationCountUi(): string {
@@ -58,14 +49,6 @@ export class NavComponent implements OnInit {
       s: section
     };
     this.router.navigate(['/razisci'], { queryParams: queryParams });
-  }
-
-  protected createImageFromBlob(image: Blob) {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      this.profilePictureUrl = reader.result as string;
-    };
-    reader.readAsDataURL(image);
   }
 
   protected removeNotification(event: Event, notificationId: number) {

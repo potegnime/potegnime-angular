@@ -176,9 +176,9 @@ export class AdministrationPageComponent implements OnInit {
           });
 
           // Get user pfp
-          this.userService.getUserPfp(response1.userId).subscribe({
+          this.userService.getUserPfp(response1.username).subscribe({
             next: (response2) => {
-              this.createImageFromBlob(response2);
+              this.userPfpUrl = URL.createObjectURL(response2);
             },
             error: (error2) => {
               this.userPfpUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
@@ -255,15 +255,6 @@ export class AdministrationPageComponent implements OnInit {
         }
       });
     }
-  }
-
-  // UI methods
-  protected createImageFromBlob(image: Blob) {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      this.userPfpUrl = reader.result as string;
-    };
-    reader.readAsDataURL(image);
   }
 
   protected getUiAppropriateControlName(controlName: string): string {

@@ -106,39 +106,31 @@ export class SettingsPageComponent implements OnInit {
       // Get user data from JWT
       this.setSettingsPage(user.username, user.email);
 
-      // Get user pfp
-      // Wait 0.5 second to avoid unnecessary double api calls for profile picture - other component already has it cached
-      setTimeout(() => {
-        const cachedProfilePicture = this.cacheService.get(user.uid.toString());
-        if (cachedProfilePicture) {
-          this.createImageFromBlob(cachedProfilePicture);
-          this.pristineProfilePicture = cachedProfilePicture;
-          return;
-        } else {
-          this.userService.getUserPfp(user.uid).subscribe({
-            next: (response) => {
-              this.cacheService.put(user.uid.toString(), response);
-              this.createImageFromBlob(response);
-              this.pristineProfilePicture = response;
-            },
-            error: (error) => {
-              switch (error.status) {
-                case 404:
-                  this.profilePictureUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
-                  this.changeUserDataForm.patchValue({
-                    profilePicture: this.profilePictureUrl
-                  });
-                  break;
-                default:
-                  this.toastr.error('', 'Napaka pri nalaganju profilne slike', {
-                    timeOut: timingConst.error
-                  });
-                  break;
-              }
-            }
+      this.userService.getUserPfp(user.username).subscribe({
+        next: (response) => {
+          this.hasProfilePicture = true;
+          this.profilePictureUrl = URL.createObjectURL(response);
+          this.changeUserDataForm.patchValue({
+            profilePicture: this.profilePictureUrl
           });
+          this.pristineProfilePicture = response;
+        },
+        error: (error) => {
+          switch (error.status) {
+            case 404:
+              this.profilePictureUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
+              this.changeUserDataForm.patchValue({
+                profilePicture: this.profilePictureUrl
+              });
+              break;
+            default:
+              this.toastr.error('', 'Napaka pri nalaganju profilne slike', {
+                timeOut: timingConst.error
+              });
+              break;
+          }
         }
-      }, 500);
+      });
     } else {
       // Error decoding token - redirect to login page - log out user
       this.authService.unauthorizedHandler();
@@ -181,7 +173,7 @@ export class SettingsPageComponent implements OnInit {
                 this.tokenService.updateToken(response.token);
                 setTimeout(() => {
                   window.location.reload();
-                }, 500);
+                }, 1000);
               },
               error: () => {
                 this.authService.unauthorizedHandler();
@@ -221,7 +213,7 @@ export class SettingsPageComponent implements OnInit {
                 this.tokenService.updateToken(response.token);
                 setTimeout(() => {
                   window.location.reload();
-                }, 500);
+                }, 1000);
               },
               error: () => {
                 this.authService.unauthorizedHandler();
@@ -262,7 +254,7 @@ export class SettingsPageComponent implements OnInit {
             // Refresh site to update token and profile picture across the site
             setTimeout(() => {
               window.location.reload();
-            }, 500);
+            }, 1000);
           },
           error: (error) => {
             switch (error.status) {
@@ -331,7 +323,7 @@ export class SettingsPageComponent implements OnInit {
               this.tokenService.updateToken(response.token);
                 setTimeout(() => {
                   window.location.reload();
-                }, 500);
+                }, 1000);
             },
             error: () => {
               this.authService.unauthorizedHandler();
@@ -502,18 +494,6 @@ export class SettingsPageComponent implements OnInit {
         return this.profilePictureUrl;
       }
     }
-  }
-
-  protected createImageFromBlob(image: Blob) {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      this.hasProfilePicture = true;
-      this.profilePictureUrl = reader.result as string;
-      this.changeUserDataForm.patchValue({
-        profilePicture: this.profilePictureUrl
-      });
-    };
-    reader.readAsDataURL(image);
   }
 
   protected getUiAppropriateControlName(controlName: string): string {

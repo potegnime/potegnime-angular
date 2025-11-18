@@ -5,7 +5,7 @@ export interface UserModel {
   username: string;
   email: string;
   role: 'user' | 'uploader' | 'admin';
+  pfpPath?: string;
   joined: string;
-  hasPfp: boolean;
   uploaderRequestStatus?: UploaderRequestStatus;
 }
