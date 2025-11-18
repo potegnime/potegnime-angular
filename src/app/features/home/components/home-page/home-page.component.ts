@@ -12,22 +12,9 @@ import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/load
   imports: [HomeHeaderComponent, HomeTorrentComponent, LoadingSpinnerComponent],
   standalone: true
 })
-export class HomePageComponent implements OnInit {
-  private readonly searchService = inject(SearchService);
-
+export class HomePageComponent {
   protected headerLoading: boolean = false;
   protected torrentLoading: boolean = false;
-
-  ngOnInit(): void {
-    this.searchService.ping().subscribe({
-      next: (response: any) => {
-        // console.log('Ping successful:', response);
-      },
-      error: (error: any) => {
-        console.error('Ping failed:', error);
-      }
-    });
-  }
 
   get isLoading(): boolean {
     return this.headerLoading || this.torrentLoading;
