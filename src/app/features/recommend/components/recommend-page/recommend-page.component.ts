@@ -28,7 +28,7 @@ export class RecommendPageComponent implements AfterViewChecked, OnInit {
   private allDataLoaded: boolean = false;
   private sectionToScroll: string | null = null;
 
-  protected language: 'sl-SI' | 'en-US' = 'sl-SI';
+  protected language: 'sl-SI' | 'en-US' = 'en-US';
   protected region: 'SI' | 'US' = 'SI';
   protected timeWindow: 'day' | 'week' = 'day';
 
