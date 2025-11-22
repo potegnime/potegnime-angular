@@ -9,11 +9,11 @@
         <li>
           <a class="side-link" (click)="scrollToSection('zasebnost')">Zasebnost</a>
         </li>
-        @if (uploaderRequestStatus !== uploaderRequestStatusEnum.Approved && isUser) {
+        <!-- @if (uploaderRequestStatus !== uploaderRequestStatusEnum.Approved && isUser) {
           <li>
             <a class="side-link" (click)="scrollToSection('request-uploader')">Postani nalagalec</a>
           </li>
-        }
+        } -->
       </ul>
     </nav>
   </div>
@@ -123,7 +123,7 @@
       </form>
     </div>
 
-    @if (uploaderRequestStatus !== uploaderRequestStatusEnum.Approved && isUser) {
+    <!-- @if (uploaderRequestStatus !== uploaderRequestStatusEnum.Approved && isUser) {
       <div class="settings-section" id="request-uploader">
         <h3>Postani nalagalec</h3>
         <hr />
@@ -227,6 +227,6 @@
           </div>
         }
       </div>
-    }
+    } -->
   </div>
 </div>

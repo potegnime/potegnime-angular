@@ -6,7 +6,6 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 import { AuthService } from '@features/auth/services/auth/auth.service';
@@ -29,7 +28,7 @@ import { APP_CONSTANTS } from '@constants/constants';
   selector: 'app-settings-page',
   templateUrl: './settings-page.component.html',
   styleUrls: ['./settings-page.component.scss'],
-  imports: [RouterLink, ReactiveFormsModule, SudoNavComponent],
+  imports: [ReactiveFormsModule, SudoNavComponent],
   standalone: true
 })
 export class SettingsPageComponent implements OnInit {
