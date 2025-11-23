@@ -48,7 +48,7 @@ export class SearchResultsComponent implements OnInit {
 
   protected copyText: string = 'Magnet link';
   protected copyHighlightText: string = 'Kopirano';
-  protected downloadText: string = 'Potegni ga';
+  protected downloadText: string = 'Potegni me';
   protected isDownloadingTorrentFile: boolean = false;
 
   public ngOnInit(): void {
@@ -393,7 +393,7 @@ export class SearchResultsComponent implements OnInit {
       },
       error: (error) => {
         this.isDownloadingTorrentFile = false;
-        this.toastr.error('Prosimo uporabite magnet link', 'Prenos ni uspel', {
+        this.toastr.error('Prosimo uporabite magnet link', 'Prenos .torrent datoteke ni uspel', {
           timeOut: timingConst.error
         });
       }
