@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -6,15 +6,15 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
+import { forkJoin, Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
 import { AuthService } from '@features/auth/services/auth/auth.service';
-import { CacheService } from '@core/services/cache/cache.service';
 import { TokenService } from '@core/services/token-service/token.service';
 import { UserService } from '@features/user/services/user/user.service';
 import { UpdateUsernameDto } from '@features/user/models/update-username.interface';
 import { UpdateEmailDto } from '@features/user/models/update-email.interface';
-import { UpdatePfpDto } from '@features/user/models/update-pfp.interface';
+import { SetPfpDto } from '@features/user/models/update-pfp.interface';
 import { UpdatePasswordDto } from '@features/user/models/update-password.interface';
 import { DeleteProfileDto } from '@features/user/models/delete-profile.interface';
 import { timingConst } from '@core/enums/toastr-timing.enum';
@@ -23,6 +23,8 @@ import { UploaderRequestStatus } from '@core/enums/uploader-request-status.enum'
 import { SudoNavComponent } from '@features/sudo/components/sudo-nav/sudo-nav.component';
 import { UserModel } from '@models/user.interface';
 import { APP_CONSTANTS } from '@constants/constants';
+import { JwtTokenResponse } from '@models/jwt-token-response.interface';
+import { JitEvaluator } from '@angular/compiler';
 
 @Component({
   selector: 'app-settings-page',
@@ -31,24 +33,20 @@ import { APP_CONSTANTS } from '@constants/constants';
   imports: [ReactiveFormsModule, SudoNavComponent],
   standalone: true
 })
-export class SettingsPageComponent implements OnInit {
+export class SettingsPageComponent implements OnInit, OnDestroy {
   private readonly formBuilder = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly tokenService = inject(TokenService);
   private readonly userService = inject(UserService);
   private readonly toastr = inject(ToastrService);
-  private readonly cacheService = inject(CacheService);
 
-  protected token: string | null = null;
-  protected uid: number | null = null;
-  protected username: string | null = null;
-  protected email: string | null = null;
-  protected pristineProfilePicture: string | Blob = APP_CONSTANTS.DEFAULT_PFP_PATH;
-  protected hasProfilePicture: boolean = false;
+  protected user: UserModel | undefined;
+
   protected selectedProfilePicture: File | null = null;
   protected profilePictureUrl: string = APP_CONSTANTS.DEFAULT_PFP_PATH;
   protected pfpChanged: boolean = false;
   protected isUser: boolean = false;
+  public isLoading: boolean = true;
   protected uploaderRequestStatus: UploaderRequestStatus | null = null;
   protected uploaderRequestStatusEnum = UploaderRequestStatus;
   protected uploaderRequestFormCharacterCount: any = {
@@ -57,16 +55,19 @@ export class SettingsPageComponent implements OnInit {
     proof: 0,
     otherTrackers: 0
   };
+  private originalProfilePictureUrl: string = '';
 
-  changeUserDataForm!: FormGroup;
-  uploaderRequestDataForm!: FormGroup;
-  changePasswordForm!: FormGroup;
-  deleteProfileForm!: FormGroup;
+  protected changeUserDataForm!: FormGroup;
+  protected uploaderRequestDataForm!: FormGroup;
+  protected changePasswordForm!: FormGroup;
+  protected deleteProfileForm!: FormGroup;
+
+  private userSubscription = new Subscription();
 
   public ngOnInit(): void {
     // Form builders
     this.changeUserDataForm = this.formBuilder.group({
-      username: ['', Validators.required],
+      username: ['', [Validators.required, Validators.minLength(4)]],
       email: ['', [Validators.required, Validators.email]],
       profilePicture: ['']
     });
@@ -93,194 +94,213 @@ export class SettingsPageComponent implements OnInit {
     });
 
     // Get user data - set settings page
-    this.token = this.tokenService.getToken();
-    if (!this.token) {
-      this.authService.unauthorizedHandler();
-    }
-    const user: UserModel = this.userService.getUserInfoFromToken();
-    if (user) {
-      if (user.uploaderRequestStatus) {
-        this.uploaderRequestStatus = user.uploaderRequestStatus;
+    this.userSubscription = this.tokenService.user$.subscribe(user => {
+      this.user = user;
+    });
+
+    if (this.user) {
+      if (this.user.uploaderRequestStatus) {
+        this.uploaderRequestStatus = this.user.uploaderRequestStatus;
       }
       // Get user data from JWT
-      this.setSettingsPage(user.username, user.email);
+      this.setSettingsPage();
 
-      this.userService.getUserPfp(user.username).subscribe({
-        next: (response) => {
-          this.hasProfilePicture = true;
-          this.profilePictureUrl = URL.createObjectURL(response);
-          this.changeUserDataForm.patchValue({
-            profilePicture: this.profilePictureUrl
-          });
-          this.pristineProfilePicture = response;
-        },
-        error: (error) => {
-          switch (error.status) {
-            case 404:
-              this.profilePictureUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
-              this.changeUserDataForm.patchValue({
-                profilePicture: this.profilePictureUrl
-              });
-              break;
-            default:
-              this.toastr.error('', 'Napaka pri nalaganju profilne slike', {
-                timeOut: timingConst.error
-              });
-              break;
-          }
-        }
+      if (this.user.pfp) {
+        this.originalProfilePictureUrl = this.user.pfp;
+        this.profilePictureUrl = this.userService.getUserPfpUrl(this.user.pfp);
+      } else {
+        this.profilePictureUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
+      }
+      this.changeUserDataForm.patchValue({
+        profilePicture: this.profilePictureUrl
       });
     } else {
       // Error decoding token - redirect to login page - log out user
       this.authService.unauthorizedHandler();
     }
+    this.isLoading = false;
   }
 
-  protected onChnangeUserDataSubmit() {
-    if (this.changeUserDataForm.valid) {
-      // Check which fields have changed
-      const username = this.changeUserDataForm.get('username')?.value;
-      const email = this.changeUserDataForm.get('email')?.value;
-      const profilePicture = this.changeUserDataForm.get('profilePicture')?.value;
+  public ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
+  }
 
-      // Check if none of the fields have changed
-      if (
-        username === this.username &&
-        email === this.email &&
-        profilePicture === this.pristineProfilePicture
-      ) {
-        this.toastr.info('', 'Ni sprememb', { timeOut: timingConst.info });
-        return;
-      }
+  protected onChangeUserDataSubmit() {
+    if (!this.changeUserDataForm.dirty) {
+      return;
+    }
 
-      // Update username
-      if (username !== this.username) {
-        const updateUsernameDto: UpdateUsernameDto = {
-          username: username
-        };
-        this.userService.updateUsername(updateUsernameDto).subscribe({
-          next: () => {
-            this.toastr.success('Uporabniško ime uspešno posodobljeno');
-            // Update username in settings page
-            this.username = username;
-            this.changeUserDataForm.patchValue({
-              username: this.username
-            });
-            // Update JWT
-            this.authService.refreshToken().subscribe({
-              next: (response) => {
-                this.tokenService.updateToken(response.token);
-                setTimeout(() => {
-                  window.location.reload();
-                }, 1000);
-              },
-              error: () => {
-                this.authService.unauthorizedHandler();
-              }
-            });
-          },
-          error: (error) => {
-            switch (error.status) {
-              case 409:
-                this.toastr.error('', error.error.message, { timeOut: timingConst.error });
-                break;
-              default:
-                this.toastr.error('', 'Napaka pri posodabljanju uporabniškega imena', {
-                  timeOut: timingConst.error
-                });
-                break;
-            }
-          }
-        });
-      }
-
-      if (email !== this.email) {
-        const updateEmailDto: UpdateEmailDto = {
-          email: email
-        };
-        this.userService.updateEmail(updateEmailDto).subscribe({
-          next: () => {
-            this.toastr.success('', 'Email uspešno posodobljen', { timeOut: timingConst.success });
-            // Update email in settings page
-            this.email = email;
-            this.changeUserDataForm.patchValue({
-              email: this.email
-            });
-            // Update JWT
-            this.authService.refreshToken().subscribe({
-              next: (response) => {
-                this.tokenService.updateToken(response.token);
-                setTimeout(() => {
-                  window.location.reload();
-                }, 1000);
-              },
-              error: () => {
-                this.authService.unauthorizedHandler();
-              }
-            });
-          },
-          error: (error) => {
-            switch (error.status) {
-              case 409:
-                this.toastr.error('', error.error.message, { timeOut: timingConst.error });
-                break;
-              default:
-                this.toastr.error('', 'Napaka pri posodabljanju e-pošte', {
-                  timeOut: timingConst.error
-                });
-                break;
-            }
-          }
-        });
-      }
-
-      if (profilePicture !== this.pristineProfilePicture && this.pfpChanged) {
-        const updatePfpDto: UpdatePfpDto = {
-          profilePicFile: this.selectedProfilePicture as File
-        };
-        this.userService.updatePfp(updatePfpDto).subscribe({
-          next: () => {
-            this.toastr.success('', 'Profilna slika uspešno posodobljena', {
-              timeOut: timingConst.success
-            });
-            // Update profile picture in settings page
-            this.pristineProfilePicture = this.selectedProfilePicture as File;
-            this.profilePictureUrl = this.getProfilePictureUrl();
-            this.changeUserDataForm.patchValue({
-              profilePicture: this.profilePictureUrl
-            });
-
-            // Refresh site to update token and profile picture across the site
-            setTimeout(() => {
-              window.location.reload();
-            }, 1000);
-          },
-          error: (error) => {
-            switch (error.status) {
-              case 409:
-                this.toastr.error('', error.error.message, { timeOut: timingConst.error });
-                break;
-              default:
-                this.toastr.error('', 'Napaka pri posodabljanju profilne slike', {
-                  timeOut: timingConst.error
-                });
-                break;
-            }
-          }
-        });
-      }
-    } else {
+    if (!this.changeUserDataForm.valid) {
       for (const controlName of Object.keys(this.changeUserDataForm.controls)) {
         const control = this.changeUserDataForm.get(controlName);
         if (control?.invalid) {
           this.toastr.error(
             '',
-            `Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`,
+            `Neveljaven vnos ${this.getUiAppropriateControlName(controlName)}!`,
             { timeOut: timingConst.error }
           );
           break;
         }
       }
+      return;
+    }
+
+    // Check which fields have changed
+    const username = this.changeUserDataForm.get('username')?.value;
+    const email = this.changeUserDataForm.get('email')?.value;
+    const profilePicture = this.changeUserDataForm.get('profilePicture')?.value;
+
+    // Collect all update observables
+    const updates: any = {};
+
+    // Check what needs to be updated
+    if (username !== this.user?.username) {
+      const updateUsernameDto: UpdateUsernameDto = { username };
+      updates.username = this.userService.updateUsername(updateUsernameDto);
+    }
+
+    if (email !== this.user?.email) {
+      const updateEmailDto: UpdateEmailDto = { email };
+      updates.email = this.userService.updateEmail(updateEmailDto);
+    }
+
+    if (this.pfpChanged && this.selectedProfilePicture !== null) {
+      // Check file size
+      if (this.selectedProfilePicture.size > APP_CONSTANTS.MAX_PROFILE_PIC_SIZE_BYTES) {
+        this.toastr.error('', 'Največja dovoljena velikost profilne slike je 5MB', {
+          timeOut: timingConst.error
+        });
+        return;
+      }
+      const setPfp: SetPfpDto = { profilePicFile: this.selectedProfilePicture ?? null };
+      updates.pfp = this.userService.setPfp(setPfp);
+    }
+
+    // If no changes detected
+    if (Object.keys(updates).length === 0) {
+      this.toastr.info('', 'Ni sprememb', { timeOut: timingConst.info });
+      return;
+    }
+
+    this.isLoading = true;
+    // Execute updates sequentially to handle token updates properly
+    forkJoin(updates).subscribe({
+      next: (responses: any) => {
+        // TODO
+      },
+      error: (error) => {
+        // TODO
+      }
+    });
+
+
+
+    // Update username
+    if (username !== this.user?.username) {
+      const updateUsernameDto: UpdateUsernameDto = {
+        username: username
+      };
+      this.userService.updateUsername(updateUsernameDto).subscribe({
+        next: (response: JwtTokenResponse) => {
+          this.toastr.success('Uporabniško ime uspešno posodobljeno');
+          // Update JWT
+          this.tokenService.updateToken(response.token);
+          this.changeUserDataForm.patchValue({
+            username: this.user?.username
+          });
+          this.isLoading = false;
+        },
+        error: (error) => {
+          switch (error.status) {
+            case 409:
+              this.toastr.error('', error.error.message, { timeOut: timingConst.error });
+              break;
+            default:
+              this.toastr.error('', 'Napaka pri posodabljanju uporabniškega imena', {
+                timeOut: timingConst.error
+              });
+              break;
+          }
+          this.isLoading = false;
+        },
+      });
+    }
+
+    // Update email
+    if (email !== this.user?.email) {
+      const updateEmailDto: UpdateEmailDto = {
+        email: email
+      };
+      this.userService.updateEmail(updateEmailDto).subscribe({
+        next: (response: JwtTokenResponse) => {
+          this.toastr.success('', 'Email uspešno posodobljen', { timeOut: timingConst.success });
+          // Update JWT
+          this.tokenService.updateToken(response.token);
+          this.changeUserDataForm.patchValue({
+            email: this.user?.email
+          });
+          this.isLoading = false;
+        },
+        error: (error) => {
+          switch (error.status) {
+            case 409:
+              this.toastr.error('', error.error.message, { timeOut: timingConst.error });
+              break;
+            default:
+              this.toastr.error('', 'Napaka pri posodabljanju e-pošte', {
+                timeOut: timingConst.error
+              });
+              break;
+          }
+          this.isLoading = false;
+        }
+      });
+    }
+
+    // Update profile picture
+    if (profilePicture !== this.originalProfilePictureUrl && this.pfpChanged) {
+      // check size
+      if (this.selectedProfilePicture && this.selectedProfilePicture.size > APP_CONSTANTS.MAX_PROFILE_PIC_SIZE_BYTES) {
+        this.toastr.error('', 'Največja dovoljena velikost profilne slike je 5MB', { timeOut: timingConst.error });
+        this.isLoading = false;
+        return;
+      }
+      const setPfp: SetPfpDto = {
+        profilePicFile: this.selectedProfilePicture as File
+      };
+      this.userService.setPfp(setPfp).subscribe({
+        next: (response: JwtTokenResponse) => {
+          this.tokenService.updateToken(response.token);
+          this.isLoading = false;
+          window.location.reload();
+          this.toastr.success('', 'Profilna slika uspešno posodobljena', {
+            timeOut: timingConst.success
+          });
+          // Update profile picture in settings page
+          this.profilePictureUrl = this.getProfilePictureUrl();
+          this.changeUserDataForm.patchValue({
+            profilePicture: this.profilePictureUrl
+          });
+
+          this.isLoading = false;
+
+          // Refresh site to update token and profile picture across the site
+          //
+        },
+        error: (error) => {
+          switch (error.status) {
+            case 409:
+              this.toastr.error('', error.error.message, { timeOut: timingConst.error });
+              break;
+            default:
+              this.toastr.error('', 'Napaka pri posodabljanju profilne slike', {
+                timeOut: timingConst.error
+              });
+              break;
+          }
+          this.isLoading = false;
+        }
+      });
     }
   }
 
@@ -311,23 +331,14 @@ export class SettingsPageComponent implements OnInit {
       };
 
       this.userService.submitUploaderRequest(uploaderRequestDto).subscribe({
-        next: () => {
+        next: (response) => {
           this.toastr.success('', 'Vloga za nalagalca uspešno poslana', {
             timeOut: timingConst.success
           });
           this.uploaderRequestStatus = UploaderRequestStatus.Review;
           // Update JWT
-          this.authService.refreshToken().subscribe({
-            next: (response) => {
-              this.tokenService.updateToken(response.token);
-                setTimeout(() => {
-                  window.location.reload();
-                }, 1000);
-            },
-            error: () => {
-              this.authService.unauthorizedHandler();
-            }
-          });
+          this.tokenService.updateToken(response.token);
+          this.isLoading = false;
         },
         error: (error) => {
           switch (error.status) {
@@ -337,6 +348,7 @@ export class SettingsPageComponent implements OnInit {
               });
               break;
           }
+          this.isLoading = false;
         }
       });
     } else {
@@ -374,6 +386,7 @@ export class SettingsPageComponent implements OnInit {
         next: () => {
           this.toastr.success('', 'Geslo uspešno posodobljeno', { timeOut: timingConst.success });
           this.changePasswordForm.reset();
+          this.isLoading = false;
         },
         error: (error) => {
           switch (error.status) {
@@ -386,6 +399,7 @@ export class SettingsPageComponent implements OnInit {
               });
               break;
           }
+          this.isLoading = false;
         }
       });
     } else {
@@ -408,6 +422,7 @@ export class SettingsPageComponent implements OnInit {
       if (!confirm('Ali ste prepričani, da želite izbrisati profil?')) {
         return;
       }
+      this.isLoading = true;
       const password = this.deleteProfileForm.get('password')?.value;
       const deleteProfileDto: DeleteProfileDto = {
         password: password
@@ -417,6 +432,7 @@ export class SettingsPageComponent implements OnInit {
         next: () => {
           this.toastr.success('', 'Profil uspešno izbrisan', { timeOut: timingConst.success });
           this.authService.unauthorizedHandler();
+          this.isLoading = false;
         },
         error: (error) => {
           switch (error.status) {
@@ -427,6 +443,7 @@ export class SettingsPageComponent implements OnInit {
               this.toastr.error('', 'Napaka pri brisanju profila', { timeOut: timingConst.error });
               break;
           }
+          this.isLoading = false;
         }
       });
     } else {
@@ -453,74 +470,71 @@ export class SettingsPageComponent implements OnInit {
 
   protected removeProfilePicture(): void {
     this.pfpChanged = true;
-    this.hasProfilePicture = false;
     this.selectedProfilePicture = null;
-    this.profilePictureUrl = this.getProfilePictureUrl();
+    this.profilePictureUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
     this.changeUserDataForm.patchValue({
       profilePicture: this.profilePictureUrl
     });
+    this.changeUserDataForm.markAsDirty();
   }
 
   protected onProfilePictureChange(event: any): void {
     this.pfpChanged = true;
     if (event.target.files && event.target.files.length > 0) {
-      this.hasProfilePicture = true;
       this.selectedProfilePicture = event.target.files[0];
-      this.profilePictureUrl = this.getProfilePictureUrl();
-      this.changeUserDataForm.patchValue({
-        profilePicture: this.profilePictureUrl
-      });
     } else {
       this.selectedProfilePicture = null;
-      this.profilePictureUrl = this.getProfilePictureUrl();
-      this.changeUserDataForm.patchValue({
-        profilePicture: this.profilePictureUrl
-      });
     }
     this.profilePictureUrl = this.getProfilePictureUrl();
     this.changeUserDataForm.patchValue({
       profilePicture: this.profilePictureUrl
     });
+    this.changeUserDataForm.markAsDirty();
   }
 
   protected getProfilePictureUrl() {
-    if (!this.hasProfilePicture) {
-      return APP_CONSTANTS.DEFAULT_PFP_PATH;
-    } else {
+    if (this.pfpChanged) {
+      if (this.selectedProfilePicture) {
+        return URL.createObjectURL(this.selectedProfilePicture);
+      }
+    }
+    if (this.user?.pfp) {
       if (this.selectedProfilePicture) {
         return URL.createObjectURL(this.selectedProfilePicture);
       } else {
         return this.profilePictureUrl;
       }
+    } else {
+      return APP_CONSTANTS.DEFAULT_PFP_PATH;
     }
   }
 
   protected getUiAppropriateControlName(controlName: string): string {
     switch (controlName) {
       case 'username':
-        return 'Uporabniško ime';
+        return 'uporabniškega imena';
       case 'email':
-        return 'E-pošta';
+        return 'e-pošte';
       case 'profilePicture':
-        return 'Profilna slika';
+        return 'profilne slike';
       case 'oldPassword':
-        return 'Staro geslo';
+        return 'starega gesla';
       case 'newPassword':
-        return 'Novo geslo';
+        return 'novega gesla';
       case 'newPasswordRepeat':
-        return 'Ponovi novo geslo';
+        return 'novega gesla';
       case 'password':
-        return 'Geslo';
+        return 'gesla';
       case 'experience':
-        return 'Izkušnje';
+        return 'izkušenj';
       case 'content':
-        return 'Vsebina';
+        return 'vsebine';
       case 'proof':
-        return 'Dokaz';
+        return 'dokaza';
       case 'otherTrackers':
-        return 'Ostali sledilci';
+        return 'ostalih sledilcev';
       case 'agreeToTerms':
-        return 'Strinjanje s pogoji';
+        return 'strinjanja s pogoji';
       default:
         return controlName;
     }
@@ -531,15 +545,11 @@ export class SettingsPageComponent implements OnInit {
       this.uploaderRequestDataForm.get(field)?.value.length || 0;
   }
 
-  private setSettingsPage(username: string, email: string): void {
-    // Set input fields
-    this.username = username;
-    this.email = email;
+  private setSettingsPage(): void {
     this.isUser = this.userService.isUserLogged();
-
     this.changeUserDataForm.patchValue({
-      username: this.username,
-      email: this.email,
+      username: this.user?.username,
+      email: this.user?.email,
       profilePicture: this.profilePictureUrl
     });
   }

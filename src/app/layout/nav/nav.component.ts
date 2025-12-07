@@ -1,11 +1,12 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Router, RouterLink } from '@angular/router';
 
 import { AuthService } from '@features/auth/services/auth/auth.service';
 import { UserModel } from '@models/user.interface';
-import { CacheService } from '@core/services/cache/cache.service';
-import { UserService } from '@features/user/services/user/user.service';
 import { APP_CONSTANTS } from '@constants/constants';
+import { UserService } from '@features/user/services/user/user.service';
+import { TokenService } from '@core/services/token-service/token.service';
 
 @Component({
   selector: 'app-nav',
@@ -14,27 +15,32 @@ import { APP_CONSTANTS } from '@constants/constants';
   imports: [RouterLink],
   standalone: true
 })
-export class NavComponent implements OnInit {
+export class NavComponent implements OnInit, OnDestroy {
   private readonly authService = inject(AuthService);
   private readonly userService = inject(UserService);
+  private readonly tokenService = inject(TokenService);
   private readonly router = inject(Router);
-  private readonly cacheService = inject(CacheService);
 
-  protected user: UserModel | null = null;
+  protected user: UserModel | undefined;
   protected profilePictureUrl: string = APP_CONSTANTS.DEFAULT_PFP_PATH;
   protected notificationCount: number = 10;
 
-  public ngOnInit(): void {
-    this.user = this.userService.getUserInfoFromToken();
+  private userSubscription = new Subscription();
 
-    this.userService.getUserPfp(this.user.username).subscribe({
-      next: (blob) => {
-        this.profilePictureUrl = URL.createObjectURL(blob);
-      },
-      error: (err) => {
-        this.profilePictureUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
-      }
+  public ngOnInit(): void {
+    this.userSubscription = this.tokenService.user$.subscribe(user => {
+      this.user = user;
     });
+
+    if (this.user?.pfp) {
+      this.profilePictureUrl = this.userService.getUserPfpUrl(this.user.pfp);
+    } else {
+      this.profilePictureUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
+    }
+  }
+
+  public ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
   }
 
   protected get notificationCountUi(): string {

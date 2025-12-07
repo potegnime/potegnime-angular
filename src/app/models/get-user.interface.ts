@@ -1,8 +1,7 @@
 export interface GetUserModel {
-  userId: number;
   username: string;
   joined: string;
   role: 'user' | 'uploader' | 'admin';
-  hasPfp: boolean;
+  pfp?: string;
   uploaderRequestStatus?: string;
 }

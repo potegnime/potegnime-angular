@@ -92,22 +92,22 @@
       </form>
 
       <div class="row">
-        @if (userFound === false) {
+        @if (this.foundUser === null && userControlForm.touched) {
           <p class="error-text">Uporabnik s tem uporabniškim imenom ne obstaja!</p>
         }
         <div class="col-8">
-          @if (userFound === true) {
+          @if (this.foundUser !== null) {
             <div class="user-display-container">
               <p class="text-center">
                 Uporabniško ime:
-                {{ userUsername }}
+                {{ foundUser?.username }}
               </p>
-              <p class="text-center">Role: {{ userRole }}</p>
-              <img [src]="userPfpUrl" [alt]="userUsername" id="profile-pic" />
+              <p class="text-center">Role: {{ foundUser?.role }}</p>
+              <img [src]="profilePictureUrl" [alt]="foundUser?.username" id="profile-pic" />
             </div>
           }
         </div>
-        @if (userFound === true) {
+        @if (this.foundUser !== null) {
           <div class="col-4">
             <form [formGroup]="userRoleChangeForm">
               <label for="changeUserRole">Spremeni role</label>

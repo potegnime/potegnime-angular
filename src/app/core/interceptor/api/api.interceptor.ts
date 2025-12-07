@@ -7,13 +7,19 @@ import { TokenService } from '@core/services/token-service/token.service';
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
   private readonly tokenService = inject(TokenService);
+  private readonly userSubscription = this.tokenService.user$;
+  private token: string | undefined;
+
+  constructor() {
+    this.userSubscription.subscribe(user => {
+      this.token = this.tokenService.getToken();
+    });
+  }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    // TODO - check if API request, switch between scraper and api token if needed
-    const token = this.tokenService.getToken();
-    if (token) {
+    if (this.token) {
       const cloned = request.clone({
-        headers: request.headers.set('Authorization', `Bearer ${token}`)
+        headers: request.headers.set('Authorization', `Bearer ${this.token}`)
       });
       return next.handle(cloned);
     }

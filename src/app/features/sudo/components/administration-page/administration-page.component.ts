@@ -11,6 +11,7 @@ import { UserService } from '@features/user/services/user/user.service';
 import { AdminService } from '@features/sudo/services/admin/admin.service';
 import { SudoNavComponent } from '@features/sudo/components/sudo-nav/sudo-nav.component';
 import { APP_CONSTANTS } from '@constants/constants';
+import { GetUserModel } from '@models/get-user.interface';
 
 @Component({
   selector: 'app-administration-page',
@@ -27,11 +28,8 @@ export class AdministrationPageComponent implements OnInit {
   private readonly toastr = inject(ToastrService);
 
   // User control
-  protected userFound: boolean | null = null;
-  protected userUserId: number | null = null;
-  protected userUsername: string | null = null;
-  protected userRole: string | null = null;
-  protected userPfpUrl: string | null = null;
+  protected foundUser: GetUserModel | undefined;
+  protected profilePictureUrl: string | undefined = APP_CONSTANTS.DEFAULT_PFP_PATH;
 
   // Uploader requests
   protected uploaderRequests: any[] = [];
@@ -164,11 +162,8 @@ export class AdministrationPageComponent implements OnInit {
       // Search for user
       const username = this.userControlForm.get('username')?.value;
       this.userService.getUserByUsername(username).subscribe({
-        next: (response1) => {
-          this.userFound = true;
-          this.userUserId = response1.userId;
-          this.userUsername = response1.username;
-          this.userRole = response1.role;
+        next: (response1: GetUserModel) => {
+          this.foundUser = response1;
 
           // Set role selection dropdown
           this.userRoleChangeForm.patchValue({
@@ -176,19 +171,16 @@ export class AdministrationPageComponent implements OnInit {
           });
 
           // Get user pfp
-          this.userService.getUserPfp(response1.username).subscribe({
-            next: (response2) => {
-              this.userPfpUrl = URL.createObjectURL(response2);
-            },
-            error: (error2) => {
-              this.userPfpUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
-            }
-          });
+          if (this.foundUser.pfp) {
+            this.profilePictureUrl = this.userService.getUserPfpUrl(this.foundUser.pfp);
+          } else {
+            this.profilePictureUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
+          }
         },
         error: (error1) => {
           switch (error1.status) {
             case 404:
-              this.userFound = false;
+              // this.userFound = false;
               break;
           }
         }
@@ -210,9 +202,9 @@ export class AdministrationPageComponent implements OnInit {
 
   protected onUserRoleChangeForm() {
     const role = this.userRoleChangeForm.get('role')?.value;
-    if (this.userUserId) {
+    if (this.foundUser?.username) {
       const updateRoleDto: UpdateRoleDto = {
-        userId: this.userUserId,
+        username: this.foundUser.username,
         roleName: role
       };
 
@@ -220,7 +212,7 @@ export class AdministrationPageComponent implements OnInit {
         next: () => {
           this.toastr.success(
             '',
-            `Role za uporabnika ${this.userUsername} uspešno nastavljen na ${this.getUiAppropriateControlName(role)}`,
+            `Role za uporabnika ${this.foundUser?.username} uspešno nastavljen na ${this.getUiAppropriateControlName(role)}`,
             { timeOut: timingConst.success }
           );
           this.onUserControlFormSubmit();
@@ -230,18 +222,16 @@ export class AdministrationPageComponent implements OnInit {
   }
 
   protected onDeleteUser() {
-    if (!confirm(`Ali ste prepričani, da želite izbrisati uporabnika ${this.userUsername}?`)) {
+    if (!confirm(`Ali ste prepričani, da želite izbrisati uporabnika ${this.foundUser?.username}?`)) {
       return;
     }
 
-    if (this.userUsername) {
-      this.adminService.deleteProfileAdmin(this.userUsername).subscribe({
+    if (this.foundUser?.username) {
+      this.adminService.deleteProfileAdmin(this.foundUser.username).subscribe({
         next: () => {
           this.toastr.success('', 'Profil uspešno izbrisan', { timeOut: timingConst.success });
-          this.userFound = null;
-          this.userUsername = null;
-          this.userRole = null;
-          this.userPfpUrl = null;
+          this.foundUser = undefined;
+          this.profilePictureUrl = undefined;
         },
         error: (error) => {
           switch (error.status) {
