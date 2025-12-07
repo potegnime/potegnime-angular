@@ -71,7 +71,6 @@ App follows Angular v20 folder structure:
 │   │   │   └── components
 │   │   │       ├── about-page
 │   │   │       ├── donate-page
-│   │   │       ├── license-page
 │   │   │       └── terms-page
 │   │   ├── auth
 │   │   │   ├── components

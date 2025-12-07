@@ -3,11 +3,13 @@ import { ToastrService } from 'ngx-toastr';
 
 import { AuthService } from '@features/auth/services/auth/auth.service';
 import { timingConst } from '@core/enums/toastr-timing.enum';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-donate-page',
   templateUrl: './donate-page.component.html',
   styleUrls: ['./donate-page.component.scss'],
+  imports: [RouterLink],
   standalone: true
 })
 export class DonatePageComponent implements OnInit {

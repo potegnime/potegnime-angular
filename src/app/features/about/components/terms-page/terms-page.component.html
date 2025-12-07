@@ -1,7 +1,7 @@
 <!-- TODO change... -->
 
 <div class="container text-center">
-  @if (isLoggedIn) {
+  @if (!isLoggedIn) {
     <div class="text-center m-2 mx-auto">
       <a routerLink="/registracija">
         <img src="assets/images/logo.png" alt="potegni.me" width="150" />
@@ -19,14 +19,14 @@
     potegni.me je zgolj torrent iskalnik, ki črpa podatke iz drugih torrent sledilnikov (<a
       href="https://thepiratebay.org/"
       target="_blank"
-      class="hidden-link"
+      class="link"
       >The Pirate Bay</a
     >,
-    <a href="https://yts.mx/" target="_blank" class="hidden-link">YTS</a>
+    <a href="https://yts.mx/" target="_blank" class="link">YTS</a>
     in
-    <a href="https://eztv.re/" target="_blank" class="hidden-link">EZTV</a>
+    <a href="https://eztv.re/" target="_blank" class="link">EZTV</a>
     in
-    <a href="https://torrentproject.cc/" target="_blank" class="hidden-link">TorrentProject</a>), zato potegni.me nima
+    <a href="https://torrentproject.cc/" target="_blank" class="link">TorrentProject</a>), zato potegni.me nima
     vpliva na vsebino datotek in drugih vsebin, katere je moč pridobiti preko spletne aplikacije. Posledično potegni.me
     ne prevzema nobene odgovornosti za resničnost, pravilnost in zakonitost vsebin, ki jih preko aplikacije lahko
     pridobijo uporabniki.
@@ -81,10 +81,10 @@
   <p>
     potegni.me si prizadeva, da bo celotna vsebina spletne aplikacije kvalitetna, estetska, zakonita in ažurna. Kljub
     temu, je storitev na voljo takšna kot je, brez kakršnega koli jamstva za delovanje. Iskalnik črpa podatke iz drugih
-    torrent sledilnikov (<a href="https://thepiratebay.org/" target="_blank" class="hidden-link">The Pirate Bay</a>,
-    <a href="https://yts.mx/" target="_blank" class="hidden-link">YTS</a>
+    torrent sledilnikov (<a href="https://thepiratebay.org/" target="_blank" class="link">The Pirate Bay</a>,
+    <a href="https://yts.mx/" target="_blank" class="link">YTS</a>
     in
-    <a href="https://torrentproject.cc/" target="_blank" class="hidden-link">TorrentProject</a>), zato potegni.me ne
+    <a href="https://torrentproject.cc/" target="_blank" class="link">TorrentProject</a>), zato potegni.me ne
     prevzema nobene odgovornosti za vsebino, dostopnost in delovanje spletne aplikacije potegni.me, zlasti ne odgovarja
     za resničnost, pravilnost in zakonitost vsebin, ki jih je moč dobiti preko aplikacije. potegni.me prav tako ne
     prevzema odgovornosti za kakršno koli morebitno škodo, ki bi nastala uporabniku preko uporabe ali nezmožnosti
@@ -96,13 +96,13 @@
     obsegu je dovoljena z veljavno zakonodajo.
   </p>
 
-  <h4>Pravila za nalagalce vsebine</h4>
-  <p>TODO</p>
+  <!-- <h4>Pravila za nalagalce vsebine</h4>
+  <p>TODO</p> -->
 
   <h4>Licenca</h4>
   <p>
     potegni.me je odprtokodna programska pod odprtokodno
-    <a routerLink="/licenca" class="hidden-link">MIT licenco</a>.
+    <a href="https://github.com/potegnime/potegnime-angular/blob/main/LICENSE" class="link">GNU GENERAL PUBLIC LICENSE v3</a>.
   </p>
 
   <h4>Sprememba pravil in pogojev uporabe</h4>
@@ -113,5 +113,5 @@
   </p>
 
   <hr />
-  <p>potegni.me, februar 2025</p>
+  <p>potegni.me, december 2025</p>
 </div>
