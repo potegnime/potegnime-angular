@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { SearchRequestDto } from '@features/search/models/search-request.interface';
 import { TorrentCategories } from '@features/search/models/torrent-categories.interface';
@@ -30,8 +30,31 @@ export class SearchService extends BaseHttpService {
   }
 
   public getCategories(): Observable<TorrentCategories> {
-    // TODO - remove, hardcoded in frontend
-    return this.getJson<TorrentCategories>(`categories`);
+    // return this.getJson<TorrentCategories>(`categories`);
+    const categories: TorrentCategories = {
+      "Eztv": [
+          "All"
+      ],
+      "ThePirateBay": [
+          "All",
+          "Audio",
+          "Video",
+          "Applications",
+          "Games",
+          "Porn",
+          "Other",
+          "Top100"
+      ],
+      "TorrentProject": [
+          "All"
+      ],
+      "Yts": [
+          "All",
+          "Movies"
+      ]
+    };
+
+    return of(categories);
   }
 
   public getProviders(): Observable<string[]> {
