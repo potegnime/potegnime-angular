@@ -1,7 +1,8 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { DatePipe, NgClass } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 
 import { SearchService } from '@features/search/services/search/search.service';
 import { SearchRequestDto } from '@features/search/models/search-request.interface';
@@ -28,13 +29,15 @@ import { SearchBarSearchComponent } from '@features/search/components/search-bar
   providers: [DatePipe],
   standalone: true
 })
-export class SearchResultsComponent implements OnInit {
+export class SearchResultsComponent implements OnInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
   private readonly searchService = inject(SearchService);
   private readonly toastr = inject(ToastrService);
   private readonly torrentFileDownloadService = inject(TorrentFileDownloadService);
   private readonly sortService = inject(SortService);
   private readonly datePipe = inject(DatePipe);
+
+  private sortSubscription!: Subscription;
 
   private searchQuery: string = '';
   private category: string | null = null;
@@ -53,6 +56,15 @@ export class SearchResultsComponent implements OnInit {
 
   public ngOnInit(): void {
     this.noResults = false;
+
+    // Subscribe to sort changes from the search bar dropdown
+    this.sortSubscription = this.sortService.currentSort.subscribe((sort) => {
+      if (this.searchResults.length > 0 && sort !== this.sort) {
+        this.sort = sort;
+        this.sortResults(this.sort);
+      }
+    });
+
     this.route.queryParams.subscribe((params) => {
       this.searchQuery = params['q'];
       this.category = params['category'];
@@ -76,6 +88,12 @@ export class SearchResultsComponent implements OnInit {
         this.noResults = false;
       }
     });
+  }
+
+  public ngOnDestroy(): void {
+    if (this.sortSubscription) {
+      this.sortSubscription.unsubscribe();
+    }
   }
 
   private fetchSearchResults(searchRequestDto: SearchRequestDto): void {
