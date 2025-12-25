@@ -7,6 +7,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { AuthService } from '@features/auth/services/auth/auth.service';
 import { HeaderComponent } from '@layout/header/header.component';
 import { FooterComponent } from '@layout/footer/footer.component';
+import { environment } from 'src/environment';
 
 @Component({
   selector: 'app-root',
@@ -24,5 +25,10 @@ export class AppComponent {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
       this.isLoggedIn = this.authService.verifyToken();
     });
+
+    if (environment.underMaintenance) {
+      this.authService.logout(false);
+      this.router.navigate(['/maintenance']);
+    }
   }
 }

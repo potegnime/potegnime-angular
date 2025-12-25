@@ -28,10 +28,12 @@ export class AuthService extends BaseHttpService {
     return this.postJson<UserLoginDto, any>(`auth/login`, userLoginDto);
   }
 
-  public logout(): void {
+  public logout(showToast: boolean = true): void {
     this.tokenService.deleteToken();
     this.router.navigate(['/prijava']);
-    this.toastr.success('', 'Odjava uspešna', { timeOut: timingConst.success });
+    if (showToast) {
+      this.toastr.success('', 'Odjava uspešna', { timeOut: timingConst.success });
+    }
   }
 
   public unauthorizedHandler(): void {
