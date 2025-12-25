@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  underMaintenance: false, // danger!! site becomes unavailable when true
+  underMaintenance: true, // danger!! site becomes unavailable when true
 };
