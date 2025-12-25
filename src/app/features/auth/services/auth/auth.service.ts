@@ -51,8 +51,16 @@ export class AuthService extends BaseHttpService {
     if (!token) return false;
 
     const jwtPayload = AuthHelper.decodeJWT(token);
+    if (!jwtPayload || !jwtPayload.exp) {
+      this.tokenService.deleteToken();
+      return false;
+    }
     const isExpired = jwtPayload.exp < Math.floor(Date.now() / 1000);
-    return !isExpired;
+    if (isExpired) {
+      this.tokenService.deleteToken();
+      return false;
+    }
+    return true;
   }
 
   public refreshToken(): Observable<any> {
