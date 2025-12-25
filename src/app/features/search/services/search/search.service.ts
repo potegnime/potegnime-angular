@@ -57,11 +57,6 @@ export class SearchService extends BaseHttpService {
     return of(categories);
   }
 
-  public getProviders(): Observable<string[]> {
-    // TODO - remove, hardcoded in frontend
-    return this.getJson<string[]>(`providers`);
-  }
-
   public onSearchComponent(
     query: string,
     category: string | null,

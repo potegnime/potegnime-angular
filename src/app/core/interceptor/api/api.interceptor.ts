@@ -9,7 +9,6 @@ export class ApiInterceptor implements HttpInterceptor {
   private readonly tokenService = inject(TokenService);
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    // TODO - check if API request, switch between scraper and api token if needed
     const token = this.tokenService.getToken();
     if (token) {
       const cloned = request.clone({
