@@ -8,28 +8,28 @@
 
   <div class="col-4 text-center">
     <ul class="btn-cnt">
-      <li class="button" (click)="searchAdminRecommendationOfTheDay('movie')">
-        <p>Film dneva</p>
-      </li>
-      <li class="button" (click)="searchAdminRecommendationOfTheDay('series')">
-        <p>Serija dneva</p>
-      </li>
-      <li class="button" (click)="searchRandomMovieTitle()">
-        <p>Preseneti me</p>
-      </li>
-    </ul>
-  </div>
-
-  <div class="col-4 text-center">
-    <ul class="btn-cnt">
       <li class="button" (click)="seeMore('popular')">
         <p>Popularno</p>
       </li>
       <li class="button" (click)="seeMore('trendingMovie')">
         <p>Trending filmi</p>
       </li>
+      <li class="button" (click)="searchAdminRecommendationOfTheDay('movie')">
+        <p>Film dneva</p>
+      </li>
+    </ul>
+  </div>
+
+  <div class="col-4 text-center">
+    <ul class="btn-cnt">
+      <li class="button" (click)="searchRandomMovieTitle()">
+        <p>Preseneti me</p>
+      </li>
       <li class="button" (click)="seeMore('trendingTv')">
         <p>Trending TV</p>
+      </li>
+      <li class="button" (click)="searchAdminRecommendationOfTheDay('series')">
+        <p>Serija dneva</p>
       </li>
     </ul>
   </div>

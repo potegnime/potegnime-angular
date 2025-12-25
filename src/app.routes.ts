@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from '@core/guards/auth.guard';
 import { LoggedInAuthGuard } from '@core/guards/logged-in-guard.guard';
+import { MaintenanceGuard } from '@core/guards/maintenance.guard';
 
 export const routes: Routes = [
   // Home module - needs to be defined before Auth module
@@ -36,6 +37,11 @@ export const routes: Routes = [
         path: 'ponastavi-geslo',
         loadComponent: () => import('@features/auth/components/reset-password-form/reset-password-form.component').then((m) => m.ResetPasswordFormComponent),
         canActivate: [LoggedInAuthGuard]
+      },
+      {
+        path: 'maintenance',
+        loadComponent: () => import('@features/auth/components/maintenance/maintenance.component').then((m) => m.MaintenanceComponent),
+        canActivate: [MaintenanceGuard]
       }
     ]
   },

@@ -18,11 +18,5 @@ export const ABOUT_ROUTES: Routes = [
     loadComponent: () => import('./components/terms-page/terms-page.component').then((m) => m.TermsPageComponent),
     pathMatch: 'full'
   },
-  { path: 'terms', redirectTo: 'pogoji', pathMatch: 'full' },
-  {
-    path: 'licenca',
-    loadComponent: () => import('./components/license-page/license-page.component').then((m) => m.LicensePageComponent),
-    pathMatch: 'full'
-  },
-  { path: 'license', redirectTo: 'licenca', pathMatch: 'full' }
+  { path: 'terms', redirectTo: 'pogoji', pathMatch: 'full' }
 ];

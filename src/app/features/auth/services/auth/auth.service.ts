@@ -29,12 +29,12 @@ export class AuthService extends BaseHttpService {
     return this.postJson<UserLoginDto, JwtTokenResponse>(`auth/login`, userLoginDto);
   }
 
-  public logout(): void {
-    console.log('trace')
-    console.trace(); // This will show the full call stack
+  public logout(showToast: boolean = true): void {
     this.tokenService.deleteToken();
     this.router.navigate(['/prijava']);
-    this.toastr.success('', 'Odjava uspešna', { timeOut: timingConst.success });
+    if (showToast) {
+      this.toastr.success('', 'Odjava uspešna', { timeOut: timingConst.success });
+    }
   }
 
   public unauthorizedHandler(): void {
@@ -54,8 +54,20 @@ export class AuthService extends BaseHttpService {
     if (!token) return false;
 
     const jwtPayload = AuthHelper.decodeJWT(token);
+    if (!jwtPayload || !jwtPayload.exp) {
+      this.tokenService.deleteToken();
+      return false;
+    }
     const isExpired = jwtPayload.exp < Math.floor(Date.now() / 1000);
-    return !isExpired;
+    if (isExpired) {
+      this.tokenService.deleteToken();
+      return false;
+    }
+    return true;
+  }
+
+  public refreshToken(): Observable<any> {
+    return this.postJson<any, string>(`auth/refresh`, {});
   }
 
   public forgotPassword(forgorPasswordDto: ForgotPasswordDto): Observable<any> {

@@ -149,8 +149,8 @@ export class SearchBarSearchComponent implements OnInit, OnDestroy {
   }
 
   protected onSortChange(sort: any): void {
-    this.sort = sort;
-    this.onSearch();
+    this.sort = this.searchForm.value.sort;
+    this.sortService.changeSort(this.sort);
   }
 
   protected translate(string: string): string {
