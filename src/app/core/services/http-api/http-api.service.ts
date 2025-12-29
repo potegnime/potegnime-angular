@@ -85,7 +85,6 @@ export class HttpApiService {
       default:
         // All other unexpected errors
         this.toastr.error('', 'Napaka na strežniku :(', { timeOut: timingConst.error });
-
         break;
     }
     return throwError(() => error);
