@@ -1,8 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToastService } from '@core/services/toast/toast.service';
 
-import { timingConst } from '@core/enums/toastr-timing.enum';
 import { AdminRecommendation } from '@models/admin-recommendation.interface';
 import { RecommendService } from '@shared/services/recommend/recommend.service';
 
@@ -14,7 +13,7 @@ import { RecommendService } from '@shared/services/recommend/recommend.service';
 })
 export class HomeHeaderComponent implements OnInit {
   private readonly recommendService = inject(RecommendService);
-  private readonly toastr = inject(ToastrService);
+  private readonly toastService = inject(ToastService);
   private readonly router = inject(Router);
 
   protected isLoading: boolean = true;
@@ -49,23 +48,15 @@ export class HomeHeaderComponent implements OnInit {
         switch (error.status) {
           case 404:
             if (type == 'movie')
-              this.toastr.info('', 'Film dneva še ni bil nastavljen', {
-                timeOut: timingConst.info
-              });
+              this.toastService.showInfo('Film dneva še ni bil nastavljen');
             else
-              this.toastr.info('', 'Serija dneva še ni bila nastavljena', {
-                timeOut: timingConst.info
-              });
+              this.toastService.showInfo('Serija dneva še ni bila nastavljena');
             break;
           default:
             if (type == 'movie')
-              this.toastr.error('', 'Napaka pri pridobivanju filma dneva', {
-                timeOut: timingConst.error
-              });
+              this.toastService.showError('Napaka pri pridobivanju filma dneva');
             else
-              this.toastr.error('', 'Napaka pri pridobivanju serije dneva', {
-                timeOut: timingConst.error
-              });
+              this.toastService.showError('Napaka pri pridobivanju serije dneva');
             break;
         }
         this.setLoading(false);
@@ -86,9 +77,7 @@ export class HomeHeaderComponent implements OnInit {
       },
       error: (error) => {
         this.setLoading(false);
-        this.toastr.error('', 'Napaka pri pridobivanju priporočila', {
-          timeOut: timingConst.error
-        });
+        this.toastService.showError('Napaka pri pridobivanju priporočila');
       }
     });
   }

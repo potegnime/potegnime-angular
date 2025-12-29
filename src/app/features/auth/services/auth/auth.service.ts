@@ -1,24 +1,23 @@
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
 
 import { TokenService } from '@core/services/token/token.service';
 import { AuthHelper } from '@core/helpers/auth-helper';
-import { timingConst } from '@core/enums/toastr-timing.enum';
 import { BaseHttpService } from '@core/services/base-http/base-http.service';
 import { UserRegisterDto } from '@features/auth/models/user-register.interface';
 import { UserLoginDto } from '@features/auth/models/user-login.interface';
 import { ForgotPasswordDto } from '@features/auth/models/forgot-password.interface';
 import { ResetPasswordDto } from '@features/auth/models/reset-password.interface';
 import { JwtTokenResponse } from '@models/jwt-token-response.interface';
+import { ToastService } from '@core/services/toast/toast.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService extends BaseHttpService {
   private readonly router = inject(Router);
-  private readonly toastr = inject(ToastrService);
+  private readonly toastService = inject(ToastService);
   private readonly tokenService = inject(TokenService);
 
   public register(userRegisterDto: UserRegisterDto): Observable<JwtTokenResponse> {
@@ -33,7 +32,7 @@ export class AuthService extends BaseHttpService {
     this.tokenService.deleteToken();
     this.router.navigate(['/prijava']);
     if (showToast) {
-      this.toastr.success('', 'Odjava uspešna', { timeOut: timingConst.success });
+      this.toastService.showSuccess('Odjava uspešna');
     }
   }
 

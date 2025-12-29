@@ -1,14 +1,13 @@
 import { Component, NgZone, AfterViewChecked, OnInit, inject } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { forkJoin } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
 
 import { RecommendService } from '@shared/services/recommend/recommend.service';
 import { TmdbMovieResponse } from '@models/tmdb-movie-response.interface';
 import { TmdbTrendingResponse } from '@models/tmdb-trending-response.interface';
 import { ActivatedRoute, Router } from '@angular/router';
-import { timingConst } from '@core/enums/toastr-timing.enum';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
+import { ToastService } from '@core/services/toast/toast.service';
 
 @Component({
   selector: 'app-recommend-page',
@@ -19,7 +18,7 @@ import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/load
 })
 export class RecommendPageComponent implements AfterViewChecked, OnInit {
   private readonly recommendService = inject(RecommendService);
-  private readonly toastr = inject(ToastrService);
+  private readonly toastService = inject(ToastService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly ngZone = inject(NgZone);
@@ -129,11 +128,7 @@ export class RecommendPageComponent implements AfterViewChecked, OnInit {
 
   protected searchTitle(text: string): void {
     if (this.language == 'sl-SI') {
-      this.toastr.info(
-        'Za boljše rezultate, poskusite iskati v angleščini',
-        'Iskanje v slovenščini',
-        { timeOut: timingConst.info }
-      );
+      this.toastService.showInfo('Za boljše rezultate, poskusite iskati v angleščini', 'Iskanje v slovenščini');
     }
     this.router.navigate(['/iskanje'], { queryParams: { q: text } });
   }

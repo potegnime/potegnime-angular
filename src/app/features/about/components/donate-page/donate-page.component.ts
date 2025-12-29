@@ -1,9 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 
 import { AuthService } from '@features/auth/services/auth/auth.service';
-import { timingConst } from '@core/enums/toastr-timing.enum';
 import { RouterLink } from '@angular/router';
+import { ToastService } from '@core/services/toast/toast.service';
 
 @Component({
   selector: 'app-donate-page',
@@ -13,7 +12,7 @@ import { RouterLink } from '@angular/router';
   standalone: true
 })
 export class DonatePageComponent implements OnInit {
-  private readonly toastr = inject(ToastrService);
+  private readonly toastService = inject(ToastService);
   private readonly authService = inject(AuthService);
 
   protected isLoggedIn: boolean = false;
@@ -31,8 +30,6 @@ export class DonatePageComponent implements OnInit {
   protected copyAddress(key: 'btc' | 'eth' | 'ltc' | 'xmr'): void {
     const address: string = this.walletAddresses[key];
     navigator.clipboard.writeText(address);
-    this.toastr.success('', `${key.toUpperCase()} naslov kopiran`, {
-      timeOut: timingConst.success
-    });
+    this.toastService.showSuccess(`${key.toUpperCase()} naslov kopiran`);
   }
 }

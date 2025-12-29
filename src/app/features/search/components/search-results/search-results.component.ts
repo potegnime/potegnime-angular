@@ -1,19 +1,18 @@
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { DatePipe, NgClass } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 
 import { SearchService } from '@features/search/services/search/search.service';
 import { SearchRequestDto } from '@features/search/models/search-request.interface';
 import { Torrent } from '@features/search/models/torrent.interface';
 import { SortService } from '@features/search/services/sort/sort.service';
-import { timingConst } from '@core/enums/toastr-timing.enum';
 import { TorrentFileDownloadService } from '@features/search/services/torrent-file-download/torrent-file-download.service';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 import { TorrentSourcePipe } from '@shared/pipes/torrent-source.pipe';
 import { AboutResultsComponent } from '@features/search/components/about-results/about-results.component';
 import { SearchBarSearchComponent } from '@features/search/components/search-bar-search/search-bar-search.component';
+import { ToastService } from '@core/services/toast/toast.service';
 
 @Component({
   selector: 'app-search-results',
@@ -32,7 +31,7 @@ import { SearchBarSearchComponent } from '@features/search/components/search-bar
 export class SearchResultsComponent implements OnInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
   private readonly searchService = inject(SearchService);
-  private readonly toastr = inject(ToastrService);
+  private readonly toastService = inject(ToastService);
   private readonly torrentFileDownloadService = inject(TorrentFileDownloadService);
   private readonly sortService = inject(SortService);
   private readonly datePipe = inject(DatePipe);
@@ -130,12 +129,10 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
           case 400:
             // Check if message is present and can be displayed
             if (error.error.message && error.error.errorCode == 1) {
-              this.toastr.error('', `Napaka pri iskanju torrentov: ${error.error.message}`, {
-                timeOut: timingConst.error
-              });
+              this.toastService.showError(`Napaka pri iskanju torrentov: ${error.error.message}`);
               break;
             } else {
-              this.toastr.error('', 'Napaka pri iskanju torrentov', { timeOut: timingConst.error });
+              this.toastService.showError('Napaka pri iskanju torrentov');
               break;
             }
           case 404:
@@ -145,10 +142,10 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
           case 503:
             // TODO
             // Cannot use potegnime-scraper - display native only
-            this.toastr.error('', 'Storitev trenutno ni na voljo', { timeOut: timingConst.error });
+            this.toastService.showError('Storitev trenutno ni na voljo');
             break;
           default:
-            this.toastr.error('', 'Napaka pri iskanju torrentov', { timeOut: timingConst.error });
+            this.toastService.showError('Napaka pri iskanju torrentov');
             break;
         }
         this.displayLoadingSpinner = false;
@@ -171,36 +168,28 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         try {
           this.searchResults.sort((a, b) => a.title.localeCompare(b.title));
         } catch {
-          this.toastr.info('', 'Sortiranje po imenu naraščajoče ni uspelo', {
-            timeOut: timingConst.info
-          });
+          this.toastService.showInfo('Sortiranje po imenu naraščajoče ni uspelo');
         }
         break;
       case 'name-desc':
         try {
           this.searchResults.sort((a, b) => b.title.localeCompare(a.title));
         } catch {
-          this.toastr.info('', 'Sortiranje po imenu padajoče ni uspelo', {
-            timeOut: timingConst.info
-          });
+          this.toastService.showInfo('Sortiranje po imenu padajoče ni uspelo');
         }
         break;
       case 'uploader-asc':
         try {
           this.searchResults.sort((a, b) => a.source.localeCompare(b.source));
         } catch {
-          this.toastr.info('', 'Sortiranje po uploaderju naraščajoče ni uspelo', {
-            timeOut: timingConst.info
-          });
+          this.toastService.showInfo('Sortiranje po uploaderju naraščajoče ni uspelo');
         }
         break;
       case 'uploader-desc':
         try {
           this.searchResults.sort((a, b) => b.source.localeCompare(a.source));
         } catch {
-          this.toastr.info('', 'Sortiranje po uploaderju padajoče ni uspelo', {
-            timeOut: timingConst.info
-          });
+          this.toastService.showInfo('Sortiranje po uploaderju padajoče ni uspelo');
         }
         break;
       case 'date-asc':
@@ -209,9 +198,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             (a, b) => new Date(a.time).getTime() - new Date(b.time).getTime()
           );
         } catch {
-          this.toastr.info('', 'Sortiranje po datumu naraščajoče ni uspelo', {
-            timeOut: timingConst.info
-          });
+          this.toastService.showInfo('Sortiranje po datumu naraščajoče ni uspelo');
         }
         break;
       case 'date-desc':
@@ -220,45 +207,35 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             (a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()
           );
         } catch {
-          this.toastr.info('', 'Sortiranje po datumu padajoče ni uspelo', {
-            timeOut: timingConst.info
-          });
+          this.toastService.showInfo('Sortiranje po datumu padajoče ni uspelo');
         }
         break;
       case 'seed-asc':
         try {
           this.searchResults.sort((a, b) => a.seeds - b.seeds);
         } catch {
-          this.toastr.info('', 'Sortiranje po sejalcih naraščajoče ni uspelo', {
-            timeOut: timingConst.info
-          });
+          this.toastService.showInfo('Sortiranje po sejalcih naraščajoče ni uspelo');
         }
         break;
       case 'seed-desc':
         try {
           this.searchResults.sort((a, b) => b.seeds - a.seeds);
         } catch {
-          this.toastr.info('', 'Sortiranje po sejalcih padajoče ni uspelo', {
-            timeOut: timingConst.info
-          });
+          this.toastService.showInfo('Sortiranje po sejalcih padajoče ni uspelo');
         }
         break;
       case 'peer-asc':
         try {
           this.searchResults.sort((a, b) => a.peers - b.peers);
         } catch {
-          this.toastr.info('', 'Sortiranje po peer naraščajoče ni uspelo', {
-            timeOut: timingConst.info
-          });
+          this.toastService.showInfo('Sortiranje po peer naraščajoče ni uspelo');
         }
         break;
       case 'peer-desc':
         try {
           this.searchResults.sort((a, b) => b.peers - a.peers);
         } catch {
-          this.toastr.info('', 'Sortiranje po peer padajoče ni uspelo', {
-            timeOut: timingConst.info
-          });
+          this.toastService.showInfo('Sortiranje po peer padajoče ni uspelo');
         }
         break;
       case 'size-asc':
@@ -269,9 +246,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             return sizeA - sizeB;
           });
         } catch {
-          this.toastr.info('', 'Sortiranje po velikosti naraščajoče ni uspelo', {
-            timeOut: timingConst.info
-          });
+          this.toastService.showInfo('Sortiranje po velikosti naraščajoče ni uspelo');
         }
         break;
       case 'size-desc':
@@ -282,9 +257,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             return sizeB - sizeA;
           });
         } catch {
-          this.toastr.info('', 'Sortiranje po velikosti padajoče ni uspelo', {
-            timeOut: timingConst.info
-          });
+          this.toastService.showInfo('Sortiranje po velikosti padajoče ni uspelo');
         }
         break;
       default:
@@ -411,9 +384,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         this.isDownloadingTorrentFile = false;
-        this.toastr.error('Prosimo uporabite magnet link', 'Prenos .torrent datoteke ni uspel', {
-          timeOut: timingConst.error
-        });
+        this.toastService.showError('Prosimo uporabite magnet link', 'Prenos .torrent datoteke ni uspel');
       }
     });
   }

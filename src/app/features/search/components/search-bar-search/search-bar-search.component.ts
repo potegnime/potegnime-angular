@@ -1,20 +1,13 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl,
-  ReactiveFormsModule
-} from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { SearchService } from '@features/search/services/search/search.service';
 import { RecommendService } from '@shared/services/recommend/recommend.service';
 import { SortService } from '@features/search/services/sort/sort.service';
 import { Subscription } from 'rxjs';
-import { timingConst } from '@core/enums/toastr-timing.enum';
 import { TorrentCategories } from '@features/search/models/torrent-categories.interface';
+import { ToastService } from '@core/services/toast/toast.service';
 
 @Component({
   selector: 'app-search-bar-search',
@@ -25,7 +18,7 @@ import { TorrentCategories } from '@features/search/models/torrent-categories.in
 })
 export class SearchBarSearchComponent implements OnInit, OnDestroy {
   private readonly formBuilder = inject(FormBuilder);
-  private readonly toastr = inject(ToastrService);
+  private readonly toastService = inject(ToastService);
   private readonly route = inject(ActivatedRoute);
   private readonly searchService = inject(SearchService);
   private readonly recommendService = inject(RecommendService);
@@ -63,7 +56,7 @@ export class SearchBarSearchComponent implements OnInit, OnDestroy {
           case 503:
             // TODO
             // Cannot use potegnime-scraper - display native only
-            this.toastr.error('', 'Storitev trenutno ni na voljo', { timeOut: timingConst.error });
+            this.toastService.showError('Storitev trenutno ni na voljo');
             break;
         }
       }
@@ -98,7 +91,7 @@ export class SearchBarSearchComponent implements OnInit, OnDestroy {
 
   protected onSearch(): void {
     if (!this.searchForm.valid) {
-      this.toastr.warning('', 'Vnesite izraz za iskanje', { timeOut: timingConst.warning });
+      this.toastService.showWarning('Vnesite izraz za iskanje');
       return;
     }
 
@@ -121,9 +114,7 @@ export class SearchBarSearchComponent implements OnInit, OnDestroy {
         this.onSearch();
       },
       error: (error) => {
-        this.toastr.error('', 'Napaka pri pridobivanju priporočila', {
-          timeOut: timingConst.error
-        });
+        this.toastService.showError('Napaka pri pridobivanju priporočila');
       }
     });
   }

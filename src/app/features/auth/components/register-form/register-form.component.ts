@@ -2,14 +2,13 @@ import { Component, OnInit, inject } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 
-import { timingConst } from '@core/enums/toastr-timing.enum';
 import { AuthService } from '@features/auth/services/auth/auth.service';
 import { UserRegisterDto } from '@features/auth/models/user-register.interface';
 import { AuthResetHelper } from '@features/auth/helpers/auth-reset-helper';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 import { TokenService } from '@core/services/token/token.service';
+import { ToastService } from '@core/services/toast/toast.service';
 
 @Component({
   selector: 'app-register-form',
@@ -23,7 +22,7 @@ export class RegisterFormComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly tokenService = inject(TokenService);
   private readonly router = inject(Router);
-  private readonly toastr = inject(ToastrService);
+  private readonly toastService = inject(ToastService);
 
   registerForm!: FormGroup;
   protected showRegisterError: boolean = false;
@@ -131,7 +130,7 @@ export class RegisterFormComponent implements OnInit {
         next: (resp) => {
           this.isSubmitting = false;
           if (resp.token) {
-            this.toastr.success('', 'Registracija uspešna', { timeOut: timingConst.success });
+            this.toastService.showSuccess('Registracija uspešna');
 
             // Clear register form cache
             AuthResetHelper.removeRegisterForm();

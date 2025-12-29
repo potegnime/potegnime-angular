@@ -3,7 +3,6 @@ import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 
-import { timingConst } from '@core/enums/toastr-timing.enum';
 import { TmdbMovieResponse } from '@models/tmdb-movie-response.interface';
 import { RecommendService } from '@shared/services/recommend/recommend.service';
 

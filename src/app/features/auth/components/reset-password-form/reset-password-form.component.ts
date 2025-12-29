@@ -2,12 +2,11 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgClass } from '@angular/common';
-import { ToastrService } from 'ngx-toastr';
 
 import { AuthService } from '@features/auth/services/auth/auth.service';
-import { timingConst } from '@core/enums/toastr-timing.enum';
 import { ResetPasswordDto } from '@features/auth/models/reset-password.interface';
 import { TokenService } from '@core/services/token/token.service';
+import { ToastService } from '@core/services/toast/toast.service';
 
 @Component({
   selector: 'app-reset-password-form',
@@ -20,7 +19,7 @@ export class ResetPasswordFormComponent implements OnInit {
   private readonly formBuilder = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly tokenService = inject(TokenService);
-  private readonly toastr = inject(ToastrService);
+  private readonly toastService = inject(ToastService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
 
@@ -109,7 +108,7 @@ export class ResetPasswordFormComponent implements OnInit {
         next: (resp) => {
           this.isSubmitting = false;
           if (resp.token) {
-            this.toastr.success('', 'Geslo uspešno posodobljeno', { timeOut: timingConst.success });
+            this.toastService.showSuccess('Geslo uspešno posodobljeno');
 
             // Save token and redirect
             this.tokenService.setToken(resp.token);
@@ -124,7 +123,7 @@ export class ResetPasswordFormComponent implements OnInit {
               // Check if message is present and can be displayed
               // TODO - generalize this across the app
               if (err.error.message && err.error.errorCode == 1) {
-                this.toastr.error('', `${err.error.message}`, { timeOut: timingConst.long });
+                this.toastService.showError(err.error.message);
               }
 
               this.router.navigate(['/']);

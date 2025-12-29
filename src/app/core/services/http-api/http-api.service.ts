@@ -1,11 +1,10 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { catchError, Observable, throwError } from 'rxjs';
 
-import { timingConst } from '@core/enums/toastr-timing.enum';
 import { TokenService } from '@core/services/token/token.service';
+import { ToastService } from '../toast/toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +13,7 @@ export class HttpApiService {
   private readonly httpClient = inject(HttpClient);
   private readonly router = inject(Router);
   private readonly tokenService = inject(TokenService);
-  private readonly toastr = inject(ToastrService);
+  private readonly toastService = inject(ToastService);
 
   public get<Response>(
     url: string,
@@ -84,7 +83,7 @@ export class HttpApiService {
         break;
       default:
         // All other unexpected errors
-        this.toastr.error('', 'Napaka na strežniku :(', { timeOut: timingConst.error });
+        this.toastService.showError('Napaka na strežniku :(');
         break;
     }
     return throwError(() => error);

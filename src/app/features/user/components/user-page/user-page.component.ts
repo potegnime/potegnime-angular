@@ -2,17 +2,16 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe, NgClass } from '@angular/common';
-import { ToastrService } from 'ngx-toastr';
 
 import { AuthService } from '@features/auth/services/auth/auth.service';
 import { UserService } from '@features/user/services/user/user.service';
-import { timingConst } from '@core/enums/toastr-timing.enum';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 import { SudoNavComponent } from '@features/sudo/components/sudo-nav/sudo-nav.component';
 import { UserModel } from '@models/user.interface';
 import { GetUserModel } from '@models/get-user.interface';
 import { APP_CONSTANTS } from '@constants/constants';
 import { TokenService } from '@core/services/token/token.service';
+import { ToastService } from '@core/services/toast/toast.service';
 
 // TODO
 // Compress pfp (client side?) before uploading to server, or server side (before saving?)
@@ -31,7 +30,7 @@ export class UserPageComponent implements OnInit {
   private readonly userService = inject(UserService);
   private readonly authService = inject(AuthService);
   private readonly route = inject(ActivatedRoute);
-  private readonly toastr = inject(ToastrService);
+  private readonly toastService = inject(ToastService);
 
   protected user: UserModel | undefined;
   protected otherUser: GetUserModel | null = null;
@@ -94,9 +93,7 @@ export class UserPageComponent implements OnInit {
             this.router.navigate(['404']);
             break;
           default:
-            this.toastr.error('', 'Napaka pri pridobivanju podatkov o uporabniku', {
-              timeOut: timingConst.error
-            });
+            this.toastService.showError('Napaka pri pridobivanju podatkov o uporabniku');
             break;
         }
       }
