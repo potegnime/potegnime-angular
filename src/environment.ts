@@ -9,5 +9,5 @@ export const environment = {
    * Frontend will only allow /maintenance page to be displayed, APIs will continue to work normally.
    * Any users that visit site while in maintenance mode will be logged out.
    */
-  underMaintenance: false
+  underMaintenance: true
 };
