@@ -227,6 +227,15 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
           timeOut: timingConst.success
         });
         this.isLoading = false;
+
+        // If profile picture was updated, reload the page so the new pfp is visible everywhere.
+        if (this.pfpChanged) {
+          setTimeout(() => {
+            try {
+              window.location.reload();
+            } catch {}
+          }, 1000);
+        }
       },
       error: (error) => {
         switch (error.status) {
