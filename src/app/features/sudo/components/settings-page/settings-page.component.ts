@@ -43,6 +43,7 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
   protected selectedProfilePicture: File | null = null;
   protected profilePictureUrl: string = APP_CONSTANTS.DEFAULT_PFP_PATH;
   protected pfpChanged: boolean = false;
+  private lastObjectUrl: string | null = null;
   protected isUser: boolean = false;
   public isLoading: boolean = true;
   protected uploaderRequestStatus: UploaderRequestStatus | null = null;
@@ -410,21 +411,54 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
   protected removeProfilePicture(): void {
     this.pfpChanged = true;
     this.selectedProfilePicture = null;
+    if (this.lastObjectUrl) {
+      try {
+        URL.revokeObjectURL(this.lastObjectUrl);
+      } catch {}
+      this.lastObjectUrl = null;
+    }
+
     this.profilePictureUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
     this.changeUserDataForm.patchValue({
       profilePicture: this.profilePictureUrl
     });
     this.changeUserDataForm.markAsDirty();
+
+    const fileInputById = document.getElementById('change-user-pfp') as HTMLInputElement | null;
+    if (fileInputById) {
+      try {
+        fileInputById.value = '';
+      } catch {}
+      return;
+    }
+    const anyFileInput = document.querySelector<HTMLInputElement>('input[type="file"]');
+    if (anyFileInput) {
+      try {
+        anyFileInput.value = '';
+      } catch {}
+    }
   }
 
   protected onProfilePictureChange(event: any): void {
     this.pfpChanged = true;
     if (event.target.files && event.target.files.length > 0) {
-      this.selectedProfilePicture = event.target.files[0];
+      const file = event.target.files[0] as File;
+      this.selectedProfilePicture = file;
+      if (this.lastObjectUrl) {
+        try {
+          URL.revokeObjectURL(this.lastObjectUrl);
+        } catch {}
+        this.lastObjectUrl = null;
+      }
+      try {
+        this.lastObjectUrl = URL.createObjectURL(file);
+        this.profilePictureUrl = this.lastObjectUrl;
+      } catch {
+        this.profilePictureUrl = this.getProfilePictureUrl();
+      }
     } else {
       this.selectedProfilePicture = null;
     }
-    this.profilePictureUrl = this.getProfilePictureUrl();
     this.changeUserDataForm.patchValue({
       profilePicture: this.profilePictureUrl
     });
@@ -434,7 +468,7 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
   protected getProfilePictureUrl() {
     if (this.pfpChanged) {
       if (this.selectedProfilePicture) {
-        return URL.createObjectURL(this.selectedProfilePicture);
+        return this.lastObjectUrl ?? URL.createObjectURL(this.selectedProfilePicture);
       }
     }
 

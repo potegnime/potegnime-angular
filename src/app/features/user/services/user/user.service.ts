@@ -24,6 +24,7 @@ export class UserService extends BaseHttpService {
 
   public buildPfpUrl(username: string): string {
     // name of pfp image is the same as user's username
+    // nginx serves the image directly and takes care of file extension
     return `${this.createUrl('pfp', ApiType.Api)}/${username}`;
   }
 
