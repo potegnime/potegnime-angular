@@ -7,7 +7,7 @@ import { UpdatePasswordDto } from '@features/user/models/update-password.interfa
 import { DeleteProfileDto } from '@features/user/models/delete-profile.interface';
 import { UploaderRequestDto } from '@features/user/models/uploader-request.interface';
 import { BaseHttpService } from '@core/services/base-http/base-http.service';
-import { TokenService } from '@core/services/token-service/token.service';
+import { TokenService } from '@core/services/token/token.service';
 import { GetUserModel } from '@models/get-user.interface';
 import { ApiType } from '@core/enums/api-type.enum';
 import { JwtTokenResponse } from '@models/jwt-token-response.interface';

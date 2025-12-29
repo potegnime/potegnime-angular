@@ -10,7 +10,7 @@ import { forkJoin, Observable, of, Subscription, switchMap } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
 import { AuthService } from '@features/auth/services/auth/auth.service';
-import { TokenService } from '@core/services/token-service/token.service';
+import { TokenService } from '@core/services/token/token.service';
 import { UserService } from '@features/user/services/user/user.service';
 import { SetPfpDto } from '@features/user/models/update-pfp.interface';
 import { UpdatePasswordDto } from '@features/user/models/update-password.interface';

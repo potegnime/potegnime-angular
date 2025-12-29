@@ -9,7 +9,7 @@ import { AuthService } from '@features/auth/services/auth/auth.service';
 import { UserRegisterDto } from '@features/auth/models/user-register.interface';
 import { AuthResetHelper } from '@features/auth/helpers/auth-reset-helper';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
-import { TokenService } from '@core/services/token-service/token.service';
+import { TokenService } from '@core/services/token/token.service';
 
 @Component({
   selector: 'app-register-form',

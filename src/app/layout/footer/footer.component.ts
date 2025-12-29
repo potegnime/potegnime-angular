@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { TokenService } from '@core/services/token-service/token.service';
+import { TokenService } from '@core/services/token/token.service';
 import { AuthService } from '@features/auth/services/auth/auth.service';
 import { UserService } from '@features/user/services/user/user.service';
 import { UserModel } from '@models/user.interface';

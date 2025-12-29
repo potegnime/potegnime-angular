@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
-import { TokenService } from '@core/services/token-service/token.service';
+import { TokenService } from '@core/services/token/token.service';
 import { AuthHelper } from '@core/helpers/auth-helper';
 import { timingConst } from '@core/enums/toastr-timing.enum';
 import { BaseHttpService } from '@core/services/base-http/base-http.service';

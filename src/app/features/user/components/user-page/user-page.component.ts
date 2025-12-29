@@ -12,7 +12,7 @@ import { SudoNavComponent } from '@features/sudo/components/sudo-nav/sudo-nav.co
 import { UserModel } from '@models/user.interface';
 import { GetUserModel } from '@models/get-user.interface';
 import { APP_CONSTANTS } from '@constants/constants';
-import { TokenService } from '@core/services/token-service/token.service';
+import { TokenService } from '@core/services/token/token.service';
 
 // TODO
 // Compress pfp (client side?) before uploading to server, or server side (before saving?)

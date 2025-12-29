@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { catchError, Observable, throwError } from 'rxjs';
 
 import { timingConst } from '@core/enums/toastr-timing.enum';
-import { TokenService } from '@core/services/token-service/token.service';
+import { TokenService } from '@core/services/token/token.service';
 
 @Injectable({
   providedIn: 'root'

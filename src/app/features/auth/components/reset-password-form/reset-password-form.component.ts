@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '@features/auth/services/auth/auth.service';
 import { timingConst } from '@core/enums/toastr-timing.enum';
 import { ResetPasswordDto } from '@features/auth/models/reset-password.interface';
-import { TokenService } from '@core/services/token-service/token.service';
+import { TokenService } from '@core/services/token/token.service';
 
 @Component({
   selector: 'app-reset-password-form',

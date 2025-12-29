@@ -5,7 +5,7 @@ import { NgClass } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 
 import { AuthService } from '@features/auth/services/auth/auth.service';
-import { TokenService } from '@core/services/token-service/token.service';
+import { TokenService } from '@core/services/token/token.service';
 import { timingConst } from '@core/enums/toastr-timing.enum';
 import { UserLoginDto } from '@features/auth/models/user-login.interface';
 import { AuthResetHelper } from '@features/auth//helpers/auth-reset-helper';
