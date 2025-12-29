@@ -445,40 +445,40 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
       const file = event.target.files[0] as File;
 
       // compress image - remove if necessary and use code commented out below
-      // this.compressImage(file).then((compressedFile) => {
-      //   this.selectedProfilePicture = compressedFile;
-      //   this.lastObjectUrl = URL.createObjectURL(compressedFile);
-      //   this.profilePictureUrl = this.lastObjectUrl;
-      // }).catch(() => {
-      //   // if compression fails, use original file
-      //   this.selectedProfilePicture = file;
-      //   if (this.lastObjectUrl) {
-      //     try {
-      //       URL.revokeObjectURL(this.lastObjectUrl);
-      //     } catch {}
-      //     this.lastObjectUrl = null;
-      //   }
-      //   try {
-      //     this.lastObjectUrl = URL.createObjectURL(file);
-      //     this.profilePictureUrl = this.lastObjectUrl;
-      //   } catch {
-      //     this.profilePictureUrl = this.getProfilePictureUrl();
-      //   }
-      // });
-
-      this.selectedProfilePicture = file;
-      if (this.lastObjectUrl) {
-        try {
-          URL.revokeObjectURL(this.lastObjectUrl);
-        } catch {}
-        this.lastObjectUrl = null;
-      }
-      try {
-        this.lastObjectUrl = URL.createObjectURL(file);
+      this.compressImage(file).then((compressedFile) => {
+        this.selectedProfilePicture = compressedFile;
+        this.lastObjectUrl = URL.createObjectURL(compressedFile);
         this.profilePictureUrl = this.lastObjectUrl;
-      } catch {
-        this.profilePictureUrl = this.getProfilePictureUrl();
-      }
+      }).catch(() => {
+        // if compression fails, use original file
+        this.selectedProfilePicture = file;
+        if (this.lastObjectUrl) {
+          try {
+            URL.revokeObjectURL(this.lastObjectUrl);
+          } catch {}
+          this.lastObjectUrl = null;
+        }
+        try {
+          this.lastObjectUrl = URL.createObjectURL(file);
+          this.profilePictureUrl = this.lastObjectUrl;
+        } catch {
+          this.profilePictureUrl = this.getProfilePictureUrl();
+        }
+      });
+
+      // this.selectedProfilePicture = file;
+      // if (this.lastObjectUrl) {
+      //   try {
+      //     URL.revokeObjectURL(this.lastObjectUrl);
+      //   } catch {}
+      //   this.lastObjectUrl = null;
+      // }
+      // try {
+      //   this.lastObjectUrl = URL.createObjectURL(file);
+      //   this.profilePictureUrl = this.lastObjectUrl;
+      // } catch {
+      //   this.profilePictureUrl = this.getProfilePictureUrl();
+      // }
     } else {
       this.selectedProfilePicture = null;
     }
