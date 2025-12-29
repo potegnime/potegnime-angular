@@ -52,12 +52,6 @@ export class HomeHeaderComponent implements OnInit {
             else
               this.toastService.showInfo('Serija dneva še ni bila nastavljena');
             break;
-          default:
-            if (type == 'movie')
-              this.toastService.showError('Napaka pri pridobivanju filma dneva');
-            else
-              this.toastService.showError('Napaka pri pridobivanju serije dneva');
-            break;
         }
         this.setLoading(false);
       }
@@ -77,7 +71,6 @@ export class HomeHeaderComponent implements OnInit {
       },
       error: (error) => {
         this.setLoading(false);
-        this.toastService.showError('Napaka pri pridobivanju priporočila');
       }
     });
   }

@@ -144,9 +144,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             // Cannot use potegnime-scraper - display native only
             this.toastService.showError('Storitev trenutno ni na voljo');
             break;
-          default:
-            this.toastService.showError('Napaka pri iskanju torrentov');
-            break;
         }
         this.displayLoadingSpinner = false;
         this.noResults = true;

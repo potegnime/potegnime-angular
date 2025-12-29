@@ -62,7 +62,6 @@ export class AdministrationPageComponent implements OnInit {
             });
             break;
           default:
-            this.toastService.showError('Napaka pri pridobivanju priporočila dneva');
             this.setRecommendationForm = this.formBuilder.group({
               date: [date, Validators.required],
               type: ['movie', Validators.required],
@@ -215,9 +214,6 @@ export class AdministrationPageComponent implements OnInit {
             case 404:
               this.toastService.showError('Uporabnik ne obstaja');
               break;
-            default:
-              this.toastService.showError('Napaka pri brisanju profila');
-              break;
           }
         }
       });
@@ -280,7 +276,6 @@ export class AdministrationPageComponent implements OnInit {
             });
             break;
           default:
-            this.toastService.showError('Napaka pri pridobivanju priporočila dneva');
             this.setRecommendationForm = this.formBuilder.group({
               date: [date, Validators.required],
               type: ['movie', Validators.required],

@@ -29,8 +29,6 @@ export class HomeTorrentComponent implements OnInit {
   protected isLoading: boolean = true;
   @Output() loadingChange = new EventEmitter<boolean>();
 
-  private errorToastShown: boolean = false;
-
   public ngOnInit(): void {
     this.setLoading(true);
 

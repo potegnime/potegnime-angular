@@ -227,9 +227,6 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
           case 409:
             this.toastService.showError(error.error.message);
             break;
-          default:
-            this.toastService.showError('Napaka pri posodabljanju podatkov');
-            break;
         }
         this.isLoading = false;
       }
@@ -268,14 +265,6 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
           this.uploaderRequestStatus = UploaderRequestStatus.Review;
           // Update JWT
           this.tokenService.updateToken(response.token);
-          this.isLoading = false;
-        },
-        error: (error) => {
-          switch (error.status) {
-            default:
-              this.toastService.showError('Napaka pri pošiljanju vloge za nalagalca');
-              break;
-          }
           this.isLoading = false;
         }
       });
@@ -317,9 +306,6 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
             case 403:
               this.toastService.showError(error.error.message);
               break;
-            default:
-              this.toastService.showError('Napaka pri posodabljanju gesla');
-              break;
           }
           this.isLoading = false;
         }
@@ -356,9 +342,6 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
           switch (error.status) {
             case 403:
               this.toastService.showError(error.error.message);
-              break;
-            default:
-              this.toastService.showError('Napaka pri brisanju profila');
               break;
           }
           this.isLoading = false;

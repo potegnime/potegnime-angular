@@ -92,9 +92,6 @@ export class UserPageComponent implements OnInit {
             // Redirect to 404 page
             this.router.navigate(['404']);
             break;
-          default:
-            this.toastService.showError('Napaka pri pridobivanju podatkov o uporabniku');
-            break;
         }
       }
     });

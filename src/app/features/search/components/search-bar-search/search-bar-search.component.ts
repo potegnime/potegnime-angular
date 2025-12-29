@@ -112,9 +112,6 @@ export class SearchBarSearchComponent implements OnInit, OnDestroy {
           query: response.name
         });
         this.onSearch();
-      },
-      error: (error) => {
-        this.toastService.showError('Napaka pri pridobivanju priporočila');
       }
     });
   }
