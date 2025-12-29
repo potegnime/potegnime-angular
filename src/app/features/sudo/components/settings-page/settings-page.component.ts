@@ -1,21 +1,13 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
-import { forkJoin, Observable, of, Subscription, switchMap } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
+import { AbstractControl, FormBuilder,  FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Observable, of, Subscription, switchMap } from 'rxjs';
 
 import { AuthService } from '@features/auth/services/auth/auth.service';
-import { TokenService } from '@core/services/token-service/token.service';
+import { TokenService } from '@core/services/token/token.service';
 import { UserService } from '@features/user/services/user/user.service';
 import { SetPfpDto } from '@features/user/models/update-pfp.interface';
 import { UpdatePasswordDto } from '@features/user/models/update-password.interface';
 import { DeleteProfileDto } from '@features/user/models/delete-profile.interface';
-import { timingConst } from '@core/enums/toastr-timing.enum';
 import { UploaderRequestDto } from '@features/user/models/uploader-request.interface';
 import { UploaderRequestStatus } from '@core/enums/uploader-request-status.enum';
 import { SudoNavComponent } from '@features/sudo/components/sudo-nav/sudo-nav.component';
@@ -23,6 +15,7 @@ import { UserModel } from '@models/user.interface';
 import { APP_CONSTANTS } from '@constants/constants';
 import { JwtTokenResponse } from '@models/jwt-token-response.interface';
 import { UpdateUserDto } from '@features/user/models/update-user.interface';
+import { ToastService } from '@core/services/toast/toast.service';
 
 @Component({
   selector: 'app-settings-page',
@@ -36,7 +29,7 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
   private readonly authService = inject(AuthService);
   private readonly tokenService = inject(TokenService);
   private readonly userService = inject(UserService);
-  private readonly toastr = inject(ToastrService);
+  private readonly toastService = inject(ToastService);
 
   protected user: UserModel | undefined;
 
@@ -130,11 +123,7 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
       for (const controlName of Object.keys(this.changeUserDataForm.controls)) {
         const control = this.changeUserDataForm.get(controlName);
         if (control?.invalid) {
-          this.toastr.error(
-            '',
-            `Neveljaven vnos ${this.getUiAppropriateControlName(controlName)}!`,
-            { timeOut: timingConst.error }
-          );
+          this.toastService.showError(`Neveljaven vnos ${this.getUiAppropriateControlName(controlName)}!`);
           break;
         }
       }
@@ -174,9 +163,7 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
       // Check file size
 
       if (this.selectedProfilePicture && this.selectedProfilePicture.size > APP_CONSTANTS.MAX_PROFILE_PIC_SIZE_BYTES) {
-        this.toastr.error('', 'Največja dovoljena velikost profilne slike je 5MB', {
-          timeOut: timingConst.error
-        });
+        this.toastService.showError('Največja dovoljena velikost profilne slike je 5MB');
         return;
       }
       const setPfp: SetPfpDto = { profilePicFile: this.selectedProfilePicture ?? null };
@@ -185,7 +172,7 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
 
     // If no changes detected
     if (Object.keys(updates).length === 0) {
-      this.toastr.info('', 'Ni sprememb', { timeOut: timingConst.info });
+      this.toastService.showInfo('Ni sprememb');
       return;
     }
 
@@ -223,9 +210,7 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
           profilePicture: this.profilePictureUrl
         });
 
-        this.toastr.success('', 'Podatki uspešno posodobljeni', {
-          timeOut: timingConst.success
-        });
+        this.toastService.showSuccess('Podatki uspešno posodobljeni');
         this.isLoading = false;
 
         // If profile picture was updated, reload the page so the new pfp is visible everywhere.
@@ -240,12 +225,7 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
       error: (error) => {
         switch (error.status) {
           case 409:
-            this.toastr.error('', error.error.message, { timeOut: timingConst.error });
-            break;
-          default:
-            this.toastr.error('', 'Napaka pri posodabljanju podatkov', {
-              timeOut: timingConst.error
-            });
+            this.toastService.showError(error.error.message);
             break;
         }
         this.isLoading = false;
@@ -262,7 +242,7 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
       const agreeToTerms = this.uploaderRequestDataForm.get('agreeToTerms')?.value;
 
       if (agreeToTerms !== 'yes') {
-        this.toastr.error('', 'Strinjanje s pogoji je obvezno', { timeOut: timingConst.error });
+        this.toastService.showError('Strinjanje s pogoji je obvezno');
         return;
       }
 
@@ -281,22 +261,10 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
 
       this.userService.submitUploaderRequest(uploaderRequestDto).subscribe({
         next: (response) => {
-          this.toastr.success('', 'Vloga za nalagalca uspešno poslana', {
-            timeOut: timingConst.success
-          });
+          this.toastService.showSuccess('Vloga za nalagalca uspešno poslana');
           this.uploaderRequestStatus = UploaderRequestStatus.Review;
           // Update JWT
           this.tokenService.updateToken(response.token);
-          this.isLoading = false;
-        },
-        error: (error) => {
-          switch (error.status) {
-            default:
-              this.toastr.error('', 'Napaka pri pošiljanju vloge za nalagalca', {
-                timeOut: timingConst.error
-              });
-              break;
-          }
           this.isLoading = false;
         }
       });
@@ -304,11 +272,7 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
       for (const controlName of Object.keys(this.uploaderRequestDataForm.controls)) {
         const control = this.uploaderRequestDataForm.get(controlName);
         if (control?.invalid) {
-          this.toastr.error(
-            '',
-            `Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`,
-            { timeOut: timingConst.error }
-          );
+          this.toastService.showError(`Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`);
           break;
         }
       }
@@ -322,7 +286,7 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
       const newPasswordRepeat = this.changePasswordForm.get('newPasswordRepeat')?.value;
 
       if (newPassword !== newPasswordRepeat) {
-        this.toastr.error('', 'Gesli se ne ujemata', { timeOut: timingConst.error });
+        this.toastService.showError('Gesli se ne ujemata');
         return;
       }
 
@@ -333,19 +297,14 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
 
       this.userService.updatePassword(updatePasswordDto).subscribe({
         next: () => {
-          this.toastr.success('', 'Geslo uspešno posodobljeno', { timeOut: timingConst.success });
+          this.toastService.showSuccess('Geslo uspešno posodobljeno');
           this.changePasswordForm.reset();
           this.isLoading = false;
         },
         error: (error) => {
           switch (error.status) {
             case 403:
-              this.toastr.error('', error.error.message, { timeOut: timingConst.error });
-              break;
-            default:
-              this.toastr.error('', 'Napaka pri posodabljanju gesla', {
-                timeOut: timingConst.error
-              });
+              this.toastService.showError(error.error.message);
               break;
           }
           this.isLoading = false;
@@ -355,11 +314,7 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
       for (const controlName of Object.keys(this.changePasswordForm.controls)) {
         const control = this.changePasswordForm.get(controlName);
         if (control?.invalid) {
-          this.toastr.error(
-            '',
-            `Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`,
-            { timeOut: timingConst.error }
-          );
+          this.toastService.showError(`Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`);
           break;
         }
       }
@@ -379,17 +334,14 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
 
       this.userService.deleteProfile(deleteProfileDto).subscribe({
         next: () => {
-          this.toastr.success('', 'Profil uspešno izbrisan', { timeOut: timingConst.success });
+          this.toastService.showSuccess('Profil uspešno izbrisan');
           this.authService.unauthorizedHandler();
           this.isLoading = false;
         },
         error: (error) => {
           switch (error.status) {
             case 403:
-              this.toastr.error('', error.error.message, { timeOut: timingConst.error });
-              break;
-            default:
-              this.toastr.error('', 'Napaka pri brisanju profila', { timeOut: timingConst.error });
+              this.toastService.showError(error.error.message);
               break;
           }
           this.isLoading = false;
@@ -399,11 +351,7 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
       for (const controlName of Object.keys(this.deleteProfileForm.controls)) {
         const control = this.deleteProfileForm.get(controlName);
         if (control?.invalid) {
-          this.toastr.error(
-            '',
-            `Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`,
-            { timeOut: timingConst.error }
-          );
+          this.toastService.showError(`Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`);
           break;
         }
       }

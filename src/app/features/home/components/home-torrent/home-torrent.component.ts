@@ -1,10 +1,8 @@
 import { SlicePipe } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { forkJoin } from 'rxjs';
 
-import { timingConst } from '@core/enums/toastr-timing.enum';
 import { TmdbMovieResponse } from '@models/tmdb-movie-response.interface';
 import { RecommendService } from '@shared/services/recommend/recommend.service';
 
@@ -17,7 +15,6 @@ import { RecommendService } from '@shared/services/recommend/recommend.service';
 })
 export class HomeTorrentComponent implements OnInit {
   private readonly recommendService = inject(RecommendService);
-  private readonly toastr = inject(ToastrService);
   private readonly router = inject(Router);
 
   protected language: 'sl-SI' | 'en-US' = 'en-US';
@@ -31,8 +28,6 @@ export class HomeTorrentComponent implements OnInit {
   protected topRatedMovies: TmdbMovieResponse[] = [];
   protected isLoading: boolean = true;
   @Output() loadingChange = new EventEmitter<boolean>();
-
-  private errorToastShown: boolean = false;
 
   public ngOnInit(): void {
     this.setLoading(true);
@@ -52,22 +47,9 @@ export class HomeTorrentComponent implements OnInit {
         this.setLoading(false);
       },
       error: (error: any) => {
-        switch (error.status) {
-          default:
-            this.errorGettingRecommendations();
-            break;
-        }
         this.setLoading(false);
       }
     });
-  }
-
-  // Error getting recommendations
-  private errorGettingRecommendations(): void {
-    if (!this.errorToastShown) {
-      this.toastr.error('', 'Napaka pri pridobivanju torrentov', { timeOut: timingConst.error });
-      this.errorToastShown = true;
-    }
   }
 
   protected searchTitle(text: string): void {

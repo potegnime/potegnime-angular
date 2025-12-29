@@ -1,10 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
 
 import { SearchService } from '@features/search/services/search/search.service';
-import { timingConst } from '@core/enums/toastr-timing.enum';
+import { ToastService } from '@core/services/toast/toast.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -15,7 +14,7 @@ import { timingConst } from '@core/enums/toastr-timing.enum';
 })
 export class SearchBarComponent implements OnInit {
   private readonly formBuilder = inject(FormBuilder);
-  private readonly toastr = inject(ToastrService);
+  private readonly toastService = inject(ToastService);
   private readonly route = inject(ActivatedRoute);
   private readonly searchService = inject(SearchService);
 
@@ -35,7 +34,7 @@ export class SearchBarComponent implements OnInit {
   protected onSearch(): void {
     // Use search service onSearch method
     if (!this.searchForm.valid) {
-      this.toastr.warning('', 'Vnesite izraz za iskanje', { timeOut: timingConst.warning });
+      this.toastService.showWarning('Vnesite izraz za iskanje');
       return;
     }
 

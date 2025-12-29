@@ -1,12 +1,11 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
 
 import { AuthService } from '@features/auth/services/auth/auth.service';
-import { timingConst } from '@core/enums/toastr-timing.enum';
 import { ForgotPasswordDto } from '@features/auth/models/forgot-password.interface';
 import { AuthResetHelper } from '@features/auth/helpers/auth-reset-helper';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
+import { ToastService } from '@core/services/toast/toast.service';
 
 @Component({
   selector: 'app-forgot-password-form',
@@ -18,7 +17,7 @@ import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/load
 export class ForgotPasswordFormComponent implements OnInit {
   private readonly formBuilder = inject(FormBuilder);
   private readonly authService = inject(AuthService);
-  private readonly toastr = inject(ToastrService);
+  private readonly toastService = inject(ToastService);
 
   protected forgotPasswordForm!: FormGroup;
   protected isSubmitting: boolean = false;
@@ -36,7 +35,7 @@ export class ForgotPasswordFormComponent implements OnInit {
         const minutesLeft = Math.ceil(
           (forgotPasswordTimeout.getTime() - new Date().getTime()) / 60000
         );
-        this.toastr.warning('', this.warningMessage(minutesLeft), { timeOut: timingConst.long });
+        this.toastService.showWarning(this.warningMessage(minutesLeft));
         this.isSubmitted = true;
       } else {
         AuthResetHelper.removeForgotPasswordTimeout();

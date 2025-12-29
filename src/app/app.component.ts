@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { filter } from 'rxjs/operators';
-import { ToastrModule } from 'ngx-toastr';
 
 import { AuthService } from '@features/auth/services/auth/auth.service';
 import { HeaderComponent } from '@layout/header/header.component';
@@ -13,7 +12,7 @@ import { environment } from 'src/environment';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  imports: [HeaderComponent, FooterComponent, RouterOutlet, NgClass, ToastrModule],
+  imports: [HeaderComponent, FooterComponent, RouterOutlet, NgClass],
   standalone: true
 })
 export class AppComponent {

@@ -2,14 +2,13 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
-import { ToastrService } from 'ngx-toastr';
 
 import { AuthService } from '@features/auth/services/auth/auth.service';
-import { TokenService } from '@core/services/token-service/token.service';
-import { timingConst } from '@core/enums/toastr-timing.enum';
+import { TokenService } from '@core/services/token/token.service';
 import { UserLoginDto } from '@features/auth/models/user-login.interface';
 import { AuthResetHelper } from '@features/auth//helpers/auth-reset-helper';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
+import { ToastService } from '@core/services/toast/toast.service';
 
 @Component({
   selector: 'app-login-form',
@@ -23,7 +22,7 @@ export class LoginFormComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly tokenService = inject(TokenService);
   private readonly router = inject(Router);
-  private readonly toastr = inject(ToastrService);
+  private readonly toastService = inject(ToastService);
 
   protected loginForm!: FormGroup;
   protected showLoginError: boolean = false;
@@ -51,7 +50,7 @@ export class LoginFormComponent implements OnInit {
         next: (resp) => {
           this.isSubmitting = false;
           if (resp.token) {
-            this.toastr.success('', 'Prijava uspešna', { timeOut: timingConst.success });
+            this.toastService.showSuccess('Prijava uspešna');
 
             // Clear register form cache
             AuthResetHelper.removeRegisterForm();
