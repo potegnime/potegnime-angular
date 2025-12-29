@@ -49,12 +49,12 @@ export class NavComponent implements OnInit, OnDestroy {
 
   protected exploreClick(section: string | null) {
     if (!section) {
-      this.router.navigate(['/razisci']);
+      this.router.navigate(['/explore']);
     }
     let queryParams = {
       s: section
     };
-    this.router.navigate(['/razisci'], { queryParams: queryParams });
+    this.router.navigate(['/explore'], { queryParams: queryParams });
   }
 
   protected removeNotification(event: Event, notificationId: number) {

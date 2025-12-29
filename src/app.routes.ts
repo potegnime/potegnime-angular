@@ -17,24 +17,22 @@ export const routes: Routes = [
     loadComponent: () => import('@features/auth/components/auth-page/auth-page.component').then((m) => m.AuthPageComponent),
     children: [
       {
-        path: 'prijava',
+        path: 'login',
         loadComponent: () => import('@features/auth/components/login-form/login-form.component').then((m) => m.LoginFormComponent),
         canActivate: [LoggedInAuthGuard]
       },
-      { path: 'login', redirectTo: 'prijava', pathMatch: 'full' },
       {
-        path: 'registracija',
+        path: 'register',
         loadComponent: () => import('@features/auth/components/register-form/register-form.component').then((m) => m.RegisterFormComponent),
         canActivate: [LoggedInAuthGuard]
       },
-      { path: 'register', redirectTo: 'registracija', pathMatch: 'full' },
       {
-        path: 'pozabljeno-geslo',
+        path: 'forgot-password',
         loadComponent: () => import('@features/auth/components/forgot-password-form/forgot-password-form.component').then((m) => m.ForgotPasswordFormComponent),
         canActivate: [LoggedInAuthGuard]
       },
       {
-        path: 'ponastavi-geslo',
+        path: 'reset-password',
         loadComponent: () => import('@features/auth/components/reset-password-form/reset-password-form.component').then((m) => m.ResetPasswordFormComponent),
         canActivate: [LoggedInAuthGuard]
       },
@@ -48,7 +46,7 @@ export const routes: Routes = [
 
   // Search module
   {
-    path: 'iskanje',
+    path: 'search',
     loadChildren: () => import('@features/search/search.routes').then((m) => m.SEARCH_ROUTES),
     canActivate: [AuthGuard]
   },
@@ -62,7 +60,7 @@ export const routes: Routes = [
 
   // Recommend module
   {
-    path: 'razisci',
+    path: 'explore',
     loadChildren: () => import('@features/recommend/recommend.routes').then((m) => m.RECOMMEND_ROUTES),
     canActivate: [AuthGuard]
   },

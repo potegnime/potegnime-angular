@@ -25,7 +25,7 @@ export class HomeHeaderComponent implements OnInit {
   }
 
   protected searchTitle(text: string): void {
-    this.router.navigate(['/iskanje'], { queryParams: { q: text } });
+    this.router.navigate(['/search'], { queryParams: { q: text } });
   }
 
   private getFormattedDate(): string {
@@ -77,7 +77,7 @@ export class HomeHeaderComponent implements OnInit {
 
   protected seeMore(section: string) {
     this.setLoading(true);
-    this.router.navigate(['/razisci'], { queryParams: { s: section } });
+    this.router.navigate(['/explore'], { queryParams: { s: section } });
   }
 
   setLoading(isLoading: boolean): void {

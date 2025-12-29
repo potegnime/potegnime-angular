@@ -5,7 +5,7 @@ import { UploaderGuard } from '@core/guards/uploader.guard';
 
 export const SUDO_ROUTES: Routes = [
   {
-    path: 'nastavitve',
+    path: 'settings',
     loadComponent: () => import('./components/settings-page/settings-page.component').then((m) => m.SettingsPageComponent),
     canActivate: [AuthGuard]
   },
@@ -15,7 +15,7 @@ export const SUDO_ROUTES: Routes = [
     canActivate: [AdminGuard]
   },
   {
-    path: 'ustvari',
+    path: 'create',
     loadComponent: () => import('./components/upload-torrent-page/upload-torrent-page.component').then((m) => m.UploadTorrentPageComponent),
     canActivate: [UploaderGuard]
   }

@@ -50,7 +50,7 @@
       <li class="nav-item dropdown">
         <a
           class="nav-link text-center"
-          id="o-nas-dropdown-link"
+          id="about-dropdown-link"
           data-bs-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
@@ -61,11 +61,11 @@
           </div>
         </a>
         @if (user) {
-          <div class="dropdown-menu text-center" aria-labelledby="o-nas-dropdown-link">
+          <div class="dropdown-menu text-center" aria-labelledby="about-us-dropdown-link">
             <a class="dropdown-item" [routerLink]="['/u', this.user.username]">Moj profil</a>
-            <a class="dropdown-item" routerLink="/nastavitve">Nastavitve</a>
+            <a class="dropdown-item" routerLink="/settings">Nastavitve</a>
             @if (user.role === 'admin' || user.role === 'uploader') {
-              <a class="dropdown-item" routerLink="/ustvari">Ustvari torrent</a>
+              <a class="dropdown-item" routerLink="/create">Ustvari torrent</a>
             }
             @if (user.role === 'admin') {
               <a class="dropdown-item" routerLink="/admin">Administracija</a>

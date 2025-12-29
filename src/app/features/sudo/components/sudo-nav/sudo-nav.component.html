@@ -1,14 +1,19 @@
 <nav class="row navbar navbar-expand-lg">
   <div class="container-fluid">
     <div class="d-flex">
-      <button class="sudo-button" type="button" [routerLink]="['/u', this.user?.username]" routerLinkActive="active-link">
+      <button
+        class="sudo-button"
+        type="button"
+        [routerLink]="['/u', this.user?.username]"
+        routerLinkActive="active-link"
+      >
         Moj profil
       </button>
-      <button class="sudo-button" type="button" routerLink="/nastavitve" routerLinkActive="active-link">
+      <button class="sudo-button" type="button" routerLink="/settings" routerLinkActive="active-link">
         Nastavitve
       </button>
       @if (isAdmin || isUploader) {
-        <button class="sudo-button" type="button" routerLink="/ustvari" routerLinkActive="active-link">
+        <button class="sudo-button" type="button" routerLink="/create" routerLinkActive="active-link">
           Ustvari torrent
         </button>
       }
@@ -24,4 +29,4 @@
     </div>
   </div>
 </nav>
-<hr class="mt-0">
+<hr class="mt-0" />

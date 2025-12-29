@@ -18,12 +18,12 @@
     <h3>Profil</h3>
     <ul>
       <li>
-         @if (user) {
+        @if (user) {
           <a [routerLink]="['/u', this.user.username]">Moj profil</a>
-         }
+        }
       </li>
       <li>
-        <a routerLink="/nastavitve">Nastavitve</a>
+        <a routerLink="/settings">Nastavitve</a>
       </li>
       @if (isAdmin) {
         <li>
@@ -41,13 +41,13 @@
     <h3>potegni.me</h3>
     <ul>
       <li>
-        <a routerLink="/o-nas">O nas</a>
+        <a routerLink="/about">O nas</a>
       </li>
       <li>
-        <a routerLink="/donacije">Donacije</a>
+        <a routerLink="/donate">Donacije</a>
       </li>
       <li>
-        <a routerLink="/pogoji">Pravila in pogoji</a>
+        <a routerLink="/terms">Pravila in pogoji</a>
       </li>
     </ul>
   </div>

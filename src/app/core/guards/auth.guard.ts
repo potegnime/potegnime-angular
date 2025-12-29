@@ -14,7 +14,7 @@ export class AuthGuard implements CanActivate {
     const isTokenValid = this.authService.verifyToken();
     if (isTokenValid) return true;
 
-    this.router.navigate(['/prijava']);
+    this.router.navigate(['/login']);
     return false;
   }
 }

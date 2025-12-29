@@ -82,7 +82,7 @@ export class SearchService extends BaseHttpService {
       queryParams = { ...queryParams, sort: sort };
     }
 
-    this.router.navigate(['/iskanje'], { queryParams: queryParams });
+    this.router.navigate(['/search'], { queryParams: queryParams });
   }
 
   protected override getJson<Response>(urlPath: string, apiType?: ApiType): Observable<Response> {

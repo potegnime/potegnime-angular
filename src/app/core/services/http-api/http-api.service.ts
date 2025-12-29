@@ -73,7 +73,7 @@ export class HttpApiService {
     switch (error.status) {
       case 401:
         this.tokenService.deleteToken();
-        this.router.navigate(['/prijava']);
+        this.router.navigate(['/login']);
         break;
       case 404:
         // API returns 404 for valid reasons, such as no pfp set, not an error

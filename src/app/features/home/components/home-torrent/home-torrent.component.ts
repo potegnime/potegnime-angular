@@ -55,14 +55,14 @@ export class HomeTorrentComponent implements OnInit {
   protected searchTitle(text: string): void {
     // todo: setting for language, per user, configurable in settings
     // this.toastr.info('Za boljše rezultate, poskusite iskati v angleščini', 'Iskanje v slovenščini', { timeOut: timingConst.info });
-    this.router.navigate(['/iskanje'], { queryParams: { q: text } });
+    this.router.navigate(['/search'], { queryParams: { q: text } });
   }
 
   protected seeMore(section: string) {
     let queryParams = {
       s: section
     };
-    this.router.navigate(['/razisci'], { queryParams: queryParams });
+    this.router.navigate(['/explore'], { queryParams: queryParams });
   }
 
   setLoading(isLoading: boolean): void {

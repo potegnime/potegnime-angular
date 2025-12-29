@@ -30,7 +30,7 @@ export class AuthService extends BaseHttpService {
 
   public logout(showToast: boolean = true): void {
     this.tokenService.deleteToken();
-    this.router.navigate(['/prijava']);
+    this.router.navigate(['/login']);
     if (showToast) {
       this.toastService.showSuccess('Odjava uspešna');
     }
@@ -39,7 +39,7 @@ export class AuthService extends BaseHttpService {
   public unauthorizedHandler(): void {
     // Called on 401, or when page cannot be displayed
     this.tokenService.deleteToken();
-    this.router.navigate(['/prijava']);
+    this.router.navigate(['/login']);
   }
 
   /**

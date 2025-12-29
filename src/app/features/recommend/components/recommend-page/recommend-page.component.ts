@@ -130,6 +130,6 @@ export class RecommendPageComponent implements AfterViewChecked, OnInit {
     if (this.language == 'sl-SI') {
       this.toastService.showInfo('Za boljše rezultate, poskusite iskati v angleščini', 'Iskanje v slovenščini');
     }
-    this.router.navigate(['/iskanje'], { queryParams: { q: text } });
+    this.router.navigate(['/search'], { queryParams: { q: text } });
   }
 }
