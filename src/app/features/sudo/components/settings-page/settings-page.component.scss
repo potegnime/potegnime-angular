@@ -113,3 +113,11 @@ input[type='file'] {
 .red {
   color: var(--red-primary);
 }
+
+form[data-disabled="true"] * :not(#spinner) {
+  opacity: 0.4;
+
+  .overlay-text {
+    opacity: 0;
+  }
+}

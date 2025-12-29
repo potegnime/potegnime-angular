@@ -76,7 +76,7 @@ export abstract class BaseHttpService {
     );
   }
 
-  private createUrl(urlPath: string, apiType: ApiType): string {
+  protected createUrl(urlPath: string, apiType: ApiType): string {
     let apiUrl: string = this.configService.getApiUrl(apiType);
     apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl;
     urlPath.startsWith('/') ? urlPath.slice(1) : urlPath;

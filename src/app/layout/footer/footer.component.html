@@ -18,7 +18,9 @@
     <h3>Profil</h3>
     <ul>
       <li>
-        <a [routerLink]="['/u', this.uid]">Moj profil</a>
+         @if (user) {
+          <a [routerLink]="['/u', this.user.username]">Moj profil</a>
+         }
       </li>
       <li>
         <a routerLink="/nastavitve">Nastavitve</a>

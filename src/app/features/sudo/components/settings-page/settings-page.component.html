@@ -21,8 +21,8 @@
     <div class="settings-section" id="uredi">
       <h3>Uredi profil</h3>
       <hr />
-      <form [formGroup]="changeUserDataForm" (ngSubmit)="onChnangeUserDataSubmit()">
-        <div class="change-container">
+      <form [formGroup]="changeUserDataForm" (ngSubmit)="onChangeUserDataSubmit()" [attr.data-disabled]="isLoading">
+        <div class="change-container disabled">
           <label for="change-user-username">Uporabniško ime:</label>
           <input
             type="text"
@@ -37,15 +37,21 @@
           <input type="text" name="change-user-email" id="change-user-email" formControlName="email" class="input" />
         </div>
         <div class="change-container">
-          Profilna slika:
+          <label for="change-user-pfp">Profilna slika:</label>
           <div class="profile-pic-container">
             <label for="change-user-pfp">
-              <img [src]="profilePictureUrl" alt="{{ username }}" class="profile-pic" width="300" height="300" />
+              <img
+                [src]="profilePictureUrl"
+                alt="{{ this.user?.username }}"
+                class="profile-pic"
+                width="300"
+                height="300"
+              />
               <div class="overlay-text">Spremeni profilno sliko</div>
             </label>
           </div>
-          @if (this.hasProfilePicture) {
-            <button class="button" id="remove-profile-picture-button" (click)="removeProfilePicture()">
+          @if (this.user?.hasPfp || selectedProfilePicture) {
+            <button type="button" class="button" id="remove-profile-picture-button" (click)="removeProfilePicture()">
               Odstrani profilno sliko
             </button>
           }
@@ -53,11 +59,14 @@
             type="file"
             name="change-user-pfp"
             id="change-user-pfp"
-            accept=".jpg, .jpeg, .png .webp .bmp .gif .tiff"
+            accept=".jpg, .jpeg, .png, .webp, .gif, .avif"
             (change)="onProfilePictureChange($event)"
           />
         </div>
-        <button type="submit" class="button">Shrani spremembe</button>
+
+        <button type="submit" [disabled]="isLoading || !changeUserDataForm.dirty" class="button">
+          Shrani spremembe
+        </button>
       </form>
     </div>
 
@@ -65,7 +74,7 @@
       <h3>Zasebnost</h3>
       <hr />
       <h4 class="section-title">Sprememba gesla</h4>
-      <form [formGroup]="changePasswordForm" (ngSubmit)="onChangePasswordSubmit()">
+      <form [formGroup]="changePasswordForm" (ngSubmit)="onChangePasswordSubmit()" [attr.data-disabled]="isLoading">
         <div class="change-container">
           <label for="change-password-old">Staro geslo:</label>
           <input
@@ -101,7 +110,7 @@
       </form>
 
       <h4>Izbris profila</h4>
-      <form [formGroup]="deleteProfileForm" (ngSubmit)="onDeleteProfileSubmit()">
+      <form [formGroup]="deleteProfileForm" (ngSubmit)="onDeleteProfileSubmit()" [attr.data-disabled]="isLoading">
         <div class="change-container">
           <label for="delete-profile-password">Geslo:</label>
           <input

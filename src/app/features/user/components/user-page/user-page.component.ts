@@ -5,15 +5,14 @@ import { DatePipe, NgClass } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 
 import { AuthService } from '@features/auth/services/auth/auth.service';
-import { TokenService } from '@core/services/token-service/token.service';
 import { UserService } from '@features/user/services/user/user.service';
-import { CacheService } from '@core/services/cache/cache.service';
 import { timingConst } from '@core/enums/toastr-timing.enum';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 import { SudoNavComponent } from '@features/sudo/components/sudo-nav/sudo-nav.component';
 import { UserModel } from '@models/user.interface';
 import { GetUserModel } from '@models/get-user.interface';
 import { APP_CONSTANTS } from '@constants/constants';
+import { TokenService } from '@core/services/token-service/token.service';
 
 // TODO
 // Compress pfp (client side?) before uploading to server, or server side (before saving?)
@@ -26,15 +25,15 @@ import { APP_CONSTANTS } from '@constants/constants';
   standalone: true
 })
 export class UserPageComponent implements OnInit {
+  private readonly activatedRoute = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly userService = inject(UserService);
   private readonly tokenService = inject(TokenService);
+  private readonly userService = inject(UserService);
   private readonly authService = inject(AuthService);
   private readonly route = inject(ActivatedRoute);
   private readonly toastr = inject(ToastrService);
-  private readonly cacheService = inject(CacheService);
 
-  protected user: UserModel | null = null;
+  protected user: UserModel | undefined;
   protected otherUser: GetUserModel | null = null;
   protected isMyPage: boolean = false;
   protected profilePictureUrl: string = APP_CONSTANTS.DEFAULT_PFP_PATH;
@@ -63,36 +62,29 @@ export class UserPageComponent implements OnInit {
 
   public ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      const loggedInUser: UserModel | null = this.userService.getUserInfoFromToken();
+      const loggedInUser: UserModel | undefined = this.tokenService.getUserFromToken();
       if (!loggedInUser) {
         this.authService.unauthorizedHandler();
+        return;
       }
 
-      const urlUid: number | null = parseInt(this.router.url.split('/')[2]);
-      this.isMyPage = loggedInUser.uid == urlUid;
-      if (this.isMyPage && urlUid) {
+      const urlUsername: string | null = this.activatedRoute.snapshot.paramMap.get('username');
+      this.isMyPage = loggedInUser!.username == urlUsername;
+      if (this.isMyPage && urlUsername) {
         this.user = loggedInUser;
-        if (this.user?.hasPfp) this.setPfp(this.user.uid);
+         this.setPfp(this.user!);
         this.isLoading = false;
       } else {
-        this.getUserData(urlUid);
+        this.getUserData(urlUsername!);
       }
     });
   }
 
-  protected createImageFromBlob(image: Blob) {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      this.profilePictureUrl = reader.result as string;
-    };
-    reader.readAsDataURL(image);
-  }
-
-  private getUserData(userId: number): void {
-    this.userService.getUserById(userId).subscribe({
+  private getUserData(username: string): void {
+    this.userService.getUserByUsername(username).subscribe({
       next: (user: GetUserModel) => {
         this.otherUser = user;
-        if (this.otherUser?.hasPfp) this.setPfp(this.otherUser.userId);
+        if (this.otherUser?.hasPfp) this.setPfp(this.otherUser);
         this.isLoading = false;
       },
       error: (error) => {
@@ -111,27 +103,11 @@ export class UserPageComponent implements OnInit {
     });
   }
 
-  private setPfp(userId: number): void {
-    // Get profile picture
-    // Wait 0.5 second to avoid unnecessary double api calls for profile picture - other component already has it cached
-    setTimeout(() => {
-      const cachedProfilePicture = this.cacheService.get(userId.toString());
-      if (cachedProfilePicture) {
-        this.createImageFromBlob(cachedProfilePicture);
-        this.isLoading = false;
-      } else {
-        this.userService.getUserPfp(userId).subscribe({
-          next: (response) => {
-            this.cacheService.put(userId.toString(), response);
-            this.createImageFromBlob(response);
-            this.isLoading = false;
-          },
-          error: (error) => {
-            this.profilePictureUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
-            this.isLoading = false;
-          }
-        });
-      }
-    }, 500);
+  private setPfp(user: UserModel | GetUserModel): void {
+    if (user.hasPfp) {
+      this.profilePictureUrl = this.userService.buildPfpUrl(user.username);
+    } else {
+      this.profilePictureUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
+    }
   }
 }

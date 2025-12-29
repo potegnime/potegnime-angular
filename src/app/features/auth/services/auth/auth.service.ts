@@ -11,6 +11,7 @@ import { UserRegisterDto } from '@features/auth/models/user-register.interface';
 import { UserLoginDto } from '@features/auth/models/user-login.interface';
 import { ForgotPasswordDto } from '@features/auth/models/forgot-password.interface';
 import { ResetPasswordDto } from '@features/auth/models/reset-password.interface';
+import { JwtTokenResponse } from '@models/jwt-token-response.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +21,12 @@ export class AuthService extends BaseHttpService {
   private readonly toastr = inject(ToastrService);
   private readonly tokenService = inject(TokenService);
 
-  public register(userRegisterDto: UserRegisterDto): Observable<any> {
-    return this.postJson<UserRegisterDto, any>(`auth/register`, userRegisterDto);
+  public register(userRegisterDto: UserRegisterDto): Observable<JwtTokenResponse> {
+    return this.postJson<UserRegisterDto, JwtTokenResponse>(`auth/register`, userRegisterDto);
   }
 
-  public login(userLoginDto: UserLoginDto): Observable<any> {
-    return this.postJson<UserLoginDto, any>(`auth/login`, userLoginDto);
+  public login(userLoginDto: UserLoginDto): Observable<JwtTokenResponse> {
+    return this.postJson<UserLoginDto, JwtTokenResponse>(`auth/login`, userLoginDto);
   }
 
   public logout(showToast: boolean = true): void {
@@ -73,7 +74,7 @@ export class AuthService extends BaseHttpService {
     return this.postJson<ForgotPasswordDto, any>(`auth/forgotPassword`, forgorPasswordDto);
   }
 
-  public resetPassword(resetPasswordDto: ResetPasswordDto): Observable<any> {
-    return this.postJson<ResetPasswordDto, any>(`auth/resetPassword`, resetPasswordDto);
+  public resetPassword(resetPasswordDto: ResetPasswordDto): Observable<JwtTokenResponse> {
+    return this.postJson<ResetPasswordDto, JwtTokenResponse>(`auth/resetPassword`, resetPasswordDto);
   }
 }

@@ -9,6 +9,7 @@ import { AuthService } from '@features/auth/services/auth/auth.service';
 import { UserRegisterDto } from '@features/auth/models/user-register.interface';
 import { AuthResetHelper } from '@features/auth/helpers/auth-reset-helper';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
+import { TokenService } from '@core/services/token-service/token.service';
 
 @Component({
   selector: 'app-register-form',
@@ -20,6 +21,7 @@ import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/load
 export class RegisterFormComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
   private readonly authService = inject(AuthService);
+  private readonly tokenService = inject(TokenService);
   private readonly router = inject(Router);
   private readonly toastr = inject(ToastrService);
 
@@ -135,7 +137,7 @@ export class RegisterFormComponent implements OnInit {
             AuthResetHelper.removeRegisterForm();
 
             // Save token and redirect
-            localStorage.setItem('token', resp.token);
+            this.tokenService.setToken(resp.token)
             this.router.navigate(['/']);
           }
         },

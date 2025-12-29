@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '@features/auth/services/auth/auth.service';
 import { timingConst } from '@core/enums/toastr-timing.enum';
 import { ResetPasswordDto } from '@features/auth/models/reset-password.interface';
+import { TokenService } from '@core/services/token-service/token.service';
 
 @Component({
   selector: 'app-reset-password-form',
@@ -18,6 +19,7 @@ import { ResetPasswordDto } from '@features/auth/models/reset-password.interface
 export class ResetPasswordFormComponent implements OnInit {
   private readonly formBuilder = inject(FormBuilder);
   private readonly authService = inject(AuthService);
+  private readonly tokenService = inject(TokenService);
   private readonly toastr = inject(ToastrService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
@@ -110,7 +112,7 @@ export class ResetPasswordFormComponent implements OnInit {
             this.toastr.success('', 'Geslo uspešno posodobljeno', { timeOut: timingConst.success });
 
             // Save token and redirect
-            localStorage.setItem('token', resp.token);
+            this.tokenService.setToken(resp.token);
             this.router.navigate(['/']);
           }
         },

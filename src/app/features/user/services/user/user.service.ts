@@ -1,83 +1,54 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { UpdateUsernameDto } from '@features/user/models/update-username.interface';
-import { UpdateEmailDto } from '@features/user/models/update-email.interface';
-import { UpdatePfpDto } from '@features/user/models/update-pfp.interface';
+import { UpdateUserDto} from '@features/user/models/update-user.interface';
+import { SetPfpDto } from '@features/user/models/update-pfp.interface';
 import { UpdatePasswordDto } from '@features/user/models/update-password.interface';
 import { DeleteProfileDto } from '@features/user/models/delete-profile.interface';
 import { UploaderRequestDto } from '@features/user/models/uploader-request.interface';
 import { BaseHttpService } from '@core/services/base-http/base-http.service';
 import { TokenService } from '@core/services/token-service/token.service';
-import { UserModel } from '@models/user.interface';
 import { GetUserModel } from '@models/get-user.interface';
-import { DecodedTokenModel } from '@models/decoded-token.interface';
+import { ApiType } from '@core/enums/api-type.enum';
+import { JwtTokenResponse } from '@models/jwt-token-response.interface';
 
 @Injectable({
-  providedIn: 'root' // TODO - make lazy loaded
+  providedIn: 'root'
 })
 export class UserService extends BaseHttpService {
   private readonly tokenService = inject(TokenService);
-
-  public getUserInfoFromToken(): UserModel {
-    const decodedToken = this.tokenService.decodeToken();
-
-    if (!decodedToken) throw new Error('No token found');
-    const user: UserModel = {
-      uid: decodedToken.uid,
-      username: decodedToken.username,
-      email: decodedToken.email,
-      role: decodedToken.role,
-      hasPfp: decodedToken.hasPfp,
-      joined: decodedToken.joined,
-      uploaderRequestStatus: decodedToken.uploaderRequestStatus
-    };
-
-    return user;
-  }
-
-  public getUserById(userId: number | string): Observable<GetUserModel> {
-    return this.getJson<GetUserModel>(`user/userId?userId=${userId}`);
-  }
 
   public getUserByUsername(username: string): Observable<GetUserModel> {
     return this.getJson<GetUserModel>(`user/username?username=${encodeURIComponent(username)}`);
   }
 
-  public getUserPfp(userId: number | string): Observable<Blob> {
-    return this.getBlob(`user/pfp/${userId}`);
+  public buildPfpUrl(username: string): string {
+    // name of pfp image is the same as user's username
+    // nginx serves the image directly and takes care of file extension
+    return `${this.createUrl('pfp', ApiType.Api)}/${username}`;
   }
 
-  public updateUsername(updateUsernameDto: UpdateUsernameDto): Observable<any> {
-    return this.postJson<UpdateUsernameDto, any>(`user/updateUsername`, updateUsernameDto);
+  public updateUser(updateUserDto: UpdateUserDto): Observable<JwtTokenResponse> {
+    return this.postJson<UpdateUserDto, JwtTokenResponse>(`user/updateUser`, updateUserDto);
   }
 
-  public updateEmail(updateEmailDto: UpdateEmailDto): Observable<any> {
-    return this.postJson<UpdateEmailDto, any>(`user/updateEmail`, updateEmailDto);
-  }
-
-  public updatePfp(updatePfpDto: UpdatePfpDto): Observable<any> {
+  public setPfp(setPfpDto: SetPfpDto): Observable<JwtTokenResponse> {
     const formData = new FormData();
-    if (updatePfpDto.profilePicFile) formData.append('ProfilePicFile', updatePfpDto.profilePicFile);
+    if (setPfpDto.profilePicFile) formData.append('ProfilePicFile', setPfpDto.profilePicFile);
 
-    return this.postFormData<any>(`user/updatePfp`, formData);
+    return this.postFormData<JwtTokenResponse>(`user/setPfp`, formData);
   }
 
-  public updatePassword(updatePasswordDto: UpdatePasswordDto): Observable<any> {
-    return this.postJson<UpdatePasswordDto, any>(`user/updatePassword`, updatePasswordDto);
+  public updatePassword(updatePasswordDto: UpdatePasswordDto): Observable<void> {
+    return this.postJson<UpdatePasswordDto, void>(`user/updatePassword`, updatePasswordDto);
   }
 
-  public deleteProfile(deleteProfileDto: DeleteProfileDto): Observable<any> {
-    return this.deleteJson<DeleteProfileDto, any>(`user/deleteUser`, deleteProfileDto);
+  public deleteProfile(deleteProfileDto: DeleteProfileDto): Observable<void> {
+    return this.deleteJson<DeleteProfileDto, void>(`user/deleteUser`, deleteProfileDto);
   }
 
-  public submitUploaderRequest(uploaderRequestDto: UploaderRequestDto): Observable<any> {
-    return this.postJson<UploaderRequestDto, any>(`user/submitUploaderRequest`, uploaderRequestDto);
-  }
-
-  public getLoggedUserId(): number | null {
-    const decodedToken: DecodedTokenModel | null = this.tokenService.decodeToken();
-    return decodedToken ? decodedToken.uid : null;
+  public submitUploaderRequest(uploaderRequestDto: UploaderRequestDto): Observable<JwtTokenResponse> {
+    return this.postJson<UploaderRequestDto, JwtTokenResponse>(`user/submitUploaderRequest`, uploaderRequestDto);
   }
 
   public isAdminLogged(): boolean {
@@ -96,7 +67,7 @@ export class UserService extends BaseHttpService {
   }
 
   private getUserRole(): string | null {
-    const decodedToken = this.tokenService.decodeToken();
-    return decodedToken ? decodedToken.role.toLowerCase() : null;
+    const userModel = this.tokenService.getUserFromToken();
+    return userModel ? userModel.role.toLowerCase() : null;
   }
 }

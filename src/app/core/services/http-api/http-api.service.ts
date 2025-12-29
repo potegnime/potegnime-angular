@@ -6,7 +6,6 @@ import { catchError, Observable, throwError } from 'rxjs';
 
 import { timingConst } from '@core/enums/toastr-timing.enum';
 import { TokenService } from '@core/services/token-service/token.service';
-import { environment } from 'src/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -80,13 +79,12 @@ export class HttpApiService {
       case 404:
         // API returns 404 for valid reasons, such as no pfp set, not an error
         break;
+      case 403:
+        // can occur on user settings page
+        break;
       default:
         // All other unexpected errors
-        // TODO - show dialog instead of toast?
         this.toastr.error('', 'Napaka na strežniku :(', { timeOut: timingConst.error });
-        if (!environment.production) {
-          console.error('Error details:', error);
-        }
 
         break;
     }

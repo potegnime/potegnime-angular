@@ -1,4 +1,4 @@
 export interface UpdateRoleDto {
-  userId: number;
+  username: string;
   roleName: string;
 }

@@ -13,6 +13,8 @@ import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/load
   standalone: true
 })
 export class HomePageComponent {
+  private readonly searchService = inject(SearchService);
+
   protected headerLoading: boolean = false;
   protected torrentLoading: boolean = false;
 
