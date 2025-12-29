@@ -18,10 +18,6 @@ import { JwtTokenResponse } from '@models/jwt-token-response.interface';
 export class UserService extends BaseHttpService {
   private readonly tokenService = inject(TokenService);
 
-  public getUserById(userId: number | string): Observable<GetUserModel> {
-    return this.getJson<GetUserModel>(`user/userId?userId=${userId}`);
-  }
-
   public getUserByUsername(username: string): Observable<GetUserModel> {
     return this.getJson<GetUserModel>(`user/username?username=${encodeURIComponent(username)}`);
   }
