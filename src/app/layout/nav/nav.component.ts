@@ -30,13 +30,13 @@ export class NavComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.userSubscription = this.tokenService.user$.subscribe(user => {
       this.user = user;
-    });
 
-    if (this.user?.pfp) {
-      this.profilePictureUrl = this.userService.getUserPfpUrl(this.user.pfp);
-    } else {
-      this.profilePictureUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
-    }
+      if (this.user?.hasPfp) {
+        this.profilePictureUrl = this.userService.buildPfpUrl(this.user.username);
+      } else {
+        this.profilePictureUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
+      }
+    });
   }
 
   public ngOnDestroy(): void {

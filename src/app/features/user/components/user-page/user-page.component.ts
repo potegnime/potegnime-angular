@@ -84,7 +84,7 @@ export class UserPageComponent implements OnInit {
     this.userService.getUserByUsername(username).subscribe({
       next: (user: GetUserModel) => {
         this.otherUser = user;
-        if (this.otherUser?.pfp) this.setPfp(this.otherUser);
+        if (this.otherUser?.hasPfp) this.setPfp(this.otherUser);
         this.isLoading = false;
       },
       error: (error) => {
@@ -104,8 +104,8 @@ export class UserPageComponent implements OnInit {
   }
 
   private setPfp(user: UserModel | GetUserModel): void {
-    if (user.pfp) {
-      this.profilePictureUrl = this.userService.getUserPfpUrl(user.pfp);
+    if (user.hasPfp) {
+      this.profilePictureUrl = this.userService.buildPfpUrl(user.username);
     } else {
       this.profilePictureUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
     }

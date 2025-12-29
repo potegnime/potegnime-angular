@@ -1,17 +1,14 @@
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
-import { UpdateUsernameDto } from '@features/user/models/update-username.interface';
-import { UpdateEmailDto } from '@features/user/models/update-email.interface';
+import { UpdateUserDto} from '@features/user/models/update-user.interface';
 import { SetPfpDto } from '@features/user/models/update-pfp.interface';
 import { UpdatePasswordDto } from '@features/user/models/update-password.interface';
 import { DeleteProfileDto } from '@features/user/models/delete-profile.interface';
 import { UploaderRequestDto } from '@features/user/models/uploader-request.interface';
 import { BaseHttpService } from '@core/services/base-http/base-http.service';
 import { TokenService } from '@core/services/token-service/token.service';
-import { UserModel } from '@models/user.interface';
 import { GetUserModel } from '@models/get-user.interface';
-import { DecodedTokenModel } from '@models/decoded-token.interface';
 import { ApiType } from '@core/enums/api-type.enum';
 import { JwtTokenResponse } from '@models/jwt-token-response.interface';
 
@@ -29,16 +26,13 @@ export class UserService extends BaseHttpService {
     return this.getJson<GetUserModel>(`user/username?username=${encodeURIComponent(username)}`);
   }
 
-  public getUserPfpUrl(pfpPath: string): string {
-    return `${this.createUrl('pfp', ApiType.Api)}/${pfpPath}`;
+  public buildPfpUrl(username: string): string {
+    // name of pfp image is the same as user's username
+    return `${this.createUrl('pfp', ApiType.Api)}/${username}`;
   }
 
-  public updateUsername(updateUsernameDto: UpdateUsernameDto): Observable<JwtTokenResponse> {
-    return this.postJson<UpdateUsernameDto, JwtTokenResponse>(`user/updateUsername`, updateUsernameDto);
-  }
-
-  public updateEmail(updateEmailDto: UpdateEmailDto): Observable<JwtTokenResponse> {
-    return this.postJson<UpdateEmailDto, JwtTokenResponse>(`user/updateEmail`, updateEmailDto);
+  public updateUser(updateUserDto: UpdateUserDto): Observable<JwtTokenResponse> {
+    return this.postJson<UpdateUserDto, JwtTokenResponse>(`user/updateUser`, updateUserDto);
   }
 
   public setPfp(setPfpDto: SetPfpDto): Observable<JwtTokenResponse> {

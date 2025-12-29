@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { DecodedTokenModel } from '@models/decoded-token.interface';
-import { UploaderRequestStatus } from '@core/enums/uploader-request-status.enum';
 import { AuthHelper } from '@core/helpers/auth-helper';
 import { UserModel } from '@models/user.interface';
 
@@ -34,7 +33,6 @@ export class TokenService {
   }
 
   public getUserFromToken(): UserModel | undefined {
-    console.log('getUserFromToken called');
     const decodedToken = this.decodeToken();
 
     if (!decodedToken) return;
@@ -43,19 +41,14 @@ export class TokenService {
       email: decodedToken.email,
       role: decodedToken.role,
       joined: decodedToken.joined,
-      // uploaderRequestStatus: decodedToken.uploaderRequestStatus,
-      pfp: decodedToken.pfp
+      hasPfp: decodedToken.hasPfp === "true"
     };
-
-    console.log('getUserFromToken result:', user);
 
     return user;
   }
 
   private decodeToken(): DecodedTokenModel | undefined {
-    console.log('decodeToken called');
     const token = this.getToken();
-    console.log('Token retrieved:', token);
     if (!token) return;
 
     const decodedToken = AuthHelper.decodeJWT(token);
@@ -64,7 +57,7 @@ export class TokenService {
         username: decodedToken.username,
         email: decodedToken.email,
         role: decodedToken.role.toLowerCase(),
-        pfp: decodedToken.pfp,
+        hasPfp: decodedToken.hasPfp === "true" ? "true" : "false",
         // uploaderRequestStatus: decodedToken.uploaderRequestStatus.toLowerCase(),
         joined: decodedToken.joined,
         iss: decodedToken.iss,
@@ -73,14 +66,8 @@ export class TokenService {
         exp: Number(decodedToken.exp)
       };
 
-      // if (decodedToken.uploaderRequestStatus) {
-      //   formattedToken.uploaderRequestStatus =
-      //     decodedToken.uploaderRequestStatus as UploaderRequestStatus;
-      // }
-
       return formattedToken;
     } catch (error) {
-      console.error('Error decoding token:', error);
       return;
     }
   }

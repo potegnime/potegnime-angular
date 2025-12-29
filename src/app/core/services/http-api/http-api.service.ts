@@ -6,7 +6,6 @@ import { catchError, Observable, throwError } from 'rxjs';
 
 import { timingConst } from '@core/enums/toastr-timing.enum';
 import { TokenService } from '@core/services/token-service/token.service';
-import { environment } from 'src/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -86,9 +85,6 @@ export class HttpApiService {
       default:
         // All other unexpected errors
         this.toastr.error('', 'Napaka na strežniku :(', { timeOut: timingConst.error });
-        if (!environment.production) {
-          console.error('Error details:', error);
-        }
 
         break;
     }

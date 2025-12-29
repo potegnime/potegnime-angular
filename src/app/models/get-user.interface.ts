@@ -2,6 +2,6 @@ export interface GetUserModel {
   username: string;
   joined: string;
   role: 'user' | 'uploader' | 'admin';
-  pfp?: string;
+  hasPfp?: boolean;
   uploaderRequestStatus?: string;
 }

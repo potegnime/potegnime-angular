@@ -6,8 +6,7 @@ export interface DecodedTokenModel {
   email: string;
   role: 'user' | 'uploader' | 'admin';
   joined: string;
-  pfp: string;
-  // uploaderRequestStatus: UploaderRequestStatus;
+  hasPfp: string; // "true" or "false"
   iss: string;
   aud: string;
   iat: number;

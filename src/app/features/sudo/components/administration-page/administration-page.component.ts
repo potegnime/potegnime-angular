@@ -171,8 +171,8 @@ export class AdministrationPageComponent implements OnInit {
           });
 
           // Get user pfp
-          if (this.foundUser.pfp) {
-            this.profilePictureUrl = this.userService.getUserPfpUrl(this.foundUser.pfp);
+          if (this.foundUser.hasPfp) {
+            this.profilePictureUrl = this.userService.buildPfpUrl(this.foundUser.username);
           } else {
             this.profilePictureUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
           }

@@ -40,11 +40,17 @@
           <label for="change-user-pfp">Profilna slika:</label>
           <div class="profile-pic-container">
             <label for="change-user-pfp">
-              <img [src]="profilePictureUrl" alt="{{ this.user?.username }}" class="profile-pic" width="300" height="300" />
+              <img
+                [src]="profilePictureUrl"
+                alt="{{ this.user?.username }}"
+                class="profile-pic"
+                width="300"
+                height="300"
+              />
               <div class="overlay-text">Spremeni profilno sliko</div>
             </label>
           </div>
-          @if (this.user?.pfp  || selectedProfilePicture) {
+          @if (this.user?.hasPfp || selectedProfilePicture) {
             <button type="button" class="button" id="remove-profile-picture-button" (click)="removeProfilePicture()">
               Odstrani profilno sliko
             </button>
