@@ -443,19 +443,42 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
     this.pfpChanged = true;
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0] as File;
-      this.selectedProfilePicture = file;
-      if (this.lastObjectUrl) {
-        try {
-          URL.revokeObjectURL(this.lastObjectUrl);
-        } catch {}
-        this.lastObjectUrl = null;
-      }
-      try {
-        this.lastObjectUrl = URL.createObjectURL(file);
+
+      // compress image - remove if necessary and use code commented out below
+      this.compressImage(file).then((compressedFile) => {
+        this.selectedProfilePicture = compressedFile;
+        this.lastObjectUrl = URL.createObjectURL(compressedFile);
         this.profilePictureUrl = this.lastObjectUrl;
-      } catch {
-        this.profilePictureUrl = this.getProfilePictureUrl();
-      }
+      }).catch(() => {
+        // if compression fails, use original file
+        this.selectedProfilePicture = file;
+        if (this.lastObjectUrl) {
+          try {
+            URL.revokeObjectURL(this.lastObjectUrl);
+          } catch {}
+          this.lastObjectUrl = null;
+        }
+        try {
+          this.lastObjectUrl = URL.createObjectURL(file);
+          this.profilePictureUrl = this.lastObjectUrl;
+        } catch {
+          this.profilePictureUrl = this.getProfilePictureUrl();
+        }
+      });
+
+      // this.selectedProfilePicture = file;
+      // if (this.lastObjectUrl) {
+      //   try {
+      //     URL.revokeObjectURL(this.lastObjectUrl);
+      //   } catch {}
+      //   this.lastObjectUrl = null;
+      // }
+      // try {
+      //   this.lastObjectUrl = URL.createObjectURL(file);
+      //   this.profilePictureUrl = this.lastObjectUrl;
+      // } catch {
+      //   this.profilePictureUrl = this.getProfilePictureUrl();
+      // }
     } else {
       this.selectedProfilePicture = null;
     }
@@ -537,5 +560,49 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
     } else {
       control.get('newPasswordRepeat')?.setErrors(null);
     }
+  }
+
+  private compressImage(file: File, maxWidth: number = 800, quality: number = 0.7): Promise<File> {
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        image.src = e.target.result;
+      };
+
+      reader.onerror = (err) => reject(err);
+      reader.readAsDataURL(file);
+
+      image.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        if (!ctx) {
+          reject('Cannot get canvas context');
+          return;
+        }
+
+        const scale = Math.min(maxWidth / image.width, 1);
+        canvas.width = image.width * scale;
+        canvas.height = image.height * scale;
+
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+        canvas.toBlob((blob) => {
+          if (blob) {
+            const compressedFile = new File([blob], file.name, { type: 'image/jpeg' });
+            resolve(compressedFile);
+          } else {
+            reject('Compression failed');
+          }
+        },
+        'image/jpeg',
+        quality
+        );
+      };
+
+      image.onerror = (err) => reject(err);
+    });
   }
 }
