@@ -41,8 +41,6 @@ export class RecommendPageComponent implements AfterViewChecked, OnInit {
   protected trendingMovies: TmdbTrendingResponse[] = [];
   protected trendingTvShows: TmdbTrendingResponse[] = [];
 
-  private errorToastShown: boolean = false;
-
   public ngOnInit(): void {
     // Get params from url
     this.route.queryParams.subscribe((params) => {
@@ -87,7 +85,6 @@ export class RecommendPageComponent implements AfterViewChecked, OnInit {
       },
       error: (error: any) => {
         this.displayLoadingSpinner = false;
-        this.errorGettingRecommendations();
       }
     });
   }
@@ -139,12 +136,5 @@ export class RecommendPageComponent implements AfterViewChecked, OnInit {
       );
     }
     this.router.navigate(['/iskanje'], { queryParams: { q: text } });
-  }
-
-  private errorGettingRecommendations(): void {
-    if (!this.errorToastShown) {
-      this.toastr.error('', 'Napaka pri pridobivanju torrentov', { timeOut: timingConst.error });
-      this.errorToastShown = true;
-    }
   }
 }
