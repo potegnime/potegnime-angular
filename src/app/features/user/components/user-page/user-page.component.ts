@@ -11,10 +11,6 @@ import { UserModel } from '@models/user.interface';
 import { GetUserModel } from '@models/get-user.interface';
 import { APP_CONSTANTS } from '@constants/constants';
 import { TokenService } from '@core/services/token/token.service';
-import { ToastService } from '@core/services/toast/toast.service';
-
-// TODO
-// Compress pfp (client side?) before uploading to server, or server side (before saving?)
 
 @Component({
   selector: 'app-user-page',
@@ -30,7 +26,6 @@ export class UserPageComponent implements OnInit {
   private readonly userService = inject(UserService);
   private readonly authService = inject(AuthService);
   private readonly route = inject(ActivatedRoute);
-  private readonly toastService = inject(ToastService);
 
   protected user: UserModel | undefined;
   protected otherUser: GetUserModel | null = null;
@@ -49,7 +44,17 @@ export class UserPageComponent implements OnInit {
   }
 
   public get displayRole(): string {
-    switch (this.user?.role) {
+    if (this.isMyPage) {
+      if (!this.user) return '';
+      return this.getRoleString(this.user);
+    } else {
+      if (!this.otherUser) return '';
+      return this.getRoleString(this.otherUser);
+    }
+  }
+
+  private getRoleString(user: UserModel | GetUserModel): string {
+    switch (user.role) {
       case 'admin':
         return 'Administrator';
       case 'uploader':
