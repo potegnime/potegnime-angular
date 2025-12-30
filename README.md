@@ -19,15 +19,19 @@ Prerequisites:
 
 Running the app:
 
-- Set `production: false` in `src/environment.ts`. This will use development URLs from `src/assets/config.json`
-- Run the app:
-
 ```
 npm install
+
+# development
+npm run dev
+
+# production
 npm start
 ```
 
 Browser opens in http://localhost:4200
+
+Note: environment is set in `src/environment.ts` with the `production` boolean, which uses the correct backend endpoints from `src/assets/config.json`.
 
 ## Development guidelines
 
