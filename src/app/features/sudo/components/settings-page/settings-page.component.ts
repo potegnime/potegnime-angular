@@ -118,6 +118,23 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
     if (!this.changeUserDataForm.dirty) {
       return;
     }
+    const username = this.changeUserDataForm.get('username')?.value;
+    const email = this.changeUserDataForm.get('email')?.value;
+
+    // Username basic validation (mirror register page rules)
+    if (username && username.length < 4) {
+      this.toastService.showError('Uporabniško ime mora vsebovati vsaj 4 znake');
+      return;
+    }
+    if (username && username.length > 100) {
+      this.toastService.showError('Uporabniško ime ima lahko največ 100 znakov');
+      return;
+    }
+    // Username cannot end with a trailing space
+    if (username && username.endsWith(' ')) {
+      this.toastService.showError('Uporabniško ime ne sme končati s presledkom');
+      return;
+    }
 
     if (!this.changeUserDataForm.valid) {
       for (const controlName of Object.keys(this.changeUserDataForm.controls)) {
@@ -130,10 +147,8 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // Check which fields have changed
-    const username = this.changeUserDataForm.get('username')?.value;
-    const email = this.changeUserDataForm.get('email')?.value;
-    const profilePicture = this.changeUserDataForm.get('profilePicture')?.value; // TODO - remove?
+  // Check which fields have changed
+  const profilePicture = this.changeUserDataForm.get('profilePicture')?.value; // TODO - remove?
 
     // Collect all update observables
     const updates: {
@@ -285,8 +300,20 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
       const newPassword = this.changePasswordForm.get('newPassword')?.value;
       const newPasswordRepeat = this.changePasswordForm.get('newPasswordRepeat')?.value;
 
+      // Passwords match validation
       if (newPassword !== newPasswordRepeat) {
         this.toastService.showError('Gesli se ne ujemata');
+        return;
+      }
+
+      // Password strength validation (mirror register page rules)
+      if (newPassword.length < 8) {
+        this.toastService.showError('Geslo mora vsebovati vsaj 8 znakov');
+        return;
+      }
+      const numbers = /[0-9]/;
+      if (!numbers.test(newPassword)) {
+        this.toastService.showError('Geslo mora vsebovati vsaj 1 številko');
         return;
       }
 
