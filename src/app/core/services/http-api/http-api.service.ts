@@ -81,6 +81,9 @@ export class HttpApiService {
       case 403:
         // can occur on user settings page
         break;
+      case 409:
+        // can occur on register... (username/email already taken)
+        break;
       default:
         // All other unexpected errors
         this.toastService.showError('Napaka na strežniku :(');
