@@ -58,7 +58,7 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     // Form builders
     this.changeUserDataForm = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.minLength(4)]],
+      username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100)]],
       email: ['', [Validators.required, Validators.email]],
       profilePicture: ['']
     });

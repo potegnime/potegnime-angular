@@ -36,7 +36,7 @@ export class RegisterFormComponent implements OnInit {
   public ngOnInit() {
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      username: ['', [Validators.required]],
+      username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(100)]],
       password: ['', Validators.required],
       passwordConfirm: ['', Validators.required],
       agreeToTerms: [false, Validators.required]
@@ -68,6 +68,12 @@ export class RegisterFormComponent implements OnInit {
     if (this.registerForm?.value.username.length < 4) {
       this.showRegisterError = true;
       this.registerErrorMessage = 'Uporabniško ime mora vsebovati vsaj 4 znake';
+      this.handleErrorAnimation();
+      return;
+    }
+    if (this.registerForm?.value.username.length > 100) {
+      this.showRegisterError = true;
+      this.registerErrorMessage = 'Uporabniško ime ima lahko največ 100 znakov';
       this.handleErrorAnimation();
       return;
     }
