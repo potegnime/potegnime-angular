@@ -306,6 +306,11 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
         return;
       }
 
+      if (oldPassword === newPassword) {
+        this.toastService.showError('Novo geslo ne sme biti enako kot staro geslo');
+        return;
+      }
+
       // Password strength validation (mirror register page rules)
       if (newPassword.length < 8) {
         this.toastService.showError('Geslo mora vsebovati vsaj 8 znakov');
