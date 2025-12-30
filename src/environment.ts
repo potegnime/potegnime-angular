@@ -1,8 +1,8 @@
-export const environment = {
+const environment = {
   /**
    * Production mode flag - used for switching between dev and prod config.json settings
    */
-  production: true,
+  production: false,
 
   /**
    * Danger!! When true, the site is in maintenance mode and becomes unavailable,
@@ -11,3 +11,8 @@ export const environment = {
    */
   underMaintenance: false
 };
+
+
+
+export const production = environment.production;
+export const underMaintenance = environment.underMaintenance && localStorage.getItem('bypass') !== 'true';

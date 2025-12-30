@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
+import { underMaintenance } from 'src/environment';
 
-import { environment } from 'src/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +10,7 @@ export class MaintenanceGuard implements CanActivate {
   private readonly router = inject(Router);
 
   canActivate() {
-    const isUnderMaintenance = environment.underMaintenance;
-    if (!isUnderMaintenance) {
+    if (!underMaintenance) {
       this.router.navigate(['/']);
       return false;
     };

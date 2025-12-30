@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
 import { ApiType } from '@core/enums/api-type.enum';
-import { environment } from 'src/environment';
+import { production } from 'src/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +34,7 @@ export class ConfigService {
   }
 
   public getApiUrl(apiType: ApiType): string {
-    const envKey = environment.production ? 'production' : 'development';
+    const envKey = production ? 'production' : 'development';
     switch (apiType) {
       case ApiType.Api:
         return this.getSection<string>(`api:${envKey}`);
