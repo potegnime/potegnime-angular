@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ToastService } from '@core/services/toast/toast.service';
 
 import { AdminRecommendation } from '@models/admin-recommendation.interface';
+import { ExploreService } from '@shared/services/explore/explore.service';
 import { RecommendService } from '@shared/services/recommend/recommend.service';
 
 @Component({
@@ -13,6 +14,7 @@ import { RecommendService } from '@shared/services/recommend/recommend.service';
 })
 export class HomeHeaderComponent implements OnInit {
   private readonly recommendService = inject(RecommendService);
+  private readonly exploreService = inject(ExploreService);
   private readonly toastService = inject(ToastService);
   private readonly router = inject(Router);
 
@@ -64,7 +66,7 @@ export class HomeHeaderComponent implements OnInit {
 
   protected searchRandomMovieTitle(): void {
     this.setLoading(true);
-    this.recommendService.getRandomRecommendation().subscribe({
+    this.exploreService.getRandomRecommendation().subscribe({
       next: (response: AdminRecommendation) => {
         this.searchTitle(response.name);
         this.setLoading(false);

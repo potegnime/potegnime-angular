@@ -2,12 +2,12 @@ import { Component, NgZone, AfterViewChecked, OnInit, inject } from '@angular/co
 import { DatePipe } from '@angular/common';
 import { forkJoin } from 'rxjs';
 
-import { RecommendService } from '@shared/services/recommend/recommend.service';
 import { TmdbMovieResponse } from '@models/tmdb-movie-response.interface';
 import { TmdbTrendingResponse } from '@models/tmdb-trending-response.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 import { ToastService } from '@core/services/toast/toast.service';
+import { ExploreService } from '@shared/services/explore/explore.service';
 
 @Component({
   selector: 'app-recommend-page',
@@ -17,7 +17,7 @@ import { ToastService } from '@core/services/toast/toast.service';
   standalone: true
 })
 export class RecommendPageComponent implements AfterViewChecked, OnInit {
-  private readonly recommendService = inject(RecommendService);
+  private readonly exploreService = inject(ExploreService);
   private readonly toastService = inject(ToastService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
@@ -59,23 +59,14 @@ export class RecommendPageComponent implements AfterViewChecked, OnInit {
     this.region = region;
 
     // Load recommendations
-    const requests = [
-      this.recommendService.nowPlaying(this.language, 1, this.region),
-      this.recommendService.popular(this.language, 1, this.region),
-      this.recommendService.topRated(this.language, 1, this.region),
-      this.recommendService.upcoming(this.language, 1, this.region),
-      this.recommendService.trendingMovie(this.timeWindow, this.language),
-      this.recommendService.trendingTv(this.timeWindow, this.language)
-    ];
-
-    forkJoin(requests).subscribe({
+    this.exploreService.explore([ 'now_playing', 'popular', 'top_rated', 'upcoming', 'trending_movie', 'trending_tv' ], this.language, 1, this.region).subscribe({
       next: (responses: any) => {
-        this.nowPlayingMovies = responses[0];
-        this.popularMovies = responses[1];
-        this.topRatedMovies = responses[2];
-        this.upcomingMovies = responses[3];
-        this.trendingMovies = responses[4];
-        this.trendingTvShows = responses[5];
+        this.nowPlayingMovies = responses.now_playing;
+        this.popularMovies = responses.popular;
+        this.topRatedMovies = responses.top_rated;
+        this.upcomingMovies = responses.upcoming;
+        this.trendingMovies = responses.trending_movie;
+        this.trendingTvShows = responses.trending_tv;
 
         this.allDataLoaded = true;
 

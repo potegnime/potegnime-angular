@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 
 import { TmdbMovieResponse } from '@models/tmdb-movie-response.interface';
-import { RecommendService } from '@shared/services/recommend/recommend.service';
+import { ExploreService } from '@shared/services/explore/explore.service';
 
 @Component({
   selector: 'app-home-torrent',
@@ -14,7 +14,7 @@ import { RecommendService } from '@shared/services/recommend/recommend.service';
   standalone: true
 })
 export class HomeTorrentComponent implements OnInit {
-  private readonly recommendService = inject(RecommendService);
+  private readonly exploreService = inject(ExploreService);
   private readonly router = inject(Router);
 
   protected language: 'sl-SI' | 'en-US' = 'en-US';
@@ -32,18 +32,11 @@ export class HomeTorrentComponent implements OnInit {
   public ngOnInit(): void {
     this.setLoading(true);
 
-    // Load recommendations
-    const requests = [
-      this.recommendService.nowPlaying(this.language, 1, this.region),
-      this.recommendService.popular(this.language, 1, this.region),
-      this.recommendService.topRated(this.language, 1, this.region)
-    ];
-
-    forkJoin(requests).subscribe({
+    this.exploreService.explore(['now_playing', 'popular', 'top_rated'], this.language, 1, this.region).subscribe({
       next: (responses: any) => {
-        this.nowPlayingMovies = responses[0];
-        this.popularMovies = responses[1];
-        this.topRatedMovies = responses[2];
+        this.nowPlayingMovies = responses.now_playing;
+        this.popularMovies = responses.popular;
+        this.topRatedMovies = responses.top_rated;
         this.setLoading(false);
       },
       error: (error: any) => {

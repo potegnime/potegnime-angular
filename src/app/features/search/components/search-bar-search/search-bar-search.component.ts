@@ -3,11 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { SearchService } from '@features/search/services/search/search.service';
-import { RecommendService } from '@shared/services/recommend/recommend.service';
 import { SortService } from '@features/search/services/sort/sort.service';
 import { Subscription } from 'rxjs';
 import { TorrentCategories } from '@features/search/models/torrent-categories.interface';
 import { ToastService } from '@core/services/toast/toast.service';
+import { ExploreService } from '@shared/services/explore/explore.service';
 
 @Component({
   selector: 'app-search-bar-search',
@@ -21,7 +21,7 @@ export class SearchBarSearchComponent implements OnInit, OnDestroy {
   private readonly toastService = inject(ToastService);
   private readonly route = inject(ActivatedRoute);
   private readonly searchService = inject(SearchService);
-  private readonly recommendService = inject(RecommendService);
+  private readonly exploreService = inject(ExploreService);
   private readonly sortService = inject(SortService);
 
   protected searchForm!: FormGroup;
@@ -106,7 +106,7 @@ export class SearchBarSearchComponent implements OnInit, OnDestroy {
   }
 
   protected searchRandomTitle(): void {
-    this.recommendService.getRandomRecommendation().subscribe({
+    this.exploreService.getRandomRecommendation().subscribe({
       next: (response) => {
         this.searchForm.patchValue({
           query: response.name
