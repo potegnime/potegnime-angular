@@ -40,6 +40,17 @@ export class SearchBarSearchComponent implements OnInit, OnDestroy {
       this.sort = sort;
     });
 
+    // Default values for search form
+    this.searchForm = this.formBuilder.group({
+      query: [
+        this.route.snapshot.queryParamMap.get('q') || '',
+        [Validators.required, this.notOnlyWhitespaceValidator]
+      ],
+      category: ['All'],
+      source: ['All'],
+      sort: ['default']
+    });
+
     // Get torrent categories
     this.searchService.getCategories().subscribe({
       next: (data: TorrentCategories) => {
@@ -60,17 +71,6 @@ export class SearchBarSearchComponent implements OnInit, OnDestroy {
             break;
         }
       }
-    });
-
-    // Default values for search form
-    this.searchForm = this.formBuilder.group({
-      query: [
-        this.route.snapshot.queryParamMap.get('q') || '',
-        [Validators.required, this.notOnlyWhitespaceValidator]
-      ],
-      category: ['All'],
-      source: ['All'],
-      sort: ['default']
     });
 
     this.route.queryParamMap.subscribe((params) => {
