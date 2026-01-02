@@ -48,6 +48,6 @@ export class FooterComponent implements OnInit, OnDestroy {
   }
 
   protected logout() {
-    this.authService.logout();
+    this.authService.logout().subscribe();
   }
 }

@@ -32,7 +32,7 @@ export class SudoNavComponent implements OnInit, OnDestroy {
     });
 
     if (!this.user) {
-      this.authService.logout();
+      this.authService.logout().subscribe();
     }
     this.isAdmin = this.userService.isAdminLogged();
     this.isUploader = this.userService.isUploaderLogged();
@@ -43,6 +43,6 @@ export class SudoNavComponent implements OnInit, OnDestroy {
   }
 
   protected logout() {
-    this.authService.logout();
+    this.authService.logout().subscribe();
   }
 }

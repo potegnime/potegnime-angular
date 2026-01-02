@@ -28,12 +28,19 @@ export class AuthService extends BaseHttpService {
     return this.postJson<UserLoginDto, JwtTokenResponse>(`auth/login`, userLoginDto);
   }
 
-  public logout(showToast: boolean = true): void {
-    this.tokenService.deleteToken();
-    this.router.navigate(['/login']);
-    if (showToast) {
-      this.toastService.showSuccess('Odjava uspešna');
-    }
+  public logout(showToast: boolean = true): Observable<void> {
+    return this.postJson<any, void>('auth/logout', {}, true, ApiType.Api).pipe(
+      tap(() => {
+        this.tokenService.deleteToken();
+        this.router.navigate(['/login']);
+        if (showToast) this.toastService.showSuccess('Odjava uspešna');
+      }),
+      catchError(err => {
+        this.tokenService.deleteToken();
+        this.router.navigate(['/login']);
+        return throwError(() => err);
+      })
+    );
   }
 
   public unauthorizedHandler(): void {

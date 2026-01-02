@@ -68,6 +68,6 @@ export class NavComponent implements OnInit, OnDestroy {
   }
 
   protected logout() {
-    this.authService.logout();
+    this.authService.logout().subscribe();
   }
 }
