@@ -49,13 +49,13 @@ export class LoginFormComponent implements OnInit {
       this.authService.login(userLoginDto).subscribe({
         next: (resp) => {
           this.isSubmitting = false;
-          if (resp.token) {
+          if (resp.accessToken) {
             this.toastService.showSuccess('Prijava uspešna');
 
             // Clear register form cache
             AuthResetHelper.removeRegisterForm();
 
-            this.tokenService.setToken(resp.token);
+            this.tokenService.setToken(resp.accessToken);
             this.router.navigate(['/']);
           }
         },

@@ -197,8 +197,8 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
     if (updates.user) update$ = updates.user;
     update$ = update$.pipe(
       switchMap((userResponse) => {
-        if (userResponse?.token) {
-          this.tokenService.updateToken(userResponse.token);
+        if (userResponse?.accessToken) {
+          this.tokenService.setToken(userResponse.accessToken);
         }
         if (updates.pfp) return updates.pfp;
         return of(userResponse);
@@ -207,8 +207,8 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
 
     update$.subscribe({
       next: (finalResponse) => {
-        if (finalResponse?.token) {
-          this.tokenService.updateToken(finalResponse.token);
+        if (finalResponse?.accessToken) {
+          this.tokenService.setToken(finalResponse.accessToken);
         }
 
         // refresh UI
@@ -279,7 +279,7 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
           this.toastService.showSuccess('Vloga za nalagalca uspešno poslana');
           this.uploaderRequestStatus = UploaderRequestStatus.Review;
           // Update JWT
-          this.tokenService.updateToken(response.token);
+          this.tokenService.setToken(response.accessToken);
           this.isLoading = false;
         }
       });

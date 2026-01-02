@@ -107,11 +107,11 @@ export class ResetPasswordFormComponent implements OnInit {
       this.authService.resetPassword(resetPasswordDto).subscribe({
         next: (resp) => {
           this.isSubmitting = false;
-          if (resp.token) {
+          if (resp.accessToken) {
             this.toastService.showSuccess('Geslo uspešno posodobljeno');
 
             // Save token and redirect
-            this.tokenService.setToken(resp.token);
+            this.tokenService.setToken(resp.accessToken);
             this.router.navigate(['/']);
           }
         },

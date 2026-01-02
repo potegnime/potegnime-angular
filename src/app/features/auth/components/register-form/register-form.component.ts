@@ -135,14 +135,14 @@ export class RegisterFormComponent implements OnInit {
       this.authService.register(userRegisterDto).subscribe({
         next: (resp) => {
           this.isSubmitting = false;
-          if (resp.token) {
+          if (resp.accessToken) {
             this.toastService.showSuccess('Registracija uspešna');
 
             // Clear register form cache
             AuthResetHelper.removeRegisterForm();
 
             // Save token and redirect
-            this.tokenService.setToken(resp.token)
+            this.tokenService.setToken(resp.accessToken)
             this.router.navigate(['/']);
           }
         },
