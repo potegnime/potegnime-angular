@@ -1,9 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Router } from '@angular/router';
 import { catchError, Observable, throwError } from 'rxjs';
 
-import { TokenService } from '@core/services/token/token.service';
 import { ToastService } from '../toast/toast.service';
 
 @Injectable({
@@ -11,8 +9,6 @@ import { ToastService } from '../toast/toast.service';
 })
 export class HttpApiService {
   private readonly httpClient = inject(HttpClient);
-  private readonly router = inject(Router);
-  private readonly tokenService = inject(TokenService);
   private readonly toastService = inject(ToastService);
 
   public get<Response>(
