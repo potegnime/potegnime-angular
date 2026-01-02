@@ -19,7 +19,7 @@ export class UserService extends BaseHttpService {
   private readonly tokenService = inject(TokenService);
 
   public getUserByUsername(username: string): Observable<GetUserModel> {
-    return this.getJson<GetUserModel>(`user/username?username=${encodeURIComponent(username)}`);
+    return this.getJson<GetUserModel>(`user?username=${encodeURIComponent(username)}`);
   }
 
   public buildPfpUrl(username: string): string {
