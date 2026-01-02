@@ -1,8 +1,9 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, OnDestroy } from '@angular/core';
 
-import { AuthService } from '@features/auth/services/auth/auth.service';
+import { TokenService } from '@core/services/token/token.service';
 import { RouterLink } from '@angular/router';
 import { ToastService } from '@core/services/toast/toast.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-donate-page',
@@ -11,11 +12,12 @@ import { ToastService } from '@core/services/toast/toast.service';
   imports: [RouterLink],
   standalone: true
 })
-export class DonatePageComponent implements OnInit {
+export class DonatePageComponent implements OnInit, OnDestroy {
   private readonly toastService = inject(ToastService);
-  private readonly authService = inject(AuthService);
+  private readonly tokenService = inject(TokenService);
 
   protected isLoggedIn: boolean = false;
+  private userSubscription: Subscription | undefined;
   protected walletAddresses = {
     btc: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
     eth: 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
@@ -24,7 +26,15 @@ export class DonatePageComponent implements OnInit {
   };
 
   public ngOnInit(): void {
-    this.isLoggedIn = this.authService.verifyToken();
+    this.userSubscription = this.tokenService.user$.subscribe((user) => {
+      this.isLoggedIn = user !== undefined;
+    });
+  }
+
+  public ngOnDestroy(): void {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 
   protected copyAddress(key: 'btc' | 'eth' | 'ltc' | 'xmr'): void {

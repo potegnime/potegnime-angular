@@ -1,7 +1,8 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { AuthService } from '@features/auth/services/auth/auth.service';
+import { TokenService } from '@core/services/token/token.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-about-page',
@@ -10,12 +11,21 @@ import { AuthService } from '@features/auth/services/auth/auth.service';
   imports: [RouterLink],
   standalone: true
 })
-export class AboutPageComponent implements OnInit {
-  private readonly authService = inject(AuthService);
+export class AboutPageComponent implements OnInit, OnDestroy {
+  private readonly tokenService = inject(TokenService);
 
   protected isLoggedIn: boolean = false;
+  private userSubscription: Subscription | undefined;
 
   public ngOnInit(): void {
-    this.isLoggedIn = this.authService.verifyToken();
+    this.userSubscription = this.tokenService.user$.subscribe((user) => {
+      this.isLoggedIn = user !== undefined;
+    });
+  }
+
+  public ngOnDestroy(): void {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 }
