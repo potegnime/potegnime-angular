@@ -11,24 +11,19 @@ import { UserModel } from '@models/user.interface';
 export class TokenService {
   private userSubject = new BehaviorSubject<UserModel | undefined>(this.getUserFromToken());
   public user$ = this.userSubject.asObservable();
+  private token: string | undefined;
 
   public getToken(): string | undefined {
-    const token = localStorage.getItem('token');
-    return token ? token : undefined;
+    return this.token;
   }
 
   public setToken(token: string): void {
-    localStorage.setItem('token', token);
+    this.token = token;
     this.userSubject.next(this.getUserFromToken());
   }
 
-  public updateToken(newToken: string): void {
-    localStorage.removeItem('token');
-    this.setToken(newToken);
-  }
-
   public deleteToken(): void {
-    localStorage.removeItem('token');
+    this.token = undefined;
     this.userSubject.next(undefined);
   }
 
