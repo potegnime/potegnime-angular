@@ -27,6 +27,10 @@ export class TokenService {
     this.userSubject.next(undefined);
   }
 
+  public tokenExists(): boolean {
+    return this.token != undefined;
+  }
+
   public getUserFromToken(): UserModel | undefined {
     const decodedToken = this.decodeToken();
 

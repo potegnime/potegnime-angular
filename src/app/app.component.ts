@@ -7,6 +7,7 @@ import { AuthService } from '@features/auth/services/auth/auth.service';
 import { HeaderComponent } from '@layout/header/header.component';
 import { FooterComponent } from '@layout/footer/footer.component';
 import { underMaintenance } from 'src/environment';
+import { TokenService } from '@core/services/token/token.service';
 
 @Component({
   selector: 'app-root',
@@ -18,12 +19,13 @@ import { underMaintenance } from 'src/environment';
 export class AppComponent {
   private readonly router = inject(Router);
   private readonly authService = inject(AuthService);
+  private readonly tokenService = inject(TokenService);
   public isLoggedIn: boolean = false;
 
   constructor() {
     // isLoggedIn check must be synchronous for ngClass to work properly - some weird UI glitch otherwise
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
-      this.isLoggedIn = this.authService.tokenExists();
+      this.isLoggedIn = this.tokenService.tokenExists();
     });
 
     if (underMaintenance) {

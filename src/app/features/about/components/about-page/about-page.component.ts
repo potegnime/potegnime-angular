@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { AuthService } from '@features/auth/services/auth/auth.service';
+import { TokenService } from '@core/services/token/token.service';
 
 @Component({
   selector: 'app-about-page',
@@ -11,11 +11,11 @@ import { AuthService } from '@features/auth/services/auth/auth.service';
   standalone: true
 })
 export class AboutPageComponent implements OnInit {
-  private readonly authService = inject(AuthService);
+  private readonly tokenService = inject(TokenService);
 
   protected isLoggedIn: boolean = false;
 
   public ngOnInit(): void {
-    this.isLoggedIn = this.authService.tokenExists();
+    this.isLoggedIn = this.tokenService.tokenExists();
   }
 }

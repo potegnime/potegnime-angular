@@ -63,11 +63,6 @@ export class AuthService extends BaseHttpService {
     this.router.navigate(['/login']);
   }
 
-  public tokenExists(): boolean {
-    const token = this.tokenService.getToken();
-    return token != undefined;
-  }
-
   public forgotPassword(forgorPasswordDto: ForgotPasswordDto): Observable<any> {
     return this.postJson<ForgotPasswordDto, any>(`auth/forgotPassword`, forgorPasswordDto);
   }

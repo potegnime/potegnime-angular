@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 
-import { AuthService } from '@features/auth/services/auth/auth.service';
+import { TokenService } from '@core/services/token/token.service';
 
 @Component({
   selector: 'app-terms-page',
@@ -12,7 +12,7 @@ import { AuthService } from '@features/auth/services/auth/auth.service';
 })
 export class TermsPageComponent implements OnInit {
   private readonly router = inject(Router);
-  private readonly authService = inject(AuthService);
+  private readonly tokenService = inject(TokenService);
 
   protected isLoggedIn: boolean = false;
 
@@ -20,7 +20,7 @@ export class TermsPageComponent implements OnInit {
     // Route handling for auth
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.isLoggedIn = this.authService.tokenExists();
+        this.isLoggedIn = this.tokenService.tokenExists();
       }
     });
   }
