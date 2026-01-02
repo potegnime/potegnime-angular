@@ -53,7 +53,7 @@ export const routes: Routes = [
 
   // User module
   {
-    path: '',
+    path: 'u',
     loadChildren: () => import('@features/user/user.routes').then((m) => m.USER_ROUTES),
     canActivate: [AuthGuard]
   },
