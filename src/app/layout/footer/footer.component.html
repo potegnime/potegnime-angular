@@ -19,7 +19,7 @@
     <ul>
       <li>
         @if (user) {
-          <a [routerLink]="['/u', this.user.username]">Moj profil</a>
+          <a [routerLink]="[this.user.username]">Moj profil</a>
         }
       </li>
       <li>
