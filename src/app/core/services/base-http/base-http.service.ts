@@ -27,12 +27,14 @@ export abstract class BaseHttpService {
   protected postJson<Request, Response>(
     urlPath: string,
     body: Request,
-    apiType: ApiType = ApiType.Api
+    apiType: ApiType = ApiType.Api,
+    withCredentials: boolean = false
   ): Observable<Response> {
     return this.httpApiService.post<Request, Response>(
       this.createUrl(urlPath, apiType),
       this.createHeaders(),
-      body
+      body,
+      withCredentials
     );
   }
 

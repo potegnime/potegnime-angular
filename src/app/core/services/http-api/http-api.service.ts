@@ -38,10 +38,11 @@ export class HttpApiService {
   public post<Request, Response>(
     url: string,
     headers: HttpHeaders,
-    body: Request
+    body: Request,
+    withCredentials: boolean = false
   ): Observable<Response> {
     return this.httpClient
-      .post<Response>(url, body, { headers: headers })
+      .post<Response>(url, body, { headers: headers, withCredentials: withCredentials })
       .pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
   }
 
@@ -70,10 +71,11 @@ export class HttpApiService {
     // move 401 handling here or to the interceptor?
 
     // cover valid error cases
+    console.log('HTTP Error Status:', error);
     switch (error.status) {
+      
       case 401:
-        this.tokenService.deleteToken();
-        this.router.navigate(['/login']);
+        // Handled by interceptor
         break;
       case 404:
         // API returns 404 for valid reasons, such as no pfp set, not an error
