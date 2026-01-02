@@ -1,13 +1,12 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
 import { NgClass } from '@angular/common';
+import { filter } from 'rxjs/operators';
 
 import { AuthService } from '@features/auth/services/auth/auth.service';
-import { TokenService } from '@core/services/token/token.service';
 import { HeaderComponent } from '@layout/header/header.component';
 import { FooterComponent } from '@layout/footer/footer.component';
 import { underMaintenance } from 'src/environment';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -16,29 +15,20 @@ import { Subscription } from 'rxjs';
   imports: [HeaderComponent, FooterComponent, RouterOutlet, NgClass],
   standalone: true
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent {
   private readonly router = inject(Router);
   private readonly authService = inject(AuthService);
-  private readonly tokenService = inject(TokenService);
   public isLoggedIn: boolean = false;
-  private userSubscription: Subscription | undefined;
 
   constructor() {
-    if (underMaintenance) {
-      this.authService.logout(false).subscribe();
-      this.router.navigate(['/maintenance']);
-    }
-  }
-
-  ngOnInit() {
-    this.userSubscription = this.tokenService.user$.subscribe((user) => {
-      this.isLoggedIn = user !== undefined;
+    // isLoggedIn check must be synchronous for ngClass to work properly - some weird UI glitch otherwise
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
+      this.isLoggedIn = this.authService.tokenExists();
     });
-  }
 
-  ngOnDestroy() {
-    if (this.userSubscription) {
-      this.userSubscription.unsubscribe();
+    if (underMaintenance) {
+      this.authService.logout(false);
+      this.router.navigate(['/maintenance']);
     }
   }
 }

@@ -11,8 +11,8 @@ export class LoggedInAuthGuard implements CanActivate {
   private readonly router = inject(Router);
 
   canActivate() {
-    const isTokenValid = this.authService.verifyToken();
-    if (isTokenValid) {
+    const tokenExists = this.authService.tokenExists();
+    if (tokenExists) {
       this.router.navigate(['/']);
       return false;
     }

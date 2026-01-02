@@ -11,8 +11,8 @@ export class AuthGuard implements CanActivate {
   private readonly router = inject(Router);
 
   canActivate() {
-    const isTokenValid = this.authService.verifyToken();
-    if (isTokenValid) return true;
+    const tokenExists = this.authService.tokenExists();
+    if (tokenExists) return true;
 
     this.router.navigate(['/login']);
     return false;

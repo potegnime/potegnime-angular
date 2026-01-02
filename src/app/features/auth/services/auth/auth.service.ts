@@ -63,13 +63,9 @@ export class AuthService extends BaseHttpService {
     this.router.navigate(['/login']);
   }
 
-  /**
-   * Verifies if a valid token exists
-   * @returns true if token exists, false otherwise
-   */
-  public verifyToken(): boolean {
+  public tokenExists(): boolean {
     const token = this.tokenService.getToken();
-    return token !== undefined;
+    return token != undefined;
   }
 
   public forgotPassword(forgorPasswordDto: ForgotPasswordDto): Observable<any> {

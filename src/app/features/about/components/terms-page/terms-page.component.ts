@@ -1,8 +1,7 @@
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 
-import { TokenService } from '@core/services/token/token.service';
-import { Subscription } from 'rxjs';
+import { AuthService } from '@features/auth/services/auth/auth.service';
 
 @Component({
   selector: 'app-terms-page',
@@ -11,21 +10,18 @@ import { Subscription } from 'rxjs';
   imports: [RouterLink],
   standalone: true
 })
-export class TermsPageComponent implements OnInit, OnDestroy {
-  private readonly tokenService = inject(TokenService);
+export class TermsPageComponent implements OnInit {
+  private readonly router = inject(Router);
+  private readonly authService = inject(AuthService);
 
   protected isLoggedIn: boolean = false;
-  private userSubscription: Subscription | undefined;
 
   public ngOnInit(): void {
-    this.userSubscription = this.tokenService.user$.subscribe((user) => {
-      this.isLoggedIn = user !== undefined;
+    // Route handling for auth
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.isLoggedIn = this.authService.tokenExists();
+      }
     });
-  }
-
-  public ngOnDestroy(): void {
-    if (this.userSubscription) {
-      this.userSubscription.unsubscribe();
-    }
   }
 }
