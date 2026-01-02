@@ -27,8 +27,8 @@ export abstract class BaseHttpService {
   protected postJson<Request, Response>(
     urlPath: string,
     body: Request,
-    apiType: ApiType = ApiType.Api,
-    withCredentials: boolean = false
+    withCredentials: boolean = false,
+    apiType: ApiType = ApiType.Api
   ): Observable<Response> {
     return this.httpApiService.post<Request, Response>(
       this.createUrl(urlPath, apiType),
