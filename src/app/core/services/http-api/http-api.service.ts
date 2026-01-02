@@ -38,11 +38,10 @@ export class HttpApiService {
   public post<Request, Response>(
     url: string,
     headers: HttpHeaders,
-    body: Request,
-    withCredentials: boolean = false
+    body: Request
   ): Observable<Response> {
     return this.httpClient
-      .post<Response>(url, body, { headers: headers, withCredentials: withCredentials })
+      .post<Response>(url, body, { headers: headers, withCredentials: true })
       .pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
   }
 
@@ -67,13 +66,8 @@ export class HttpApiService {
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {
-    // TODO - implement better error handling/logging
-    // move 401 handling here or to the interceptor?
-
     // cover valid error cases
-    console.log('HTTP Error Status:', error);
     switch (error.status) {
-      
       case 401:
         // Handled by interceptor
         break;
