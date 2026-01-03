@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-maintenance',
   imports: [],
   templateUrl: './maintenance.component.html',
-  styleUrl: './maintenance.component.scss',
+  styleUrl: './maintenance.component.scss'
 })
-export class MaintenanceComponent {
-
-}
+export class MaintenanceComponent {}

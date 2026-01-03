@@ -11,7 +11,6 @@ import { ConfigService } from '@core/services/config/config.service';
 import { AuthService } from '@features/auth/services/auth/auth.service';
 import { ApplicationDataService } from '@core/services/application-data/application-data.service';
 
-
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
@@ -23,17 +22,17 @@ export const appConfig: ApplicationConfig = {
       const applicationDataService = inject(ApplicationDataService);
 
       return configService.loadConfig().then(() => {
-        return firstValueFrom(
-          authService.refreshToken()
-        ).then(() => {
-          // User is authenticated, fetch application data
-          return firstValueFrom(applicationDataService.fetchApplicationData());
-        }).catch((err) => {
-          // refresh failed (no valid refresh token or user not authenticated)
-          // expected for unauthenticated users accessing public routes
-          // silently continue - protected routes will redirect via AuthGuard
-          return null;
-        });
+        return firstValueFrom(authService.refreshToken())
+          .then(() => {
+            // User is authenticated, fetch application data
+            return firstValueFrom(applicationDataService.fetchApplicationData());
+          })
+          .catch((err) => {
+            // refresh failed (no valid refresh token or user not authenticated)
+            // expected for unauthenticated users accessing public routes
+            // silently continue - protected routes will redirect via AuthGuard
+            return null;
+          });
       });
     }),
     provideToastr(),

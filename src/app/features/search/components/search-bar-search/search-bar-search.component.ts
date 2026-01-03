@@ -1,6 +1,12 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
 
 import { SearchService } from '@features/search/services/search/search.service';
 import { SortService } from '@features/search/services/sort/sort.service';

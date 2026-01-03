@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { UpdateUserDto} from '@features/user/models/update-user.interface';
+import { UpdateUserDto } from '@features/user/models/update-user.interface';
 import { SetPfpDto } from '@features/user/models/update-pfp.interface';
 import { UpdatePasswordDto } from '@features/user/models/update-password.interface';
 import { DeleteProfileDto } from '@features/user/models/delete-profile.interface';
@@ -47,8 +47,13 @@ export class UserService extends BaseHttpService {
     return this.deleteJson<DeleteProfileDto, void>(`user/deleteUser`, deleteProfileDto);
   }
 
-  public submitUploaderRequest(uploaderRequestDto: UploaderRequestDto): Observable<JwtTokenResponse> {
-    return this.postJson<UploaderRequestDto, JwtTokenResponse>(`user/submitUploaderRequest`, uploaderRequestDto);
+  public submitUploaderRequest(
+    uploaderRequestDto: UploaderRequestDto
+  ): Observable<JwtTokenResponse> {
+    return this.postJson<UploaderRequestDto, JwtTokenResponse>(
+      `user/submitUploaderRequest`,
+      uploaderRequestDto
+    );
   }
 
   public isAdminLogged(): boolean {

@@ -117,7 +117,9 @@ export class AdministrationPageComponent implements OnInit {
       for (const controlName of Object.keys(this.setRecommendationForm.controls)) {
         const control = this.setRecommendationForm.get(controlName);
         if (control?.invalid) {
-          this.toastService.showError(`Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`);
+          this.toastService.showError(
+            `Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`
+          );
           break;
         }
       }
@@ -173,7 +175,9 @@ export class AdministrationPageComponent implements OnInit {
       for (const controlName of Object.keys(this.userControlForm.controls)) {
         const control = this.userControlForm.get(controlName);
         if (control?.invalid) {
-          this.toastService.showError(`Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`);
+          this.toastService.showError(
+            `Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`
+          );
           break;
         }
       }
@@ -190,7 +194,9 @@ export class AdministrationPageComponent implements OnInit {
 
       this.adminService.updateRole(updateRoleDto).subscribe({
         next: () => {
-          this.toastService.showSuccess(`Role za uporabnika ${this.foundUser?.username} uspešno nastavljen na ${this.getUiAppropriateControlName(role)}`);
+          this.toastService.showSuccess(
+            `Role za uporabnika ${this.foundUser?.username} uspešno nastavljen na ${this.getUiAppropriateControlName(role)}`
+          );
           this.onUserControlFormSubmit();
         }
       });
@@ -198,7 +204,9 @@ export class AdministrationPageComponent implements OnInit {
   }
 
   protected onDeleteUser() {
-    if (!confirm(`Ali ste prepričani, da želite izbrisati uporabnika ${this.foundUser?.username}?`)) {
+    if (
+      !confirm(`Ali ste prepričani, da želite izbrisati uporabnika ${this.foundUser?.username}?`)
+    ) {
       return;
     }
 

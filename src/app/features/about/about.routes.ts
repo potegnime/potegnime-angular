@@ -15,5 +15,5 @@ export const ABOUT_ROUTES: Routes = [
     path: 'terms',
     loadComponent: () => import('./components/terms-page/terms-page.component').then((m) => m.TermsPageComponent),
     pathMatch: 'full'
-  },
+  }
 ];

@@ -26,11 +26,7 @@ export class AuthService extends BaseHttpService {
       tap((res) => {
         this.tokenService.setToken(res.accessToken);
       }),
-      switchMap((res) =>
-        this.applicationDataService.fetchApplicationData().pipe(
-          map(() => res)
-        )
-      )
+      switchMap((res) => this.applicationDataService.fetchApplicationData().pipe(map(() => res)))
     );
   }
 
@@ -39,11 +35,7 @@ export class AuthService extends BaseHttpService {
       tap((res) => {
         this.tokenService.setToken(res.accessToken);
       }),
-      switchMap((res) =>
-        this.applicationDataService.fetchApplicationData().pipe(
-          map(() => res)
-        )
-      )
+      switchMap((res) => this.applicationDataService.fetchApplicationData().pipe(map(() => res)))
     );
   }
 
@@ -63,7 +55,7 @@ export class AuthService extends BaseHttpService {
         this.router.navigate(['/login']);
         if (showToast) this.toastService.showSuccess('Odjava uspešna');
       }),
-      catchError(err => {
+      catchError((err) => {
         this.tokenService.deleteToken();
         this.applicationDataService.clearApplicationData();
         this.router.navigate(['/login']);
@@ -82,6 +74,9 @@ export class AuthService extends BaseHttpService {
   }
 
   public resetPassword(resetPasswordDto: ResetPasswordDto): Observable<JwtTokenResponse> {
-    return this.postJson<ResetPasswordDto, JwtTokenResponse>(`auth/resetPassword`, resetPasswordDto);
+    return this.postJson<ResetPasswordDto, JwtTokenResponse>(
+      `auth/resetPassword`,
+      resetPasswordDto
+    );
   }
 }

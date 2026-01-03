@@ -5,7 +5,7 @@ import { ApplicationData } from '@models/application-data.interface';
 import { UserModel } from '@models/user.interface';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class ApplicationDataService extends BaseHttpService {
   private applicationDataSubject = new BehaviorSubject<ApplicationData | undefined>(undefined);

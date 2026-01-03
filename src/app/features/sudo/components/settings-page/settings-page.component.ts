@@ -1,5 +1,11 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { AbstractControl, FormBuilder,  FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import { Observable, of, Subscription, switchMap } from 'rxjs';
 
 import { AuthService } from '@features/auth/services/auth/auth.service';
@@ -86,9 +92,9 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
       password: ['', Validators.required]
     });
 
-    this.userSubscription = this.applicationDataService.user$.subscribe(user => {
+    this.userSubscription = this.applicationDataService.user$.subscribe((user) => {
       this.user = user;
-      
+
       if (this.user) {
         // TODO - call api to get uploaderRequestStatus
 
@@ -139,15 +145,17 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
       for (const controlName of Object.keys(this.changeUserDataForm.controls)) {
         const control = this.changeUserDataForm.get(controlName);
         if (control?.invalid) {
-          this.toastService.showError(`Neveljaven vnos ${this.getUiAppropriateControlName(controlName)}!`);
+          this.toastService.showError(
+            `Neveljaven vnos ${this.getUiAppropriateControlName(controlName)}!`
+          );
           break;
         }
       }
       return;
     }
 
-  // Check which fields have changed
-  const profilePicture = this.changeUserDataForm.get('profilePicture')?.value; // TODO - remove?
+    // Check which fields have changed
+    const profilePicture = this.changeUserDataForm.get('profilePicture')?.value; // TODO - remove?
 
     // Collect all update observables
     const updates: {
@@ -176,7 +184,10 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
     if (this.pfpChanged) {
       // Check file size
 
-      if (this.selectedProfilePicture && this.selectedProfilePicture.size > APP_CONSTANTS.MAX_PROFILE_PIC_SIZE_BYTES) {
+      if (
+        this.selectedProfilePicture &&
+        this.selectedProfilePicture.size > APP_CONSTANTS.MAX_PROFILE_PIC_SIZE_BYTES
+      ) {
         this.toastService.showError('Največja dovoljena velikost profilne slike je 5MB');
         return;
       }
@@ -288,7 +299,9 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
       for (const controlName of Object.keys(this.uploaderRequestDataForm.controls)) {
         const control = this.uploaderRequestDataForm.get(controlName);
         if (control?.invalid) {
-          this.toastService.showError(`Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`);
+          this.toastService.showError(
+            `Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`
+          );
           break;
         }
       }
@@ -347,7 +360,9 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
       for (const controlName of Object.keys(this.changePasswordForm.controls)) {
         const control = this.changePasswordForm.get(controlName);
         if (control?.invalid) {
-          this.toastService.showError(`Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`);
+          this.toastService.showError(
+            `Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`
+          );
           break;
         }
       }
@@ -384,7 +399,9 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
       for (const controlName of Object.keys(this.deleteProfileForm.controls)) {
         const control = this.deleteProfileForm.get(controlName);
         if (control?.invalid) {
-          this.toastService.showError(`Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`);
+          this.toastService.showError(
+            `Neveljaven vnos podatkov v polju ${this.getUiAppropriateControlName(controlName)}!`
+          );
           break;
         }
       }
@@ -435,26 +452,28 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
       const file = event.target.files[0] as File;
 
       // compress image - remove if necessary and use code commented out below
-      this.compressImage(file).then((compressedFile) => {
-        this.selectedProfilePicture = compressedFile;
-        this.lastObjectUrl = URL.createObjectURL(compressedFile);
-        this.profilePictureUrl = this.lastObjectUrl;
-      }).catch(() => {
-        // if compression fails, use original file
-        this.selectedProfilePicture = file;
-        if (this.lastObjectUrl) {
-          try {
-            URL.revokeObjectURL(this.lastObjectUrl);
-          } catch {}
-          this.lastObjectUrl = null;
-        }
-        try {
-          this.lastObjectUrl = URL.createObjectURL(file);
+      this.compressImage(file)
+        .then((compressedFile) => {
+          this.selectedProfilePicture = compressedFile;
+          this.lastObjectUrl = URL.createObjectURL(compressedFile);
           this.profilePictureUrl = this.lastObjectUrl;
-        } catch {
-          this.profilePictureUrl = this.getProfilePictureUrl();
-        }
-      });
+        })
+        .catch(() => {
+          // if compression fails, use original file
+          this.selectedProfilePicture = file;
+          if (this.lastObjectUrl) {
+            try {
+              URL.revokeObjectURL(this.lastObjectUrl);
+            } catch {}
+            this.lastObjectUrl = null;
+          }
+          try {
+            this.lastObjectUrl = URL.createObjectURL(file);
+            this.profilePictureUrl = this.lastObjectUrl;
+          } catch {
+            this.profilePictureUrl = this.getProfilePictureUrl();
+          }
+        });
 
       // this.selectedProfilePicture = file;
       // if (this.lastObjectUrl) {
@@ -579,16 +598,17 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
 
         ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 
-        canvas.toBlob((blob) => {
-          if (blob) {
-            const compressedFile = new File([blob], file.name, { type: 'image/jpeg' });
-            resolve(compressedFile);
-          } else {
-            reject('Compression failed');
-          }
-        },
-        'image/jpeg',
-        quality
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              const compressedFile = new File([blob], file.name, { type: 'image/jpeg' });
+              resolve(compressedFile);
+            } else {
+              reject('Compression failed');
+            }
+          },
+          'image/jpeg',
+          quality
         );
       };
 

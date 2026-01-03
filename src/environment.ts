@@ -12,7 +12,5 @@ const environment = {
   underMaintenance: false
 };
 
-
-
 export const production = environment.production;
 export const underMaintenance = environment.underMaintenance && localStorage.getItem('bypass') !== 'true';

@@ -76,7 +76,7 @@ export class UserPageComponent implements OnInit {
       this.isMyPage = loggedInUser!.username == urlUsername;
       if (this.isMyPage && urlUsername) {
         this.user = loggedInUser;
-         this.setPfp(this.user!);
+        this.setPfp(this.user!);
         this.isLoading = false;
       } else {
         this.getUserData(urlUsername!);

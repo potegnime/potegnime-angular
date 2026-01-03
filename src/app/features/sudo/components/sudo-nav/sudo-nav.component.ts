@@ -7,7 +7,6 @@ import { UserService } from '@features/user/services/user/user.service';
 import { ApplicationDataService } from '@core/services/application-data/application-data.service';
 import { UserModel } from '@models/user.interface';
 
-
 @Component({
   selector: 'app-sudo-nav',
   templateUrl: './sudo-nav.component.html',
@@ -27,7 +26,7 @@ export class SudoNavComponent implements OnInit, OnDestroy {
   private userSubscription = new Subscription();
 
   public ngOnInit(): void {
-    this.userSubscription = this.applicationDataService.user$.subscribe(user => {
+    this.userSubscription = this.applicationDataService.user$.subscribe((user) => {
       this.user = user;
     });
 

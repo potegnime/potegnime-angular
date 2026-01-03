@@ -1,5 +1,11 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpInterceptor,
+  HttpErrorResponse
+} from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject, switchMap, catchError, filter, take } from 'rxjs';
 
 import { TokenService } from '@core/services/token/token.service';
@@ -11,7 +17,9 @@ export class ApiInterceptor implements HttpInterceptor {
   private readonly authService = inject(AuthService);
 
   private isRefreshing = false;
-  private refreshTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
+  private refreshTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(
+    null
+  );
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.tokenService.getToken();
@@ -23,7 +31,11 @@ export class ApiInterceptor implements HttpInterceptor {
     return next.handle(clonedRequest).pipe(
       catchError((err: HttpErrorResponse) => {
         // Don't try to refresh on login or register failures
-        if (err.status === 401 && !request.url.includes('/auth/login') && !request.url.includes('/auth/register')) {
+        if (
+          err.status === 401 &&
+          !request.url.includes('/auth/login') &&
+          !request.url.includes('/auth/register')
+        ) {
           return this.handle401(clonedRequest, next);
         }
         return throwError(() => err);

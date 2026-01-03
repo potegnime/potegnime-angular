@@ -26,7 +26,7 @@ export class FooterComponent implements OnInit, OnDestroy {
   private userSubscription = new Subscription();
 
   public ngOnInit(): void {
-    this.userSubscription = this.applicationDataService.user$.subscribe(user => {
+    this.userSubscription = this.applicationDataService.user$.subscribe((user) => {
       this.user = user;
     });
 

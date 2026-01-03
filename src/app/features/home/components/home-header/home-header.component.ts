@@ -41,27 +41,23 @@ export class HomeHeaderComponent implements OnInit {
   protected searchAdminRecommendationOfTheDay(type: 'movie' | 'series'): void {
     this.setLoading(true);
     setTimeout(() => {
-          this.recommendService.getAdminRecommendation(date, type).subscribe({
-      next: (response: AdminRecommendation) => {
-        this.searchTitle(response.name);
-        this.setLoading(false);
-      },
-      error: (error) => {
-        switch (error.status) {
-          case 404:
-            if (type == 'movie')
-              this.toastService.showInfo('Film dneva še ni bil nastavljen');
-            else
-              this.toastService.showInfo('Serija dneva še ni bila nastavljena');
-            break;
+      this.recommendService.getAdminRecommendation(date, type).subscribe({
+        next: (response: AdminRecommendation) => {
+          this.searchTitle(response.name);
+          this.setLoading(false);
+        },
+        error: (error) => {
+          switch (error.status) {
+            case 404:
+              if (type == 'movie') this.toastService.showInfo('Film dneva še ni bil nastavljen');
+              else this.toastService.showInfo('Serija dneva še ni bila nastavljena');
+              break;
+          }
+          this.setLoading(false);
         }
-        this.setLoading(false);
-      }
-    });
+      });
     }, 5000);
     const date = this.getFormattedDate();
-
-
   }
 
   protected searchRandomMovieTitle(): void {

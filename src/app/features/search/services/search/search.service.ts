@@ -32,26 +32,10 @@ export class SearchService extends BaseHttpService {
   public getCategories(): Observable<TorrentCategories> {
     // return this.getJson<TorrentCategories>(`categories`);
     const categories: TorrentCategories = {
-      "Yts": [
-          "All",
-          "Movies"
-      ],
-      "ThePirateBay": [
-          "All",
-          "Audio",
-          "Video",
-          "Applications",
-          "Games",
-          "Porn",
-          "Other",
-          "Top100"
-      ],
-      "TorrentProject": [
-          "All"
-      ],
-      "Eztv": [
-          "All"
-      ],
+      Yts: ['All', 'Movies'],
+      ThePirateBay: ['All', 'Audio', 'Video', 'Applications', 'Games', 'Porn', 'Other', 'Top100'],
+      TorrentProject: ['All'],
+      Eztv: ['All']
     };
 
     return of(categories);
