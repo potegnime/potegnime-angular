@@ -86,30 +86,27 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
       password: ['', Validators.required]
     });
 
-    // Get user data - set settings page
     this.userSubscription = this.applicationDataService.user$.subscribe(user => {
       this.user = user;
-    });
+      
+      if (this.user) {
+        // TODO - call api to get uploaderRequestStatus
 
-    if (this.user) {
-      // TODO - call api to get uploaderRequestStatus
+        this.setSettingsPage();
 
-      // Get user data from JWT
-      this.setSettingsPage();
-
-      if (this.user.hasPfp) {
-        this.profilePictureUrl = this.userService.buildPfpUrl(this.user.username);
+        if (this.user.hasPfp) {
+          this.profilePictureUrl = this.userService.buildPfpUrl(this.user.username);
+        } else {
+          this.profilePictureUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
+        }
+        this.changeUserDataForm.patchValue({
+          profilePicture: this.profilePictureUrl
+        });
       } else {
-        this.profilePictureUrl = APP_CONSTANTS.DEFAULT_PFP_PATH;
+        this.authService.unauthorizedHandler();
       }
-      this.changeUserDataForm.patchValue({
-        profilePicture: this.profilePictureUrl
-      });
-    } else {
-      // Error decoding token - redirect to login page - log out user
-      this.authService.unauthorizedHandler();
-    }
-    this.isLoading = false;
+      this.isLoading = false;
+    });
   }
 
   public ngOnDestroy(): void {
@@ -211,9 +208,10 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
       next: (finalResponse) => {
         if (finalResponse?.accessToken) {
           this.tokenService.setToken(finalResponse.accessToken);
+          this.applicationDataService.fetchApplicationData().subscribe();
         }
 
-        // refresh UI
+        // refresh UI - user data will be updated via the subscription to applicationDataService.user$
         this.changeUserDataForm.patchValue({
           username: this.user?.username,
           email: this.user?.email
@@ -280,8 +278,9 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
         next: (response) => {
           this.toastService.showSuccess('Vloga za nalagalca uspešno poslana');
           this.uploaderRequestStatus = UploaderRequestStatus.Review;
-          // Update JWT
+          // Update JWT and application data
           this.tokenService.setToken(response.accessToken);
+          this.applicationDataService.fetchApplicationData().subscribe();
           this.isLoading = false;
         }
       });
