@@ -108,8 +108,6 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
         this.changeUserDataForm.patchValue({
           profilePicture: this.profilePictureUrl
         });
-      } else {
-        this.authService.unauthorizedHandler();
       }
       this.isLoading = false;
     });
