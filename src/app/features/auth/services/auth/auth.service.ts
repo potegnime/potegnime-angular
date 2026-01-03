@@ -66,6 +66,7 @@ export class AuthService extends BaseHttpService {
 
   public unauthorizedHandler(): void {
     this.tokenService.deleteToken();
+    this.applicationDataService.clearApplicationData();
     this.router.navigate(['/login']);
   }
 

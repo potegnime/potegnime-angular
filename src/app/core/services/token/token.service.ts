@@ -19,6 +19,6 @@ export class TokenService {
   }
 
   public tokenExists(): boolean {
-    return this.token != undefined;
+    return this.token !== undefined;
   }
 }
