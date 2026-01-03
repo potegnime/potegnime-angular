@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { TokenService } from '@core/services/token/token.service';
+import { ApplicationDataService } from '@core/services/application-data/application-data.service';
 import { AuthService } from '@features/auth/services/auth/auth.service';
 import { UserService } from '@features/user/services/user/user.service';
 import { UserModel } from '@models/user.interface';
@@ -16,7 +16,7 @@ import { UserModel } from '@models/user.interface';
 })
 export class FooterComponent implements OnInit, OnDestroy {
   private readonly authService = inject(AuthService);
-  private readonly tokenService = inject(TokenService);
+  private readonly applicationDataService = inject(ApplicationDataService);
   private readonly userService = inject(UserService);
   private readonly router = inject(Router);
 
@@ -26,7 +26,7 @@ export class FooterComponent implements OnInit, OnDestroy {
   private userSubscription = new Subscription();
 
   public ngOnInit(): void {
-    this.userSubscription = this.tokenService.user$.subscribe(user => {
+    this.userSubscription = this.applicationDataService.user$.subscribe(user => {
       this.user = user;
     });
 

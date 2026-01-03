@@ -10,7 +10,7 @@ import { SudoNavComponent } from '@features/sudo/components/sudo-nav/sudo-nav.co
 import { UserModel } from '@models/user.interface';
 import { GetUserModel } from '@models/get-user.interface';
 import { APP_CONSTANTS } from '@constants/constants';
-import { TokenService } from '@core/services/token/token.service';
+import { ApplicationDataService } from '@core/services/application-data/application-data.service';
 
 @Component({
   selector: 'app-user-page',
@@ -22,7 +22,7 @@ import { TokenService } from '@core/services/token/token.service';
 export class UserPageComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly tokenService = inject(TokenService);
+  private readonly applicationDataService = inject(ApplicationDataService);
   private readonly userService = inject(UserService);
   private readonly authService = inject(AuthService);
   private readonly route = inject(ActivatedRoute);
@@ -66,7 +66,7 @@ export class UserPageComponent implements OnInit {
 
   public ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      const loggedInUser: UserModel | undefined = this.tokenService.getUserFromToken();
+      const loggedInUser: UserModel | undefined = this.applicationDataService.getUser();
       if (!loggedInUser) {
         this.authService.unauthorizedHandler();
         return;

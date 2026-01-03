@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder,  FormGroup, ReactiveFormsModule, Validato
 import { Observable, of, Subscription, switchMap } from 'rxjs';
 
 import { AuthService } from '@features/auth/services/auth/auth.service';
+import { ApplicationDataService } from '@core/services/application-data/application-data.service';
 import { TokenService } from '@core/services/token/token.service';
 import { UserService } from '@features/user/services/user/user.service';
 import { SetPfpDto } from '@features/user/models/update-pfp.interface';
@@ -27,6 +28,7 @@ import { ToastService } from '@core/services/toast/toast.service';
 export class SettingsPageComponent implements OnInit, OnDestroy {
   private readonly formBuilder = inject(FormBuilder);
   private readonly authService = inject(AuthService);
+  private readonly applicationDataService = inject(ApplicationDataService);
   private readonly tokenService = inject(TokenService);
   private readonly userService = inject(UserService);
   private readonly toastService = inject(ToastService);
@@ -85,7 +87,7 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
     });
 
     // Get user data - set settings page
-    this.userSubscription = this.tokenService.user$.subscribe(user => {
+    this.userSubscription = this.applicationDataService.user$.subscribe(user => {
       this.user = user;
     });
 

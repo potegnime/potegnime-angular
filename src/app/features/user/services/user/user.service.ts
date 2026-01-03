@@ -7,7 +7,7 @@ import { UpdatePasswordDto } from '@features/user/models/update-password.interfa
 import { DeleteProfileDto } from '@features/user/models/delete-profile.interface';
 import { UploaderRequestDto } from '@features/user/models/uploader-request.interface';
 import { BaseHttpService } from '@core/services/base-http/base-http.service';
-import { TokenService } from '@core/services/token/token.service';
+import { ApplicationDataService } from '@core/services/application-data/application-data.service';
 import { GetUserModel } from '@models/get-user.interface';
 import { ApiType } from '@core/enums/api-type.enum';
 import { JwtTokenResponse } from '@models/jwt-token-response.interface';
@@ -16,7 +16,7 @@ import { JwtTokenResponse } from '@models/jwt-token-response.interface';
   providedIn: 'root'
 })
 export class UserService extends BaseHttpService {
-  private readonly tokenService = inject(TokenService);
+  private readonly applicationDataService = inject(ApplicationDataService);
 
   public getUserByUsername(username: string): Observable<GetUserModel> {
     return this.getJson<GetUserModel>(`user?username=${encodeURIComponent(username)}`);
@@ -67,7 +67,7 @@ export class UserService extends BaseHttpService {
   }
 
   private getUserRole(): string | null {
-    const userModel = this.tokenService.getUserFromToken();
+    const userModel = this.applicationDataService.getUser();
     return userModel ? userModel.role.toLowerCase() : null;
   }
 }
