@@ -381,7 +381,10 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         this.isDownloadingTorrentFile = false;
-        this.toastService.showError('Prosimo uporabite magnet link', 'Prenos .torrent datoteke ni uspel');
+        this.toastService.showError(
+          'Prosimo uporabite magnet link',
+          'Prenos .torrent datoteke ni uspel'
+        );
       }
     });
   }

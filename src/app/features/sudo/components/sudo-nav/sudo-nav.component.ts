@@ -4,9 +4,8 @@ import { Subscription } from 'rxjs';
 
 import { AuthService } from '@features/auth/services/auth/auth.service';
 import { UserService } from '@features/user/services/user/user.service';
-import { TokenService } from '@core/services/token/token.service';
+import { ApplicationDataService } from '@core/services/application-data/application-data.service';
 import { UserModel } from '@models/user.interface';
-
 
 @Component({
   selector: 'app-sudo-nav',
@@ -18,7 +17,7 @@ import { UserModel } from '@models/user.interface';
 export class SudoNavComponent implements OnInit, OnDestroy {
   private readonly authService = inject(AuthService);
   private readonly userService = inject(UserService);
-  private readonly tokenService = inject(TokenService);
+  private readonly applicationDataService = inject(ApplicationDataService);
 
   protected user: UserModel | undefined;
   protected isAdmin: boolean = false;
@@ -27,12 +26,12 @@ export class SudoNavComponent implements OnInit, OnDestroy {
   private userSubscription = new Subscription();
 
   public ngOnInit(): void {
-    this.userSubscription = this.tokenService.user$.subscribe(user => {
+    this.userSubscription = this.applicationDataService.user$.subscribe((user) => {
       this.user = user;
     });
 
     if (!this.user) {
-      this.authService.logout();
+      this.authService.logout().subscribe();
     }
     this.isAdmin = this.userService.isAdminLogged();
     this.isUploader = this.userService.isUploaderLogged();
@@ -43,6 +42,6 @@ export class SudoNavComponent implements OnInit, OnDestroy {
   }
 
   protected logout() {
-    this.authService.logout();
+    this.authService.logout().subscribe();
   }
 }

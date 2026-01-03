@@ -59,24 +59,31 @@ export class RecommendPageComponent implements AfterViewChecked, OnInit {
     this.region = region;
 
     // Load recommendations
-    this.exploreService.explore([ 'now_playing', 'popular', 'top_rated', 'upcoming', 'trending_movie', 'trending_tv' ], this.language, 1, this.region).subscribe({
-      next: (responses: any) => {
-        this.nowPlayingMovies = responses.now_playing;
-        this.popularMovies = responses.popular;
-        this.topRatedMovies = responses.top_rated;
-        this.upcomingMovies = responses.upcoming;
-        this.trendingMovies = responses.trending_movie;
-        this.trendingTvShows = responses.trending_tv;
+    this.exploreService
+      .explore(
+        ['now_playing', 'popular', 'top_rated', 'upcoming', 'trending_movie', 'trending_tv'],
+        this.language,
+        1,
+        this.region
+      )
+      .subscribe({
+        next: (responses: any) => {
+          this.nowPlayingMovies = responses.now_playing;
+          this.popularMovies = responses.popular;
+          this.topRatedMovies = responses.top_rated;
+          this.upcomingMovies = responses.upcoming;
+          this.trendingMovies = responses.trending_movie;
+          this.trendingTvShows = responses.trending_tv;
 
-        this.allDataLoaded = true;
+          this.allDataLoaded = true;
 
-        // Hide loading spinner
-        this.displayLoadingSpinner = false;
-      },
-      error: (error: any) => {
-        this.displayLoadingSpinner = false;
-      }
-    });
+          // Hide loading spinner
+          this.displayLoadingSpinner = false;
+        },
+        error: (error: any) => {
+          this.displayLoadingSpinner = false;
+        }
+      });
   }
 
   ngAfterViewChecked() {
@@ -119,7 +126,10 @@ export class RecommendPageComponent implements AfterViewChecked, OnInit {
 
   protected searchTitle(text: string): void {
     if (this.language == 'sl-SI') {
-      this.toastService.showInfo('Za boljše rezultate, poskusite iskati v angleščini', 'Iskanje v slovenščini');
+      this.toastService.showInfo(
+        'Za boljše rezultate, poskusite iskati v angleščini',
+        'Iskanje v slovenščini'
+      );
     }
     this.router.navigate(['/search'], { queryParams: { q: text } });
   }

@@ -21,7 +21,7 @@ export class HomeTorrentComponent implements OnInit {
   protected region: 'SI' | 'US' = 'US';
   protected timeWindow: 'day' | 'week' = 'day';
 
-  protected readonly posterUrl = 'https://image.tmdb.org/t/p/original';
+  protected readonly posterUrl = 'https://image.tmdb.org/t/p/w342';
 
   protected nowPlayingMovies: TmdbMovieResponse[] = [];
   protected popularMovies: TmdbMovieResponse[] = [];
@@ -32,17 +32,19 @@ export class HomeTorrentComponent implements OnInit {
   public ngOnInit(): void {
     this.setLoading(true);
 
-    this.exploreService.explore(['now_playing', 'popular', 'top_rated'], this.language, 1, this.region).subscribe({
-      next: (responses: any) => {
-        this.nowPlayingMovies = responses.now_playing;
-        this.popularMovies = responses.popular;
-        this.topRatedMovies = responses.top_rated;
-        this.setLoading(false);
-      },
-      error: (error: any) => {
-        this.setLoading(false);
-      }
-    });
+    this.exploreService
+      .explore(['now_playing', 'popular', 'top_rated'], this.language, 1, this.region)
+      .subscribe({
+        next: (responses: any) => {
+          this.nowPlayingMovies = responses.now_playing;
+          this.popularMovies = responses.popular;
+          this.topRatedMovies = responses.top_rated;
+          this.setLoading(false);
+        },
+        error: (error: any) => {
+          this.setLoading(false);
+        }
+      });
   }
 
   protected searchTitle(text: string): void {

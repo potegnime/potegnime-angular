@@ -1,8 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 
-import { AuthService } from '@features/auth/services/auth/auth.service';
 import { RouterLink } from '@angular/router';
 import { ToastService } from '@core/services/toast/toast.service';
+import { TokenService } from '@core/services/token/token.service';
 
 @Component({
   selector: 'app-donate-page',
@@ -13,7 +13,7 @@ import { ToastService } from '@core/services/toast/toast.service';
 })
 export class DonatePageComponent implements OnInit {
   private readonly toastService = inject(ToastService);
-  private readonly authService = inject(AuthService);
+  private readonly tokenService = inject(TokenService);
 
   protected isLoggedIn: boolean = false;
   protected walletAddresses = {
@@ -24,7 +24,7 @@ export class DonatePageComponent implements OnInit {
   };
 
   public ngOnInit(): void {
-    this.isLoggedIn = this.authService.verifyToken();
+    this.isLoggedIn = this.tokenService.tokenExists();
   }
 
   protected copyAddress(key: 'btc' | 'eth' | 'ltc' | 'xmr'): void {

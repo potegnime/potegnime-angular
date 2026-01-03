@@ -1,9 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Router } from '@angular/router';
 import { catchError, Observable, throwError } from 'rxjs';
 
-import { TokenService } from '@core/services/token/token.service';
 import { ToastService } from '../toast/toast.service';
 
 @Injectable({
@@ -11,8 +9,6 @@ import { ToastService } from '../toast/toast.service';
 })
 export class HttpApiService {
   private readonly httpClient = inject(HttpClient);
-  private readonly router = inject(Router);
-  private readonly tokenService = inject(TokenService);
   private readonly toastService = inject(ToastService);
 
   public get<Response>(
@@ -41,7 +37,7 @@ export class HttpApiService {
     body: Request
   ): Observable<Response> {
     return this.httpClient
-      .post<Response>(url, body, { headers: headers })
+      .post<Response>(url, body, { headers: headers, withCredentials: true })
       .pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
   }
 
@@ -66,14 +62,10 @@ export class HttpApiService {
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {
-    // TODO - implement better error handling/logging
-    // move 401 handling here or to the interceptor?
-
     // cover valid error cases
     switch (error.status) {
       case 401:
-        this.tokenService.deleteToken();
-        this.router.navigate(['/login']);
+        // Handled by interceptor
         break;
       case 404:
         // API returns 404 for valid reasons, such as no pfp set, not an error

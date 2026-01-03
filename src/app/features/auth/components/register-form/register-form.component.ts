@@ -7,7 +7,6 @@ import { AuthService } from '@features/auth/services/auth/auth.service';
 import { UserRegisterDto } from '@features/auth/models/user-register.interface';
 import { AuthResetHelper } from '@features/auth/helpers/auth-reset-helper';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
-import { TokenService } from '@core/services/token/token.service';
 import { ToastService } from '@core/services/toast/toast.service';
 
 @Component({
@@ -20,7 +19,6 @@ import { ToastService } from '@core/services/toast/toast.service';
 export class RegisterFormComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
   private readonly authService = inject(AuthService);
-  private readonly tokenService = inject(TokenService);
   private readonly router = inject(Router);
   private readonly toastService = inject(ToastService);
 
@@ -135,16 +133,13 @@ export class RegisterFormComponent implements OnInit {
       this.authService.register(userRegisterDto).subscribe({
         next: (resp) => {
           this.isSubmitting = false;
-          if (resp.token) {
-            this.toastService.showSuccess('Registracija uspešna');
+          this.toastService.showSuccess('Registracija uspešna');
 
-            // Clear register form cache
-            AuthResetHelper.removeRegisterForm();
+          // Clear register form cache
+          AuthResetHelper.removeRegisterForm();
 
-            // Save token and redirect
-            this.tokenService.setToken(resp.token)
-            this.router.navigate(['/']);
-          }
+          // Navigate to home (token is already set by AuthService)
+          this.router.navigate(['/']);
         },
         error: (err) => {
           this.isSubmitting = false;
@@ -154,7 +149,7 @@ export class RegisterFormComponent implements OnInit {
             this.registerErrorMessage = err.error.message;
             this.handleErrorAnimation();
           } else if (err.status === 400) {
-            // Fields missing errror
+            // Fields missing error
             this.showRegisterError = true;
             this.registerErrorMessage = err.error.message;
             this.handleErrorAnimation();
