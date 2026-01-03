@@ -14,7 +14,13 @@
           <ul class="list-unstyled">
             @for (movie of popularMovies | slice: 0 : 5; track movie) {
               <li class="d-flex align-items-start mb-2 li-movie" (click)="searchTitle(movie.title)">
-                <img [src]="posterUrl + movie.imageUrl" class="img-fluid mr-2" alt="{{ movie.title }}" />
+                <img
+                  [src]="posterUrl + movie.imageUrl"
+                  class="img-fluid mr-2"
+                  alt="{{ movie.title }}"
+                  width="50"
+                  height="75"
+                />
                 <div class="m-auto">
                   <h5 class="mb-0">
                     {{ movie.title }}
@@ -34,7 +40,13 @@
           <ul class="list-unstyled">
             @for (movie of topRatedMovies | slice: 0 : 5; track movie) {
               <li class="d-flex align-items-start mb-2 li-movie" (click)="searchTitle(movie.title)">
-                <img [src]="posterUrl + movie.imageUrl" class="img-fluid mr-2" alt="{{ movie.title }}" />
+                <img
+                  [src]="posterUrl + movie.imageUrl"
+                  class="img-fluid mr-2"
+                  alt="{{ movie.title }}"
+                  width="50"
+                  height="75"
+                />
                 <div class="m-auto">
                   <h5 class="mb-0">
                     {{ movie.title }}
@@ -54,7 +66,13 @@
           <ul class="list-unstyled">
             @for (movie of nowPlayingMovies | slice: 0 : 5; track movie) {
               <li class="d-flex align-items-start mb-2 li-movie" (click)="searchTitle(movie.title)">
-                <img [src]="posterUrl + movie.imageUrl" class="img-fluid mr-2" alt="{{ movie.title }}" />
+                <img
+                  [src]="posterUrl + movie.imageUrl"
+                  class="img-fluid mr-2"
+                  alt="{{ movie.title }}"
+                  width="50"
+                  height="75"
+                />
                 <div class="m-auto">
                   <h5 class="mb-0">
                     {{ movie.title }}

@@ -21,7 +21,7 @@ export class HomeTorrentComponent implements OnInit {
   protected region: 'SI' | 'US' = 'US';
   protected timeWindow: 'day' | 'week' = 'day';
 
-  protected readonly posterUrl = 'https://image.tmdb.org/t/p/original';
+  protected readonly posterUrl = 'https://image.tmdb.org/t/p/w342';
 
   protected nowPlayingMovies: TmdbMovieResponse[] = [];
   protected popularMovies: TmdbMovieResponse[] = [];
