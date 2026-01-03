@@ -35,6 +35,7 @@ Note: environment is set in `src/environment.ts` with the `production` boolean, 
 
 ## Development guidelines
 
+- Don't read any claims from JWTs. Use `GET /application` endpoint to get basic app data from API or implement separate API calls.
 - Use `npm run format` to format project, or `npm run format:check` to check formatting
 - Use @ import syntax defined in `tsconfig.json`
 - Blank line between Angular and app imports
