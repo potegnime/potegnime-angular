@@ -49,15 +49,12 @@ export class LoginFormComponent implements OnInit {
       this.authService.login(userLoginDto).subscribe({
         next: (resp) => {
           this.isSubmitting = false;
-          if (resp.accessToken) {
-            this.toastService.showSuccess('Prijava uspešna');
+          this.toastService.showSuccess('Prijava uspešna');
 
-            // Clear register form cache
-            AuthResetHelper.removeRegisterForm();
+          // Clear register form cache
+          AuthResetHelper.removeRegisterForm();
 
-            this.tokenService.setToken(resp.accessToken);
-            this.router.navigate(['/']);
-          }
+          this.router.navigate(['/']);
         },
         error: (err) => {
           this.isSubmitting = false;

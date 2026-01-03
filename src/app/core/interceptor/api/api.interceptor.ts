@@ -22,7 +22,10 @@ export class ApiInterceptor implements HttpInterceptor {
 
     return next.handle(clonedRequest).pipe(
       catchError((err: HttpErrorResponse) => {
-        if (err.status === 401) return this.handle401(clonedRequest, next);
+        // Don't try to refresh on login or register failures
+        if (err.status === 401 && !request.url.includes('/auth/login') && !request.url.includes('/auth/register')) {
+          return this.handle401(clonedRequest, next);
+        }
         return throwError(() => err);
       })
     );
