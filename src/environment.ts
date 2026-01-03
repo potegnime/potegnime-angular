@@ -9,8 +9,9 @@ const environment = {
    * Frontend will only allow /maintenance page to be displayed, APIs will continue to work normally.
    * Any users that visit site while in maintenance mode will be logged out.
    */
-  underMaintenance: false
+  underMaintenance: true
 };
 
 export const production = environment.production;
-export const underMaintenance = environment.underMaintenance && localStorage.getItem('bypass') !== 'true';
+export const underMaintenance =
+  environment.underMaintenance && localStorage.getItem('bypass') !== 'true';
