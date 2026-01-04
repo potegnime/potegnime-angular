@@ -108,7 +108,8 @@ export class ResetPasswordFormComponent implements OnInit {
         next: (resp) => {
           this.isSubmitting = false;
           if (resp.accessToken) {
-            this.toastService.showSuccess('Geslo uspešno posodobljeno, prosimo prijavite se z novim geslom.');
+            this.toastService.showSuccess('Lahko se prijavite z novim geslom', 'Geslo uspešno posodobljeno');
+            this.router.navigate(['/login']);
           }
         },
         error: (err) => {
