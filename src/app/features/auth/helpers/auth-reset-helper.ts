@@ -4,7 +4,7 @@ export class AuthResetHelper {
 
   public static setForgotPasswordTimeout(): void {
     const timeout = new Date();
-    timeout.setMinutes(timeout.getUTCMinutes() + 5);
+    timeout.setMinutes(timeout.getUTCMinutes() + 2);
     localStorage.setItem(this.forgotPasswordTimeoutCacheKey, timeout.toISOString());
   }
 

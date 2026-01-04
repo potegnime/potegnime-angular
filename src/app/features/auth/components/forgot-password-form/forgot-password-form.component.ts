@@ -33,10 +33,10 @@ export class ForgotPasswordFormComponent implements OnInit {
     const forgotPasswordTimeout = AuthResetHelper.getForgotPasswordTimeout();
     if (forgotPasswordTimeout) {
       if (new Date() < forgotPasswordTimeout) {
-        const minutesLeft = Math.ceil(
-          (forgotPasswordTimeout.getTime() - new Date().getTime()) / 60000
+        const secondsLeft = Math.ceil(
+          (forgotPasswordTimeout.getTime() - new Date().getTime()) / 1000
         );
-        this.toastService.showWarning(this.warningMessage(minutesLeft));
+        this.toastService.showWarning(this.warningMessage(secondsLeft));
         this.isSubmitted = true;
       } else {
         AuthResetHelper.removeForgotPasswordTimeout();
@@ -67,17 +67,17 @@ export class ForgotPasswordFormComponent implements OnInit {
     }
   }
 
-  private warningMessage(min: number): string {
-    switch (min) {
+  private warningMessage(sec: number): string {
+    switch (sec) {
       case 1:
-        return `Prosimo, počakajte ${min} minuto, preden ponovno pošljete zahtevo za ponastavitev gesla.`;
+        return `Prosimo počakajte ${sec} sekundo, preden ponovno pošljete zahtevo za ponastavitev gesla.`;
       case 2:
-        return `Prosimo, počakajte ${min} minuti, preden ponovno pošljete zahtevo za ponastavitev gesla.`;
+        return `Prosimo počakajte ${sec} sekundi, preden ponovno pošljete zahtevo za ponastavitev gesla.`;
       case 3:
       case 4:
-        return `Prosimo, počakajte ${min} minute, preden ponovno pošljete zahtevo za ponastavitev gesla.`;
+        return `Prosimo počakajte ${sec} sekunde, preden ponovno pošljete zahtevo za ponastavitev gesla.`;
       default:
-        return `Prosimo, počakajte ${min} minut, preden ponovno pošljete zahtevo za ponastavitev gesla.`;
+        return `Prosimo počakajte ${sec} sekund, preden ponovno pošljete zahtevo za ponastavitev gesla.`;
     }
   }
 }
