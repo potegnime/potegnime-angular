@@ -6,12 +6,13 @@ import { ForgotPasswordDto } from '@features/auth/models/forgot-password.interfa
 import { AuthResetHelper } from '@features/auth/helpers/auth-reset-helper';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 import { ToastService } from '@core/services/toast/toast.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-forgot-password-form',
   templateUrl: './forgot-password-form.component.html',
   styleUrls: ['./forgot-password-form.component.scss'],
-  imports: [ReactiveFormsModule, LoadingSpinnerComponent],
+  imports: [ReactiveFormsModule, LoadingSpinnerComponent, RouterLink],
   standalone: true
 })
 export class ForgotPasswordFormComponent implements OnInit {
