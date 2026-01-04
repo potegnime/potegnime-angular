@@ -5,7 +5,6 @@ import { Router, RouterLink } from '@angular/router';
 
 import { AuthService } from '@features/auth/services/auth/auth.service';
 import { UserRegisterDto } from '@features/auth/models/user-register.interface';
-import { AuthResetHelper } from '@features/auth/helpers/auth-reset-helper';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 import { ToastService } from '@core/services/toast/toast.service';
 
@@ -41,16 +40,10 @@ export class RegisterFormComponent implements OnInit {
     });
 
     this.registerForm.valueChanges.subscribe((formValue) => {
-      AuthResetHelper.setRegisterForm(formValue);
       if (this.agreeToTermsBool !== this.registerForm.value.agreeToTerms) {
         this.agreeToTermsBool = this.registerForm.value.agreeToTerms;
       }
     });
-
-    const registerFormCache = AuthResetHelper.getRegisterForm();
-    if (registerFormCache) {
-      this.registerForm.patchValue(registerFormCache);
-    }
   }
 
   protected togglePasswordVisibility(fieldNumber: number) {
@@ -134,10 +127,6 @@ export class RegisterFormComponent implements OnInit {
         next: (resp) => {
           this.isSubmitting = false;
           this.toastService.showSuccess('Registracija uspešna');
-
-          // Clear register form cache
-          AuthResetHelper.removeRegisterForm();
-
           // Navigate to home (token is already set by AuthService)
           this.router.navigate(['/']);
         },

@@ -6,7 +6,6 @@ import { NgClass } from '@angular/common';
 import { AuthService } from '@features/auth/services/auth/auth.service';
 import { TokenService } from '@core/services/token/token.service';
 import { UserLoginDto } from '@features/auth/models/user-login.interface';
-import { AuthResetHelper } from '@features/auth//helpers/auth-reset-helper';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 import { ToastService } from '@core/services/toast/toast.service';
 
@@ -36,9 +35,6 @@ export class LoginFormComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
-
-    // Get register form cache (to remove it if expired)
-    AuthResetHelper.getRegisterForm();
   }
 
   protected onSubmit(): void {
@@ -50,9 +46,6 @@ export class LoginFormComponent implements OnInit {
         next: (resp) => {
           this.isSubmitting = false;
           this.toastService.showSuccess('Prijava uspešna');
-
-          // Clear register form cache
-          AuthResetHelper.removeRegisterForm();
 
           this.router.navigate(['/']);
         },
