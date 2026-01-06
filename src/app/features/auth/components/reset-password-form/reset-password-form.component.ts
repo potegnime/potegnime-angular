@@ -113,19 +113,11 @@ export class ResetPasswordFormComponent implements OnInit {
           }
         },
         error: (err) => {
-          this.isSubmitting = false;
-          switch (err.status) {
-            case 400:
-              // Token expired or invalid
-              // Check if message is present and can be displayed
-              // TODO - generalize this across the app
-              if (err.error.message && err.error.errorCode == 1) {
-                this.toastService.showError(err.error.message);
-              }
-
-              this.router.navigate(['/']);
-              break;
+          if (err.error.message && err.error.errorCode == 1) {
+            this.toastService.showError(err.error.message);
           }
+          this.isSubmitting = false;
+          this.router.navigate(['/']);
         }
       });
     }

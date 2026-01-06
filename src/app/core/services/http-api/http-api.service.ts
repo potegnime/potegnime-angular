@@ -67,11 +67,11 @@ export class HttpApiService {
       case 401:
         // Handled by interceptor
         break;
+      case 403:
+        // can occur on user settings page, reset password page...
+        break;
       case 404:
         // API returns 404 for valid reasons, such as no pfp set, not an error
-        break;
-      case 403:
-        // can occur on user settings page
         break;
       case 409:
         // can occur on register... (username/email already taken)
