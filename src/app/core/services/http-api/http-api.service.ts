@@ -1,8 +1,9 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, of, throwError } from 'rxjs';
 
 import { ToastService } from '../toast/toast.service';
+import { underMaintenance } from 'src/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +12,19 @@ export class HttpApiService {
   private readonly httpClient = inject(HttpClient);
   private readonly toastService = inject(ToastService);
 
+  private checkMaintenance<T>(): Observable<T> | null {
+    if (underMaintenance) return of({} as T);
+    return null;
+  }
+
   public get<Response>(
     url: string,
     headers: HttpHeaders,
     params: HttpParams | undefined = undefined
   ): Observable<Response> {
+    const maintenanceError = this.checkMaintenance<Response>();
+    if (maintenanceError) return maintenanceError;
+
     return this.httpClient
       .get<Response>(url, { headers: headers, params: params })
       .pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
@@ -26,6 +35,9 @@ export class HttpApiService {
     headers: HttpHeaders,
     params: HttpParams | undefined = undefined
   ): Observable<Blob> {
+    const maintenanceError = this.checkMaintenance<Blob>();
+    if (maintenanceError) return maintenanceError;
+
     return this.httpClient
       .get(url, { headers: headers, params: params, responseType: 'blob' })
       .pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
@@ -36,6 +48,9 @@ export class HttpApiService {
     headers: HttpHeaders,
     body: Request
   ): Observable<Response> {
+    const maintenanceError = this.checkMaintenance<Response>();
+    if (maintenanceError) return maintenanceError;
+
     return this.httpClient
       .post<Response>(url, body, { headers: headers, withCredentials: true })
       .pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
@@ -46,6 +61,9 @@ export class HttpApiService {
     headers: HttpHeaders,
     body: Request
   ): Observable<Response> {
+    const maintenanceError = this.checkMaintenance<Response>();
+    if (maintenanceError) return maintenanceError;
+
     return this.httpClient
       .put<Response>(url, body, { headers: headers })
       .pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
@@ -56,6 +74,9 @@ export class HttpApiService {
     headers: HttpHeaders,
     body?: Request
   ): Observable<Response> {
+    const maintenanceError = this.checkMaintenance<Response>();
+    if (maintenanceError) return maintenanceError;
+
     return this.httpClient
       .delete<Response>(url, { headers: headers, body: body })
       .pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
