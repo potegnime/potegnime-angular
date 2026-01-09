@@ -10,7 +10,7 @@ import { SortService } from '@features/search/services/sort/sort.service';
 import { TorrentFileDownloadService } from '@features/search/services/torrent-file-download/torrent-file-download.service';
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 import { TorrentSourcePipe } from '@shared/pipes/torrent-source.pipe';
-import { AboutResultsComponent } from '@features/search/components/about-results/about-results.component';
+import { SearchHelpComponent } from '@features/search/components/help/search-help.component';
 import { SearchBarSearchComponent } from '@features/search/components/search-bar-search/search-bar-search.component';
 import { ToastService } from '@core/services/toast/toast.service';
 
@@ -20,7 +20,7 @@ import { ToastService } from '@core/services/toast/toast.service';
   styleUrls: ['./search-results.component.scss'],
   imports: [
     SearchBarSearchComponent,
-    AboutResultsComponent,
+    SearchHelpComponent,
     LoadingSpinnerComponent,
     TorrentSourcePipe,
     NgClass
