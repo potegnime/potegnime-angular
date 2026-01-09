@@ -2,7 +2,7 @@ const environment = {
   /**
    * Production mode flag - used for switching between dev and prod config.json settings
    */
-  production: false,
+  production: true,
 
   /**
    * Danger!! When true, the site is in maintenance mode and becomes unavailable,
