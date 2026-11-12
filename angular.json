@@ -32,6 +32,12 @@
                         "inlineStyleLanguage": "scss",
                         "assets": [
                             "src/favicon.ico",
+                            "src/icon.svg",
+                            "src/icon-192.png",
+                            "src/icon-512.png",
+                            "src/icon-mask.png",
+                            "src/apple-touch-icon.png",
+                            "src/manifest.webmanifest",
                             "src/assets"
                         ],
                         "styles": [
@@ -97,6 +103,12 @@
                         "inlineStyleLanguage": "scss",
                         "assets": [
                             "src/favicon.ico",
+                            "src/icon.svg",
+                            "src/icon-192.png",
+                            "src/icon-512.png",
+                            "src/icon-mask.png",
+                            "src/apple-touch-icon.png",
+                            "src/manifest.webmanifest",
                             "src/assets"
                         ],
                         "styles": [
